@@ -1,0 +1,1 @@
+using OpportunityService as service from '../../srv/opportunities';

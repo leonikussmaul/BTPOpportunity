@@ -1,0 +1,34 @@
+### Opportunities Metadata
+GET http://localhost:4004/opportunity/$metadata
+
+### Get all Opportunities
+GET http://localhost:4004/opportunity/opportunityHeader
+
+###Create a new Opportunity
+POST http://localhost:4004/opportunity/opportunityHeader
+Content-Type: application/json;IEEE754Compatible=true
+
+{
+    "servicePlay": "Text",
+    "source" : "Approached by MU",
+    "clientContactPerson" : "Paul",
+    "ssa" : "Job",
+    "account" : "VDL",
+    "marketUnit" : "Nedherlands",
+    "topic" : "Extensions",
+    "status" : "Opportunity",
+    "primaryContact" : "Vignesh",
+    "opportunityValue" : 150,
+    "notes" : [{
+        "text" : "First Customer"
+    }]
+}
+
+
+
+
+
+
+
+
+

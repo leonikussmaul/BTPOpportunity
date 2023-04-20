@@ -1,0 +1,281 @@
+<mvc:View controllerName="opportunity.opportunity.controller.ObjectPage"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:suite="sap.suite.ui.commons"
+>
+    <Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
+        <content>
+            <f:SidePanel id="mySidePanel" toggle="onToggle" sidePanelResizable="true" sidePanelMinWidth="30rem" sidePanelWidth="20rem">
+                <f:mainContent>
+                    <u:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showEditHeaderButton="true" editHeaderButtonPress="handleEditBtnPress" upperCaseAnchorBar="false">
+                        <u:headerTitle>
+                            <u:ObjectPageDynamicHeaderTitle>
+                                <u:heading>
+                                    <Title text="{account}" />
+                                </u:heading>
+                                <u:snappedTitleOnMobile>
+                                    <Title text="{account}" />
+                                </u:snappedTitleOnMobile>
+
+                                <u:expandedContent>
+                                    <Text text="{marketUnit}" />
+                                </u:expandedContent>
+                                <u:snappedContent>
+                                    <Text text="{marketUnit}" />
+                                </u:snappedContent>
+                                <u:actions>
+                                    <u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="delete" importance="Low" tooltip="delete" press="onDeletePress" />
+                                    <u:ObjectPageHeaderActionButton icon="sap-icon://action" text="action" importance="Low" tooltip="action" />
+                                </u:actions>
+                            </u:ObjectPageDynamicHeaderTitle>
+                        </u:headerTitle>
+
+                        <u:headerContent>
+                            <FlexBox wrap="Wrap">
+                                <!-- <VBox class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                            <Title text="Contact" class="sapUiTinyMarginBottom" />
+                            <HBox class="sapUiTinyMarginBottom">
+                                <core:Icon src="sap-icon://account" />
+                                <Label text="{i18n>primaryContact}" class="sapUiSmallMarginBegin" />
+                                <Link text="{primaryContact}" class="sapUiSmallMarginBegin" />
+                            </HBox>
+                            <HBox class="sapUiTinyMarginBottom">
+                                <core:Icon src="sap-icon://outgoing-call" />
+                                <Label text="{i18n>ssa}" class="sapUiSmallMarginBegin" />
+                                <Link text="{ssa}" class="sapUiSmallMarginBegin" />
+                            </HBox>
+                            <HBox>
+                                <core:Icon src="sap-icon://email" />
+                                <Label text="{i18n>clientContactPerson}" class="sapUiSmallMarginBegin" />
+                                <Link text="{clientContactPerson}" class="sapUiSmallMarginBegin" />
+                            </HBox>
+                        </VBox> -->
+
+                                <l:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                                    <VBox>
+                                        <ObjectStatus state="Success" text="{status}" icon="sap-icon://message-information" />
+                                        <ProgressIndicator
+                                            displayValue="{= Math.round(parseFloat(${status}) * 100) + '%'}"
+                                            percentValue="{
+                                                    path: 'status',
+                                                    formatter: '.formatter.mapStatusToPercent'
+                                                    }"
+                                            width="28.7rem"
+                                            showValue="true"
+                                        />
+                                    </VBox>
+                                </l:VerticalLayout>
+
+                                <VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom">
+                                    <Title text="{i18n>opportunityClosedQuarter}" class="sapUiTinyMarginBottom" />
+                                    <ObjectStatus text="{opportunityClosedQuarter}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" />
+                                </VBox>
+
+                                <VBox class="sapUiSmallMarginBeginEnd">
+                                    <Title text="{i18n>Value}" class="sapUiTinyMarginBottom" />
+                                    <ObjectNumber class="sapMObjectNumberLarge" state="Warning" number="{opportunityValue}" unit="EUR" />
+                                </VBox>
+
+                                <VBox class="sapUiSmallMarginBeginEnd">
+                                    <!-- <Title text="{i18n>Topics}" class="sapUiTinyMarginBottom" /> -->
+                                    <VBox>
+                                        <HBox class="sapUiTinyMarginBottom">
+                                            <ToggleButton text="{i18n>Extension}" pressed="true" press="onToggleButtonPressed" class="sapUiSmallMarginEnd" />
+                                            <ToggleButton text="{i18n>AppDevelopment}" pressed="true" press="onToggleButtonPressed" class="sapUiSmallMarginEnd" />
+                                            <ToggleButton text="{i18n>CleanCore}" pressed="true" press="onToggleButtonPressed" class="sapUiSmallMarginEnd" />
+                                        </HBox>
+                                        <HBox >
+                                            <ToggleButton text="{i18n>Integration}" pressed="true" press="onToggleButtonPressed" class="sapUiLargeMarginBegin sapUiSmallMarginEnd"/>
+                                            <ToggleButton text="{i18n>Data}" pressed="true" press="onToggleButtonPressed" class="sapUiSmallMarginEnd" />
+                                            <ToggleButton text="{i18n>Analytics}" pressed="{= ${topic} === 'Topic3'}" press="onToggleButtonPressed" class="sapUiSmallMarginEnd" />
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </FlexBox>
+                        </u:headerContent>
+
+                        <u:sections>
+                            <u:ObjectPageSection titleUppercase="false" title="{i18n>Status}">
+                                <u:subSections>
+                                    <u:ObjectPageSubSection titleUppercase="false">
+                                        <u:blocks>
+                                            <form:SimpleForm id="statusSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                                <form:content>
+                                                    <Label text="{i18n>status}" />
+                                                    <ComboBox selectedKey="{status}" items="{
+                                                path: '/opportunityHeader'
+                                            }">
+                                                        <core:Item key="{status}" text="{status}" />
+                                                    </ComboBox>
+
+                                                    <Label text="{i18n>opportunityDate}" />
+                                                    <DatePicker id="oppDate" value="{opportunityDate}" change="handleChange" />
+
+                                                    <Label text="{i18n>opportunityValue}" />
+                                                    <Input value="{opportunityValue}" valueLiveUpdate="true" />
+
+                                                    <Label text="{i18n>opportunityCreatedQuarter}" />
+                                                    <ComboBox selectedKey="{opportunityCreatedQuarter}" items="{
+                                                path: '/opportunityHeader'
+                                            }">
+                                                        <core:Item key="{opportunityCreatedQuarter}" text="{opportunityCreatedQuarter}" />
+                                                    </ComboBox>
+
+                                                    <Label text="{i18n>opportunityClosedQuarter}" />
+                                                    <ComboBox selectedKey="{opportunityClosedQuarter}" items="{
+                                                path: '/opportunityHeader'
+                                            }">
+                                                        <core:Item key="{opportunityClosedQuarter}" text="{opportunityClosedQuarter}" />
+                                                    </ComboBox>
+
+                                                    <Label text="{i18n>opportunityInCRM}" />
+                                                    <CheckBox id="opportunityInCRMInput" value="{opportunityInCRM}" selected="{= ${opportunityInCRM} === 'Yes'}"
+                                                    editable="true" text="{i18n>Yes}" />
+
+                                                    
+
+                                                </form:content>
+                                            </form:SimpleForm>
+                                        </u:blocks>
+                                    </u:ObjectPageSubSection>
+                                </u:subSections>
+                            </u:ObjectPageSection>
+
+                            <u:ObjectPageSection titleUppercase="false" title="{i18n>Contact}">
+                                <!-- <u:heading>
+                            <MessageStrip text="{/opportunityNotes/0/text}" type="Information" />
+                        </u:heading> -->
+                                <u:subSections>
+                                    <u:ObjectPageSubSection titleUppercase="false">
+                                        <u:blocks>
+                                            <form:SimpleForm  id="contactSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                                <form:content>
+                                                    <Label text="{i18n>clientContactPerson}" />
+                                                    <Input type="Text" value="{clientContactPerson}" id="clientContactPersonInput" liveChange="onInputChange"/>
+
+                                                    <Label text="{i18n>ssa}" />
+                                                    <Input id="ssaInput" value="{ssa}" />
+
+                                                    <Label text="{i18n>primaryContact}" />
+                                                    <Input id="primaryContactInput" value="{primaryContact}" />
+                                                </form:content>
+                                            </form:SimpleForm>
+                                        </u:blocks>
+                                    </u:ObjectPageSubSection>
+                                </u:subSections>
+                            </u:ObjectPageSection>
+
+                            <u:ObjectPageSection titleUppercase="false" title="{i18n>Topics}">
+                                <u:subSections>
+                                    <!-- <u:ObjectPageSubSection titleUppercase="false" title="{i18n>Topics}" showTitle="false">
+                                        <u:blocks>
+                                             <HBox class="sapUiSmallMarginTopBottom">
+                                                <CheckBox id="extensions" selected="true" editable="true" text="{i18n>Extension}" />
+                                                <CheckBox id="appdev" selected="true" editable="true" text="{i18n>AppDevelopment}" />
+                                                <CheckBox id="cleanCore" selected="true" editable="true" text="{i18n>CleanCore}" />
+                                                <CheckBox id="integration" selected="false" editable="true" text="{i18n>Integration}" />
+                                                <CheckBox id="data" selected="false" editable="true" text="{i18n>Data}" />
+                                                <CheckBox id="analytics" selected="false" editable="true" text="{i18n>Analytics}" />
+                                            </HBox>
+                                        </u:blocks>
+                                    </u:ObjectPageSubSection> -->
+
+                                    <u:ObjectPageSubSection titleUppercase="false" title="{i18n>Deliverables}" >
+                                        <u:blocks>
+                                            <HBox class="sapUiSmallMarginTopBottom">
+                                                <!-- <CheckBox id="BTPMasterclass" selected="true" editable="true" text="{i18n>BTPMasterclass}" />
+                                                <CheckBox id="BTPAdoptionClass" selected="true" editable="true" text="{i18n>BTPAdoptionClass}" />
+                                                <CheckBox id="BTPADA" selected="false" editable="true" text="{i18n>ADA}" /> -->
+
+                                            <ToggleButton text="{i18n>BTPMasterclass}" pressed="true" press="onToggleDeliverables" class="sapUiSmallMarginEnd" />
+                                            <ToggleButton text="{i18n>BTPAdoptionClass}" pressed="true" press="onToggleDeliverables" class="sapUiSmallMarginEnd" />
+                                            <ToggleButton text="{i18n>ADA}" pressed="true" press="onToggleDeliverables" class="sapUiSmallMarginEnd" />
+                                            <Button text="+" class="sapUiSmallMarginEnd" />
+                                            </HBox>
+                                        </u:blocks>
+                                    </u:ObjectPageSubSection>
+                                </u:subSections>
+                            </u:ObjectPageSection>
+
+
+
+                             <u:ObjectPageSection titleUppercase="false" title="{i18n>Note}">
+                              
+                                <u:subSections>
+                                    <u:ObjectPageSubSection titleUppercase="false">
+                                        <u:blocks>
+                                           <Carousel id="myCarousel" width="100%">
+                                            <Text class="sapUiSmallMargin" text="Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat" />
+                                        </Carousel>
+                                        </u:blocks>
+                                    </u:ObjectPageSubSection>
+                                </u:subSections>
+                            </u:ObjectPageSection>
+                            
+
+                            <!--                    
+                    <u:ObjectPageSection titleUppercase="false" title="{i18n>Notes}">
+                        <u:subSections>
+                            <u:ObjectPageSubSection titleUppercase="false">
+                                <u:blocks>
+                                    <suite:Timeline id="timeline" enableDoubleSided="true" groupBy="dateTime" lazyLoading="true" content="{/opportunityNotes}" textHeight="automatic" showHeaderBar="false">
+                                        <suite:TimelineItem dateTime="{
+					                        path: 'date'
+				                            }" title="title" text="text">
+                                            <suite:embeddedControl>
+                                                <VBox>
+                                                    <Text text="{date}" class="sapUiTinyMargin" />
+                                                    <TextArea value="{text}" growing="true" height="150px" width="100%" placeholder="{i18n>text}" valueLiveUpdate="true" />
+                                                    <Button text="{i18n>save}" press=".addNote" />
+                                                </VBox>
+                                            </suite:embeddedControl>
+                                        </suite:TimelineItem>
+                                    </suite:Timeline>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection> -->
+                        </u:sections>
+                    </u:ObjectPageLayout>
+                </f:mainContent>
+                <f:items>
+                    <f:SidePanelItem icon="sap-icon://paper-plane" text="{i18n>Notes}">
+                        <suite:Timeline id="time" enableDoubleSided="true" groupBy="dateTime" content="{/opportunityNotes}" textHeight="automatic" showHeaderBar="false">
+                            <suite:TimelineItem dateTime="{
+					                        path: 'date'
+				                            }" title="title" text="text">
+                                <suite:embeddedControl>
+                                    <VBox>
+                                        <Text text="{date}" class="sapUiTinyMargin" />
+                                        <TextArea value="{text}" growing="true" height="150px" width="100%" placeholder="{i18n>text}" valueLiveUpdate="true" />
+                                        <HBox>
+                                        <Button text="{i18n>save}" press="onAddNote" />
+                                        <Button icon="sap-icon://delete" press="onDeleteNote" class="sapUiTinyMarginBeginEnd"/>
+                                        </HBox>
+                                    </VBox>
+                                </suite:embeddedControl>
+                            </suite:TimelineItem>
+                        </suite:Timeline>
+                    </f:SidePanelItem>
+                </f:items>
+            </f:SidePanel>
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button id="copy" text="{i18n>copy}" press="onCopyPress" />
+                <Button id="newVersion" text="{i18n>newVersion}" press="handleNewVersionPress" />
+                <Button id="Save" text="{i18n>save}" press="onSavePress" type="Success" />
+                <Button id="Cancel" text="{i18n>cancel}" press="onCancelPress" type="Reject" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

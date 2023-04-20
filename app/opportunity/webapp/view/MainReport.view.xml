@@ -1,0 +1,240 @@
+<mvc:View controllerName="opportunity.opportunity.controller.MainReport"
+    id="view1"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:table="sap.ui.table"
+    xmlns:plugins="sap.ui.table.plugins"
+>
+    <f:DynamicPage id="page" title="{i18n>title}" backgroundDesign="List">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>title}" id="headerTitle" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar id="myFilterBar" showGoOnFB="false" showClearOnFB="true" clear="onReset" reset="onReset" search="onGoPress" useToolbar="false" showFilterConfiguration="true" persistencyKey="persistency">
+                        <fb:filterGroupItems> 
+
+                            <fb:FilterGroupItem groupName="G1" name="marketUnit" label="{i18n>marketUnit}" visibleInFilterBar="true" >
+                                <fb:control>
+                                    <!-- <MultiComboBox  items="{filterModel>/marketUnit}">
+                                        <core:Item key="{filterModel>key}" text="{filterModel>text}" />
+                                    </MultiComboBox> -->
+                                    <MultiComboBox id="muComboBox" selectionChange="onSelectionChange" showSelectAll="true">
+                                    <core:Item key="marketUnit" text="{i18n>BeLux}" />
+                                    <core:Item key="marketUnit" text="{i18n>France}" />
+                                    <core:Item key="marketUnit" text="{i18n>Netherlands}" />
+                                    <core:Item key="marketUnit" text="{i18n>Nordics}" />
+                                    <core:Item key="marketUnit" text="{i18n>UKI}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                             <fb:FilterGroupItem groupName="G2" name="topic" label="{i18n>topic}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <MultiComboBox id="topicBomboBox" selectionChange="onSelectionChange" showSelectAll="true">
+                                    <core:Item key="topic" text="{i18n>AI}" />
+                                     <core:Item key="topic" text="{i18n>Automation}" />
+                                     <core:Item key="topic" text="{i18n>Analytics}" />
+                                    <core:Item key="topic" text="{i18n>BTPAdoptionClass}" />
+                                     <core:Item key="topic" text="{i18n>CleanCoreExtensions}" />
+                                    <core:Item key="topic" text="{i18n>CSD}" />
+                                     <core:Item key="topic" text="{i18n>Data}" />
+                                     <core:Item key="topic " text="{i18n>GovernanceFramework}" />
+                                     <core:Item key="topic" text="{i18n>iCCM}" />
+                                    <core:Item key="topic" text="{i18n>Integration}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G3" name="status" label="{i18n>status}" visibleInFilterBar="true">
+                                <fb:control>
+                                     <MultiComboBox id="statusComboBox" selectionChange="onSelectionChange" showSelectAll="true">
+                                    <core:Item key="topic" text="{i18n>DealQualification}" />
+                                     <core:Item key="topic" text="{i18n>RFP}" />
+                                    <core:Item key="topic" text="{i18n>Opportunity}" />
+                                     <core:Item key="topic" text="{i18n>SolutionDefinition}" />
+                                    <core:Item key="topic" text="{i18n>DealClosure}" />
+                                    <core:Item key="topic" text="{i18n>Booked}" />
+                                    <core:Item key="topic" text="{i18n>ProjectDelivery}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G4" name="primaryContact" label="{i18n>primaryContact}" visibleInFilterBar="true">
+                                <fb:control>
+                                     <MultiComboBox id="contactComboBox" selectionChange="onSelectionChange" showSelectAll="true" >
+                                                <core:Item key="primaryContact" text="Abhay" />
+                                               <core:Item key="primaryContact" text="Ami" />
+                                                <core:Item key="primaryContact" text="Amit" />
+                                                <core:Item key="primaryContact" text="Andrea" />
+                                                 <core:Item key="primaryContact" text="Arpit" />
+                                                <core:Item key="primaryContact" text="Bas" />
+                                                <core:Item key="primaryContact" text="Elinor" />
+                                                <core:Item key="primaryContact" text="Eric" />
+                                                <core:Item key="primaryContact" text="Gurpreet" />
+                                                <core:Item key="primaryContact" text="Karthik" />
+                                                <core:Item key="primaryContact" text="Leoni" />
+                                                <core:Item key="primaryContact" text="Liliana" />
+                                                <core:Item key="primaryContact" text="Matthew" />
+                                                <core:Item key="primaryContact" text="Nesimi" />
+                                                <core:Item key="primaryContact" text="Omar" />
+                                                <core:Item key="primaryContact" text="Peter" />
+                                                <core:Item key="primaryContact" text="Rajat" />
+                                                <core:Item key="primaryContact" text="Ravi" />
+                                                <core:Item key="primaryContact" text="Sarah" />
+                                                <core:Item key="primaryContact" text="Shubham" />
+                                                <core:Item key="primaryContact" text="Stefan" />
+                                                <core:Item key="primaryContact" text="Sunil" />
+                                                <core:Item key="primaryContact" text="Vijay" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G5" name="ssa" label="{i18n>ssa}" visibleInFilterBar="false">
+                                <fb:control>
+                                     <MultiComboBox id="ssaComboBox" selectionChange="onSelectionChange" showSelectAll="true">
+                                                <core:Item key="ssa" text="{i18n>HeleneBrugneaux}" />
+                                               <core:Item key="ssa" text="{i18n>JobSteenhoff}" />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G6" name="opportunityDate" label="{i18n>opportunityDate}" visibleInFilterBar="false">
+                                <fb:control>
+                                    <DatePicker id="dueDateId" displayFormat="short" change="handleChange" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G7" name="opportunityClosedQuarter" label="{i18n>opportunityClosedQuarter}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <!-- <ComboBox selectedKey="{opportunityClosedQuarter}" items="{path: '/opportunityHeader'}" id="QuarterComboBox">
+                                        <core:Item key="{opportunityClosedQuarter}" text="{opportunityClosedQuarter}" />
+                                    </ComboBox> -->
+                                     <ComboBox id="opportunityClosedQuarterComboBox" selectionChange="onSelectChange" >
+                                                <core:Item key="opportunityClosedQuarter" text="{i18n>Q12022}" />
+                                               <core:Item key="opportunityClosedQuarter" text="{i18n>Q22022}" />
+                                                <core:Item key="opportunityClosedQuarter" text="{i18n>Q32022}" />
+                                               <core:Item key="opportunityClosedQuarter" text="{i18n>Q42022}" />
+                                                <core:Item key="opportunityClosedQuarter" text="{i18n>Q12023}" />
+                                               <core:Item key="opportunityClosedQuarter" text="{i18n>Q22023}" />
+                                                <core:Item key="opportunityClosedQuarter" text="{i18n>Q32023}" />
+                                               <core:Item key="opportunityClosedQuarter" text="{i18n>Q42023}" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="G8" name="opportunityInCRM" label="{i18n>InCRM}" visibleInFilterBar="true" >
+                                <fb:control>
+                                    <VBox id="checkboxes" >
+                                        <!-- <CheckBox text="{i18n>Yes}" id="checkbox1" select="onCheckBoxSelect" /> -->
+                                         <ToggleButton text="{i18n>Yes}" pressed="true" press="onToggleInCRM" class="sapUiSmallMarginEnd" />
+                                    </VBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table
+                id="mainTable"
+                sticky="ColumnHeaders,HeaderToolbar"
+                inset="false"
+                noDataText="{i18n>noData}"
+                class="sapFDynamicPageAlignContent"
+                width="auto"
+                growing="true"
+                growingThreshold="50"
+                items="{
+								path: '/opportunityHeader',
+								parameters: {
+									$count: true,
+                                    $orderby : 'marketUnit'
+								}
+		                }"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <SearchField width="20rem" class="sapUiSizeCompact" liveChange=".onSearch" />
+                        <Button id="starButtonOn" icon="sap-icon://favorite" type="Transparent" press="onFavouriteToolbarPress" visible="false"/>
+                         <Button id="starButtonOff" icon="sap-icon://unfavorite" type="Transparent" press="onFavouriteToolbarPress" visible="true"/>
+                        <Button id="refreshButton" icon="sap-icon://refresh" type="Transparent" press="onRefreshTable" />
+                        <Button id="addButton" icon="sap-icon://add" type="Transparent" press="onAddTableItem" />
+                        <Button id="sortButton" tooltip="{i18n>tooltipSort}" icon="sap-icon://sort" press="onSortButtonPress" type="Transparent" />
+                        <Button id="exportButton" tooltip="{i18n>tooltipExport}" icon="sap-icon://excel-attachment" press="onExportButtonPress" type="Transparent" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                     <!-- <Column width="4rem">
+                        <Text  text=""/>
+                    </Column> -->
+
+                    <Column>
+                        <customData>
+                            <core:CustomData key="marketUnit" value='{marketUnit}' />
+                        </customData>
+                        <Text text="{i18n>marketUnit}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>account}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>topic}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>status}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>primaryContact}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>ssa}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>opportunityClosedQuarter}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>opportunityValue}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press="onTableItemPress">
+                        <cells>
+                        <!-- <core:Icon 
+                            src="{path: 'favModel>/isFavourite', formatter: '.formatter.favoriteIconFormatter'}"
+                            press="onFavouritePress"
+                            size="1.2rem"
+                            color="#427cac"/> -->
+                            <Text text="{marketUnit}" />
+                            <Text text="{account}" />
+                            <Text text="{topic}" />
+                            <Text text="{status}" />
+                            <Text text="{primaryContact}" />
+                            <Text text="{ssa}" />
+                            <Text text="{opportunityClosedQuarter}" />
+                            <Text text="{path: 'opportunityValue', formatter: '.formatter.addKUnit'}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
