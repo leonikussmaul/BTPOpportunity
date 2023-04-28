@@ -173,7 +173,7 @@
 
 					</f:mainContent>
 				<f:items>
-					<f:SidePanelItem icon="sap-icon://paper-plane" text="{i18n>Notes}">
+					<!-- <f:SidePanelItem icon="sap-icon://paper-plane" text="{i18n>Notes}">
                         <suite:Timeline id="time" enableDoubleSided="true" groupBy="dateTime" lazyLoading="true" content="{/opportunityNotes}" textHeight="automatic" showHeaderBar="false">
                                         <suite:TimelineItem dateTime="{
 					                        path: 'date'
@@ -187,7 +187,7 @@
                                             </suite:embeddedControl>
                                         </suite:TimelineItem>
                                     </suite:Timeline>
-					</f:SidePanelItem>
+					</f:SidePanelItem> -->
 				</f:items>
 			</f:SidePanel>
 

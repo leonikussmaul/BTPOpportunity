@@ -17,21 +17,22 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/Opportunity/",
+                "uri": "/v2/Opportunity/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
-                    "odataVersion": "4.0"
+                    "odataVersion": "2.0",
+                    "defaultBindingMode": "TwoWay"
                 }
             },
-            "V2Service": {
-              "uri": "/v2/Opportunity/",
+            "V4Service": {
+              "uri": "/Opportunity/",
               "type": "OData",
               "settings": {
                   "annotations": [],
                   "localUri": "localService/metadata2.xml",
-                  "odataVersion": "2.0"
+                  "odataVersion": "4.0"
               }
           }
         }
@@ -82,15 +83,18 @@
                 "dataSource": "mainService",
                 "preload": true,
                 "settings": {
-                    "synchronizationMode": "None",
-                    "operationMode": "Server",
-                    "autoExpandSelect": true,
-                    "earlyRequests": true
+                    "autoExpandSelect": true
                 }
             },
-            "V2Service": {
-              "dataSource": "V2Service",
-              "preload": true
+            "V4Service": {
+              "dataSource": "V4Service",
+              "preload": true,
+              "settings": {
+                "synchronizationMode": "None",
+                "operationMode": "Server",
+                "autoExpandSelect": true,
+                "earlyRequests": true
+            }
           }
         },
         "resources": {

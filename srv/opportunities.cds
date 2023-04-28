@@ -5,7 +5,7 @@ using {sapbtp.opportunities} from '../db/opportunities';
 service OpportunityService {
 
     entity opportunityHeader    as projection on opportunities.opportunityHeader;
-    entity opportunityContacts  as projection on opportunities.opportunityContacts;
-    entity opportunityNotes     as projection on opportunities.opportunityNotes;
-    entity opportunityNextSteps as projection on opportunities.opportunityNextSteps;
+    entity opportunityTopics     as projection on opportunities.opportunityTopics;
+    entity opportunityActionItems as projection on opportunities.opportunityActionItems;
+    entity opportunityDeliverables as projection on opportunities.opportunityDeliverables;
 }

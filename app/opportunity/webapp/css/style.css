@@ -1,1 +1,7 @@
 /* Enter your custom styles here */
+
+.myTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}

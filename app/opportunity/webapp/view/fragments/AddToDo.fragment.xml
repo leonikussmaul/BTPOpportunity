@@ -1,0 +1,70 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form">
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="30%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Add To Do"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}" id="actionTaskInput"  /> -->
+		
+
+		<form:SimpleForm editable="true"
+						>
+							<Label text="Title" required="true"/>
+							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInput"  />
+
+							<Label text="Task" required="true"/>
+							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInput" growing="true" />
+
+							<Label text="Owner" />
+							<ComboBox selectedKey="{AddTaskModel>/actionOwner}">
+								<core:Item key="Sarah" text="Sarah"/>
+								<core:Item key="Karthik" text="Karthik"/>
+								<core:Item key="Ravi" text="Ravi"/>
+							</ComboBox>
+
+
+							<Label text="Topic" />
+							<ComboBox selectedKey="{AddTaskModel>/actionTopic}">
+								<core:Item key="Analytics" text="Analytics"/>
+								<core:Item key="Data" text="Data"/>
+								<core:Item key="Automation / AI" text="Automation / AI"/>
+								<core:Item key="Integration" text="Integration"/>
+							</ComboBox>
+
+							<Label text="Due Date"/>
+							<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDate"  />
+
+							<Label text="Priority" />
+							<ComboBox selectedKey="{AddTaskModel>/actionPriority}">
+								<core:Item key="High" text="High"/>
+								<core:Item key="Medium" text="Medium"/>
+								<core:Item key="Low" text="Low"/>
+							</ComboBox>
+
+						<Label text="Progress"/>
+							<Slider value="{AddTaskModel>/actionProgress}" width="100%" step="25"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false"/>
+						</form:SimpleForm>
+
+		<footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitNewTask" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>

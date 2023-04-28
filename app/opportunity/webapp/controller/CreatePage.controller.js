@@ -25,47 +25,47 @@ sap.ui.define([
                 oRouter.navTo("MainReport");
             },
 
-            handleCreateOppPress: function(oEvent){
-                var that = this; 
-                var oBinding = that.getOwnerComponent().byId("MainReport--mainTable").getBinding("items"); 
-                var oModel = this.getView().getModel();
-                var oList = oModel.bindList("/opportunityHeader");
-                var oSelected = ""
-                var oCheck =  this.getView().byId("opportunityInCRM").getSelected()
-                if(oCheck == true) oSelected = "Yes"; 
-                var sConvertDate = ""; 
-                var sDate = this.getView().byId("dateCreated").getValue(); 
-                if(sDate != "" && sDate != undefined) sConvertDate = new Date(this.getView().byId("dateCreated").getValue()).toISOString().split('T')[0]; 
+            // handleCreateOppPress: function(oEvent){
+            //     var that = this; 
+            //     var oBinding = that.getOwnerComponent().byId("MainReport--mainTable").getBinding("items"); 
+            //     var oModel = this.getView().getModel();
+            //     var oList = oModel.bindList("/opportunityHeader");
+            //     var oSelected = ""
+            //     var oCheck =  this.getView().byId("opportunityInCRM").getSelected()
+            //     if(oCheck == true) oSelected = "Yes"; 
+            //     var sConvertDate = ""; 
+            //     var sDate = this.getView().byId("dateCreated").getValue(); 
+            //     if(sDate != "" && sDate != undefined) sConvertDate = new Date(this.getView().byId("dateCreated").getValue()).toISOString().split('T')[0]; 
 
-                oList.create({
-                    account: this.getView().byId("account").getValue(),
-                    marketUnit: this.getView().byId("marketUnit").getValue(),
-                    status: this.getView().byId("status").getValue(),
-                    //topic: ,
-                    opportunityDate: sConvertDate,
-                    opportunityValue: +this.getView().byId("opportunityValue").getValue(),
-                    opportunityCreatedQuarter: this.getView().byId("opportunityCreatedQuarter").getValue(),
-                    opportunityClosedQuarter: this.getView().byId("opportunityClosedQuarter").getValue(),
-                    primaryContact: this.getView().byId("primaryContact").getValue(),
-                    ssa: this.getView().byId("ssa").getValue(), 
-                    clientContactPerson: this.getView().byId("clientContactPerson").getValue(),
-                    opportunityInCRM: oSelected
-                    //opportunityNotes = {};
-                });
-                //oBinding.created.then(function () {
-                    that.getView().setBusy(false);
-                    oBinding.refresh();
-                    MessageToast.show("New account created successfully.");
-                    var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
-                    oRouter.navTo("MainReport");
+            //     oList.create({
+            //         account: this.getView().byId("account").getValue(),
+            //         marketUnit: this.getView().byId("marketUnit").getValue(),
+            //         status: this.getView().byId("status").getValue(),
+            //         //topic: ,
+            //         opportunityDate: sConvertDate,
+            //         opportunityValue: +this.getView().byId("opportunityValue").getValue(),
+            //         opportunityCreatedQuarter: this.getView().byId("opportunityCreatedQuarter").getValue(),
+            //         opportunityClosedQuarter: this.getView().byId("opportunityClosedQuarter").getValue(),
+            //         primaryContact: this.getView().byId("primaryContact").getValue(),
+            //         ssa: this.getView().byId("ssa").getValue(), 
+            //         clientContactPerson: this.getView().byId("clientContactPerson").getValue(),
+            //         opportunityInCRM: oSelected
+            //         //opportunityNotes = {};
+            //     });
+            //     //oBinding.created.then(function () {
+            //         that.getView().setBusy(false);
+            //         oBinding.refresh();
+            //         MessageToast.show("New account created successfully.");
+            //         var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
+            //         oRouter.navTo("MainReport");
                 
-                //}, function (oError) {
-                    // that.getView().setBusy(false);
-                    // MessageBox.error(oError.message);
+            //     //}, function (oError) {
+            //         // that.getView().setBusy(false);
+            //         // MessageBox.error(oError.message);
                    
-                //});
+            //     //});
                 
-            },
+            // },
 
     
         });

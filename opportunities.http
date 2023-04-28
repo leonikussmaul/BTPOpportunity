@@ -9,7 +9,6 @@ POST http://localhost:4004/opportunity/opportunityHeader
 Content-Type: application/json;IEEE754Compatible=true
 
 {
-    "servicePlay": "Text",
     "source" : "Approached by MU",
     "clientContactPerson" : "Paul",
     "ssa" : "Job",

@@ -1,377 +1,643 @@
-    sap.ui.define([
-        "sap/ui/core/mvc/Controller",
-        "sap/m/MessageBox",
-        "sap/ui/core/Fragment",
-        "sap/ui/model/json/JSONModel",
-        "sap/ui/model/Filter",
-        "sap/ui/model/FilterOperator",
-        'sap/ui/model/Sorter',
-        "sap/ui/core/message/Message",
-        "sap/m/MessageToast",
-        "sap/ui/core/library",
-        "sap/ui/core/ValueState",
-        "sap/m/Token",
-        "sap/ui/export/Spreadsheet",
-        'jquery.sap.global',
-        "sap/ui/model/FilterType",
-        "../model/formatter",
-    ],
-        /**
-         * @param {typeof sap.ui.core.mvc.Controller} Controller
-         */
-        function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, library, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter) {
-            "use strict";
-            var oSettingsModel;
-    
-    
-            return Controller.extend("opportunity.opportunity.controller.MainReport", {
-                formatter: formatter,
-                onInit: function () {
-    
-                    this._mViewSettingsDialogs = {};
-    
-                    this.getView().setModel(new JSONModel({
-                    }), "settingsModel");
-                    oSettingsModel = this.getView().getModel("settingsModel");
-    
-                    this.getView().setModel(new JSONModel({
-                        "isFavourite": false
-                    }), "favModel");
-                    var oFavModel = this.getView().getModel("favModel");
-    
-                    var oView = this.getView();
-                    oView.setModel(new JSONModel({
-                    }), "localModel");
-    
-                    var oFilterModel = new JSONModel({
-                        "marketUnit": [
-                            {
-                                "key": "marketUnit",
-                                "text": "BeLux"
-                            },
-                            {
-                                "key": "marketUnit",
-                                "text": "France"
-                            },
-                            {
-                                "key": "marketUnit",
-                                "text": "Netherlands"
-                            },
-                            {
-                                "key": "marketUnit",
-                                "text": "Nordics"
-                            },
-                            {
-                                "key": "marketUnit",
-                                "text": "UKI"
+sap.ui.define([
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    'sap/ui/model/Sorter',
+    "sap/ui/core/message/Message",
+    "sap/m/MessageToast",
+    "sap/ui/core/ValueState",
+    "sap/m/Token",
+    "sap/ui/export/Spreadsheet",
+    'jquery.sap.global',
+    "sap/ui/model/FilterType",
+    "../model/formatter"
+],
+    /**
+     * @param {typeof sap.ui.core.mvc.Controller} Controller
+     */
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter) {
+        "use strict";
+
+
+        return Controller.extend("opportunity.opportunity.controller.MainReport", {
+            formatter: formatter,
+            onInit: function () {
+
+                this.getView().setModel(new JSONModel({
+                    "isFavourite": false
+                }), "favModel");
+                var oFavModel = this.getView().getModel("favModel");
+
+                var oView = this.getView();
+                oView.setModel(new JSONModel({
+                }), "viewModel");
+
+                var aDeliverables = [
+                    { "deliverable": "BTP Adoption Class" },
+                    { "deliverable": "BTP AD&A" },
+                    { "deliverable": "BTP Masterclass" }
+                ];
+                oView.setModel(new sap.ui.model.json.JSONModel({
+                    "deliverables": aDeliverables
+                }), "deliverableModel");
+
+                oView.setModel(new sap.ui.model.json.JSONModel({
+                }), "localModel");
+            },
+
+            _getText: function (sTextId, aArgs) {
+                return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
+
+            },
+
+
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+           TABLE
+           --------------------------------------------------------------------------------------------------------------*/
+
+            onSearch: function (oEvent) {
+                var aFilters = [];
+                var sQuery = oEvent.getSource().getValue();
+                if (sQuery && sQuery.length > 0) {
+                    var oFilter1 = new Filter("marketUnit", FilterOperator.Contains, sQuery);
+                    var oFilter2 = new Filter("account", FilterOperator.Contains, sQuery);
+                    var oFilter3 = new Filter("topic", FilterOperator.Contains, sQuery);
+                    var oFilter4 = new Filter("status", FilterOperator.Contains, sQuery);
+                    var oFilter5 = new Filter("primaryContact", FilterOperator.Contains, sQuery);
+                    var oFilter6 = new Filter("ssa", FilterOperator.Contains, sQuery);
+                    var oFilter7 = new Filter("opportunityClosedQuarter", FilterOperator.Contains, sQuery);
+                    //var oFilter8 = new Filter("opportunityValue", FilterOperator.Contains, sQuery);
+                    aFilters = new Filter([oFilter1, oFilter2, oFilter3, oFilter4, oFilter5, oFilter6, oFilter7]);
+                    //oFilter8
+                }
+
+                var oList = this.byId("mySmartTable").getTable();
+                var oBinding = oList.getBinding("items")
+                oBinding.filter(aFilters, FilterType.Application);
+            },
+
+
+            onListItemPress: function (oEvent) {
+
+                var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("ObjectPage", {
+                    opportunityID: selectedItem.opportunityID
+                });
+            },
+
+            /* ------------------------------------------------------------------------------------------------------------
+            WIZARD
+            --------------------------------------------------------------------------------------------------------------*/
+
+            onWizardDialogPress: function (oEvent) {
+                var oController = this;
+                oController.getView().setBusy(true);
+                if (!this._oDialog) {
+                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.WizardDialog", controller: this });
+                }
+                this._oDialog.then(function (_oDialog) {
+                    oController.getView().addDependent(_oDialog);
+                    _oDialog.open();
+
+                    oController.onReadTopics(); 
+                    oController.onReadDeliverables(); 
+
+                    var oLayout1 = sap.ui.getCore().byId("TopicFilters");
+                    var oTemplate1 = oLayout1.getBindingInfo("content").template;
+                    oLayout1.bindAggregation("content", {
+                        path: '/opportunityTopics',
+                        template: oTemplate1,
+                        sorter: new sap.ui.model.Sorter('topic', false)
+                    });
+                    oLayout1.getBindingInfo('content').binding.refresh();
+
+                    var oLayout2 = sap.ui.getCore().byId("DeliverablesFilters");
+                    var oTemplate2 = oLayout2.getBindingInfo("content").template;
+                    oLayout2.bindAggregation("content", {
+                        path: '/opportunityDeliverables',
+                        template: oTemplate2,
+                        sorter: new sap.ui.model.Sorter('deliverable', false)
+                    });
+                    oLayout2.getBindingInfo('content').binding.refresh();
+                });
+            },
+
+            onSaveWizardPress: function (oEvent) {
+
+                var that = this;
+                that.getView().setBusy(true);
+                var oViewModel = this.getView().getModel("viewModel");
+                var oData = oViewModel.getData();
+
+                var sDate, sDueDate, bCRM, sTodayDate;
+
+                sTodayDate = new Date().toISOString().split("T")[0];
+                if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
+                if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+
+                if (oData.opportunityInCRM) bCRM = "Yes"
+                else bCRM = "No"
+
+                var sTopic, sDeliverable;
+                //push into array once deep create supported
+                sap.ui.getCore().byId("TopicFilters").getContent().forEach(oBtn => {
+                    if (oBtn.getPressed()) sTopic = oBtn.getText();
+                });
+                sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(oBtn => {
+                    if (oBtn.getPressed()) sDeliverable = oBtn.getText();
+                });
+
+                var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+
+                var aTopics = [];
+                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent(); 
+                aTopicFilters.forEach(oItem =>{
+                    if (oItem.getPressed()) {
+                        var oTopic = {
+                            topic: oItem.getText()
+                        };
+                        aTopics.push(oTopic);
+                    }
+                });
+                var aDeliverables = [];
+                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent(); 
+                aDeliverablesFilters.forEach(oItem =>{
+                    if (oItem.getPressed()) {
+                        var oDeliverable = {
+                            deliverable: oItem.getText()
+                        };
+                        aDeliverables.push(oDeliverable);
+                    }
+                })
+               
+
+                //add deliverable field to odata
+                var oNewItem = {
+                    account: oData.account,
+                    topic: oData.topic,
+                    marketUnit: oData.marketUnit,
+                    topic: sTopic,
+                    opportunityStartDate: sDate,
+                    opportunityStartDate: sDueDate,
+                    opportunityValue: oData.opportunityValue,
+                    opportunityInCRM: bCRM,
+                    source: oData.source,
+                    ssa: oData.ssa,
+                    clientContactPerson: oData.clientContactPerson,
+                    status: sStatus,
+                    primaryContact: oData.primaryContact,
+                    opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
+                    opportunityClosedQuarter: oData.opportunityClosedQuarter,
+                    priority: oData.priority,
+                    noteDate: sTodayDate,
+                    noteText: oData.noteText,
+                    progress: oData.progress,
+                    actionItems: [{
+                        actionDueDate: sTodayDate,
+                        actionOwner: oData.primaryContact,
+                        actionProgress: oData.progress,
+                        actionTopic: oData.topic,
+                        actionTask: oData.account
+                    }],
+                    topics: aTopics,
+                    deliverables: aDeliverables
+                };
+
+                // 3. Use the `create` method of the OData model to create a new item in your service
+                var oModel = this.getView().getModel();
+                oModel.create("/opportunityHeader", oNewItem, {
+                    success: function (oData, response) {
+
+                        MessageToast.show("New Opportunity created!");
+                        that.onCloseWizardPress(oEvent);
+                        that.getView().setBusy(false);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        sap.m.MessageBox.error("Opportunity could not be created. Double check your input.");
+                    }
+                });
+
+            },
+
+                  /* ------------------------------------------------------------------------------------------------------------
+                ADD TOPIC
+           --------------------------------------------------------------------------------------------------------------*/
+
+
+            onSubmitTopic: function (oEvent) {
+                var that = this;
+                var oDialog = sap.ui.getCore().byId("topicDialog");
+                var oInput = sap.ui.getCore().byId("topicInput");
+                var oValue = oInput.getValue();
+                var aTopics = this.getView().getModel("localModel").getData().topics;
+
+                if (oValue != "" && oInput != null) {
+                    MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
+                        actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if(sAction === MessageBox.Action.OK){
+                            var isMatch = aTopics.some(oItem => {
+                                return oItem.topic.toUpperCase() === oValue.toUpperCase();
+                            });
+                            if (isMatch) {
+                                //prevent POST call 
+                                MessageBox.error("This topic already exists!");
+                                oInput.setValue("");
+                                oDialog.close();
+                            }else {
+                                // POST call 
+                                var oNewTopic = {
+                                    topic: oValue
+                                }
+                                that.getView().setBusy(true);
+                                var oModel = that.getView().getModel();
+                                oModel.create("/opportunityTopics", oNewTopic, {
+                                    success: function (oData, response) {
+                                        MessageToast.show("New topic posted!");
+                                        oDialog.close();
+                                        oInput.setValue("");
+                                        that.getView().setBusy(false);
+                                    },
+                                    error: function (oError) {
+                                        that.getView().setBusy(false);
+                                        MessageBox.error("Topic could not be posted. Please check your input.");
+                                    }
+                                });
                             }
-                        ]
-                    });
-                    oView.setModel(oFilterModel, "filterModel");
-    
-                    sap.ui.core.UIComponent.getRouterFor(this).getRoute("MainReport").attachMatched(this.onNavBackMatched, this);
-    
-                },
-    
-                onNavBackMatched: function () {
-                    var oBinding = this.byId("mainTable").getBinding("items");
-                    oBinding.refresh();
-    
-                },
-    
-                // onBeforeRendering(){
-                // var oBinding = this.byId("mainTable").getBinding("items");
-                // oBinding.refresh();
-    
-                // }, 
-                _getText: function (sTextId, aArgs) {
-                    return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
-    
-                },
-    
-                onRefreshTable: function () {
-                    this.getView().byId("mainTable").getBinding("items").refresh();
-    
-                },
-    
-                onDataReceived: function (oEvent) {
-    
-                    var aData = [];
-                    var aContext = oEvent.getSource().aContexts;
-    
-                    aContext.forEach(context => {
-                        var oObject = context.getObject();
-                        aData.push(oObject);
-                    })
-                    // this.getView().getModel("localModel").setData({tableData: aData}, true);
-    
-                    oLocalModel.setProperty("/tableData", aData);
-    
-                },
-    
-                //multiComboBox
-                onSelectionChange: function(oEvent){
-                    var aFilters = [];
-                    var oTable = this.getView().byId("mainTable");
-                    var oBinding = oTable.getBinding("items");
-                    var aSelectedKeys = oEvent.getSource().getSelectedItems();
-                    if (aSelectedKeys.length > 0) {
-                        aSelectedKeys.forEach(oItem => {
-                            //var sPath = oItem.mBindingInfos.key.binding.sPath;
-                            aFilters.push(new Filter(oItem.getKey(), FilterOperator.Contains, oItem.getText()))
-                        })
-                        oBinding.filter(aFilters);
-                    } else {
-                        aFilters = [];
-                        oBinding.filter(aFilters);
-                    }
-                },
-    
-                //comboBox
-                onSelectChange: function(oEvent){
-                    var aFilters = [];
-                    var oTable = this.getView().byId("mainTable");
-                    var oBinding = oTable.getBinding("items");
-                    var oSelectedKey = oEvent.getSource().getSelectedKey();
-                    if (oSelectedKey) {
-                        aFilters.push(new Filter("opportunityClosedQuarter", FilterOperator.Contains, oSelectedKey))
-                        oBinding.filter(aFilters);
-                    } else {
-                        aFilters = [];
-                        oBinding.filter(aFilters);
-                    }
-    
-                },
-    
-                onGoPress: function (oEvent) {
-                    //filters
-                    var aFilters = [];
-                    var oSelectionSet = oEvent.getParameters().selectionSet;
-                    for (var i = 0; i <= 4; i++) {
-                        var aSelect = oSelectionSet[i].getSelectedItems();
-                        if (aSelect.length > 0) {
-                            aSelect.forEach(oItem => {
-                                var sPath = oItem.mBindingInfos.key.binding.sPath;
-                                aFilters.push(new Filter(sPath, FilterOperator.Contains, oItem.getKey()))
-                            })
+                        } else{
+                            oInput.setValue("");
+                            that.getView().setBusy(false);
                         }
-                    }
-                    var oMultiComboBox = this.getView().byId("QuarterComboBox");
-                    var oSelKey = oMultiComboBox.getSelectedKey();
-                    if (oSelKey)
-                        aFilters.push(new Filter("opportunityClosedQuarter", FilterOperator.EQ, oSelKey));
-                    //var oCheckbox = this.getView().byId("checkbox1").getSelected();
-                    //if (oCheckbox == true) aFilters.push(new Filter("opportunityInCRM", FilterOperator.Contains, "Yes"));
-                    // var oDP = this.getView().byId("dueDateId").getValue(); 
-                    // if(oDP != "") aFilters.push(new Filter("opportunityDate", FilterOperator.Contains, new Date(oDP).toISOString()));
-                    var oList = this.getView().byId("mainTable");
-                    //get reference to the list binding and push filters
-                    var oBinding = oList.getBinding("items");
-                    oBinding.filter(aFilters);
-    
-                },
-    
-                onSearch: function (oEvent) {
-                    var aFilters = [];
-                    var sQuery = oEvent.getSource().getValue();
-                    if (sQuery && sQuery.length > 0) {
-                        var oFilter1 = new Filter("marketUnit", FilterOperator.Contains, sQuery);
-                        var oFilter2 = new Filter("account", FilterOperator.Contains, sQuery);
-                        var oFilter3 = new Filter("topic", FilterOperator.Contains, sQuery);
-                        var oFilter4 = new Filter("status", FilterOperator.Contains, sQuery);
-                        var oFilter5 = new Filter("primaryContact", FilterOperator.Contains, sQuery);
-                        var oFilter6 = new Filter("ssa", FilterOperator.Contains, sQuery);
-                        var oFilter7 = new Filter("opportunityClosedQuarter", FilterOperator.Contains, sQuery);
-                        //var oFilter8 = new Filter("opportunityValue", FilterOperator.Contains, sQuery);
-                        aFilters = new Filter([oFilter1, oFilter2, oFilter3, oFilter4, oFilter5, oFilter6, oFilter7]);
-                        //oFilter8
-                    }
-    
-                    var oList = this.byId("mainTable");
-                    var oBinding = oList.getBinding("items");
-                    oBinding.filter(aFilters, FilterType.Application);
-                },
-    
-    
-    
-                onTableItemPress: function (oEvent) {
-    
-                    var selectedItem = oEvent.getSource().getBindingContext().getObject();
-                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("ObjectPage", {
-                        opportunityID: selectedItem.opportunityID
-                    });
-                    //this.getView().byId("tableSection").setVisible(true);
-                },
-    
-                onAddTableItem: function () {
-                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("CreatePage", {
-                        // opportunityID : "123"
-                    });
-                },
-    
-    
-                /* ------------------------------------------------------------------------------------------------------------
-                EXPORT
-                --------------------------------------------------------------------------------------------------------------*/
-                onExportButtonPress: function () {
-                    this.onExportTable(true);
-                },
-    
-                _getTemplate: function (oTable) {
-                    var aColumns = oTable.getColumns();
-                    var aTemplate = [];
-    
-                    aColumns.forEach((column) => {
-                        if (column.getVisible()) {
-                            aTemplate.push({
-                                label: column.getHeader().getText(),
-                                property: column.getHeader().getBindingInfo("text").binding.getPath()
-                            })
                         }
                     });
-                    return aTemplate;
-                },
-    
-                onExportTable: function (bExportAll) {
-                    var oTable = this.getView().byId("mainTable");
-                    oTable.setVisible(true);
-                    var aCols, aRecords, oSettings, oSheet;
-                    var aContext = [];
-    
-                    //aRecords = oModel.getProperty('/opportunityHeader');
-                    aRecords = oTable.getItems();
-                    aRecords.forEach(oRecord => {
-                        var oItem = oRecord.getBindingContext().getObject();
-                        aContext.push(oItem);
-                    });
-    
-                    aCols = this._getTemplate(oTable);
-    
-                    oSettings = {
-                        workbook: { columns: aCols },
-                        dataSource: bExportAll ? aContext : aContext.filter(res => res.Flag === "ERROR")
+                } else MessageToast.show("Enter a new topic first");
+            },
+
+                  /* ------------------------------------------------------------------------------------------------------------
+                ADD DELIVERABLE
+           --------------------------------------------------------------------------------------------------------------*/
+
+           onSubmitDeliverable: function (oEvent) {
+            var that = this;
+            var oDialog = sap.ui.getCore().byId("deliverableDialog");
+            var oInput = sap.ui.getCore().byId("deliverableInput");
+            var oValue = oInput.getValue();
+            var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
+
+            if (oValue != "" && oInput != null) {
+                MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if(sAction === MessageBox.Action.OK){
+                        var isMatch = aDeliverables.some(oItem => {
+                            return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
+                        });
+                        if (isMatch) {
+                            //prevent POST call 
+                            MessageBox.error("This deliverable already exists!");
+                            oInput.setValue("");
+                            oDialog.close();
+                        }else {
+                            // POST call 
+                            var oNewDeliverable = {
+                                deliverable: oValue
+                            }
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            oModel.create("/opportunityDeliverables", oNewDeliverable, {
+                                success: function (oData, response) {
+                                    MessageToast.show("New deliverable posted!");
+                                    oDialog.close();
+                                    oInput.setValue("");
+                                    that.getView().setBusy(false);
+                                },
+                                error: function (oError) {
+                                    that.getView().setBusy(false);
+                                    MessageBox.error("Deliverable could not be posted. Please check your input.");
+                                }
+                            });
+                        }
+                    } else{
+                        oInput.setValue("");
+                        that.getView().setBusy(false);
+                    }
+                    }
+                });
+            } else MessageToast.show("Enter a new deliverable first");
+        },
+
+            onSelectAllTopicsPress: function (oEvent) {
+                sap.ui.getCore().byId("TopicFilters").getContent().forEach(function (oToggle) {
+                    var bPressed = oToggle.getPressed();
+                    oToggle.setPressed(!bPressed);
+                });
+            },
+            onSelectAllDeliverablesPress: function (oEvent) {
+                sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(function (oToggle) {
+                    var bPressed = oToggle.getPressed();
+                    oToggle.setPressed(!bPressed);
+                });
+            },
+
+            onCloseWizardPress: function (oEvent) {
+                var oWizardDialog = sap.ui.getCore().byId("myWizardDialog");
+                oWizardDialog.close();
+                var oDialog = sap.ui.getCore().byId("WizardDialog");
+                oDialog.setCurrentStep("WizardStep1");
+                this.getView().getModel("viewModel").setData({});
+                this.getView().setBusy(false);
+            },
+
+            onCRMCheckboxSelect: function (oEvent) {
+                var oCheckBox = oEvent.getSource();
+                var bSelected = oCheckBox.getSelected();
+                var sText = bSelected ? "Yes" : "No";
+                oCheckBox.setText(sText);
+            },
+
+            onFullScreenButtonPress: function (oEvent) {
+                var oDialog = oEvent.getSource().getParent().getParent();
+                var pFullSize = oDialog.getContentWidth();
+                if (pFullSize == "70%") {
+                    oDialog.setContentWidth("100%");
+                    oDialog.setContentHeight("100%");
+                    oEvent.getSource().setIcon('sap-icon://exit-full-screen');
+
+                } else {
+                    oDialog.setContentWidth("70%");
+                    oDialog.setContentHeight("70%");
+                    oEvent.getSource().setIcon('sap-icon://full-screen');
+                }
+            },
+
+            onPreviousStep: function (oEvent) {
+                sap.ui.getCore().byId("WizardDialog").previousStep();
+
+            },
+
+            // onNextStep: function(oEvent){
+            //     sap.ui.getCore().byId("WizardDialog").nextStep(); 
+            // },
+
+            onToggleInCRM: function (oEvent) {
+                var bPressed = oEvent.getSource().getPressed();
+                var sValue = bPressed ? "Yes" : "No";
+                oEvent.getSource().setText(sValue);
+
+                var sFilterValue = bPressed ? "Yes" : "";
+                var oFilter = new Filter("opportunityInCRM", FilterOperator.Contains, sFilterValue);
+                var oTable = this.getView().byId("mainTable");
+                oTable.getBinding("items").filter(oFilter);
+            },
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+            DELETE
+            --------------------------------------------------------------------------------------------------------------*/
+
+            onDeleteTableItem: function (oEvent) {
+                var oSmartTable = this.getView().byId("mySmartTable");
+                var aSelectedItems = oSmartTable.getTable().getSelectedItems();
+
+                if (aSelectedItems.length === 0) {
+                    sap.m.MessageToast.show("Select at least one item to delete");
+                    return;
+                }
+                var oModel = oSmartTable.getModel();
+                sap.m.MessageBox.warning("Are you sure you want to delete the selected items?", {
+                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                    onClose: function (oAction) {
+                        if (oAction === sap.m.MessageBox.Action.YES) {
+                            for (var i = aSelectedItems.length - 1; i >= 0; i--) {
+                                var sPath = aSelectedItems[i].getBindingContext().getPath();
+                                oModel.remove(sPath, {
+                                    success: function () {
+                                        sap.m.MessageToast.show("Item deleted successfully.");
+                                    },
+                                    error: function () {
+                                        sap.m.MessageToast.show("Failed to delete item.");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            },
+
+            /* ------------------------------------------------------------------------------------------------------------
+            SMARTFILTERBAR
+            --------------------------------------------------------------------------------------------------------------*/
+
+            onBeforeRebindTable: function (oEvent) {
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                var oSmartFilterBar = this.getView().byId("smartFilterBar");
+
+                var fnGroupHeaderFormatter = function (oContext) {
+                    var sHeader = oContext.getProperty("marketUnit");
+                    return {
+                        key: sHeader,
                     };
-    
-                    oSheet = new Spreadsheet(oSettings);
-                    oSheet.build()
-                        .then(function () {
-                            MessageToast.show(this.getI18n("exportMsg"));
-                        })
-                        .finally(oSheet.destroy);
-                },
-    
-    
-                /* ------------------------------------------------------------------------------------------------------------
-                SORT
-                --------------------------------------------------------------------------------------------------------------*/
-    
-                onSortButtonPress: function () {
-                    this.getDialog("opportunity.tracker.opportunitytracker.view.fragments.SortDialog")
-                        .then(function (oViewSettingsDialog) {
-                            oViewSettingsDialog.open();
-                        });
-    
-                },
-    
-                getDialog: function (sDialogFragmentName) {
-                    var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
-    
-                    if (!pDialog) {
-                        pDialog = Fragment.load({
-                            id: this.getView().getId(),
-                            name: sDialogFragmentName,
-                            controller: this
-                        }).then(function (oDialog) {
-                            return oDialog;
-                        });
-                        this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
-                    }
-                    return pDialog;
-                },
-    
-                handleSortDialogConfirm: function (oEvent) {
-                    var mParams = oEvent.getParameters(),
-                        sPath,
-                        bDescending,
-                        aSorters = [];
-    
-                    sPath = mParams.sortItem.getKey();
-                    bDescending = mParams.sortDescending;
-                    if (sPath == "marketUnit")
-                        aSorters.push(new Sorter("marketUnit", bDescending));
-                    else if (sPath == "opportunityValue")
-                        aSorters.push(new Sorter("opportunityValue", bDescending));
-                    else if (sPath == "opportunityDate")
-                        aSorters.push(new Sorter("opportunityDate", bDescending));
-                    else if (sPath == "account")
-                        aSorters.push(new Sorter("account", bDescending));
-                    else if (sPath == "status")
-                        aSorters.push(new Sorter("status", bDescending));
-    
-                    aSorters.push(new Sorter(sPath, bDescending));
-    
-                    var oList = this.byId("mainTable");
-                    var oBinding = oList.getBinding("items");
-                    oBinding.sort(aSorters);
-                },
-    
-                onReset: function (oEvent) {
-                    var aSelected = oEvent.getParameters().selectionSet;
-                    aSelected.forEach(oSelect => {
-                        oSelect.removeAllSelectedItems(true);
+                };
+                var oGrouping = new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter);
+                oBindingParams.sorter.push(oGrouping);
+
+                var aMarketUnit = oSmartFilterBar.getControlByKey("marketUnit").getSelectedKeys();
+                if (aMarketUnit) {
+                    aMarketUnit.forEach(function (oToken) {
+                        oBindingParams.filters.push(new Filter("marketUnit", sap.ui.model.FilterOperator.EQ, oToken));
                     })
-    
-                },
-    
-                /* ------------------------------------------------------------------------------------------------------------
-                          FAVOURITE
-                          --------------------------------------------------------------------------------------------------------------*/
-    
-                onFavouriteToolbarPress: function (oEvent) {
-                    var aFilters = [];
-                    var oUnfavourite = this.getView().byId("starButtonOff");
-                    var oFavourite = this.getView().byId("starButtonOn");
-                    if (oUnfavourite.getVisible(true)) {
-                        oUnfavourite.setVisible(false)
-                        oFavourite.setVisible(true)
-    
-                        // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, true));
-                        // var oList = this.getView().byId("mainTable");
-                        // var oBinding = oList.getBinding("items");
-                        // oBinding.filter(aFilters);
+                }
+                var aTopic = oSmartFilterBar.getControlByKey("topic").getSelectedKeys();
+                if (aTopic) {
+                    aTopic.forEach(function (oToken) {
+                        oBindingParams.filters.push(new Filter("topic", sap.ui.model.FilterOperator.EQ, oToken));
+                    })
+                }
+
+                var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
+                var bSwitch = oSwitch ? "Yes" : "No";
+                if (bSwitch == "Yes") {
+                    oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
+                }
+
+            },
+
+
+            onClearSmartFilterBar: function (oEvent) {
+                var oSmartFilterBar = oEvent.getSource();
+                oEvent.getParameters()[0].selectionSet.forEach(oSelect => {
+                    if (oSelect.removeAllSelectedItems) {
+                        oSelect.removeAllSelectedItems(true);
+
                     }
-                    else if (oFavourite.getVisible(true)) {
-                        oFavourite.setVisible(false)
-                        oUnfavourite.setVisible(true)
-    
-                        // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, false));
-                        // var oList = this.getView().byId("mainTable");
-                        // var oBinding = oList.getBinding("items");
-                        // oBinding.filter(aFilters);
+                })
+                oSmartFilterBar.getControlByKey("opportunityInCRM").setState(false);
+                MessageToast.show("All Cleared!");
+
+            },
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+                Dialogs
+           --------------------------------------------------------------------------------------------------------------*/
+
+
+            onDialogOpen: function (fragmentName) {
+                var oController = this;
+                if (!this._fragmentDialogs) {
+                    this._fragmentDialogs = {};
+                }
+
+                if (!this._fragmentDialogs[fragmentName]) {
+                    this._fragmentDialogs[fragmentName] = Fragment.load({ name: fragmentName, controller: this });
+                }
+
+                this._fragmentDialogs[fragmentName].then(function (fragmentDialog) {
+                    oController.getView().addDependent(fragmentDialog);
+                    fragmentDialog.open();
+                });
+            },
+
+
+            onCancelDialogPress: function (oEvent) {
+                oEvent.getSource().getParent().getParent().close();
+            },
+
+            onAddTopicPress: function () {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
+            },
+            onAddDeliverablePress: function () {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddDeliverable");
+            },
+
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+            FAVOURITE
+            --------------------------------------------------------------------------------------------------------------*/
+
+            onFavouriteToolbarPress: function (oEvent) {
+                var aFilters = [];
+                var oUnfavourite = this.getView().byId("starButtonOff");
+                var oFavourite = this.getView().byId("starButtonOn");
+                if (oUnfavourite.getVisible(true)) {
+                    oUnfavourite.setVisible(false)
+                    oFavourite.setVisible(true)
+
+                    // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, true));
+                    // var oList = this.getView().byId("mainTable");
+                    // var oBinding = oList.getBinding("items");
+                    // oBinding.filter(aFilters);
+                }
+                else if (oFavourite.getVisible(true)) {
+                    oFavourite.setVisible(false)
+                    oUnfavourite.setVisible(true)
+
+                    // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, false));
+                    // var oList = this.getView().byId("mainTable");
+                    // var oBinding = oList.getBinding("items");
+                    // oBinding.filter(aFilters);
+                }
+
+            },
+
+            onFavouritePress: function (oEvent) {
+                //post isFavourite 
+
+            },
+
+            onDeleteTopic: function(){
+                var oModel = this.getView().getModel();
+                var sPath = "/opportunityDeliverables(97b6f518-1f80-4bd5-a4b5-0b8c9f0c5598)"
+
+                oModel.remove(sPath, {
+                    success: function () {
+                        sap.m.MessageToast.show("Item deleted successfully.");
+                    },
+                    error: function () {
+                        sap.m.MessageToast.show("Failed to delete item.");
                     }
+                });
+            },
+
+             onReadTopics: function () {
+                var that = this;
+                that.getView().setBusy(true);
+                var oLocalModel = that.getView().getModel("localModel");
+                var oModel = that.getView().getModel();
+                oModel.read("/opportunityTopics", {
+                    urlParameters: {
+                        "$orderby": "topic"
+                      },
+                    success: function (oResponse) {
+                        var aTopics = oResponse.results;
+                        oLocalModel.setProperty("/topics", aTopics);
+                    }.bind(this),
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                });
+            },
+            onReadDeliverables: function () {
+                var that = this;
+                that.getView().setBusy(true);
+                var oLocalModel = that.getView().getModel("localModel");
+                var oModel = that.getView().getModel();
+                oModel.read("/opportunityDeliverables", {
+                    urlParameters: {
+                        "$orderby": "deliverable"
+                      },
+                    success: function (oResponse) {
+                        var aDeliverables = oResponse.results;
+                        oLocalModel.setProperty("/deliverables", aDeliverables);
+                        that.getView().setBusy(false);
+                    }.bind(this),
+                    error: function (oError) {
+                        console.log(oError);
+                        that.getView().setBusy(false);
+                    }
+                });
+            },
+
+
+            onFavoriteValueDriverPress: function (oEvent) {
+                var oController = this;
+                var oIcon = oEvent.getSource();
+                var userModel = this.getOwnerComponent().getModel("UserModel");
     
-                },
+                var oBinding = oIcon.getBindingContext();
+                var sPath = oBinding.getPath();
+                var dataGoal = sap.ui.getCore().byId("GoalCatalogTable").getModel().getProperty(sPath);
     
-                onFavouritePress: function (oEvent) {
-                    //post isFavourite 
+                var isFavorite = dataGoal.isFavourite;
+                var valueDriverID = dataGoal.valueDriverID;
+                var valueDriverName = dataGoal.valueDriverDescription;
+                var userID = userModel.getProperty("/username");
     
-                },
-    
-                onToggleInCRM: function (oEvent) {
-                    var bPressed = oEvent.getSource().getPressed();
-                    var sValue = bPressed ? "Yes" : "No";
-                    oEvent.getSource().setText(sValue);
-                
-                    var sFilterValue = bPressed ? "Yes" : "";
-                    var oFilter = new Filter("opportunityInCRM", FilterOperator.Contains, sFilterValue);
-                    var oTable = this.getView().byId("mainTable");
-                    oTable.getBinding("items").filter(oFilter);
-                },
-    
-    
-    
-            });
+                if (isFavorite === true) {
+                    console.log("Unfavorite");
+                    isFavorite = false;
+                    // removeFavourite
+                    oController.postFavouriteValueDriver(valueDriverID, isFavorite, userID, valueDriverName);
+                } else {
+                    console.log("Favourite");
+                    isFavorite = true;
+                    // addFavourite
+                    oController.postFavouriteValueDriver(valueDriverID, isFavorite, userID, valueDriverName);
+                }
+            },
+
+
+
+
         });
-    
+    });
