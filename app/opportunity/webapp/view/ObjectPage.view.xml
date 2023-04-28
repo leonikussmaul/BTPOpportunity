@@ -72,7 +72,7 @@
 										</HBox>
 									</VBox>
 								</l:VerticalLayout>
-								<!-- <VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${priority} !== null}"><Title text="{i18n>priority}" class="sapUiTinyMarginBottom" /><ObjectStatus text="{priority}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" /></VBox> -->
+								
 								<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${opportunityClosedQuarter} !== null}">
 									<Title text="{i18n>opportunityClosedQuarter}" class="sapUiTinyMarginBottom" />
 									<ObjectStatus text="{opportunityClosedQuarter}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" />
