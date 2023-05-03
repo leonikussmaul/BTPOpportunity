@@ -187,7 +187,7 @@ sap.ui.define([
                     account: oData.account,
                     topic: oData.topic,
                     marketUnit: oData.marketUnit,
-                    topic: sTopic,
+                    //topic: sTopic,
                     opportunityStartDate: sDate,
                     opportunityStartDate: sDueDate,
                     opportunityValue: oData.opportunityValue,
@@ -531,36 +531,80 @@ sap.ui.define([
             FAVOURITE
             --------------------------------------------------------------------------------------------------------------*/
 
-            onFavouriteToolbarPress: function (oEvent) {
+            onFavoriteToolbarPress: function (oEvent) {
+                var oBtn = oEvent.getSource(); 
+                var bToggle = oBtn.getPressed()
+                if(bToggle) {
+                    oBtn.setIcon('sap-icon://favorite')
+                } else oBtn.setIcon('sap-icon://unfavorite')
+
                 var aFilters = [];
-                var oUnfavourite = this.getView().byId("starButtonOff");
-                var oFavourite = this.getView().byId("starButtonOn");
-                if (oUnfavourite.getVisible(true)) {
-                    oUnfavourite.setVisible(false)
-                    oFavourite.setVisible(true)
-
-                    // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, true));
-                    // var oList = this.getView().byId("mainTable");
-                    // var oBinding = oList.getBinding("items");
-                    // oBinding.filter(aFilters);
+                var bFavorite = oEvent.getSource().getPressed();
+                if (bFavorite) {
+                    var aFilters = [
+                        new Filter({
+                          filters: [
+                            new Filter({ path: "isFavorite", operator: FilterOperator.EQ, value1: true,}),
+                          ],
+                          and: false
+                        })
+                      ];
                 }
-                else if (oFavourite.getVisible(true)) {
-                    oFavourite.setVisible(false)
-                    oUnfavourite.setVisible(true)
-
-                    // aFilters.push(new Filter("isFavourite", FilterOperator.Contains, false));
-                    // var oList = this.getView().byId("mainTable");
-                    // var oBinding = oList.getBinding("items");
-                    // oBinding.filter(aFilters);
-                }
+                var oList = this.byId("mySmartTable").getTable();
+                var oBinding = oList.getBinding("items")
+                oBinding.filter(aFilters, FilterType.Application);
 
             },
 
-            onFavouritePress: function (oEvent) {
+            onFavoritePress: function (oEvent) {
+                var that = this; 
+                var oIcon = oEvent.getSource();
+                var oBinding = oIcon.getBindingContext();
+                var sPath = oBinding.getPath();
+                var oContext = oIcon.getBindingContext().getObject(); 
+
+                var isFavorite = oContext.isFavorite;
+    
+                if (isFavorite === true) {
+                    isFavorite = false;
+                    // removeFavourite
+                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                } else {
+                    isFavorite = true;
+                    // addFavourite
+                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                }
+            },
+    
+            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 //post isFavourite 
+                var that = this; 
+                if (isFavorite === true) {
+                    oContext.isFavorite = true; 
+                } else {
+                    oContext.isFavorite = false; 
+                }
+
+                var oModel = this.getView().getModel(); 
+                oModel.update(sPath, oContext, {
+                    success: function() {
+                    var sMessage = "";
+                    if (isFavorite === true) {
+                        sMessage = "'" + oContext.account + "' added to favorites";
+                    } else {
+                        sMessage = "'" + oContext.account + "' removed from favorites";
+                    }
+                    MessageToast.show(sMessage);
+                    },
+                    error: function(oError) {
+                      MessageToast.show(oError.message);
+                    }
+                  });
 
             },
 
+
+           
             onDeleteTopic: function(){
                 var oModel = this.getView().getModel();
                 var sPath = "/opportunityDeliverables(97b6f518-1f80-4bd5-a4b5-0b8c9f0c5598)"

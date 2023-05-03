@@ -213,6 +213,14 @@ sap.ui.define([], function () {
 
   },
 
+  favoriteIconFormatter: function (isFavorite) {
+    var sIcon = "sap-icon://unfavorite";
+    if (isFavorite === true) {
+        sIcon = "sap-icon://favorite";
+    }
+    return sIcon;
+},
+
 
 
     //priority
