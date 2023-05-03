@@ -47,14 +47,53 @@ entity opportunityActionItems {
 entity opportunityTopics {
     key ID     : UUID;
         opptID : Association to opportunityHeader;
-        topic  : String(20);
+        topic  : String(255);
+};
+
+@cds.autoexpose
+entity opportunityTopicsVH {
+    key ID     : UUID;
+        topic  : String(255);
 };
 
 @cds.autoexpose
 entity opportunityDeliverables {
     key ID     : UUID;
         opptID : Association to opportunityHeader;
-        deliverable  : String(20);
+        deliverable  : String(255);
         deliverableDate  : Date; 
 };
+
+@cds.autoexpose
+entity opportunityDeliverablesVH {
+    key ID     : UUID;
+        deliverable  : String(255);
+        deliverableDate  : Date; 
+};
+
+@cds.autoexpose
+entity opportunityPrimaryContactVH {
+    key ID     : UUID;
+        primaryContact  : String(255);
+};
+
+@cds.autoexpose
+entity opportunityQuarterVH {
+    key ID     : UUID;
+        opportunityQuarter  : String(10);
+        opportunityYear  : Integer;
+};
+
+@cds.autoexpose
+entity opportunityStatusVH {
+    key ID     : UUID;
+        status  : String(20);
+};
+
+@cds.autoexpose
+entity opportunityMarketUnitVH {
+    key ID     : UUID;
+        marketUnit  : String(15);
+};
+
 

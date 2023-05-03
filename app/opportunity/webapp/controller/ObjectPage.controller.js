@@ -62,7 +62,7 @@ sap.ui.define([
                 var oLayout1 = this.getView().byId("TopicFiltersObject");
                 var oTemplate1 = oLayout1.getBindingInfo("content").template;
                 oLayout1.bindAggregation("content", {
-                    path: '/opportunityTopics',
+                    path: '/opportunityTopicsVH',
                     template: oTemplate1,
                     sorter: new sap.ui.model.Sorter('topic', false)
                 });
@@ -71,7 +71,7 @@ sap.ui.define([
                 var oLayout2 = this.getView().byId("DeliverablesFiltersObject");
                 var oTemplate2 = oLayout2.getBindingInfo("content").template;
                 oLayout2.bindAggregation("content", {
-                    path: '/opportunityDeliverables',
+                    path: '/opportunityDeliverablesVH',
                     template: oTemplate2,
                     sorter: new sap.ui.model.Sorter('deliverable', false)
                 });
@@ -403,7 +403,7 @@ sap.ui.define([
                             }
                             that.getView().setBusy(true);
                             var oModel = that.getView().getModel();
-                            oModel.create("/opportunityTopics", oNewTopic, {
+                            oModel.create("/opportunityTopicsVH", oNewTopic, {
                                 success: function (oData, response) {
                                     MessageToast.show("New topic posted!");
                                     oDialog.close();
@@ -457,7 +457,7 @@ sap.ui.define([
                         }
                         that.getView().setBusy(true);
                         var oModel = that.getView().getModel();
-                        oModel.create("/opportunityDeliverables", oNewDeliverable, {
+                        oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
                             success: function (oData, response) {
                                 MessageToast.show("New deliverable posted!");
                                 oDialog.close();

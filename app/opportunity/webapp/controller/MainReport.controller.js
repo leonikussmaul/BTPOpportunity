@@ -35,14 +35,14 @@ sap.ui.define([
                 oView.setModel(new JSONModel({
                 }), "viewModel");
 
-                var aDeliverables = [
-                    { "deliverable": "BTP Adoption Class" },
-                    { "deliverable": "BTP AD&A" },
-                    { "deliverable": "BTP Masterclass" }
-                ];
-                oView.setModel(new sap.ui.model.json.JSONModel({
-                    "deliverables": aDeliverables
-                }), "deliverableModel");
+                // var aDeliverables = [
+                //     { "deliverable": "BTP Adoption Class" },
+                //     { "deliverable": "BTP AD&A" },
+                //     { "deliverable": "BTP Masterclass" }
+                // ];
+                // oView.setModel(new sap.ui.model.json.JSONModel({
+                //     "deliverables": aDeliverables
+                // }), "deliverableModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
@@ -64,21 +64,26 @@ sap.ui.define([
                 var aFilters = [];
                 var sQuery = oEvent.getSource().getValue();
                 if (sQuery && sQuery.length > 0) {
-                    var oFilter1 = new Filter("marketUnit", FilterOperator.Contains, sQuery);
-                    var oFilter2 = new Filter("account", FilterOperator.Contains, sQuery);
-                    var oFilter3 = new Filter("topic", FilterOperator.Contains, sQuery);
-                    var oFilter4 = new Filter("status", FilterOperator.Contains, sQuery);
-                    var oFilter5 = new Filter("primaryContact", FilterOperator.Contains, sQuery);
-                    var oFilter6 = new Filter("ssa", FilterOperator.Contains, sQuery);
-                    var oFilter7 = new Filter("opportunityClosedQuarter", FilterOperator.Contains, sQuery);
-                    //var oFilter8 = new Filter("opportunityValue", FilterOperator.Contains, sQuery);
-                    aFilters = new Filter([oFilter1, oFilter2, oFilter3, oFilter4, oFilter5, oFilter6, oFilter7]);
-                    //oFilter8
+                    var aFilters = [
+                        new Filter({
+                          filters: [
+                            new Filter({ path: "marketUnit", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "account", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "topic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "primaryContact", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "ssa", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "opportunityClosedQuarter", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                          ],
+                          and: false
+                        })
+                      ];
                 }
 
                 var oList = this.byId("mySmartTable").getTable();
                 var oBinding = oList.getBinding("items")
                 oBinding.filter(aFilters, FilterType.Application);
+  
             },
 
 
@@ -111,7 +116,7 @@ sap.ui.define([
                     var oLayout1 = sap.ui.getCore().byId("TopicFilters");
                     var oTemplate1 = oLayout1.getBindingInfo("content").template;
                     oLayout1.bindAggregation("content", {
-                        path: '/opportunityTopics',
+                        path: '/opportunityTopicsVH',
                         template: oTemplate1,
                         sorter: new sap.ui.model.Sorter('topic', false)
                     });
@@ -120,7 +125,7 @@ sap.ui.define([
                     var oLayout2 = sap.ui.getCore().byId("DeliverablesFilters");
                     var oTemplate2 = oLayout2.getBindingInfo("content").template;
                     oLayout2.bindAggregation("content", {
-                        path: '/opportunityDeliverables',
+                        path: '/opportunityDeliverablesVH',
                         template: oTemplate2,
                         sorter: new sap.ui.model.Sorter('deliverable', false)
                     });
@@ -144,14 +149,14 @@ sap.ui.define([
                 if (oData.opportunityInCRM) bCRM = "Yes"
                 else bCRM = "No"
 
-                var sTopic, sDeliverable;
-                //push into array once deep create supported
-                sap.ui.getCore().byId("TopicFilters").getContent().forEach(oBtn => {
-                    if (oBtn.getPressed()) sTopic = oBtn.getText();
-                });
-                sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(oBtn => {
-                    if (oBtn.getPressed()) sDeliverable = oBtn.getText();
-                });
+                // var sTopic, sDeliverable;
+                // //push into array once deep create supported
+                // sap.ui.getCore().byId("TopicFilters").getContent().forEach(oBtn => {
+                //     if (oBtn.getPressed()) sTopic = oBtn.getText();
+                // });
+                // sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(oBtn => {
+                //     if (oBtn.getPressed()) sDeliverable = oBtn.getText();
+                // });
 
                 var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
@@ -247,19 +252,19 @@ sap.ui.define([
                             var isMatch = aTopics.some(oItem => {
                                 return oItem.topic.toUpperCase() === oValue.toUpperCase();
                             });
-                            if (isMatch) {
-                                //prevent POST call 
-                                MessageBox.error("This topic already exists!");
-                                oInput.setValue("");
-                                oDialog.close();
-                            }else {
+                            // if (isMatch) {
+                            //     //prevent POST call 
+                            //     MessageBox.error("This topic already exists!");
+                            //     oInput.setValue("");
+                            //     oDialog.close();
+                            // }else {
                                 // POST call 
                                 var oNewTopic = {
                                     topic: oValue
                                 }
                                 that.getView().setBusy(true);
                                 var oModel = that.getView().getModel();
-                                oModel.create("/opportunityTopics", oNewTopic, {
+                                oModel.create("/opportunityTopicsVH", oNewTopic, {
                                     success: function (oData, response) {
                                         MessageToast.show("New topic posted!");
                                         oDialog.close();
@@ -271,7 +276,7 @@ sap.ui.define([
                                         MessageBox.error("Topic could not be posted. Please check your input.");
                                     }
                                 });
-                            }
+                            //}
                         } else{
                             oInput.setValue("");
                             that.getView().setBusy(false);
@@ -298,22 +303,22 @@ sap.ui.define([
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {
                         if(sAction === MessageBox.Action.OK){
-                        var isMatch = aDeliverables.some(oItem => {
-                            return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
-                        });
-                        if (isMatch) {
-                            //prevent POST call 
-                            MessageBox.error("This deliverable already exists!");
-                            oInput.setValue("");
-                            oDialog.close();
-                        }else {
+                        // var isMatch = aDeliverables.some(oItem => {
+                        //     return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
+                        // });
+                        // if (isMatch) {
+                        //     //prevent POST call 
+                        //     MessageBox.error("This deliverable already exists!");
+                        //     oInput.setValue("");
+                        //     oDialog.close();
+                        // }else {
                             // POST call 
                             var oNewDeliverable = {
                                 deliverable: oValue
                             }
                             that.getView().setBusy(true);
                             var oModel = that.getView().getModel();
-                            oModel.create("/opportunityDeliverables", oNewDeliverable, {
+                            oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
                                 success: function (oData, response) {
                                     MessageToast.show("New deliverable posted!");
                                     oDialog.close();
@@ -325,7 +330,7 @@ sap.ui.define([
                                     MessageBox.error("Deliverable could not be posted. Please check your input.");
                                 }
                             });
-                        }
+                        //}
                     } else{
                         oInput.setValue("");
                         that.getView().setBusy(false);
@@ -436,41 +441,42 @@ sap.ui.define([
             /* ------------------------------------------------------------------------------------------------------------
             SMARTFILTERBAR
             --------------------------------------------------------------------------------------------------------------*/
-
             onBeforeRebindTable: function (oEvent) {
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
-
+              
                 var fnGroupHeaderFormatter = function (oContext) {
-                    var sHeader = oContext.getProperty("marketUnit");
-                    return {
-                        key: sHeader,
-                    };
+                  var sHeader = oContext.getProperty("marketUnit");
+                  return {
+                    key: sHeader,
+                  };
                 };
                 var oGrouping = new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter);
                 oBindingParams.sorter.push(oGrouping);
-
-                var aMarketUnit = oSmartFilterBar.getControlByKey("marketUnit").getSelectedKeys();
-                if (aMarketUnit) {
-                    aMarketUnit.forEach(function (oToken) {
-                        oBindingParams.filters.push(new Filter("marketUnit", sap.ui.model.FilterOperator.EQ, oToken));
-                    })
-                }
-                var aTopic = oSmartFilterBar.getControlByKey("topic").getSelectedKeys();
-                if (aTopic) {
-                    aTopic.forEach(function (oToken) {
-                        oBindingParams.filters.push(new Filter("topic", sap.ui.model.FilterOperator.EQ, oToken));
-                    })
-                }
-
+              
+                this.addFiltersForSelectedItems(oEvent, "marketUnit");
+                this.addFiltersForSelectedItems(oEvent, "topic");
+                this.addFiltersForSelectedItems(oEvent, "primaryContact");
+                this.addFiltersForSelectedItems(oEvent, "status");
+                this.addFiltersForSelectedItems(oEvent, "opportunityCreatedQuarter");
+                this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
+              
                 var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 var bSwitch = oSwitch ? "Yes" : "No";
-                if (bSwitch == "Yes") {
-                    oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
+                if (bSwitch === "Yes") {
+                  oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
                 }
+              },
 
-            },
-
+            addFiltersForSelectedItems: function (oEvent, filterKey) {
+                var oSmartFilterBar =  this.getView().byId("smartFilterBar");
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                var selectedItems = oSmartFilterBar.getControlByKey(filterKey)?.getSelectedItems() || [];
+                selectedItems.forEach(function (oToken) {
+                  oBindingParams.filters.push(new Filter(filterKey, sap.ui.model.FilterOperator.EQ, oToken.getText()));
+                })
+              },
+              
 
             onClearSmartFilterBar: function (oEvent) {
                 var oSmartFilterBar = oEvent.getSource();
