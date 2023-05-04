@@ -6,13 +6,14 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add New Deliverable"/>
+					<Title text="Can't find the relevant service?"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
 				</contentRight>
 			</Bar>
 		</customHeader>
+		<Label text="Add a new one:" />
 		<Input type="Text"
            value=""
            id="deliverableInput"

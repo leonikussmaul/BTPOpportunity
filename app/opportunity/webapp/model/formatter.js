@@ -65,12 +65,12 @@ sap.ui.define([], function () {
 
     },
 
-    formatRowHighlight: function (status) {
-      if (status === 'Opportunity') {
-        return 'Information';
-      } else if (status === 'Lead') {
+    formatRowHighlight: function (priority) {
+      if (priority === 'High') {
+        return 'Error';
+      } else if (priority === 'Medium') {
         return 'Warning';
-      } else if (status === 'Completed') {
+      } else if (priority === 'Low') {
         return 'Success';
       }
 

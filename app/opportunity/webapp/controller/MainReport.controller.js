@@ -187,7 +187,6 @@ sap.ui.define([
                     account: oData.account,
                     topic: oData.topic,
                     marketUnit: oData.marketUnit,
-                    //topic: sTopic,
                     opportunityStartDate: sDate,
                     opportunityStartDate: sDueDate,
                     opportunityValue: oData.opportunityValue,

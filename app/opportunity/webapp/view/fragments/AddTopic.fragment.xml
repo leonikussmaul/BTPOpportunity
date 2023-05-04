@@ -6,13 +6,14 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add New Topic"/>
+					<Title text="Can't find the relevant topic?" />
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
 				</contentRight>
 			</Bar>
 		</customHeader>
+		<Label text="Add a new one:" />
 		<Input type="Text"
            value=""
            id="topicInput"
@@ -21,6 +22,7 @@
 			<Toolbar design="Auto">
 				<content>
 					<ToolbarSpacer />
+
 					<Button type="Accept" text="{i18n>Submit}" press="onSubmitTopic" />
 				</content>
 			</Toolbar>
