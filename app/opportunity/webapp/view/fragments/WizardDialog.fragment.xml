@@ -116,24 +116,40 @@
 
 							<Label text="Q. Created" />
 							<ComboBox selectedKey="{viewModel>/opportunityCreatedQuarter}" placeholder="When was it created?" 
-							items="{
-                                    path: '/opportunityQuarterVH',
-                                    sorter: {
+							 items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
                                                 path: 'opportunityQuarter',
-                                                descending: false
+                                                descending: true
                                             }
+                                        ]
                                     }">
 									<core:Item key="{opportunityQuarter}" text="{opportunityQuarter}"/>
 							</ComboBox>
 
+							
+
 							<Label text="Q. Closed" />
 							<ComboBox selectedKey="{viewModel>/opportunityClosedQuarter}" placeholder="When was it closed?"
 							 items="{
-                                    path: '/opportunityQuarterVH',
-                                    sorter: {
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
                                                 path: 'opportunityQuarter',
-                                                descending: false
+                                                descending: true
                                             }
+                                        ]
                                     }">
 									<core:Item key="{opportunityQuarter}" text="{opportunityQuarter}"/>
 							</ComboBox>
@@ -264,8 +280,8 @@
             <content>
 			
 			<ToolbarSpacer />
-			<!-- <Button text="Delete" press="onDeleteTopic" />
-				<Button text="Previous Step" press="onPreviousStep" /> -->
+			<Button text="Delete" press="onDeleteTopic" />
+				<!-- <Button text="Previous Step" press="onPreviousStep" /> -->
                <Button type="Reject" text="{i18n>cancel}" press="onCloseWizardPress" />
 			   <Button type="Accept" text="{i18n>save}" press="onSaveWizardPress" />
             </content>

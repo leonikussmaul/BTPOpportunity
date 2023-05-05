@@ -5,8 +5,13 @@ xmlns:smartField="sap.ui.comp.smartfield"
  xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 <smartForm:SmartForm id="generalSmartForm" customData:useSmartField="true" validationMode="Async" editable="{editModel>/editMode}" 
-app:defaultCheckBoxDisplayBehaviour="OnOff"
-app:defaultDropDownDisplayBehaviour="idAndDescription">
+	app:defaultCheckBoxDisplayBehaviour="OnOff"
+			app:defaultDropDownDisplayBehaviour="idAndDescription" >
+			<smartForm:customData>
+		<core:CustomData key="suppressUnit" value="false" />
+		<core:CustomData key="defaultDropDownDisplayBehaviour" value='descriptionAndId' />
+	</smartForm:customData>
+	
 				<smartForm:layout>
 				<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 			</smartForm:layout>
@@ -19,7 +24,7 @@ app:defaultDropDownDisplayBehaviour="idAndDescription">
 				</smartForm:GroupElement>
 
 				<smartForm:GroupElement >
-					<smartField:SmartField  value="{marketUnit}" >
+					<smartField:SmartField  value="{marketUnit}" customData:mandatory="true">
 					<smartField:configuration>
 							<smartField:Configuration controlType="dropDownList" displayBehaviour="descriptionAndId" />
 						</smartField:configuration>
@@ -27,12 +32,13 @@ app:defaultDropDownDisplayBehaviour="idAndDescription">
 				</smartForm:GroupElement>
 
 				<smartForm:GroupElement>
-					<smartField:SmartField value="{status}"  />
+					<smartField:SmartField id="statusSmartField" value="{topic}"  />
 				</smartForm:GroupElement>
 
 				<smartForm:GroupElement>
 					<smartField:SmartField value="{priority}" />
 				</smartForm:GroupElement>
+
 				</smartForm:Group>
 
 				<!-- dates group  -->

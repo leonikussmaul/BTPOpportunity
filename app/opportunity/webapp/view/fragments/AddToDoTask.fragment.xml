@@ -14,7 +14,7 @@
 				</contentRight>
 			</Bar>
 		</customHeader>
-		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}" id="actionTaskInput"  /> -->
+		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}"  /> -->
 		
 
 		<form:SimpleForm editable="true"
@@ -23,11 +23,22 @@
 							<Label text="Account" required="true"/>
 							<!-- <Input value="{AddTaskModel>/account}" id="accountInput" placeholder="Which customer is the task related to?" /> -->
 
+							<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox"
+							 items="{
+                                    path: '/opportunityHeader',
+                                   sorter:  {
+                                                path: 'account',
+                                                descending: true
+                                            }
+                                    }">
+									<core:ListItem key="{opportunityID}" text="{account}" additionalText="{opportunityID}"/>
+							</ComboBox>
+
 							<Label text="Title" required="true"/>
-							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInput" placeholder="What's To Do?" />
+							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="What's To Do?" />
 
 							<Label text="Task" required="true"/>
-							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInput" growing="true" placeholder="Give a short description"/>
+							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" growing="true" placeholder="Give a short description"/>
 
 							<Label text="Owner" />
 							<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}">
@@ -67,7 +78,7 @@
 							</ComboBox>
 
 							<Label text="Due Date"/>
-							<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDate"  />
+							<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDateTask"  />
 
 							<Label text="Priority" />
 							<ComboBox selectedKey="{AddTaskModel>/actionPriority}" placeholder="How urgent is it?">

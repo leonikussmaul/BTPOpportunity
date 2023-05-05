@@ -1,85 +1,225 @@
-<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
-        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
-        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
-    </edmx:Reference>
-    <edmx:DataServices>
-        <Schema Namespace="OpportunityService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-            <EntityContainer Name="EntityContainer">
-                <EntitySet Name="opportunityHeader" EntityType="OpportunityService.opportunityHeader">
-                    <NavigationPropertyBinding Path="notes" Target="opportunityNotes"/>
-                </EntitySet>
-                <EntitySet Name="opportunityContacts" EntityType="OpportunityService.opportunityContacts">
-                    <NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
-                </EntitySet>
-                <EntitySet Name="opportunityNotes" EntityType="OpportunityService.opportunityNotes">
-                    <NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
-                </EntitySet>
-                <EntitySet Name="opportunityNextSteps" EntityType="OpportunityService.opportunityNextSteps">
-                    <NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
-                </EntitySet>
-            </EntityContainer>
-            <EntityType Name="opportunityHeader">
-                <Key>
-                    <PropertyRef Name="opportunityID"/>
-                </Key>
-                <Property Name="opportunityID" Type="Edm.Int32" Nullable="false"/>
-                <Property Name="servicePlay" Type="Edm.String" MaxLength="10"/>
-                <Property Name="source" Type="Edm.String" MaxLength="20"/>
-                <Property Name="clientContactPerson" Type="Edm.String" MaxLength="255"/>
-                <Property Name="ssa" Type="Edm.String" MaxLength="255"/>
-                <Property Name="account" Type="Edm.String" MaxLength="255"/>
-                <Property Name="marketUnit" Type="Edm.String" MaxLength="255"/>
-                <Property Name="topic" Type="Edm.String" MaxLength="255"/>
-                <Property Name="status" Type="Edm.String" MaxLength="50"/>
-                <Property Name="primaryContact" Type="Edm.String" MaxLength="255"/>
-                <Property Name="opportunityDate" Type="Edm.Date"/>
-                <Property Name="opportunityCreatedQuarter" Type="Edm.String" MaxLength="2"/>
-                <Property Name="opportunityClosedQuarter" Type="Edm.String" MaxLength="2"/>
-                <Property Name="opportunityValue" Type="Edm.Int32"/>
-                <Property Name="opportunityInCRM" Type="Edm.String" MaxLength="3"/>
-                <NavigationProperty Name="notes" Type="Collection(OpportunityService.opportunityNotes)" Partner="opptID">
-                    <OnDelete Action="Cascade"/>
-                </NavigationProperty>
-            </EntityType>
-            <EntityType Name="opportunityContacts">
-                <Key>
-                    <PropertyRef Name="ID"/>
-                </Key>
-                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-                <NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader">
-                    <ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
-                </NavigationProperty>
-                <Property Name="opptID_opportunityID" Type="Edm.Int32"/>
-                <Property Name="contact" Type="Edm.String" MaxLength="255"/>
-            </EntityType>
-            <EntityType Name="opportunityNotes">
-                <Key>
-                    <PropertyRef Name="ID"/>
-                </Key>
-                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-                <NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader" Partner="notes">
-                    <ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
-                </NavigationProperty>
-                <Property Name="opptID_opportunityID" Type="Edm.Int32"/>
-                <Property Name="date" Type="Edm.Date"/>
-                <Property Name="text" Type="Edm.String" MaxLength="800"/>
-            </EntityType>
-            <EntityType Name="opportunityNextSteps">
-                <Key>
-                    <PropertyRef Name="ID"/>
-                </Key>
-                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-                <NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader">
-                    <ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
-                </NavigationProperty>
-                <Property Name="opptID_opportunityID" Type="Edm.Int32"/>
-                <Property Name="date" Type="Edm.Date"/>
-                <Property Name="text" Type="Edm.String" MaxLength="800"/>
-            </EntityType>
-        </Schema>
-    </edmx:DataServices>
+
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+</edmx:Reference>
+<edmx:DataServices>
+<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="OpportunityService">
+<EntityContainer Name="EntityContainer">
+<EntitySet Name="opportunityHeader" EntityType="OpportunityService.opportunityHeader">
+<NavigationPropertyBinding Path="actionItems" Target="opportunityActionItems"/>
+<NavigationPropertyBinding Path="topics" Target="opportunityTopics"/>
+<NavigationPropertyBinding Path="deliverables" Target="opportunityDeliverables"/>
+</EntitySet>
+<EntitySet Name="opportunityTopics" EntityType="OpportunityService.opportunityTopics">
+<NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
+</EntitySet>
+<EntitySet Name="opportunityTopicsVH" EntityType="OpportunityService.opportunityTopicsVH"/>
+<EntitySet Name="opportunityActionItems" EntityType="OpportunityService.opportunityActionItems">
+<NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
+</EntitySet>
+<EntitySet Name="opportunityDeliverables" EntityType="OpportunityService.opportunityDeliverables">
+<NavigationPropertyBinding Path="opptID" Target="opportunityHeader"/>
+</EntitySet>
+<EntitySet Name="opportunityDeliverablesVH" EntityType="OpportunityService.opportunityDeliverablesVH"/>
+<EntitySet Name="opportunityPrimaryContactVH" EntityType="OpportunityService.opportunityPrimaryContactVH"/>
+<EntitySet Name="opportunityQuarterVH" EntityType="OpportunityService.opportunityQuarterVH"/>
+<EntitySet Name="opportunityStatusVH" EntityType="OpportunityService.opportunityStatusVH"/>
+<EntitySet Name="opportunityMarketUnitVH" EntityType="OpportunityService.opportunityMarketUnitVH"/>
+</EntityContainer>
+<EntityType Name="opportunityHeader">
+<Key>
+<PropertyRef Name="opportunityID"/>
+</Key>
+<Property Name="opportunityID" Type="Edm.Int32" Nullable="false" />
+<Property Name="source" Type="Edm.String" MaxLength="20"/>
+<Property Name="priority" Type="Edm.String" MaxLength="20"/>
+<Property Name="clientContactPerson" Type="Edm.String" MaxLength="255"/>
+<Property Name="ssa" Type="Edm.String" MaxLength="255"/>
+<Property Name="account" Type="Edm.String" MaxLength="255" />
+<Property Name="marketUnit" Type="Edm.String" MaxLength="255"/>
+<Property Name="topic" Type="Edm.String" MaxLength="255"/>
+<Property Name="status" Type="Edm.String" MaxLength="50"/>
+<Property Name="primaryContact" Type="Edm.String" MaxLength="255"/>
+<Property Name="opportunityStartDate" Type="Edm.Date"/>
+<Property Name="opportunityDueDate" Type="Edm.Date"/>
+<Property Name="progress" Type="Edm.Int32"/>
+<Property Name="isFavorite" Type="Edm.Boolean"/>
+<Property Name="opportunityCreatedQuarter" Type="Edm.String" MaxLength="2"/>
+<Property Name="opportunityClosedQuarter" Type="Edm.String" MaxLength="2"/>
+<Property Name="opportunityValue" Type="Edm.Int32"/>
+<Property Name="opportunityInCRM" Type="Edm.String" MaxLength="3"/>
+<Property Name="noteText" Type="Edm.String" MaxLength="800"/>
+<Property Name="noteDate" Type="Edm.Date"/>
+<NavigationProperty Name="actionItems" Type="Collection(OpportunityService.opportunityActionItems)" Partner="opptID">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+<NavigationProperty Name="topics" Type="Collection(OpportunityService.opportunityTopics)" Partner="opptID">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+<NavigationProperty Name="deliverables" Type="Collection(OpportunityService.opportunityDeliverables)" Partner="opptID">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+</EntityType>
+<EntityType Name="opportunityTopics">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader" Partner="topics">
+<ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
+</NavigationProperty>
+<Property Name="opptID_opportunityID" Type="Edm.Int32"/>
+<Property Name="topic" Type="Edm.String" MaxLength="255"/>
+</EntityType>
+<EntityType Name="opportunityTopicsVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="topic" Type="Edm.String" MaxLength="255"/>
+</EntityType>
+<EntityType Name="opportunityActionItems">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader" Partner="actionItems">
+<ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
+</NavigationProperty>
+<Property Name="opptID_opportunityID" Type="Edm.Int32"/>
+<Property Name="actionDueDate" Type="Edm.Date"/>
+<Property Name="actionTitle" Type="Edm.String" MaxLength="255"/>
+<Property Name="actionTask" Type="Edm.String" MaxLength="800"/>
+<Property Name="actionOwner" Type="Edm.String" MaxLength="20"/>
+<Property Name="actionProgress" Type="Edm.Int32"/>
+<Property Name="actionTopic" Type="Edm.String" MaxLength="255"/>
+<Property Name="actionPriority" Type="Edm.String" MaxLength="10"/>
+</EntityType>
+<EntityType Name="opportunityDeliverables">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<NavigationProperty Name="opptID" Type="OpportunityService.opportunityHeader" Partner="deliverables">
+<ReferentialConstraint Property="opptID_opportunityID" ReferencedProperty="opportunityID"/>
+</NavigationProperty>
+<Property Name="opptID_opportunityID" Type="Edm.Int32"/>
+<Property Name="deliverable" Type="Edm.String" MaxLength="255"/>
+<Property Name="deliverableDate" Type="Edm.Date"/>
+</EntityType>
+<EntityType Name="opportunityDeliverablesVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="deliverable" Type="Edm.String" MaxLength="255"/>
+<Property Name="deliverableDate" Type="Edm.Date"/>
+</EntityType>
+<EntityType Name="opportunityPrimaryContactVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="primaryContact" Type="Edm.String" MaxLength="255"/>
+</EntityType>
+<EntityType Name="opportunityQuarterVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="opportunityQuarter" Type="Edm.String" MaxLength="10"/>
+<Property Name="opportunityYear" Type="Edm.Int32"/>
+</EntityType>
+<EntityType Name="opportunityStatusVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="status" Type="Edm.String" MaxLength="20"/>
+</EntityType>
+<EntityType Name="opportunityMarketUnitVH">
+<Key>
+<PropertyRef Name="ID"/>
+</Key>
+<Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+<Property Name="marketUnit" Type="Edm.String" MaxLength="15"/>
+</EntityType>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityID">
+<Annotation Term="Common.Label" String="Opportunity ID"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/source">
+<Annotation Term="Common.Label" String="Source"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/priority">
+<Annotation Term="Common.Label" String="Priority"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/clientContactPerson">
+<Annotation Term="Common.Label" String="Client Contact"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/ssa">
+<Annotation Term="Common.Label" String="SSA"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/account">
+<Annotation Term="Common.Label" String="Account"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/marketUnit">
+<Annotation Term="Common.Label" String="Market Unit"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/topic">
+<Annotation Term="Common.Label" String="Topic"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/status">
+<Annotation Term="Common.Label" String="Status"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/primaryContact">
+<Annotation Term="Common.Label" String="Owner"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityStartDate">
+<Annotation Term="Common.Label" String="Start Date"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityDueDate">
+<Annotation Term="Common.Label" String="Due Date"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/progress">
+<Annotation Term="Common.Label" String="Progress"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/isFavorite">
+<Annotation Term="Common.Label" String="Favorite"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityCreatedQuarter">
+<Annotation Term="Common.Label" String="Q. Created"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityClosedQuarter">
+<Annotation Term="Common.Label" String="Q. Closed"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityValue">
+<Annotation Term="Common.Label" String="Value"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/opportunityInCRM">
+<Annotation Term="Common.Label" String="Value in CRM"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/noteText">
+<Annotation Term="Common.Label" String="Note Text"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityHeader/noteDate">
+<Annotation Term="Common.Label" String="Note Date"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityActionItems/actionDueDate">
+<Annotation Term="Common.Label" String="Due Date"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityActionItems/actionTask">
+<Annotation Term="Common.Label" String="Task"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityActionItems/actionOwner">
+<Annotation Term="Common.Label" String="Owner"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityActionItems/actionProgress">
+<Annotation Term="Common.Label" String="Progress"/>
+</Annotations>
+<Annotations Target="OpportunityService.opportunityActionItems/actionTopic">
+<Annotation Term="Common.Label" String="Topic"/>
+</Annotations>
+</Schema>
+</edmx:DataServices>
 </edmx:Edmx>

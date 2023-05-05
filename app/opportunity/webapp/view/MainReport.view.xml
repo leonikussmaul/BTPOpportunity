@@ -24,13 +24,16 @@
                 <f:heading>
                     <Title text="{i18n>title}" id="headerTitle" />
                 </f:heading>
+                
             </f:DynamicPageTitle>
+            
         </f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="true">
              <layout:HorizontalLayout  class="sapUiSmallMarginBottom">
               <Title
 		titleStyle="H4" text="Hi Sarah, here is today's Demand Generation at a Glance. " class="sapUiSmallMarginBottom"/>
+        
             </layout:HorizontalLayout>
                 <f:content>
                     
@@ -139,22 +142,27 @@
 						</smartFilterBar:ControlConfiguration>
 
                           <smartFilterBar:ControlConfiguration
-							key="opportunityCreatedQuarter"
-							index="5"
-							label="Q. Created"
-							visibleInAdvancedArea="false">
+							key="opportunityClosedQuarter"
+							index="4"
+							label="Q. Closed"
+							visibleInAdvancedArea="true">
 							<smartFilterBar:customControl>
 								<MultiComboBox
-									id="quarterFilter"
-									customData:hasValue="false"
+									id="opportunityQuarterClosedFilter"
                                     showSelectAll="true"
                                     items="{
-                                    path: '/opportunityQuarterVH',
-                                    sorter: {
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
                                                 path: 'opportunityYear',
                                                 descending: true,
                                                 group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
                                             }
+                                        ]
                                     }">
 									<core:Item key="opportunityQuarter" text="{opportunityQuarter}"/>
 								</MultiComboBox>
@@ -162,50 +170,50 @@
 						</smartFilterBar:ControlConfiguration>
 
                          <smartFilterBar:ControlConfiguration
-							key="opportunityClosedQuarter"
-							index="4"
-							label="Q. Closed"
-							visibleInAdvancedArea="true">
+							key="opportunityCreatedQuarter"
+							index="5"
+							label="Q. Created"
+							visibleInAdvancedArea="false">
 							<smartFilterBar:customControl>
 								<MultiComboBox
-									id="quarterClosedFilter"
-									customData:hasValue="false"
+									id="opportunityCreatedFilter"
                                     showSelectAll="true"
                                     items="{
-                                    path: '/opportunityQuarterVH',
-                                    sorter: {
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
                                                 path: 'opportunityYear',
                                                 descending: true,
                                                 group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
                                             }
+                                        ]
                                     }">
 									<core:Item key="opportunityQuarter" text="{opportunityQuarter}"/>
 								</MultiComboBox>
 							</smartFilterBar:customControl>
 						</smartFilterBar:ControlConfiguration>
 
-                         <!-- <smartFilterBar:ControlConfiguration
+                         <smartFilterBar:ControlConfiguration
 							key="priority"
 							index="5"
 							label="Priority"
 							visibleInAdvancedArea="true">
 							<smartFilterBar:customControl>
 								<MultiComboBox
-									id="priorityFilter"
-									customData:hasValue="false"
-                                    showSelectAll="true"
-                                    items="{
-                                    path: '/opportunityQuarterVH',
-                                    sorter: {
-                                                path: 'opportunityYear',
-                                                descending: true,
-                                                group: true
-                                            }
-                                    }">
-									<core:Item key="opportunityQuarter" text="{opportunityQuarter}"/>
+									id="priorityFilterID"
+                                    showSelectAll="true" selectionChange="onChangePrioritySelect"
+                                    >
+									<core:Item key="{priority}" text="Low" />
+                                    <core:Item key="{priority}" text="Medium"/>
+                                    <core:Item key="{priority}" text="High"/>
 								</MultiComboBox>
 							</smartFilterBar:customControl>
-						</smartFilterBar:ControlConfiguration> -->
+						</smartFilterBar:ControlConfiguration>
+
 
                         <smartFilterBar:ControlConfiguration
 							key="opportunityID"
@@ -217,7 +225,7 @@
 
                         <smartFilterBar:ControlConfiguration
 							key="opportunityInCRM"
-							label="Opportunity In CRM"
+							label="In CRM"
 							visibleInAdvancedArea="true">
 							<smartFilterBar:customControl>
 								<Switch

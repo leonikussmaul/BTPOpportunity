@@ -154,7 +154,8 @@ sap.ui.define([], function () {
 
     progressPercentage: function (sValue) {
 
-      return sValue + '%';
+      if(sValue) return sValue + '%';
+      else return; 
     },
 
     progressStatus: function (sValue) {
@@ -190,7 +191,12 @@ sap.ui.define([], function () {
       else return false;
     },
 
-    toggleButtonEnabled: function (aItems, oToggle) {
+    toggleButtonEnabled: function (aItems, oToggle, editMode) {
+
+      if(editMode){
+        return true;
+      }else{
+
       var isMatch = aItems.some(oItem => {
         if(oItem.topic){
           return oItem.topic.toUpperCase() === oToggle.toUpperCase();
@@ -200,6 +206,7 @@ sap.ui.define([], function () {
       });
       if (isMatch) return true;
       else return false;
+    }
     },
 
     priortityButton: function(sPriority){

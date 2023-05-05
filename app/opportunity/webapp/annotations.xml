@@ -1,0 +1,96 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Aggregation.V1.xml">
+        <edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml">
+        <edmx:Include Alias="Auth" Namespace="Org.OData.Authorization.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2">
+        <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="$metadata">
+        <edmx:Include Namespace="OpportunityService" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sap.sai.workbench_annotations_anno_.v1">
+           
+
+        <!-- <Annotations Target="OpportunityService.opportunityMarketUnitVH/marketUnit">
+    <Annotation Term="Common.Text" Path="marketUnit">
+        <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+    </Annotation>
+    <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+    <Annotation Term="Common.ValueList">
+        <Record>
+            <PropertyValue Property="CollectionPath" String="opportunityMarketUnitVH"/>
+            <PropertyValue Property="Parameters">
+                <Collection>
+                    <Record Type="Common.ValueListParameterInOut">
+                        <PropertyValue Property="LocalDataProperty" PropertyPath="marketUnit"/>
+                        <PropertyValue Property="ValueListProperty" String="marketUnit"/>
+                    </Record>
+                    <Record Type="Common.ValueListParameterOut">
+                        <PropertyValue Property="LocalDataProperty" PropertyPath="marketUnit"/>
+                        <PropertyValue Property="ValueListProperty" String="marketUnit"/>
+                    </Record>
+                </Collection>
+            </PropertyValue>
+        </Record>
+    </Annotation>
+</Annotations> -->
+
+	<Annotations Target="OpportunityService.opportunityMarketUnitVH/marketUnit"
+				xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+					<Record>
+						<PropertyValue Property="Label" String="marketUnit" />
+						<PropertyValue Property="CollectionPath" String="opportunityMarketUnitVH" />
+						<PropertyValue Property="SearchSupported" Bool="true" />
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty"
+										PropertyPath="marketUnit" />
+									<PropertyValue Property="ValueListProperty"
+										String="marketUnit" />
+								</Record>
+								<Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty"
+										String="marketUnit" />
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+           
+
+
+           
+           
+           
+
+           
+
+          
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

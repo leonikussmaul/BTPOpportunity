@@ -1,0 +1,32 @@
+<mvc:View controllerName="opportunity.opportunity.controller.ObjectPage"
+	xmlns:u="sap.uxap"
+	xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:t="sap.ui.table"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:suite="sap.suite.ui.commons"
+	xmlns:rte="sap.ui.richtexteditor"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:tnt="sap.tnt"
+	xmlns:dnd="sap.ui.core.dnd"
+	xmlns:dnd-grid="sap.f.dnd"
+	xmlns:commons="sap.suite.ui.commons"
+>
+	<Page id="TaskDetail" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
+		<content>
+		
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer />
+				<Button id="Cancel" text="{i18n>cancel}" press="onCancelObjectPress" type="Reject" visible="{editModel>/editMode}"/>
+				<Button id="EditBtn" text="{i18n>edit}" press="onEditObjectPress" type="Emphasized" visible="{= !${editModel>/editMode}}"/>
+				<Button id="SaveBtn" text="{i18n>save}" press="onSaveObjectPress" type="Success" visible="{editModel>/editMode}" />
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

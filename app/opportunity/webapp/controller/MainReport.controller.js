@@ -459,6 +459,7 @@ sap.ui.define([
                 this.addFiltersForSelectedItems(oEvent, "status");
                 this.addFiltersForSelectedItems(oEvent, "opportunityCreatedQuarter");
                 this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
+                this.addFiltersForSelectedItems(oEvent, "priority");
               
                 var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 var bSwitch = oSwitch ? "Yes" : "No";
@@ -605,8 +606,10 @@ sap.ui.define([
 
            
             onDeleteTopic: function(){
+
+                var that = this; 
                 var oModel = this.getView().getModel();
-                var sPath = "/opportunityDeliverables(97b6f518-1f80-4bd5-a4b5-0b8c9f0c5598)"
+                var sPath = "/opportunityQuartersVH(842e5db9-2562-48aa-8bc0-211ef201945f)"
 
                 oModel.remove(sPath, {
                     success: function () {
@@ -616,6 +619,24 @@ sap.ui.define([
                         sap.m.MessageToast.show("Failed to delete item.");
                     }
                 });
+
+                var oPayload = {
+                    opportunityQuarter: "Q3 / 24",
+                    opportunityYear: 2024
+                }
+                // that.getView().setBusy(true);
+                // var oModel = that.getView().getModel();
+                // oModel.create("/opportunityQuartersVH", oPayload, {
+                //     success: function (oData, response) {
+                //         MessageToast.show("New topic posted!");
+                       
+                //         that.getView().setBusy(false);
+                //     },
+                //     error: function (oError) {
+                //         that.getView().setBusy(false);
+                //         MessageBox.error("Topic could not be posted. Please check your input.");
+                //     }
+                // });
             },
 
              onReadTopics: function () {
@@ -685,6 +706,7 @@ sap.ui.define([
                 }
             },
 
+          
 
 
 

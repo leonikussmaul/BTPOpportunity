@@ -16,8 +16,8 @@ entity opportunityHeader {
         opportunityDueDate        : Date;
         progress                  : Integer;
         isFavorite                : Boolean;
-        opportunityCreatedQuarter : String(2);
-        opportunityClosedQuarter  : String(2);
+        opportunityCreatedQuarter : String(10);
+        opportunityClosedQuarter  : String(10);
         opportunityValue          : Integer;
         opportunityInCRM          : String(3);
         noteText                  : String(800);
@@ -35,12 +35,14 @@ entity opportunityActionItems {
     key ID              : UUID;
         opptID          : Association to opportunityHeader;
         actionDueDate   : Date;
+        actionCustomer     : String(255);
         actionTitle     : String(255);
         actionTask      : String(800);
         actionOwner     : String(20);
         actionProgress  : Integer;
         actionTopic     : String(255);
         actionPriority  : String(10);
+        actionPriorityNumber: Integer; 
 };
 
 @cds.autoexpose
@@ -78,7 +80,7 @@ entity opportunityPrimaryContactVH {
 };
 
 @cds.autoexpose
-entity opportunityQuarterVH {
+entity opportunityQuartersVH {
     key ID     : UUID;
         opportunityQuarter  : String(10);
         opportunityYear  : Integer;
@@ -94,6 +96,12 @@ entity opportunityStatusVH {
 entity opportunityMarketUnitVH {
     key ID     : UUID;
         marketUnit  : String(15);
+};
+
+@cds.autoexpose
+entity opportunityPriorityVH {
+    key ID     : UUID;
+        priority  : String(10);
 };
 
 

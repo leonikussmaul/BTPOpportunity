@@ -11,8 +11,10 @@ service OpportunityService {
     entity opportunityDeliverables as projection on opportunities.opportunityDeliverables;
     entity opportunityDeliverablesVH as projection on opportunities.opportunityDeliverablesVH;
     entity opportunityPrimaryContactVH as projection on opportunities.opportunityPrimaryContactVH;
-    entity opportunityQuarterVH as projection on opportunities.opportunityQuarterVH;
+    entity opportunityQuartersVH as projection on opportunities.opportunityQuartersVH;
     entity opportunityStatusVH as projection on opportunities.opportunityStatusVH;
     entity opportunityMarketUnitVH as projection on opportunities.opportunityMarketUnitVH;
+    entity opportunityPriorityVH as projection on opportunities.opportunityPriorityVH;
+
 
 }

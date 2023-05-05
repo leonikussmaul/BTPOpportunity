@@ -3,12 +3,14 @@ using OpportunityService as service from '../../srv/opportunities';
 
 annotate service.opportunityHeader with {
     account @Common.Label : 'Account'
+            @Common.FieldControl : #Mandatory
 };
 annotate service.opportunityHeader with {
     clientContactPerson @Common.Label : 'Client Contact'
 };
 annotate service.opportunityHeader with {
     marketUnit @Common.Label : 'Market Unit'
+                @Common.FieldControl : #Mandatory
 };
 annotate service.opportunityHeader with {
     opportunityClosedQuarter @Common.Label : 'Q. Closed'
@@ -79,4 +81,10 @@ annotate service.opportunityActionItems with {
 };
 annotate service.opportunityActionItems with {
     actionDueDate @Common.Label : 'Due Date'
+};
+annotate service.opportunityActionItems with {
+    actionPriority @Common.Label : 'Priority'
+};
+annotate service.opportunityActionItems with {
+    actionCustomer @Common.Label : 'Account'
 };

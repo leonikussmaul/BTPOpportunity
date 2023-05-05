@@ -13,6 +13,7 @@
 			</m:Menu>
 		</menu> -->
 
+
         <additionalContent>
             <!-- <Button press="onOpen_CatExpDialog" icon="sap-icon://display" tooltip="{i18n>goalCatalogExplorer}"
                 visible="{= ${UISwitch>/catalogExplorer} ? true : false}" />
@@ -27,7 +28,8 @@
                     </Menu>
                 </menu>
             </MenuButton> -->
-           
+
+            <m:Button press="onNavToTasksPage" text="Go to Tasks" id="flipButton" />
             <m:Button press="onOpenServiceCatalog" icon="sap-icon://education" tooltip="Open Service Catalog"/>            
             <m:Button press="onOpenAnalyticsStore" icon="sap-icon://business-objects-experience" tooltip="Open Analytics Store"/>
             <m:Button press="onOpenSharePoint" icon="sap-icon://idea-wall" tooltip="Open SharePoint"/>
@@ -42,3 +44,6 @@
 		
 	</ShellBar>
 </core:FragmentDefinition>
+
+
+

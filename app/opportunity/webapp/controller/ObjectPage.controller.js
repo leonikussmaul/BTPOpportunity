@@ -57,6 +57,15 @@ sap.ui.define([
 
             },
 
+            onPress: function(oEvent){
+                var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("TaskDetail", {
+                    opportunityID: selectedItem.opportunityID
+                });
+
+            },
+
             onSetLayout: function(){
 
                 var oLayout1 = this.getView().byId("TopicFiltersObject");
@@ -217,6 +226,74 @@ sap.ui.define([
 
             },
 
+            onPressToggle1: function(oEvent){
+                var bPressed = oEvent.getSource().getPressed(); 
+                var sTopic = oEvent.getSource().getText(); 
+                var oContext = this.getView().getBindingContext();
+                var sPath = oContext.getPath();
+                var oModel = this.getView().getModel(); 
+
+                var oNewTopic = {
+                    topic: sTopic,
+                    opptID_opportunityID: this.getView().getBindingContext().getObject().opportunityID
+                };
+
+                if(bPressed){
+                    var sNewPath = sPath + "/topics";
+                    oModel.create(sNewPath, oNewTopic, {
+                        success: function(oData, response) {
+                            MessageToast.show("New Topic added!");
+                        },
+                        error: function(oError) {
+                            sap.m.MessageBox.error("Topic could not be added, try again.");
+                        }
+                    });
+                }else{
+        //             var aTopics = oModel.getProperty(sPath + "/topics");
+                   
+        // var sTopicPath = sPath + "/topics(ID='" + oNewTopic.opptID_opportunityID + "')";
+        // oModel.remove(sTopicPath, {
+        //     success: function(oData, response) {
+        //         MessageToast.show("Topic removed!");
+        //     },
+        //     error: function(oError) {
+        //         sap.m.MessageBox.error("Topic could not be removed, try again.");
+        //     }
+        // });
+
+                }
+             
+            },
+
+            onPressToggle2: function(oEvent){
+                var bPressed = oEvent.getSource().getPressed(); 
+                var sDeliverable = oEvent.getSource().getText(); 
+                var oContext = this.getView().getBindingContext();
+                var sPath = oContext.getPath();
+                var oModel = this.getView().getModel(); 
+
+                var oNewDeliverable = {
+                    deliverable: sDeliverable,
+                    opptID_opportunityID: this.getView().getBindingContext().getObject().opportunityID
+                };
+
+                if(bPressed){
+                    var sNewPath = sPath + "/deliverables";
+                    oModel.create(sNewPath, oNewDeliverable, {
+                        success: function(oData, response) {
+                            MessageToast.show("New Deliverable added!");
+                        },
+                        error: function(oError) {
+                            sap.m.MessageBox.error("Deliverable could not be added, try again.");
+                        }
+                    });
+                }else{
+
+                }
+             
+            },
+            
+
             onCRMCheckboxSelect: function (oEvent) {
                 var oCheckBox = oEvent.getSource();
                 var oText = this.byId("opportunityInCRMText");
@@ -246,6 +323,26 @@ sap.ui.define([
             onSegmentPressed: function (oEvent) {
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", true);
+
+                var oModel = this.getView().getModel(); 
+
+                var sKey = oEvent.getSource().getSelectedKey();
+                var oContext = this.getView().getBindingContext();
+
+                var sPath = oContext.getPath();
+                oModel.setProperty(sPath + "/status", sKey);
+
+            },
+
+            onProgressSliderChange: function(oEvent){
+
+                var oModel = this.getView().getModel(); 
+
+                var oValue = oEvent.getParameter("value");
+                var oContext = this.getView().getBindingContext();
+                
+                var sPath = oContext.getPath();
+                oModel.setProperty(sPath + "/progress", oValue);
 
             },
 
@@ -284,17 +381,26 @@ sap.ui.define([
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
                 var sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
+                var sCustomer = this.getView().getBindingContext().getObject().account; 
                 var sDueDate;
                 if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+
+                var sPriorityNumber; 
+                if(oData.actionPriority === "High") sPriorityNumber = 1; 
+                else if (oData.actionPriority === "Medium") sPriorityNumber = 2; 
+                else if (oData.actionPriority === "Low") sPriorityNumber = 3; 
               
                 var oNewTask = {
                   actionDueDate: sDueDate,
+                  actionCustomer: sCustomer,
                   actionOwner: oData.actionOwner,
                   actionProgress: oData.actionProgress,
                   actionTopic: oData.actionTopic,
                   actionTask: oData.actionTask,
                   actionTitle: oData.actionTitle,
-                  actionPriority: oData.actionPriority
+                  actionPriority: oData.actionPriority,
+                  actionPriorityNumber: sPriorityNumber,
+                  opptID_opportunityID: sOpportunityID
                 };
               
                 var sPath = "/opportunityHeader(" + sOpportunityID + "')/actionItems";
@@ -477,6 +583,61 @@ sap.ui.define([
                 }
             });
         } else MessageToast.show("Enter a new deliverable first");
+    },
+
+       /* ------------------------------------------------------------------------------------------------------------
+            FAVORITE
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+
+    onFavoriteObjectPress: function (oEvent) {
+        var that = this; 
+        var oView = this.getView(); 
+        var oBinding = oView.getBindingContext();
+        var sPath = oBinding.getPath();
+        var oContext = oView.getBindingContext().getObject(); 
+
+        var isFavorite = oContext.isFavorite;
+
+        if (isFavorite === true) {
+            isFavorite = false;
+            // removeFavourite
+            that.postFavouriteCustomer(isFavorite, oContext, sPath);
+        } else {
+            isFavorite = true;
+            // addFavourite
+            that.postFavouriteCustomer(isFavorite, oContext, sPath);
+        }
+    },
+
+    postFavouriteCustomer: function (isFavorite, oContext, sPath) {
+        //post isFavourite 
+        var that = this; 
+        if (isFavorite === true) {
+            oContext.isFavorite = true; 
+        } else {
+            oContext.isFavorite = false; 
+        }
+
+        var oPayload = {"isFavorite": oContext.isFavorite};
+
+        var oModel = this.getView().getModel(); 
+        oModel.update(sPath, oPayload, {
+            success: function() {
+            var sMessage = "";
+            if (isFavorite === true) {
+                sMessage = "'" + oContext.account + "' added to favorites";
+            } else {
+                sMessage = "'" + oContext.account + "' removed from favorites";
+            }
+            MessageToast.show(sMessage);
+            },
+            error: function(oError) {
+              MessageToast.show(oError.message);
+            }
+          });
+
     },
 
 

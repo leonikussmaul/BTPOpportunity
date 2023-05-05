@@ -14,6 +14,7 @@
 	xmlns:tnt="sap.tnt"
 	xmlns:dnd="sap.ui.core.dnd"
 	xmlns:dnd-grid="sap.f.dnd"
+	xmlns:commons="sap.suite.ui.commons"
 >
 	<Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
 		<content>
@@ -45,9 +46,13 @@
 			}" />
 								</u:expandedContent>
 								<u:actions>
-									<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" />
-									<u:ObjectPageHeaderActionButton icon="sap-icon://unfavorite" text="Favorite Item" tooltip="Favorite Item" press="onFavoriteObjectPress"/>
-									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Item" tooltip="Delete Item" press="onDeleteObjectPress" />
+									<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" class="sapUiSmallMarginEnd"/>
+									
+									<core:Icon press="onFavoriteObjectPress" tooltip="Favorite Item"
+                                                                src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                                size="1.1rem"
+                                                                color="#427cac"/>
+									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Item" tooltip="Delete Item" press="onDeleteObjectPress"  />
 								</u:actions>
 							</u:ObjectPageDynamicHeaderTitle>
 						</u:headerTitle>
@@ -61,7 +66,7 @@
 									<VBox>
 										<ObjectStatus state="Information" text="Status" icon="sap-icon://message-information" class="sapUiSmallMarginBegin"/>
 										<HBox alignItems="Center" justifyContent="Center" width="100%" >
-											<SegmentedButton selectionChange="onSegmentPressed" id="segmentedStatusObject" width="480px" class="sapUiSmallMarginEnd sapUiSmallMarginBegin" selectedKey="{status}">
+											<SegmentedButton  selectionChange="onSegmentPressed" id="segmentedStatusObject" width="480px" class="sapUiSmallMarginEnd sapUiSmallMarginBegin" selectedKey="{status}">
 												<items>
 													<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity" />
 													<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
@@ -81,7 +86,7 @@
 									<Title text="{i18n>Value}" class="sapUiTinyMarginBottom" />
 									<ObjectNumber class="sapMObjectNumberLarge" state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}" number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"  unit="EUR" />
 								</VBox>
-								<VBox class="sapUiLargeMarginBeginEnd" width="20%" visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}">
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}">
 									<Title text="{i18n>Progress}"  />
 									<ProgressIndicator width="100%"
 								class="sapUiSmallMarginBottom"
@@ -90,13 +95,15 @@
 								showValue="true"
 								state="{path: 'progress', formatter: '.formatter.progressStatus'}" />
 								</VBox>
-								<VBox class="sapUiLargeMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>Progress}"  />
-									<Slider value="{progress}" width="100%" step="25"
+									<Slider value="{progress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
 							showAdvancedTooltip="true"
 							showHandleTooltip="false"
-							class="sapUiSmallMarginTop" />
+							class="sapUiSmallMarginTop" enableTickmarks="true" />
+
+
 								</VBox>
 							</FlexBox>
 						</u:headerContent>
@@ -121,7 +128,7 @@
 									<HBox class="sapUiSmallMarginTopBottom" >
 										<l:HorizontalLayout id="TopicFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
 											<ToggleButton text="{topic}" press="onPressToggle1" class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonEnabled'}">
+											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}">
 												<customData>
 													<core:CustomData key="ID" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
 												</customData>
@@ -141,8 +148,8 @@
 									</u:actions>
 									<HBox class="sapUiSmallMarginTopBottom">
 										<l:HorizontalLayout id="DeliverablesFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
-											<ToggleButton text="{deliverable}"  press="onPressToggle1"  class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonEnabled'}">
+											<ToggleButton text="{deliverable}"  press="onPressToggle2"  class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
+											enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}">
 												<customData>
 													<core:CustomData key="ID" value="{deliverable}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
 												</customData>
@@ -209,8 +216,10 @@
 							<f:customLayout>
 								<grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(16rem, 1fr))" gridGap="0.5rem" />
 							</f:customLayout>
-							<f:GridListItem  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
-								<VBox height="100%" justifyContent="SpaceBetween">
+
+
+							<f:GridListItem press="onPress" detailPress="onPress"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
+								<VBox height="100%" justifyContent="SpaceBetween" >
 									<layoutData>
 										<FlexItemData growFactor="1" shrinkFactor="0" />
 									</layoutData>
@@ -234,6 +243,32 @@
 										<Label text="{pageModel>actionTask}" class="sapUiSmallMarginBottom sapUiSmallMarginTop" width="100%" wrapping="true"/>
 										<Avatar src="./images/Sarah.jpeg" displayShape="Circle" customDisplaySize="2.0rem" displaySize="Custom" class="imageDisplayBlock" />
 										<Label text="{pageModel>actionOwner}" wrapping="true" />
+
+											<commons:MicroProcessFlow>
+				<commons:content>
+					<commons:MicroProcessFlowItem />
+					<commons:MicroProcessFlowItem state="Warning"/>
+					<commons:MicroProcessFlowItem state="Warning"/>
+					<commons:MicroProcessFlowItem state="Success"/>
+				</commons:content>
+			</commons:MicroProcessFlow>
+
+			<VBox>
+		<CheckBox text="Option a" selected="true" />
+		<CheckBox text="Option b" />
+		<CheckBox text="Option c" selected="true" />
+		<CheckBox text="Option d" />
+		<CheckBox text="Option e" enabled="false" />
+		<CheckBox text="Option partially selected" selected="true" partiallySelected="true" />
+		<CheckBox text="Warning" valueState="Warning" />
+		<CheckBox text="Warning disabled" valueState="Warning" enabled="false" selected="true" />
+		<CheckBox text="Error" valueState="Error" />
+		<CheckBox text="Error disabled" valueState="Error" enabled="false" selected="true" />
+		<CheckBox text="Information" valueState="Information" />
+		<CheckBox text="Information disabled" valueState="Information" enabled="false" selected="true" />
+		<CheckBox text="Checkbox with wrapping='true' and long text" wrapping="true" width="150px"/>
+	</VBox>
+
 									</VBox>
 									<OverflowToolbar design="Solid" >
 										<ObjectStatus text="{pageModel>actionPriority}" class="sapUiSmallMarginBegin"

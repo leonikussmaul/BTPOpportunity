@@ -28,7 +28,28 @@ sap.ui.define(
         onOpenAnalyticsStore: function(){
           var sUrlAnalyticsStore = 'https://eas.sap.com/astore/ui/index.html#assets';
           library.URLHelper.redirect(sUrlAnalyticsStore, true);
-        }
+        },
+
+
+        onNavToTasksPage: function(oEvent){
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          
+
+          var oBtn = oEvent.getSource();
+          var sText = oBtn.getText();
+
+          if(sText === 'Go to Tasks') {
+            oRouter.navTo("TasksReport");
+            oBtn.setText("Go to Opportunities");
+          }else {
+            oRouter.navTo("MainReport");
+            oBtn.setText("Go to Tasks");
+          }
+         
+
+      }
+
+
 
         
 
