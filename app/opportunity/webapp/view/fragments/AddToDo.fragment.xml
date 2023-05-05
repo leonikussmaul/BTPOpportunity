@@ -7,7 +7,7 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add To Do"/>
+					<Title text="Add To Do for {account}"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
@@ -27,7 +27,7 @@
 							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInput" placeholder="What's To Do?" />
 
 							<Label text="Task" required="true"/>
-							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInput" growing="true" placeholder="Give a short description"/>
+							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInput" maxLength="800" placeholder="Give a short description"/>
 
 							<Label text="Owner" />
 							<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}">

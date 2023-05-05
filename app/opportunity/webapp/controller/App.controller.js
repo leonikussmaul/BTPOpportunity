@@ -41,7 +41,7 @@ sap.ui.define(
           if(sText === 'Go to Tasks') {
             oRouter.navTo("TasksReport");
             oBtn.setText("Go to Opportunities");
-          }else {
+          }else if(sText === 'Go to Opportunities') {
             oRouter.navTo("MainReport");
             oBtn.setText("Go to Tasks");
           }

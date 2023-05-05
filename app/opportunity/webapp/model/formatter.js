@@ -228,6 +228,32 @@ sap.ui.define([], function () {
     return sIcon;
 },
 
+formatDueDate: function(sDueDate){
+
+  var sTodayDate = new Date();
+  if(sDueDate < sTodayDate) return "Error"; 
+  else if(sDueDate === sTodayDate) return "Warning"; 
+
+},
+
+
+formatIconDueDate: function(sDueDate) {
+  var dueDate = new Date(sDueDate);
+  var todayDate = new Date();
+  var oneWeek = 7 * 24 * 60 * 60 * 1000; 
+
+  if (todayDate.getTime() > dueDate.getTime() + oneWeek) {
+    return "sap-icon://alert";
+  }
+  else {
+    return ""; 
+  }
+}
+
+
+
+
+
 
 
     //priority

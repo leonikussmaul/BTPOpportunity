@@ -9,13 +9,11 @@
 	xmlns:form="sap.ui.layout.form"
 	xmlns:rte="sap.ui.richtexteditor">
 	<Dialog  id="myWizardDialog" resizable="true" draggable="true" verticalScrolling="false"
-		contentHeight="70%"
+		contentHeight="80%"
 		contentWidth="70%" >
 
 		 <customHeader>
-<Bar><contentMiddle>
-<Title text="Create Opportunity"/>
-</contentMiddle>
+<Bar>
 <contentRight>
 <Button icon="sap-icon://full-screen" press="onFullScreenButtonPress" />
 </contentRight>
@@ -23,14 +21,14 @@
 </customHeader>
 
 		<f:DynamicPage
-			stickySubheaderProvider="CreateProductWizard"
+			stickySubheaderProvider="CreateWizard"
 			toggleHeaderOnTitleClick="false"
 			class="sapUiNoContentPadding"
 			showFooter="true">
 			<f:title>
 				<f:DynamicPageTitle>
 					<f:heading>
-						<Title text="Wizard in a Dialog"/>
+						<Title text="Create New Opportunity"/>
 					</f:heading>
 				</f:DynamicPageTitle>
 			</f:title>

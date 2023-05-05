@@ -3,7 +3,7 @@
 	xmlns:core="sap.ui.core"
 	xmlns:form="sap.ui.layout.form">
 	<Dialog 
-          class="sapUiPopupWithPadding" contentWidth="30%"  resizable="true" draggable="true">
+          class="sapUiPopupWithPadding" contentWidth="35%"  resizable="true" draggable="true">
 		<customHeader>
 			<Bar>
 				<contentMiddle>
@@ -38,7 +38,8 @@
 							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="What's To Do?" />
 
 							<Label text="Task" required="true"/>
-							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" growing="true" placeholder="Give a short description"/>
+							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" placeholder="Give a short description"
+							maxLength="800"/>
 
 							<Label text="Owner" />
 							<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}">

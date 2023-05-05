@@ -136,13 +136,8 @@
                     "target": "ObjectPage"
                 },
                 {
-                    "name": "CreatePage",
-                    "pattern": "CreatePage:?query",
-                    "target": "CreatePage"
-                },
-                {
                     "name": "TasksReport",
-                    "pattern": "TasksReport:?query",
+                    "pattern": "TasksReport",
                     "target": "TasksReport"
                 },
                 {
@@ -165,13 +160,6 @@
                     "clearControlAggregation": false,
                     "viewId": "ObjectPage",
                     "viewName": "ObjectPage"
-                },
-                "CreatePage": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "CreatePage",
-                    "viewName": "CreatePage"
                 },
                 "TasksReport": {
                     "viewType": "XML",

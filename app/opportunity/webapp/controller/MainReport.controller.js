@@ -378,7 +378,7 @@ sap.ui.define([
 
                 } else {
                     oDialog.setContentWidth("70%");
-                    oDialog.setContentHeight("70%");
+                    oDialog.setContentHeight("80%");
                     oEvent.getSource().setIcon('sap-icon://full-screen');
                 }
             },
