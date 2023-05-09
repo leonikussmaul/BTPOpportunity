@@ -29,6 +29,8 @@ sap.ui.define([
                 var AddTaskModel = new JSONModel({});
                 this.getView().setModel(AddTaskModel, "AddTaskModel");
 
+               
+
             },
 
             // _onRoutePatternMatched: function (oEvent) {
@@ -169,6 +171,15 @@ sap.ui.define([
             },
 
 
+            onListItemPress: function (oEvent) {
+                var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("TaskDetail", {
+                    ID: selectedItem.ID
+                });
+            },
+
+           
 
         });
     });

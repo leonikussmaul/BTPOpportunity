@@ -18,8 +18,6 @@
            value=""
            id="deliverableInput"
            liveChange=".onDeliverableInputChange" />
-
-		   
 		<footer>
 			<Toolbar design="Auto">
 				<content>

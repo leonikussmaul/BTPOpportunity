@@ -1,48 +1,38 @@
-<core:FragmentDefinition xmlns="sap.m" 
-xmlns:core="sap.ui.core"
-xmlns:form="sap.ui.layout.form">
-
- <form:SimpleForm id="statusSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
-                                                <form:content>
-                                                    <Label text="{i18n>status}" />
-                                                    <ComboBox selectedKey="{status}" items="{
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form">
+	<form:SimpleForm id="statusSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+		<form:content>
+			<Label text="{i18n>status}" />
+			<ComboBox selectedKey="{status}" items="{
                                                 path: '/opportunityHeader'
                                             }">
-                                                        <core:Item key="{status}" text="{status}" />
-                                                    </ComboBox>
-
-                                                    <Label text="{i18n>opportunityDate}" />
-                                                    <DatePicker id="oppStartDate" value="{opportunityStartDate}" change="handleChange" />
-
-                                                     <Label text="{i18n>opportunityDate}" />
-                                                    <DatePicker id="oppDueDate" value="{opportunityDueDate}" change="handleChange" />
-
-                                                    <Label text="{i18n>opportunityValue}" />
-                                                    <Input value="{opportunityValue}" valueLiveUpdate="true" />
-
-                                                    <Label text="{i18n>opportunityCreatedQuarter}" />
-                                                    <ComboBox selectedKey="{opportunityCreatedQuarter}" items="{
+				<core:Item key="{status}" text="{status}" />
+			</ComboBox>
+			<Label text="{i18n>opportunityDate}" />
+			<DatePicker id="oppStartDate" value="{opportunityStartDate}" change="handleChange" />
+			<Label text="{i18n>opportunityDate}" />
+			<DatePicker id="oppDueDate" value="{opportunityDueDate}" change="handleChange" />
+			<Label text="{i18n>opportunityValue}" />
+			<Input value="{opportunityValue}" valueLiveUpdate="true" />
+			<Label text="{i18n>opportunityCreatedQuarter}" />
+			<ComboBox selectedKey="{opportunityCreatedQuarter}" items="{
                                                 path: '/opportunityHeader'
                                             }">
-                                                        <core:Item key="{opportunityCreatedQuarter}" text="{opportunityCreatedQuarter}" />
-                                                    </ComboBox>
-
-                                                    <Label text="{i18n>opportunityClosedQuarter}" />
-                                                    <ComboBox selectedKey="{opportunityClosedQuarter}" items="{
+				<core:Item key="{opportunityCreatedQuarter}" text="{opportunityCreatedQuarter}" />
+			</ComboBox>
+			<Label text="{i18n>opportunityClosedQuarter}" />
+			<ComboBox selectedKey="{opportunityClosedQuarter}" items="{
                                                 path: '/opportunityHeader'
                                             }">
-                                                        <core:Item key="{opportunityClosedQuarter}" text="{opportunityClosedQuarter}" />
-                                                    </ComboBox>
-
-                                                    <Label text="{i18n>opportunityInCRM}" />
-                                                    <CheckBox text="{= ${opportunityInCRM} === 'Yes' ? 'Yes' : 'No'}"
+				<core:Item key="{opportunityClosedQuarter}" text="{opportunityClosedQuarter}" />
+			</ComboBox>
+			<Label text="{i18n>opportunityInCRM}" />
+			<CheckBox text="{= ${opportunityInCRM} === 'Yes' ? 'Yes' : 'No'}"
                                                         selected="{= ${opportunityInCRM} === 'Yes'}"
                                                         id="CRMcheckbox"
                                                         select="onCRMCheckboxSelect"/>
-
-                                                
-                                                </form:content>
-                                            </form:SimpleForm>
-                                           
-
+		</form:content>
+	</form:SimpleForm>
 </core:FragmentDefinition>

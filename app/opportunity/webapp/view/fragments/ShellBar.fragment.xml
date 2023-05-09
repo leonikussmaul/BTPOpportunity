@@ -1,47 +1,28 @@
 <core:FragmentDefinition
 	xmlns:m="sap.m"
-    xmlns="sap.f"
+	xmlns="sap.f"
 	xmlns:core="sap.ui.core">
 	<ShellBar title="BTP Services"
 		secondTitle="CSS EMEA North"
 		homeIcon="https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg.adapt.svg/1493030643828.svg"
 		>
-		<!-- <menu>
-			<m:Menu>
-				<m:MenuItem text="Flight booking" icon="sap-icon://flight" />
-				<m:MenuItem text="Car rental" icon="sap-icon://car-rental" />
-			</m:Menu>
-		</menu> -->
-
-
-        <additionalContent>
-            <!-- <Button press="onOpen_CatExpDialog" icon="sap-icon://display" tooltip="{i18n>goalCatalogExplorer}"
-                visible="{= ${UISwitch>/catalogExplorer} ? true : false}" />
-            <MenuButton icon="sap-icon://download" tooltip="{i18n>downloadGoalsReport}" 
+		<!-- <menu><m:Menu><m:MenuItem text="Flight booking" icon="sap-icon://flight" /><m:MenuItem text="Car rental" icon="sap-icon://car-rental" /></m:Menu></menu> -->
+		<additionalContent>
+			<!-- <Button press="onOpen_CatExpDialog" icon="sap-icon://display" tooltip="{i18n>goalCatalogExplorer}"
+                visible="{= ${UISwitch>/catalogExplorer} ? true : false}" /><MenuButton icon="sap-icon://download" tooltip="{i18n>downloadGoalsReport}" 
                 visible="{ parts: [ {path: 'UISwitch>/downloadReport'},
                                     {path: 'UserModel>/scopes'}],
-                                    formatter: '.formatter.showDownloadButton'}" >
-                <menu>
-                    <Menu itemSelected="onMenuAction">
-                        <MenuItem text="Goals and Value Drivers report" icon="sap-icon://download" press="onDataExport_CustomerGoalValueDriverReport"/>
-                        <MenuItem text="Value Drivers report"           icon="sap-icon://download" press="onDataExport_CustomerValueDriverReport"/>
-                    </Menu>
-                </menu>
-            </MenuButton> -->
-
-            <m:Button press="onNavToTasksPage" text="Go to Tasks" id="flipButton" />
-            <m:Button press="onOpenServiceCatalog" icon="sap-icon://education" tooltip="Open Service Catalog"/>            
-            <m:Button press="onOpenAnalyticsStore" icon="sap-icon://business-objects-experience" tooltip="Open Analytics Store"/>
-            <m:Button press="onOpenSharePoint" icon="sap-icon://idea-wall" tooltip="Open SharePoint"/>
-             <m:Button press="onOpenSAPOne" icon="sap-icon://Chart-Tree-Map" tooltip="Open SAP One"/>
-            <!-- <m:Button press="onOpenFeedbackCatcher" icon="sap-icon://feedback" tooltip="{i18n>feedbackCatcher}"/> -->
-        </additionalContent>
-
-
+                                    formatter: '.formatter.showDownloadButton'}" ><menu><Menu itemSelected="onMenuAction"><MenuItem text="Goals and Value Drivers report" icon="sap-icon://download" press="onDataExport_CustomerGoalValueDriverReport"/><MenuItem text="Value Drivers report"           icon="sap-icon://download" press="onDataExport_CustomerValueDriverReport"/></Menu></menu></MenuButton> -->
+			<m:Button press="onNavToTasksPage" text="Go to Tasks" id="flipButton" />
+			<m:Button press="onOpenServiceCatalog" icon="sap-icon://education" tooltip="Open Service Catalog"/>
+			<m:Button press="onOpenAnalyticsStore" icon="sap-icon://business-objects-experience" tooltip="Open Analytics Store"/>
+			<m:Button press="onOpenSharePoint" icon="sap-icon://idea-wall" tooltip="Open SharePoint"/>
+			<m:Button press="onOpenSAPOne" icon="sap-icon://Chart-Tree-Map" tooltip="Open SAP One"/>
+			<!-- <m:Button press="onOpenFeedbackCatcher" icon="sap-icon://feedback" tooltip="{i18n>feedbackCatcher}"/> -->
+		</additionalContent>
 		<profile>
 			<m:Avatar initials="UI"/>
 		</profile>
-		
 	</ShellBar>
 </core:FragmentDefinition>
 

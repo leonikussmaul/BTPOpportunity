@@ -6,17 +6,14 @@
 	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns="sap.m"
 >
-
 	<!-- <VBox fitContainer="true"> -->
-		<smartchart:SmartChart id ="smartChartCustBussinessGoalsID" enableAutoBinding="true"
+	<smartchart:SmartChart id ="smartChartCustBussinessGoalsID" enableAutoBinding="true"
                                     entitySet="opportunityHeader" beforeRebindChart="beforeRebindChart"
                                     useVariantManagement="false"
 			                        useChartPersonalisation="true"
 			                        header="{i18n>chartLabel}" showFullScreenButton="true" selectionMode="Multi"
 			                        showChartTooltip="true" showDrillBreadcrumbs="false"
 			                        showDetailsButton="false" showDrillButtons="true"
-			                        showSemanticNavigationButton="true">
-                                </smartchart:SmartChart>
+			                        showSemanticNavigationButton="true"></smartchart:SmartChart>
 	<!-- </VBox> -->
-
 </core:FragmentDefinition>

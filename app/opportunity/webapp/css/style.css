@@ -5,3 +5,7 @@
     font-weight: bold;
     color: black;
 }
+
+.checkSubTask {
+    text-decoration: line-through!important;
+}

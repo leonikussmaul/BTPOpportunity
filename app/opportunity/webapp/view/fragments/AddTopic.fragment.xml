@@ -22,7 +22,6 @@
 			<Toolbar design="Auto">
 				<content>
 					<ToolbarSpacer />
-
 					<Button type="Accept" text="{i18n>Submit}" press="onSubmitTopic" />
 				</content>
 			</Toolbar>

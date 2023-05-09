@@ -11,15 +11,13 @@
 	<Dialog  id="myWizardDialog" resizable="true" draggable="true" verticalScrolling="false"
 		contentHeight="80%"
 		contentWidth="70%" >
-
-		 <customHeader>
-<Bar>
-<contentRight>
-<Button icon="sap-icon://full-screen" press="onFullScreenButtonPress" />
-</contentRight>
-</Bar>
-</customHeader>
-
+		<customHeader>
+			<Bar>
+				<contentRight>
+					<Button icon="sap-icon://full-screen" press="onFullScreenButtonPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
 		<f:DynamicPage
 			stickySubheaderProvider="CreateWizard"
 			toggleHeaderOnTitleClick="false"
@@ -33,24 +31,19 @@
 				</f:DynamicPageTitle>
 			</f:title>
 			<f:content>
-
-			<Wizard  complete="onCreateNewItem" id="WizardDialog" renderMode="Page" >
-				<steps>
-
-                <!-- step 1 -->
-					<WizardStep id="WizardStep1" 
+				<Wizard  complete="onCreateNewItem" id="WizardDialog" renderMode="Page" >
+					<steps>
+						<!-- step 1 -->
+						<WizardStep id="WizardStep1" 
 					title="General Information" validated="true"
 					>
-					<Title titleStyle="H5" text="Give a quick overview of the most important details." class="sapUiSmallMarginBottom"/>
-
-						<form:SimpleForm editable="true"
+							<Title titleStyle="H5" text="Give a quick overview of the most important details." class="sapUiSmallMarginBottom"/>
+							<form:SimpleForm editable="true"
 						>
-							<Label text="{i18n>account}" required="true"/>
-							<Input value="{viewModel>/account}" id="accountCreate"  placeholder="Enter the customer name"/>
-
-
-							<Label text="{i18n>marketUnit}" required="true"/>
-							<ComboBox selectedKey="{viewModel>/marketUnit}" placeholder="Select the market unit"  items="{
+								<Label text="{i18n>account}" required="true"/>
+								<Input value="{viewModel>/account}" id="accountCreate"  placeholder="Enter the customer name"/>
+								<Label text="{i18n>marketUnit}" required="true"/>
+								<ComboBox selectedKey="{viewModel>/marketUnit}" placeholder="Select the market unit"  items="{
                                     path: '/opportunityMarketUnitVH',
                                     sorter: {
                                                 path: 'marketUnit',
@@ -58,10 +51,9 @@
                                             }
                                     }">
 									<core:Item key="{marketUnit}" text="{marketUnit}"/>
-							</ComboBox>
-
-							<Label text="{i18n>mainTopic}"/>
-							<ComboBox selectedKey="{viewModel>/topic}" placeholder="What's the main topic of interest?" items="{
+								</ComboBox>
+								<Label text="{i18n>mainTopic}"/>
+								<ComboBox selectedKey="{viewModel>/topic}" placeholder="What's the main topic of interest?" items="{
                                     path: '/opportunityTopicsVH', 
                                     sorter: {
                                                 path: 'topic',
@@ -69,51 +61,38 @@
                                             }
                                     }">
 									<core:Item key="{topic}" text="{topic}"/>
-							</ComboBox>
-
-						
-							<Label text="Value (k)"/>
-							<Input value="{viewModel>/opportunityValue}" id="valueCreate" placeholder="Enter the Value in thousands" />
-							
-							<Label text="{i18n>priority}" />
-							<ComboBox selectedKey="{viewModel>/priority}" placeholder="How urgent is it?">
-								<core:Item key="High" text="High"/>
-								<core:Item key="Medium" text="Medium"/>
-								<core:Item key="Low" text="Low"/>
-							</ComboBox>
-
-							<Label text="{i18n>opportunityInCRM}"/>
-							<CheckBox text="No" selected="{viewModel>/opportunityInCRM}" id="opportunityInCRMCreate" select=".onCRMCheckboxSelect" />
-
-
-						</form:SimpleForm>
-						
-						<HBox alignItems="Center" justifyContent="Center" width="100%" >
-							<SegmentedButton id="segmentedStatus" width="480px" >
-								<items>
-									<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity"/>
-									<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
-									<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
-									<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
-								
-								</items>
-							</SegmentedButton>
-						</HBox>
-					</WizardStep>
-
-					<!-- step 2 -->
-
-					<WizardStep id="WizardStep2" 
+								</ComboBox>
+								<Label text="Value (k)"/>
+								<Input value="{viewModel>/opportunityValue}" id="valueCreate" placeholder="Enter the Value in thousands" />
+								<Label text="{i18n>priority}" />
+								<ComboBox selectedKey="{viewModel>/priority}" placeholder="How urgent is it?">
+									<core:Item key="High" text="High"/>
+									<core:Item key="Medium" text="Medium"/>
+									<core:Item key="Low" text="Low"/>
+								</ComboBox>
+								<Label text="{i18n>opportunityInCRM}"/>
+								<CheckBox text="No" selected="{viewModel>/opportunityInCRM}" id="opportunityInCRMCreate" select=".onCRMCheckboxSelect" />
+							</form:SimpleForm>
+							<HBox alignItems="Center" justifyContent="Center" width="100%" >
+								<SegmentedButton id="segmentedStatus" width="480px" >
+									<items>
+										<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity"/>
+										<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
+										<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
+										<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
+									</items>
+								</SegmentedButton>
+							</HBox>
+						</WizardStep>
+						<!-- step 2 -->
+						<WizardStep id="WizardStep2" 
 					title="Milestones" 
 					>
-					<Title titleStyle="H5" text="Where are we with this opportunity?" class="sapUiSmallMarginBottom"/>
-
-						<form:SimpleForm editable="true"
+							<Title titleStyle="H5" text="Where are we with this opportunity?" class="sapUiSmallMarginBottom"/>
+							<form:SimpleForm editable="true"
 						>
-							
-
-							<Label text="Q. Created" />
-							<ComboBox selectedKey="{viewModel>/opportunityCreatedQuarter}" placeholder="When was it created?" 
+								<Label text="Q. Created" />
+								<ComboBox selectedKey="{viewModel>/opportunityCreatedQuarter}" placeholder="When was it created?" 
 							 items="{
                                     path: '/opportunityQuartersVH',
                                    sorter: [
@@ -129,12 +108,9 @@
                                         ]
                                     }">
 									<core:Item key="{opportunityQuarter}" text="{opportunityQuarter}"/>
-							</ComboBox>
-
-							
-
-							<Label text="Q. Closed" />
-							<ComboBox selectedKey="{viewModel>/opportunityClosedQuarter}" placeholder="When was it closed?"
+								</ComboBox>
+								<Label text="Q. Closed" />
+								<ComboBox selectedKey="{viewModel>/opportunityClosedQuarter}" placeholder="When was it closed?"
 							 items="{
                                     path: '/opportunityQuartersVH',
                                    sorter: [
@@ -150,36 +126,25 @@
                                         ]
                                     }">
 									<core:Item key="{opportunityQuarter}" text="{opportunityQuarter}"/>
-							</ComboBox>
-
-							<Label text="{i18n>opportunityStartDate}"/>
-							<DatePicker value="{viewModel>/opportunityStartDate}" id="dateCreate"  />
-
-							<Label text="{i18n>opportunityDueDate}"/>
-							<DatePicker value="{viewModel>/opportunityDueDate}" id="dueDateCreate"  />
-
-							<Label text="{i18n>progress}" />
-							<Slider value="{viewModel>/progress}" width="100%" step="25"
+								</ComboBox>
+								<Label text="{i18n>opportunityStartDate}"/>
+								<DatePicker value="{viewModel>/opportunityStartDate}" id="dateCreate"  />
+								<Label text="{i18n>opportunityDueDate}"/>
+								<DatePicker value="{viewModel>/opportunityDueDate}" id="dueDateCreate"  />
+								<Label text="{i18n>progress}" />
+								<Slider value="{viewModel>/progress}" width="100%" step="25"
 							min="0" max="100"
 							showAdvancedTooltip="true"
 							showHandleTooltip="false"
 							class="sapUiMediumMarginBottom" enableTickmarks="true" />
-
-							
-							
-						</form:SimpleForm>
-						
-						
-					</WizardStep>
-
-
-                    <!-- step 3 -->
-					<WizardStep id="WizardStep3" title="Contacts" >
-					<Title titleStyle="H5" text="Who can be contacted for this opportunity?" class="sapUiSmallMarginBottom"/>
-						<form:SimpleForm editable="true"  >
-							
-							<Label text="{i18n>primaryContact}" />
-							<ComboBox
+							</form:SimpleForm>
+						</WizardStep>
+						<!-- step 3 -->
+						<WizardStep id="WizardStep3" title="Contacts" >
+							<Title titleStyle="H5" text="Who can be contacted for this opportunity?" class="sapUiSmallMarginBottom"/>
+							<form:SimpleForm editable="true"  >
+								<Label text="{i18n>primaryContact}" />
+								<ComboBox
 							placeholder="Who is the primary contact from our team?"
 									id="primaryContact"
 									value="{viewModel>/primaryContact}"
@@ -191,72 +156,58 @@
                                             }
                                     }">
 									<core:Item key="{primaryContact}" text="{primaryContact}"/>
-							</ComboBox>
-
-
-                            <Label text="{i18n>clientContactPerson}" />
-							<Input placeholder="Who is the primary contact from the customer?" 
+								</ComboBox>
+								<Label text="{i18n>clientContactPerson}" />
+								<Input placeholder="Who is the primary contact from the customer?" 
 							type="Text" value="{viewModel>/clientContactPerson}" id="clientContactPerson" />
-
-                            <Label text="{i18n>ssa}" />
-							<Input id="ssa" placeholder="Who is the SSA for this opportunity?" value="{viewModel>/ssa}" />
-
-                            <Label text="{i18n>source}" />
-							<Input placeholder="Where did this opportunity come from?" id="source" value="{viewModel>/source}" />
-
-
-						</form:SimpleForm>
-					</WizardStep>
-
-					 <!-- step 4 -->
-					<WizardStep id="WizardStep4" title="Content">
-
-					<Title titleStyle="H5" text="Select all topics and services that can be positioned to this customer." class="sapUiSmallMarginBottom"/>
-
-                        <VBox justifyContent="Center" alignContent="Center">
-                        <Toolbar class="sapUiResponsiveMargin">
-                            <Label text="What additional topics are relevant?" class="myTitle" /> 
-                            <ToolbarSpacer/>
-                            <ToggleButton text="Select All" press="onSelectAllTopicsPress"/>
-                            <Button tooltip="Add Topic" icon="sap-icon://add" press="onAddTopicPress"/>
-                        </Toolbar>
-                           
-							 <HBox justifyContent="Center" alignContent="Center">
-                                <l:HorizontalLayout id="TopicFilters" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
-                                    <ToggleButton text="{topic}" press="onPressToggle1" class="sapUiSmallMarginEnd">
-                                        <customData>
-                                            <core:CustomData key="ID" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
-                                        </customData>
-                                    </ToggleButton>
-                                </l:HorizontalLayout>
+								<Label text="{i18n>ssa}" />
+								<Input id="ssa" placeholder="Who is the SSA for this opportunity?" value="{viewModel>/ssa}" />
+								<Label text="{i18n>source}" />
+								<Input placeholder="Where did this opportunity come from?" id="source" value="{viewModel>/source}" />
+							</form:SimpleForm>
+						</WizardStep>
+						<!-- step 4 -->
+						<WizardStep id="WizardStep4" title="Content">
+							<Title titleStyle="H5" text="Select all topics and services that can be positioned to this customer." class="sapUiSmallMarginBottom"/>
+							<VBox justifyContent="Center" alignContent="Center">
+								<Toolbar class="sapUiResponsiveMargin">
+									<Label text="What additional topics are relevant?" class="myTitle" />
+									<ToolbarSpacer/>
+									<ToggleButton text="Select All" press="onSelectAllTopicsPress"/>
+									<Button tooltip="Add Topic" icon="sap-icon://add" press="onAddTopicPress"/>
+								</Toolbar>
+								<HBox justifyContent="Center" alignContent="Center">
+									<l:HorizontalLayout id="TopicFilters" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
+										<ToggleButton text="{topic}" press="onPressToggle1" class="sapUiSmallMarginEnd">
+											<customData>
+												<core:CustomData key="ID" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
+											</customData>
+										</ToggleButton>
+									</l:HorizontalLayout>
 								</HBox>
-                            </VBox>
-
-						<VBox justifyContent="Center" alignContent="Center">
-                        <Toolbar class="sapUiResponsiveMargin">
-                            <Label text="Which services are planned or have been delivered?" class="myTitle"/> 
-                            <ToolbarSpacer/>
-                            <ToggleButton text="Select All" press="onSelectAllDeliverablesPress"/>
-                            <Button tooltip="Add Deliverable" icon="sap-icon://add" press="onAddDeliverablePress"/>
-                        </Toolbar>
-                            
-							 <HBox justifyContent="Center" alignContent="Center">
-                                <l:HorizontalLayout id="DeliverablesFilters" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
-                                    <ToggleButton text="{deliverable}" press="onPressToggle1" class="sapUiSmallMarginEnd">
-                                        <customData>
-                                            <core:CustomData key="ID" value="{deliverable}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
-                                        </customData>
-                                    </ToggleButton>
-                                </l:HorizontalLayout>
+							</VBox>
+							<VBox justifyContent="Center" alignContent="Center">
+								<Toolbar class="sapUiResponsiveMargin">
+									<Label text="Which services are planned or have been delivered?" class="myTitle"/>
+									<ToolbarSpacer/>
+									<ToggleButton text="Select All" press="onSelectAllDeliverablesPress"/>
+									<Button tooltip="Add Deliverable" icon="sap-icon://add" press="onAddDeliverablePress"/>
+								</Toolbar>
+								<HBox justifyContent="Center" alignContent="Center">
+									<l:HorizontalLayout id="DeliverablesFilters" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
+										<ToggleButton text="{deliverable}" press="onPressToggle1" class="sapUiSmallMarginEnd">
+											<customData>
+												<core:CustomData key="ID" value="{deliverable}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
+											</customData>
+										</ToggleButton>
+									</l:HorizontalLayout>
 								</HBox>
-                            </VBox> 
-					</WizardStep>
-
-					<!-- step 5 -->
-					<WizardStep id="WizardStep5" title="Notes" validated="false">
-					<Title titleStyle="H5" text="Enter any additional notes and important information. You can assign tasks later on." class="sapUiSmallMarginBottom"/>
-					
-						<rte:RichTextEditor 
+							</VBox>
+						</WizardStep>
+						<!-- step 5 -->
+						<WizardStep id="WizardStep5" title="Notes" validated="false">
+							<Title titleStyle="H5" text="Enter any additional notes and important information. You can assign tasks later on." class="sapUiSmallMarginBottom"/>
+							<rte:RichTextEditor 
 						value="{viewModel>/noteText}"
 						id="myRTE" 
 						width="100%" 
@@ -265,28 +216,21 @@
 						showGroupLink="true" 
 						showGroupUndo="true"
 						/>
-
-					</WizardStep>
-
-				</steps>
-			</Wizard>
-
-		</f:content>
-
+						</WizardStep>
+					</steps>
+				</Wizard>
+			</f:content>
 			<f:footer>
-				 <Toolbar>
-            <content>
-			
-			<ToolbarSpacer />
-			<Button text="Delete" press="onDeleteTopic" />
-				<!-- <Button text="Previous Step" press="onPreviousStep" /> -->
-               <Button type="Reject" text="{i18n>cancel}" press="onCloseWizardPress" />
-			   <Button type="Accept" text="{i18n>save}" press="onSaveWizardPress" />
-            </content>
-        </Toolbar>
+				<Toolbar>
+					<content>
+						<ToolbarSpacer />
+						<Button text="Delete" press="onDeleteTopic" />
+						<!-- <Button text="Previous Step" press="onPreviousStep" /> -->
+						<Button type="Reject" text="{i18n>cancel}" press="onCloseWizardPress" />
+						<Button type="Accept" text="{i18n>save}" press="onSaveWizardPress" />
+					</content>
+				</Toolbar>
 			</f:footer>
 		</f:DynamicPage>
-
-
 	</Dialog>
 </core:FragmentDefinition>

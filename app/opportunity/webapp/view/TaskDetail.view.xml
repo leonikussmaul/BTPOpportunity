@@ -1,4 +1,4 @@
-<mvc:View controllerName="opportunity.opportunity.controller.ObjectPage"
+<mvc:View controllerName="opportunity.opportunity.controller.TaskDetail"
 	xmlns:u="sap.uxap"
 	xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
@@ -15,10 +15,166 @@
 	xmlns:dnd="sap.ui.core.dnd"
 	xmlns:dnd-grid="sap.f.dnd"
 	xmlns:commons="sap.suite.ui.commons"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:table="sap.ui.table"
 >
 	<Page id="TaskDetail" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
 		<content>
 		
+					<u:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showEditHeaderButton="true" editHeaderButtonPress="handleEditBtnPress" upperCaseAnchorBar="false">
+						<u:headerTitle>
+							<u:ObjectPageDynamicHeaderTitle>
+								<u:expandedHeading>
+									<HBox>
+										<Title text="{actionTitle}" />
+										<Button text="{actionPriority}" visible="{= ${actionPriority} !== null}" type="{path: 'actionPriority', formatter:'.formatter.priortityButton'}" class="sapUiSmallMarginBeginEnd"/>
+									</HBox>
+								</u:expandedHeading>
+								<u:snappedHeading>
+									<FlexBox  fitContainer="true" alignItems="Center">
+						 				<VBox >
+										<Title text="{actionTitle}" wrapping="true"/>
+										<Text text="{actionCustomer}" />
+										</VBox>
+									</FlexBox>
+								</u:snappedHeading>
+								<u:expandedContent>
+									<Text text="{actionCustomer}" />
+								</u:expandedContent>
+								<u:actions>
+									<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" class="sapUiSmallMarginEnd"/>
+									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Item" tooltip="Delete Item" press="onDeleteObjectPress"  />
+								</u:actions>
+							</u:ObjectPageDynamicHeaderTitle>
+						</u:headerTitle>
+						<u:headerContent>
+							<FlexBox wrap="Wrap">
+
+
+							<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionOwner} !== null}">
+									<Title text="{i18n>actionOwner}" class="sapUiTinyMarginBottom" />
+									<HBox>
+									<Avatar displayShape="Square" displaySize="XS" class="sapUiTinyMarginEnd" initials="{path: 'actionOwner', formatter:'.formatter.formatInitials'}"
+						 backgroundColor="{path: 'actionOwner', formatter:'.formatter.formatInitialsColor'}"/>
+								<Label text="{actionOwner}"  class="sapUiTinyMarginTop"/>
+								</HBox>
+								</VBox>
+
+
+								<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionDueDate} !== null}">
+									<Title text="{i18n>actionDueDate}" class="sapUiTinyMarginBottom" />
+									<ObjectStatus  text="due {path: 'actionDueDate', type: 'sap.ui.model.type.Date', formatOptions: {
+                                 relative: true,
+                                 relativeScale: 'auto'
+                             }
+                           }" state="{path: 'actionDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${actionDueDate} !== null}" icon="sap-icon://accelerated" class="sapMObjectStatusLarge" />
+								</VBox>
+
+								
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${actionProgress} !== null &amp;&amp; !${editModel>/editMode}}">
+									<Title text="{i18n>actionProgress}"  />
+									<ProgressIndicator width="100%"
+								class="sapUiSmallMarginBottom"
+								percentValue="{actionProgress}"
+								displayValue="{path: 'actionProgress', formatter: '.formatter.progressPercentage'}"
+								showValue="true"
+								state="{path: 'actionProgress', formatter: '.formatter.progressStatus'}" />
+								</VBox>
+
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
+									<Title text="{i18n>actionProgress}"  />
+									<Slider value="{actionProgress}" width="100%" step="25" change="onProgressSliderChange"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false"
+							class="sapUiSmallMarginTop" enableTickmarks="true" />
+
+
+								</VBox>
+							</FlexBox>
+						</u:headerContent>
+						
+						<u:sections>
+							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false"  >
+								<u:ObjectPageSubSection id="idGeneralSubSection">
+					
+				<Table id="subTaskTable" items="{
+			path : 'subTaskModel>/subtasks',
+			 sorter: [
+                                            {
+                                                path: 'subTaskOwner',
+                                                group: true
+                                            },
+                                            {
+                                                path: 'subTaskCompleted',
+                                                descending: true
+                                            }
+                                        ]
+		}" selectionChange="onSelectSubTask"
+										
+										 inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Looks like there are no sub-tasks.">
+						<headerToolbar>
+			<OverflowToolbar design="Transparent">
+						<ToolbarSpacer/>
+						
+						<OverflowToolbarButton icon="sap-icon://accept" tooltip="Add Table Item" press="onTableCheckPress"/>
+						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onAddSubTask"/>
+						<Button text="Clear Completed" tooltip="Delete all Completed Tasks" press="onClearDeletedTasks"/>
+						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
+					</OverflowToolbar>
+		</headerToolbar>
+					
+					<columns>
+						<Column width="90%" >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "subTask", "columnIndex" : "1", "leadingProperty": "subTask", "sortProperty": "subTask", "filterProperty": "subTask ", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>subTask}" tooltip="{i18n>subTask}"/>
+						</Column>
+						<Column  width="10em">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "subTaskOwner", "columnIndex" : "2", "leadingProperty": "subTaskOwner", "sortProperty": "subTaskOwner", "filterProperty": "subTaskOwner ", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>subTaskOwner}" tooltip="{i18n>subTaskOwner}"/>
+						</Column>
+						<Column  width="10em">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "subTaskDueDate", "columnIndex" : "3", "leadingProperty": "subTaskDueDate", "sortProperty": "subTaskDueDate", "filterProperty": "subTaskDueDate ", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>subTaskDueDate}" tooltip="{i18n>subTaskDueDate}"/>
+						</Column>
+						
+							</columns>
+					<items >
+						<ColumnListItem  vAlign="Middle" selected="{path: 'subTaskModel>subTaskCompleted', formatter:'.formatter.SubTaskCompleted'}">
+							<cells >
+								
+								<Text text="{subTaskModel>subTask}" wrapping="true" />
+								<Text text="{subTaskModel>subTaskOwner}" wrapping="true" />
+								<ObjectStatus text="{path: 'subTaskModel>subTaskDueDate',
+								 type: 'sap.ui.model.type.Date',
+                                                    formatOptions: {
+                                                        relative: true,
+                                                        relativeScale: 'auto'
+                                                    }
+								}" icon="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatIconDueDate'}"
+								state="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${subTaskModel>subTaskDueDate} !== null}" />
+
+								
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+									
+								</u:ObjectPageSubSection>
+							</u:ObjectPageSection>
+
+
+							</u:sections>
+					</u:ObjectPageLayout>
+			
 		</content>
 		<footer>
 			<Toolbar>

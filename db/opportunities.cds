@@ -43,6 +43,19 @@ entity opportunityActionItems {
         actionTopic     : String(255);
         actionPriority  : String(10);
         actionPriorityNumber: Integer; 
+        subTasks               : Composition of many opportunitySubTasks
+                                        on subTasks.opptID = $self;
+                                
+};
+
+@cds.autoexpose
+entity opportunitySubTasks {
+    key ID     : UUID;
+        opptID : Association to opportunityActionItems;
+        subTask  : String(800);
+        subTaskDueDate: Date;
+        subTaskOwner:  String(20);
+        subTaskCompleted: Boolean; 
 };
 
 @cds.autoexpose

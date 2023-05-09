@@ -142,7 +142,7 @@
                 },
                 {
                     "name": "TaskDetail",
-                    "pattern": "ObjectPage/{opportunityID}/TaskDetail",
+                    "pattern": "TaskReport/{ID}", 
                     "target": "TaskDetail"
                 }
             ],
@@ -152,28 +152,32 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "MainReport",
-                    "viewName": "MainReport"
+                    "viewName": "MainReport",
+                    "viewLevel": 0
                 },
                 "ObjectPage": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "ObjectPage",
-                    "viewName": "ObjectPage"
+                    "viewName": "ObjectPage",
+                    "viewLevel": 1
                 },
                 "TasksReport": {
                     "viewType": "XML",
                     "transition": "flip",
                     "clearControlAggregation": false,
                     "viewId": "TasksReport",
-                    "viewName": "TasksReport"
+                    "viewName": "TasksReport",
+                    "viewLevel": 1
                 },
                 "TaskDetail": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "TaskDetail",
-                    "viewName": "TaskDetail"
+                    "viewName": "TaskDetail",
+                    "viewLevel": 2
                 }
             }
         },

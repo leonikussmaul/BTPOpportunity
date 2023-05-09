@@ -18,9 +18,7 @@ annotate service.opportunityHeader with {
 annotate service.opportunityHeader with {
     opportunityCreatedQuarter @Common.Label : 'Q. Created'
 };
-annotate service.opportunityHeader with {
-    opportunityDate @Common.Label : 'Opportunity Date'
-};
+
 annotate service.opportunityHeader with {
     opportunityID @Common.Label : 'Opportunity ID'
 };
@@ -67,6 +65,7 @@ annotate service.opportunityHeader with {
     noteText @Common.Label : 'Note Text'
 };
 
+// tasks and actions
 annotate service.opportunityActionItems with {
     actionProgress @Common.Label : 'Progress'
 };
@@ -87,4 +86,22 @@ annotate service.opportunityActionItems with {
 };
 annotate service.opportunityActionItems with {
     actionCustomer @Common.Label : 'Account'
+};
+
+
+// subtasks
+annotate service.opportunitySubTasks with {
+    subTaskCompleted @Common.Label : 'Completed'
+};
+
+annotate service.opportunitySubTasks with {
+    subTaskDueDate @Common.Label : 'Due Date'
+};
+
+annotate service.opportunitySubTasks with {
+    subTaskOwner @Common.Label : 'Owner'
+};
+
+annotate service.opportunitySubTasks with {
+    subTask @Common.Label : 'Sub-Task'
 };

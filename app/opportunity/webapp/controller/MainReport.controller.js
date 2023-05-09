@@ -609,34 +609,37 @@ sap.ui.define([
 
                 var that = this; 
                 var oModel = this.getView().getModel();
-                var sPath = "/opportunityQuartersVH(842e5db9-2562-48aa-8bc0-211ef201945f)"
+                // var sPath = "/opportunityQuartersVH(842e5db9-2562-48aa-8bc0-211ef201945f)"
 
-                oModel.remove(sPath, {
-                    success: function () {
-                        sap.m.MessageToast.show("Item deleted successfully.");
-                    },
-                    error: function () {
-                        sap.m.MessageToast.show("Failed to delete item.");
-                    }
-                });
-
-                var oPayload = {
-                    opportunityQuarter: "Q3 / 24",
-                    opportunityYear: 2024
-                }
-                // that.getView().setBusy(true);
-                // var oModel = that.getView().getModel();
-                // oModel.create("/opportunityQuartersVH", oPayload, {
-                //     success: function (oData, response) {
-                //         MessageToast.show("New topic posted!");
-                       
-                //         that.getView().setBusy(false);
+                // oModel.remove(sPath, {
+                //     success: function () {
+                //         sap.m.MessageToast.show("Item deleted successfully.");
                 //     },
-                //     error: function (oError) {
-                //         that.getView().setBusy(false);
-                //         MessageBox.error("Topic could not be posted. Please check your input.");
+                //     error: function () {
+                //         sap.m.MessageToast.show("Failed to delete item.");
                 //     }
                 // });
+
+                var oPayload = {
+                    subTask: "2nd sub task",
+                    subTaskOwner: "Gurpreet",
+                    opptID_ID: "032c9c6c-16d0-4596-86ca-40c9550d15e6",
+                    // ID: "032c9c6c-16d0-4596-86ca-40c9550d15e6",
+                    subTaskCompleted: true
+                }
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunitySubTasks", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New topic posted!");
+                       
+                        that.getView().setBusy(false);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        MessageBox.error("Topic could not be posted. Please check your input.");
+                    }
+                });
             },
 
              onReadTopics: function () {

@@ -15,15 +15,11 @@
 			</Bar>
 		</customHeader>
 		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}"  /> -->
-		
-
 		<form:SimpleForm editable="true"
 						>
-
-							<Label text="Account" required="true"/>
-							<!-- <Input value="{AddTaskModel>/account}" id="accountInput" placeholder="Which customer is the task related to?" /> -->
-
-							<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox"
+			<Label text="Account" required="true"/>
+			<!-- <Input value="{AddTaskModel>/account}" id="accountInput" placeholder="Which customer is the task related to?" /> -->
+			<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox"
 							 items="{
                                     path: '/opportunityHeader',
                                    sorter:  {
@@ -31,24 +27,16 @@
                                                 descending: true
                                             }
                                     }">
-									<core:ListItem key="{opportunityID}" text="{account}" additionalText="{opportunityID}"/>
-							</ComboBox>
-
-							<Label text="Title" required="true"/>
-							<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="What's To Do?" />
-
-							<Label text="Task" required="true"/>
-							<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" placeholder="Give a short description"
+				<core:ListItem key="{opportunityID}" text="{account}" additionalText="{opportunityID}"/>
+			</ComboBox>
+			<Label text="Title" required="true"/>
+			<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="What's To Do?" />
+			<Label text="Task" required="true"/>
+			<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" placeholder="Give a short description"
 							maxLength="800"/>
-
-							<Label text="Owner" />
-							<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}">
-								<core:Item key="Sarah" text="Sarah"/>
-								<core:Item key="Karthik" text="Karthik"/>
-								<core:Item key="Ravi" text="Ravi"/>
-							</ComboBox> -->
-
-								<ComboBox selectedKey="{AddTaskModel>/actionOwner}" placeholder="Assign the task to someone in the team"
+			<Label text="Owner" />
+			<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}"><core:Item key="Sarah" text="Sarah"/><core:Item key="Karthik" text="Karthik"/><core:Item key="Ravi" text="Ravi"/></ComboBox> -->
+			<ComboBox selectedKey="{AddTaskModel>/actionOwner}" placeholder="Assign the task to someone in the team"
 							 items="{
                                     path: '/opportunityPrimaryContactVH',
                                     sorter: {
@@ -56,18 +44,11 @@
                                                 descending: false
                                             }
                                     }">
-									<core:Item key="{primaryContact}" text="{primaryContact}"/>
-							</ComboBox>
-
-
-							<Label text="Topic" />
-							<!-- <ComboBox selectedKey="{AddTaskModel>/actionTopic}">
-								<core:Item key="Analytics" text="Analytics"/>
-								<core:Item key="Data" text="Data"/>
-								<core:Item key="Automation / AI" text="Automation / AI"/>
-								<core:Item key="Integration" text="Integration"/>
-							</ComboBox> -->
-							<ComboBox selectedKey="{AddTaskModel>/actionTopic}" placeholder="Select a topic"
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+			</ComboBox>
+			<Label text="Topic" />
+			<!-- <ComboBox selectedKey="{AddTaskModel>/actionTopic}"><core:Item key="Analytics" text="Analytics"/><core:Item key="Data" text="Data"/><core:Item key="Automation / AI" text="Automation / AI"/><core:Item key="Integration" text="Integration"/></ComboBox> -->
+			<ComboBox selectedKey="{AddTaskModel>/actionTopic}" placeholder="Select a topic"
 							 items="{
                                     path: '/opportunityTopicsVH',
                                     sorter: {
@@ -75,29 +56,22 @@
                                                 descending: false
                                             }
                                     }">
-									<core:Item key="{topic}" text="{topic}"/>
-							</ComboBox>
-
-							<Label text="Due Date"/>
-							<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDateTask"  />
-
-							<Label text="Priority" />
-							<ComboBox selectedKey="{AddTaskModel>/actionPriority}" placeholder="How urgent is it?">
-								<core:Item key="High" text="High"/>
-								<core:Item key="Medium" text="Medium"/>
-								<core:Item key="Low" text="Low"/>
-							</ComboBox>
-
-
-						<Label text="Progress"/>
-							<Slider value="{AddTaskModel>/actionProgress}" width="100%" step="25"
+				<core:Item key="{topic}" text="{topic}"/>
+			</ComboBox>
+			<Label text="Due Date"/>
+			<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDateTask"  />
+			<Label text="Priority" />
+			<ComboBox selectedKey="{AddTaskModel>/actionPriority}" placeholder="How urgent is it?">
+				<core:Item key="High" text="High"/>
+				<core:Item key="Medium" text="Medium"/>
+				<core:Item key="Low" text="Low"/>
+			</ComboBox>
+			<Label text="Progress"/>
+			<Slider value="{AddTaskModel>/actionProgress}" width="100%" step="25"
 							min="0" max="100"
 							showAdvancedTooltip="true"
 							showHandleTooltip="false" enableTickmarks="true"/>
-
-							
-						</form:SimpleForm>
-
+		</form:SimpleForm>
 		<footer>
 			<Toolbar design="Auto">
 				<content>

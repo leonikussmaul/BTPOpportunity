@@ -248,7 +248,14 @@ formatIconDueDate: function(sDueDate) {
   else {
     return ""; 
   }
-}
+},
+
+
+SubTaskCompleted: function(sCompleted) {
+  if(sCompleted) return true; 
+  else return false; 
+},
+
 
 
 
