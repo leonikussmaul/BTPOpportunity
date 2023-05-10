@@ -19,6 +19,7 @@
 	xmlns:smartTable="sap.ui.comp.smarttable"
 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:table="sap.ui.table"
+	
 >
 	<Page id="TaskDetail" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
 		<content>
@@ -45,7 +46,7 @@
 								</u:expandedContent>
 								<u:actions>
 									<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" class="sapUiSmallMarginEnd"/>
-									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Item" tooltip="Delete Item" press="onDeleteObjectPress"  />
+									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Task" tooltip="Delete Task" press="onDeleteTaskObjectPress"  />
 								</u:actions>
 							</u:ObjectPageDynamicHeaderTitle>
 						</u:headerTitle>
@@ -95,12 +96,20 @@
 								</VBox>
 							</FlexBox>
 						</u:headerContent>
+
 						
 						<u:sections>
-							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false"  >
-								<u:ObjectPageSubSection id="idGeneralSubSection">
+						<u:ObjectPageSection id="idTaskDetailSection" titleUppercase="false" title="Edit Task" visible="{editModel>/editMode}">
+								<u:ObjectPageSubSection id="idTaskDetailSubSection">
+									<core:Fragment id="idTaskDetailFragment" fragmentName="opportunity.opportunity.view.fragments.TaskDetailHeader"  type="XML"/>
+								</u:ObjectPageSubSection>
+							</u:ObjectPageSection>
+
+
+							<u:ObjectPageSection id="idSubTaskSection" titleUppercase="false"  >
+								<u:ObjectPageSubSection id="idSubTaskSubSection">
 					
-				<Table id="subTaskTable" items="{
+				<Table  id="subTaskTable" items="{
 			path : 'subTaskModel>/subtasks',
 			 sorter: [
                                             {
@@ -109,20 +118,24 @@
                                             },
                                             {
                                                 path: 'subTaskCompleted',
-                                                descending: true
+                                                descending: false
                                             }
-                                        ]
+                                        ],
+										parameters: {
+									$count: true
+								}
 		}" selectionChange="onSelectSubTask"
 										
 										 inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Looks like there are no sub-tasks.">
 						<headerToolbar>
+							
 			<OverflowToolbar design="Transparent">
+			<Title text="Open Sub-Tasks ({subTaskModel>/completedCount})" level="H2"/>
 						<ToolbarSpacer/>
 						
-						<OverflowToolbarButton icon="sap-icon://accept" tooltip="Add Table Item" press="onTableCheckPress"/>
+						<!-- <OverflowToolbarButton icon="sap-icon://accept" tooltip="Add Table Item" press="onTableCheckPress"/> -->
 						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onAddSubTask"/>
-						<Button text="Clear Completed" tooltip="Delete all Completed Tasks" press="onClearDeletedTasks"/>
-						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
+						<Button text="Clean Up" icon="sap-icon://clear-all" tooltip="Delete selected Item" press="onDeleteSubTasks"/>
 					</OverflowToolbar>
 		</headerToolbar>
 					
@@ -173,6 +186,36 @@
 
 
 							</u:sections>
+
+							<!-- <u:ObjectPageSection  >
+								<u:ObjectPageSubSection >
+									<commons:ProcessFlow
+			id="processflow"
+			nodes="{/opportunityHeader}"
+			lanes="{/opportunityHeader}">
+			<commons:nodes>
+				<commons:ProcessFlowNode
+					title="{account}"
+					titleAbbreviation="{primaryContact}" />
+			</commons:nodes>
+			<commons:lanes>
+				<commons:ProcessFlowLaneHeader
+					text="{account}"/>
+			</commons:lanes>
+		</commons:ProcessFlow>
+								</u:ObjectPageSubSection>
+							</u:ObjectPageSection> -->
+
+							
+
+								<!-- <commons:MicroProcessFlow renderType="Scrolling" content="{subTaskModel>/subtasks}">
+					<commons:content>
+						<commons:MicroProcessFlowItem state="Error"/>
+					</commons:content>
+					</commons:MicroProcessFlow> -->
+
+
+
 					</u:ObjectPageLayout>
 			
 		</content>

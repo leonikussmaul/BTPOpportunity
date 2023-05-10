@@ -353,6 +353,10 @@
 					</items>
 				</Table>
 			</smartTable:SmartTable>
+
+
+
+
 		</f:content>
 	</f:DynamicPage>
 </mvc:View>

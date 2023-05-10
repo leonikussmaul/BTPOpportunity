@@ -67,7 +67,6 @@
 						<ToolbarSpacer/>
 						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
 						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onAddToDoTablePress"/>
-						<Button text="Clear Completed" tooltip="Delete all Completed Tasks" press="onClearDeletedTasks"/>
 						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
 					</OverflowToolbar>
 				</smartTable:customToolbar>

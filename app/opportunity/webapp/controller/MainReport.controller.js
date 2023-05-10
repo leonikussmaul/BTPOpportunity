@@ -46,6 +46,11 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
+
+                var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
+                var sViewName = this.getView().getViewName().split('.')[3]; 
+                oGlobalModel.setProperty("/viewName", sViewName);
+                oGlobalModel.setProperty("/buttonText", "Go to Tasks");
             },
 
             _getText: function (sTextId, aArgs) {

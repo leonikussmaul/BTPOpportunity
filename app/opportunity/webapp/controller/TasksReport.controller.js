@@ -29,23 +29,32 @@ sap.ui.define([
                 var AddTaskModel = new JSONModel({});
                 this.getView().setModel(AddTaskModel, "AddTaskModel");
 
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("TasksReport").attachPatternMatched(this._onRoutePatternMatched, this);
+
+
                
 
             },
 
-            // _onRoutePatternMatched: function (oEvent) {
-            //     var oModel = this.getView().getModel();
-            //     var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
-            //     this.getView().bindElement({
-            //         path: "/opportunityHeader/" + sOpportunityID,
-            //         parameters: {
-            //             expand: "actionItems"
-            //         }
+            _onRoutePatternMatched: function (oEvent) {
+                // var oModel = this.getView().getModel();
+                // var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
+                // this.getView().bindElement({
+                //     path: "/opportunityHeader/" + sOpportunityID,
+                //     parameters: {
+                //         expand: "actionItems"
+                //     }
 
-            //     });
-            //     oModel.setDefaultBindingMode("TwoWay");
+                // });
+                // oModel.setDefaultBindingMode("TwoWay");
+
+                var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
+                var sViewName = this.getView().getViewName().split('.')[3]; 
+                oGlobalModel.setProperty("/viewName", sViewName);
+                oGlobalModel.setProperty("/buttonText", "Go to Opportunities");
                
-            // },
+                
+            },
            
 
             onBeforeRebindTaskTable: function (oEvent) {

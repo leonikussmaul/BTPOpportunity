@@ -10,6 +10,12 @@ sap.ui.define(
         onInit() {
         },
 
+        onHomeIconPressed: function(){
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("MainReport");
+          this.getOwnerComponent().getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
+        },
+
         onOpenSAPOne: function () {
           var sUrlSAPOne = 'https://one.int.sap/home';
           library.URLHelper.redirect(sUrlSAPOne, true);
@@ -33,18 +39,22 @@ sap.ui.define(
 
         onNavToTasksPage: function(oEvent){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          
 
           var oBtn = oEvent.getSource();
-          var sText = oBtn.getText();
 
-          if(sText === 'Go to Tasks') {
-            oRouter.navTo("TasksReport");
-            oBtn.setText("Go to Opportunities");
-          }else if(sText === 'Go to Opportunities') {
+          var viewName = window.location.href.split('#')[1]; 
+          if(viewName != '' && oBtn.getText() != "Go to Tasks"){
             oRouter.navTo("MainReport");
             oBtn.setText("Go to Tasks");
+
+          } else{
+            oRouter.navTo("TasksReport");
+            oBtn.setText("Go to Opportunities");
           }
+           
+
+          // var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
+          // var sViewName = oGlobalModel.getProperty("/viewName");
          
 
       }

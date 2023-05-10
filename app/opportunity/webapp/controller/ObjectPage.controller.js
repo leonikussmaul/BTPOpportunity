@@ -411,6 +411,7 @@ sap.ui.define([
                     MessageToast.show("New Task created!");
                     that.onReadModelData();
                     oDialog.close(); 
+                    oAddTaskModel.setData({}); 
                   },
                   error: function(oError) {
                     sap.m.MessageBox.error("Task could not be created, try again.");
@@ -439,7 +440,9 @@ sap.ui.define([
 
 
             onCancelDialogPress: function (oEvent) {
-                oEvent.getSource().getParent().getParent().close()
+                oEvent.getSource().getParent().getParent().close();
+                var oAddTaskModel = this.getView().getModel("AddTaskModel");
+                oAddTaskModel.setData({}); 
             },
 
 

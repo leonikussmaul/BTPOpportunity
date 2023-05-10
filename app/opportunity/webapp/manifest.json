@@ -165,7 +165,7 @@
                 },
                 "TasksReport": {
                     "viewType": "XML",
-                    "transition": "flip",
+                    "transition": "slide",
                     "clearControlAggregation": false,
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",

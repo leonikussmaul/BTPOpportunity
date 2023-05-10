@@ -5,9 +5,10 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "opportunity/opportunity/model/models"
+        "opportunity/opportunity/model/models",
+        "sap/ui/model/json/JSONModel"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, JSONModel) {
         "use strict";
 
         return UIComponent.extend("opportunity.opportunity.Component", {
@@ -29,6 +30,9 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                this.setModel(new JSONModel(), "globalModel");
+                this.getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
             }
         });
     }
