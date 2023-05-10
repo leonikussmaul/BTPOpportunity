@@ -48,7 +48,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="marketUnit"
 							index="0"
-							label="Market Unit"
+							label="{i18n>marketUnit}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -70,7 +70,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="status"
 							index="1"
-							label="Status"
+							label="{i18n>status}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -91,7 +91,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="topic"
 							index="2"
-							label="Topic"
+							label="{i18n>topic}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -113,7 +113,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="primaryContact"
 							index="3"
-							label="Owner"
+							label="{i18n>primaryContact}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -134,7 +134,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="opportunityClosedQuarter"
 							index="4"
-							label="Q. Closed"
+							label="{i18n>opportunityClosedQuarter}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -161,7 +161,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="opportunityCreatedQuarter"
 							index="5"
-							label="Q. Created"
+							label="{i18n>opportunityCreatedQuarter}"
 							visibleInAdvancedArea="false">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -188,7 +188,7 @@
 							<smartFilterBar:ControlConfiguration
 							key="priority"
 							index="5"
-							label="Priority"
+							label="{i18n>priority}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<MultiComboBox
@@ -208,7 +208,7 @@
 							visible="false"></smartFilterBar:ControlConfiguration>
 							<smartFilterBar:ControlConfiguration
 							key="opportunityInCRM"
-							label="In CRM"
+							label="{i18n>opportunityInCRM}"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<Switch
@@ -219,7 +219,7 @@
 							</smartFilterBar:ControlConfiguration>
 							<smartFilterBar:ControlConfiguration
 							key="isFavorite"
-							label="Favorite"
+							label="{i18n>isFavorite}"
 							visibleInAdvancedArea="false"
                             visible="false"></smartFilterBar:ControlConfiguration>
 							<smartFilterBar:ControlConfiguration
@@ -248,7 +248,7 @@
   beforeExport="onBeforeExport"
   useVariantManagement="true" 
   useTablePersonalisation="true" 
-  header="Opportunities"
+  header="{i18n>mySmartTableHeader}"
   showRowCount="true"
   enableAutoBinding="true"
   demandPopin="true" 

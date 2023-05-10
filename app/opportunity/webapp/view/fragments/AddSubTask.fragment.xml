@@ -7,7 +7,7 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add Sub-Task for {actionCustomer}"/>
+					<Title text="{i18n>addSubTaskFor} {actionCustomer}"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
@@ -18,10 +18,10 @@
 		<form:SimpleForm editable="true"
 						>
 			<Label text="Title" required="true"/>
-            <TextArea value="{AddSubTaskModel>/subTask}" id="subTaskInput" maxLength="800" placeholder="What's the Sub-Task?"/>
+            <TextArea value="{AddSubTaskModel>/subTask}" id="subTaskInput" maxLength="800" placeholder="{i18n>subTaskPlaceholder}"/>
 
 			<Label text="Owner" />
-			<ComboBox selectedKey="{AddSubTaskModel>/subTaskOwner}" placeholder="Assign the sub-task to someone in the team"
+			<ComboBox selectedKey="{AddSubTaskModel>/subTaskOwner}" placeholder="{i18n>subTaskOwerPlaceholder}"
 							 items="{
                                     path: '/opportunityPrimaryContactVH',
                                     sorter: {
@@ -33,7 +33,7 @@
 			</ComboBox>
 
 
-			<Label text="Due Date"/>
+			<Label text="{i18n>dueDate}"/>
 			<DatePicker value="{AddSubTaskModel>/subTaskDueDate}" id="subTaskDueDateID"  />
 
 

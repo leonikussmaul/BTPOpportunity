@@ -48,11 +48,11 @@
 								<u:actions>
 									<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" class="sapUiSmallMarginEnd"/>
 									
-									<core:Icon press="onFavoriteObjectPress" tooltip="Favorite Item"
+									<core:Icon press="onFavoriteObjectPress" tooltip="{i18n>favoriteItemTooltip}"
                                                                 src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
                                                                 size="1.1rem"
                                                                 color="#427cac"/>
-									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Item" tooltip="Delete Item" press="onDeleteObjectPress"  />
+									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="{i18n>deleteItemTooltip}" tooltip="{i18n>deleteItemTooltip}" press="onDeleteObjectPress"  />
 								</u:actions>
 							</u:ObjectPageDynamicHeaderTitle>
 						</u:headerTitle>
@@ -64,14 +64,14 @@
                                     initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"/>
 								<l:VerticalLayout class="sapUiSmallMarginBeginEnd sapUiResponsiveMargin">
 									<VBox>
-										<ObjectStatus state="Information" text="Status" icon="sap-icon://message-information" class="sapUiSmallMarginBegin"/>
+										<ObjectStatus state="Information" text="{i18n>status}" icon="sap-icon://message-information" class="sapUiSmallMarginBegin"/>
 										<HBox alignItems="Center" justifyContent="Center" width="100%" >
 											<SegmentedButton  selectionChange="onSegmentPressed" id="segmentedStatusObject" width="480px" class="sapUiSmallMarginEnd sapUiSmallMarginBegin" selectedKey="{status}">
 												<items>
-													<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity" />
-													<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
-													<SegmentedButtonItem icon="sap-icon://pause" text="Paused" key="Paused"/>
-													<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
+													<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity"/>
+										<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
+										<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
+										<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
 												</items>
 											</SegmentedButton>
 										</HBox>
@@ -109,7 +109,7 @@
 						</u:headerContent>
 						<!-- section fragments -->
 						<u:sections>
-							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false" title="General Information" >
+							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false" title="{i18n>generalHeader}" >
 								<u:ObjectPageSubSection id="idGeneralSubSection">
 									<core:Fragment id="idGeneralFragment" fragmentName="opportunity.opportunity.view.fragments.GeneralSection" type="XML"/>
 								</u:ObjectPageSubSection>
@@ -123,12 +123,13 @@
 							<u:ObjectPageSection id="idSectionTopics" titleUppercase="false" title="{i18n>Topics}" >
 								<u:ObjectPageSubSection id="idSubSectionTopics">
 									<u:actions>
-										<Link  text="Add Topic" press="onAddTopicPress"/>
+										<Link  text="{i18n>addTopic}" press="onAddTopicPress"/>
 									</u:actions>
 									<HBox class="sapUiSmallMarginTopBottom" >
 										<l:HorizontalLayout id="TopicFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
 											<ToggleButton text="{topic}" press="onPressToggle1" class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}">
+											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+											tooltip="{i18n>toggle1Tooltip}">
 												<customData>
 													<core:CustomData key="ID" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
 												</customData>
@@ -144,12 +145,13 @@
 							<u:ObjectPageSection id="idSectionDeliverables" titleUppercase="false" title="{i18n>Deliverables}" >
 								<u:ObjectPageSubSection id="idSubSectionDeliverables">
 									<u:actions>
-										<Link  text="Add Deliverable" press="onAddDeliverablePress"/>
+										<Link  text="{i18n>addDeliverable}" press="onAddDeliverablePress"/>
 									</u:actions>
 									<HBox class="sapUiSmallMarginTopBottom">
 										<l:HorizontalLayout id="DeliverablesFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
 											<ToggleButton text="{deliverable}"  press="onPressToggle2"  class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}">
+											enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+											tooltip="{i18n>toggle2Tooltip}">
 												<customData>
 													<core:CustomData key="ID" value="{deliverable}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
 												</customData>

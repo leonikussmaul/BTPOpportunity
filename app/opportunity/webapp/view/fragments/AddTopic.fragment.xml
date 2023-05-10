@@ -6,14 +6,14 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Can't find the relevant topic?" />
+					<Title text="{i18n>addTopicHeader}" />
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
 				</contentRight>
 			</Bar>
 		</customHeader>
-		<Label text="Add a new one:" />
+		<Label text="{i18n>addNew}" />
 		<Input type="Text"
            value=""
            id="topicInput"

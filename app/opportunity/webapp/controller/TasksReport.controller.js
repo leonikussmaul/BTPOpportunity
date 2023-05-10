@@ -188,6 +188,32 @@ sap.ui.define([
                 });
             },
 
+            onSearch: function (oEvent) {
+                var aFilters = [];
+                var sQuery = oEvent.getSource().getValue();
+                if (sQuery && sQuery.length > 0) {
+                    var aFilters = [
+                        new Filter({
+                          filters: [
+                            new Filter({ path: "actionTitle", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "actionTask", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "actionCustomer", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "actionTopic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            new Filter({ path: "actionOwner", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                    
+        
+                          ],
+                          and: false
+                        })
+                      ];
+                }
+
+                var oList = this.byId("myTaskTable").getTable();
+                var oBinding = oList.getBinding("items")
+                oBinding.filter(aFilters, FilterType.Application);
+  
+            },
+
            
 
         });

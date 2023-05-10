@@ -25,10 +25,10 @@
 		<f:headerToolbar>
 			<Toolbar >
 				<ToolbarSpacer />
-				<Button icon="sap-icon://add" tooltip="Add To Do Item" press="onAddToDoItem"/>
-				<Button icon="sap-icon://sort" tooltip="Sort List" press="onSortToDoItem"/>
-				<Button icon="sap-icon://filter" tooltip="Filter List" press="onFilterToDoItem"/>
-				<Button icon="sap-icon://group-2" tooltip="Group List" press="onGroupToDoItem"/>
+				<Button icon="sap-icon://add" tooltip="{i18n>addToDoItem}" press="onAddToDoItem"/>
+				<Button icon="sap-icon://sort" tooltip="{i18n>sortList}" press="onSortToDoItem"/>
+				<Button icon="sap-icon://filter" tooltip="{i18n>filterList}" press="onFilterToDoItem"/>
+				<Button icon="sap-icon://group-2" tooltip="{i18n>groupList}" press="onGroupToDoItem"/>
 				<!-- <Button icon="sap-icon://delete" tooltip="Delete To Do Item" press="onDeleteToDoItem"/> -->
 				<SearchField  />
 			</Toolbar>

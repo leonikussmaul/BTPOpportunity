@@ -35,9 +35,6 @@
 			<smartForm:GroupElement>
 				<smartField:SmartField value="{actionPriority}" />
 			</smartForm:GroupElement>
-			<!-- <smartForm:GroupElement>
-				<smartField:SmartField value="{actionProgress}" />
-			</smartForm:GroupElement> -->
 			<smartForm:GroupElement >
 				<smartField:SmartField value="{actionDueDate}" />
 			</smartForm:GroupElement>

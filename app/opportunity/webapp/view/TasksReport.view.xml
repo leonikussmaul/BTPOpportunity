@@ -23,11 +23,11 @@
 	xmlns:main="sap.ui.webc.main"
 	xmlns:layout="sap.ui.layout"
 >
-	<f:DynamicPage id="TasksReport" title="Open Tasks" backgroundDesign="List" >
+	<f:DynamicPage id="TasksReport" title="{i18n>openTasks}" backgroundDesign="List" >
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<Title text="Open Tasks" id="tasksHeaderTitle" />
+					<Title text="{i18n>openTasks}" id="tasksHeaderTitle" />
 				</f:heading>
 			</f:DynamicPageTitle>
 		</f:title>
@@ -51,7 +51,7 @@
   beforeExport="onBeforeExport"
   useVariantManagement="false" 
   useTablePersonalisation="true" 
-  header="Tasks"
+  header="{i18n>taskTableHeader}"
   showRowCount="true"
   enableAutoBinding="true"
   demandPopin="true" 
@@ -66,11 +66,11 @@
 					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
 						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
-						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onAddToDoTablePress"/>
-						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
+						<OverflowToolbarButton icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddToDoTablePress"/>
+						<OverflowToolbarButton icon="sap-icon://delete" tooltip="{i18n>deleteSelected}" press="onDeleteTableItem"/>
 					</OverflowToolbar>
 				</smartTable:customToolbar>
-				<Table inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Nothing here. Please adjust your search critera.">
+				<Table inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="{i18n>noDataTaskTable}">
 					<columns>
 						<Column width="12em" importance="High">
 							<customData>

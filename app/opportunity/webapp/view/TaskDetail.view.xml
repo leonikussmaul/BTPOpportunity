@@ -46,7 +46,7 @@
 								</u:expandedContent>
 								<u:actions>
 									<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" class="sapUiSmallMarginEnd"/>
-									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="Delete Task" tooltip="Delete Task" press="onDeleteTaskObjectPress"  />
+									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="{i18n>deleteTask}" tooltip="{i18n>deleteTask}" press="onDeleteTaskObjectPress"  />
 								</u:actions>
 							</u:ObjectPageDynamicHeaderTitle>
 						</u:headerTitle>
@@ -99,7 +99,7 @@
 
 						
 						<u:sections>
-						<u:ObjectPageSection id="idTaskDetailSection" titleUppercase="false" title="Edit Task" visible="{editModel>/editMode}">
+						<u:ObjectPageSection id="idTaskDetailSection" titleUppercase="false" title="{i18n>editTask}" visible="{editModel>/editMode}">
 								<u:ObjectPageSubSection id="idTaskDetailSubSection">
 									<core:Fragment id="idTaskDetailFragment" fragmentName="opportunity.opportunity.view.fragments.TaskDetailHeader"  type="XML"/>
 								</u:ObjectPageSubSection>
@@ -126,7 +126,7 @@
 								}
 		}" selectionChange="onSelectSubTask"
 										
-										 inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Looks like there are no sub-tasks.">
+										 inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="{i18n>noDataSubTasks}">
 						<headerToolbar>
 							
 			<OverflowToolbar design="Transparent">
@@ -134,8 +134,8 @@
 						<ToolbarSpacer/>
 						
 						<!-- <OverflowToolbarButton icon="sap-icon://accept" tooltip="Add Table Item" press="onTableCheckPress"/> -->
-						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onAddSubTask"/>
-						<Button text="Clean Up" icon="sap-icon://clear-all" tooltip="Delete selected Item" press="onDeleteSubTasks"/>
+						<OverflowToolbarButton icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddSubTask"/>
+						<Button text="{i18n>cleanUp}" icon="sap-icon://clear-all" tooltip="{i18n>deleteSelected}" press="onDeleteSubTasks"/>
 					</OverflowToolbar>
 		</headerToolbar>
 					

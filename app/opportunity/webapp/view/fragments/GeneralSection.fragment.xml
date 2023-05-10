@@ -16,7 +16,7 @@
 			<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
 		</smartForm:layout>
 		<!-- header group  -->
-		<smartForm:Group  label="Header" visible="{editModel>/editMode}">
+		<smartForm:Group  label="{i18n>groupHeaderLabel}" visible="{editModel>/editMode}">
 			<smartForm:GroupElement>
 				<smartField:SmartField value="{account}" />
 			</smartForm:GroupElement>
@@ -35,7 +35,7 @@
 			</smartForm:GroupElement>
 		</smartForm:Group>
 		<!-- dates group  -->
-		<smartForm:Group  label="Dates" >
+		<smartForm:Group  label="{i18n>groupDatesLabel}" >
 			<smartForm:GroupElement>
 				<smartField:SmartField value="{opportunityCreatedQuarter}" />
 			</smartForm:GroupElement>
@@ -50,7 +50,7 @@
 			</smartForm:GroupElement>
 		</smartForm:Group >
 		<!-- value group -->
-		<smartForm:Group  label="Value">
+		<smartForm:Group  label="{i18n>groupValueLabel}">
 			<smartForm:GroupElement label="Value">
 				<smartField:SmartField value="{opportunityValue}"  />
 			</smartForm:GroupElement>
