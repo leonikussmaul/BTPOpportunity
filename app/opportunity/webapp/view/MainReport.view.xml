@@ -135,7 +135,7 @@
 							key="opportunityClosedQuarter"
 							index="4"
 							label="{i18n>opportunityClosedQuarter}"
-							visibleInAdvancedArea="true">
+							visibleInAdvancedArea="false">
 								<smartFilterBar:customControl>
 									<MultiComboBox
 									id="opportunityQuarterClosedFilter"
@@ -185,6 +185,29 @@
 									</MultiComboBox>
 								</smartFilterBar:customControl>
 							</smartFilterBar:ControlConfiguration>
+
+							<smartFilterBar:ControlConfiguration
+							key="ssa"
+							label="{i18n>SSA}"
+							visibleInAdvancedArea="false" index="6">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="ssaFilter"
+									customData:hasValue="false"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunitySSAVH',
+                                    sorter: {
+                                                path: 'SSA',
+                                                descending: false
+                                            }
+                                    }">
+										<core:Item key="SSA" text="{SSA}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+
+
 							<smartFilterBar:ControlConfiguration
 							key="priority"
 							index="5"
@@ -208,7 +231,7 @@
 							visible="false"></smartFilterBar:ControlConfiguration>
 							<smartFilterBar:ControlConfiguration
 							key="opportunityInCRM"
-							label="{i18n>opportunityInCRM}"
+							label="{i18n>opportunityInCRM}" index="20"
 							visibleInAdvancedArea="true">
 								<smartFilterBar:customControl>
 									<Switch
@@ -232,7 +255,11 @@
 							label="Note Text"
 							visibleInAdvancedArea="false"
                             visible="false"></smartFilterBar:ControlConfiguration>
+
 						</smartFilterBar:controlConfiguration>
+
+						
+
 					</smartFilterBar:SmartFilterBar>
 				</f:content>
 			</f:DynamicPageHeader>

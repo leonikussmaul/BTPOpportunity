@@ -15,8 +15,9 @@ service OpportunityService {
     entity opportunityStatusVH as projection on opportunities.opportunityStatusVH;
     entity opportunityMarketUnitVH as projection on opportunities.opportunityMarketUnitVH;
     entity opportunityPriorityVH as projection on opportunities.opportunityPriorityVH;
+    entity opportunitySSAVH as projection on opportunities.opportunitySSAVH;
     entity opportunitySubTasks as projection on opportunities.opportunitySubTasks;
-
+    entity opportunitySubTaskStatus as projection on opportunities.opportunitySubTaskStatus;
 
 
 }

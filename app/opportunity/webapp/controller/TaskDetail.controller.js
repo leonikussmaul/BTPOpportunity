@@ -13,12 +13,13 @@ sap.ui.define([
     "sap/ui/export/Spreadsheet",
     'jquery.sap.global',
     "sap/ui/model/FilterType",
-    "../model/formatter"
+    "../model/formatter",
+    "sap/ui/core/routing/History",
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter) {
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter, History) {
         "use strict";
 
 
@@ -48,9 +49,9 @@ sap.ui.define([
 
                 this.getView().bindElement({
                     path: "/opportunityActionItems/" + this._sID,
-                    // parameters: {
-                    //     expand: "actionItems"
-                    // }
+                    parameters: {
+                        expand: "subTasks"
+                    }
 
                 });
                 oModel.setDefaultBindingMode("TwoWay");
@@ -102,10 +103,11 @@ sap.ui.define([
 
             },
 
-
             onNavBackPress: function (oEvent) {
-
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 var oModel = this.getView().getModel();
+                var oHistory = History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
 
                 var oEditModel = this.getView().getModel("editModel");
                 var bEditMode = oEditModel.getProperty("/editMode");
@@ -113,28 +115,26 @@ sap.ui.define([
                     MessageBox.confirm("Discard changes and navigate back?", {
                         onClose: function (oAction) {
                             if (oAction === MessageBox.Action.OK) {
-                                // If user confirms, navigate back
-                                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                                oRouter.navTo("TasksReport");
-                                oEditModel.setProperty("/editMode", false);
 
-                                if (oModel.hasPendingChanges()) {
-                                    oModel.resetChanges();
-                                    oModel.updateBindings();
-                                }
+                                 // If user confirms, navigate back
+                                 oEditModel.setProperty("/editMode", false);
+                                 if (oModel.hasPendingChanges()) {
+                                     oModel.resetChanges();
+                                     oModel.updateBindings();
+                                 }
+    
+                                if (sPreviousHash !== undefined) window.history.go(-1);
+                                else oRouter.navTo("TasksReport");
                             }
                         }.bind(this)
                     });
                 } else {
                     // If edit mode is disabled, directly navigate back
-                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("TasksReport");
+                    if (sPreviousHash !== undefined) window.history.go(-1);
+                    else oRouter.navTo("TasksReport");
                 }
 
-
             },
-
-
 
             onTableCheckPress: function (oEvent) {
                 var aSelected = this.getView().byId("subTaskTable").getTable().getSelectedItems()
@@ -190,7 +190,8 @@ sap.ui.define([
                     subTaskOwner: oData.subTaskOwner,
                     subTaskDueDate: sDueDate,
                     opptID_ID: this._sID,
-                    subTaskCompleted: false
+                    subTaskCompleted: false,
+                    subTaskStatus: oData.subTaskStatus
                 };
 
                 that.getView().setBusy(true);
@@ -211,26 +212,38 @@ sap.ui.define([
             },
 
             onDialogOpen: function (fragmentName) {
-                var oController = this;
-                if (!this._fragmentDialogs) {
-                    this._fragmentDialogs = {};
-                }
 
-                if (!this._fragmentDialogs[fragmentName]) {
-                    this._fragmentDialogs[fragmentName] = Fragment.load({ name: fragmentName, controller: this });
+                var that = this;
+                if(!this._pDialog){
+                    this._pDialog = Fragment.load({
+                        id:"myDialog",
+                        name: fragmentName,
+                        controller:this
+                    }).then(function(_pDialog){
+                        that.getView().addDependent(_pDialog);
+                        _pDialog.setEscapeHandler(function () {
+                            that.onCloseDialog();
+                        });
+                        return _pDialog;
+                    });
                 }
+                this._pDialog.then(function(_pDialog){                
+                    _pDialog.open();
+                    
+                })
+        },
 
-                this._fragmentDialogs[fragmentName].then(function (fragmentDialog) {
-                    oController.getView().addDependent(fragmentDialog);
-                    fragmentDialog.open();
+
+        onCancelDialogPress: function (oEvent) {
+                this._pDialog.then(function(_pDialog){
+                    _pDialog.close();
+                    _pDialog.destroy();
                 });
-            },
-
-            onCancelDialogPress: function (oEvent) {
-                oEvent.getSource().getParent().getParent().close();
-                var oAddTaskModel = this.getView().getModel("AddSubTaskModel");
-                oAddTaskModel.setData({}); 
-            },
+                this._pDialog = null;    
+                var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
+                oAddSubTaskModel.setData({}); 
+          
+        },
 
 
             onSelectSubTask: function (oEvent) {
@@ -398,6 +411,127 @@ sap.ui.define([
 
             },
 
+            onReorderUp: function(oEvent) {
+                var oSubTaskModel = this.getView().getModel("subTaskModel");
+                var aSubTasks = oSubTaskModel.getProperty("/subtasks").slice();
+                var oItem = oEvent.getSource().getBindingContext("subTaskModel").getObject();
+                var iIndex = oItem.subTaskOrder;
+                var iNewIndex = iIndex - 1;
+                [aSubTasks[iIndex], aSubTasks[iNewIndex]] = [aSubTasks[iNewIndex], aSubTasks[iIndex]];
+                aSubTasks.forEach(function(oItem, iIndex) {
+                    oItem.subTaskOrder = iIndex;
+                });
+                oSubTaskModel.setProperty("/subtasks", aSubTasks);
+                oSubTaskModel.updateBindings();
+            
+                var oSubTaskTable = this.getView().byId("subTaskTable");
+                var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID;
+                var oModel = this.getView().getModel();
+            
+                oSubTaskTable.getItems().forEach(oItem => {
+                    var guidJSON = oItem.getBindingContext("subTaskModel").getObject().ID;
+                    var iOrder = oItem.getBindingContext("subTaskModel").getObject().subTaskOrder;
+            
+                    var subTasks = oModel.getProperty(oItem.getBindingContext().getPath()).subTasks.__list;
+                    for (var i = 0; i < subTasks.length; i++) {
+                        var guidOData = subTasks[i].split('guid')[1].slice(1, -2);
+                        if (guidOData == guidJSON) {
+                            var sPath = "/opportunitySubTasks(guid'" + guidJSON + "')";
+                            var oData = { subTaskOrder: iOrder };
+                            oModel.update(sPath, oData, {
+                                success: function() {
+                                    // MessageToast.show("success");
+                                },
+                                error: function(oError) {
+                                    MessageToast.show(oError.message);
+                                }
+                            });
+                            break;
+                        }
+                    }
+                });
+            },
+            
+
+             
+            onReorderDown: function(oEvent) {
+                var oSubTaskModel = this.getView().getModel("subTaskModel");
+                var aSubTasks = oSubTaskModel.getProperty("/subtasks").slice();
+              
+                var oItem = oEvent.getSource().getBindingContext("subTaskModel").getObject();
+                var iIndex = oItem.subTaskOrder;
+                var iNewIndex = iIndex + 1;
+              
+                [aSubTasks[iIndex], aSubTasks[iNewIndex]] = [aSubTasks[iNewIndex], aSubTasks[iIndex]];
+              
+                aSubTasks.forEach(function(oItem, iIndex) {
+                  oItem.subTaskOrder = iIndex;
+                });
+              
+                oSubTaskModel.setProperty("/subtasks", aSubTasks);
+                oSubTaskModel.updateBindings();
+              
+                var oSubTaskTable = this.getView().byId("subTaskTable");
+                var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID; 
+                var oModel = this.getView().getModel();
+              
+                var subTaskItems = oSubTaskTable.getItems().forEach(oItem =>{
+                  var guidJSON = oItem.getBindingContext("subTaskModel").getObject().ID; 
+                  var iOrder = oItem.getBindingContext("subTaskModel").getObject().subTaskOrder; 
+              
+                  var subTasks = oItem.getBindingContext().getObject().subTasks.__list; 
+                  for(var i=0; i < subTasks.length; i++){
+                    var guidOData = subTasks[i].split('guid')[1].slice(1,-2);
+                    if(guidOData == guidJSON) {
+                      console.log("success");
+                      var sPath = "/opportunitySubTasks(guid'" + guidJSON + "')";
+                      var oData = { subTaskOrder: iOrder};
+                      oModel.update(sPath, oData, {
+                        success: function() {
+                        //   MessageToast.show("success");
+                        },
+                        error: function(oError) {
+                          MessageToast.show(oError.message);
+                        }
+                      });
+                    } 
+                  }
+                })
+              },
+
+            onPopoverPress: function (oEvent) {
+                var oButton = oEvent.getSource(),
+                    oView = this.getView(),
+                    iIndex = oEvent.getSource().getBindingContext("subTaskModel").sPath;
+            
+                    this._pPopover = Fragment.load({
+                        id: oView.getId(),
+                        name: "opportunity.opportunity.view.fragments.TaskPopover2",
+                        controller: this
+                    }).then(function(oPopover) {
+                        oView.addDependent(oPopover);
+                        oPopover.bindElement({
+                            path: "subTaskModel>" + iIndex, // set the binding path based on the clicked index
+                            events: {
+                                change: function() {
+                                    oPopover.invalidate(); // invalidate the popover to force it to update with the new data
+                                }
+                            }
+                        });
+                       
+                        return oPopover;
+                    })
+                
+                this._pPopover.then(function(oPopover) {
+                    oPopover.attachAfterClose(function() {
+                        oPopover.destroy();
+                        this._pPopover = null;
+                    }.bind(this));
+                    oPopover.openBy(oButton);
+                });
+            }
+            
+              
 
 
         });

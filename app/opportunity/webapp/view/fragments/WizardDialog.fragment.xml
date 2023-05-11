@@ -74,14 +74,16 @@
 								<CheckBox text="No" selected="{viewModel>/opportunityInCRM}" id="opportunityInCRMCreate" select=".onCRMCheckboxSelect" />
 							</form:SimpleForm>
 							<HBox alignItems="Center" justifyContent="Center" width="100%" >
-								<SegmentedButton id="segmentedStatus" width="480px" >
+								<SegmentedButton id="segmentedStatus" width="560px" >
 									<items>
-										<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity"/>
 										<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
+										<SegmentedButtonItem icon="sap-icon://overlay" text="Opp" key="Opportunity"/>
 										<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
+										<SegmentedButtonItem icon="sap-icon://activate" text="Delivery" key="Delivery"/>
 										<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
 									</items>
 								</SegmentedButton>
+
 							</HBox>
 						</WizardStep>
 						<!-- step 2 -->
@@ -161,7 +163,21 @@
 								<Input placeholder="{i18n>clientContactPlaceholder}" 
 							type="Text" value="{viewModel>/clientContactPerson}" id="clientContactPerson" />
 								<Label text="{i18n>ssa}" />
-								<Input id="ssa" placeholder="{i18n>ssaPlaceholder}" value="{viewModel>/ssa}" />
+								<!-- <Input id="ssa" placeholder="{i18n>ssaPlaceholder}" value="{viewModel>/ssa}" /> -->
+								<ComboBox
+							placeholder="{i18n>ssaPlaceholder}"
+									id="ssa"
+									value="{viewModel>/ssa}"
+                                    items="{
+                                    path: '/opportunitySSAVH',
+                                    sorter: {
+                                                path: 'SSA',
+                                                descending: false
+                                            }
+                                    }">
+									<core:Item key="{SSA}" text="{SSA}"/>
+								</ComboBox>
+
 								<Label text="{i18n>source}" />
 								<Input placeholder="{i18n>sourcePlaceholder}" id="source" value="{viewModel>/source}" />
 							</form:SimpleForm>

@@ -56,6 +56,8 @@ entity opportunitySubTasks {
         subTaskDueDate: Date;
         subTaskOwner:  String(20);
         subTaskCompleted: Boolean; 
+        subTaskOrder: Integer; 
+        subTaskStatus: String(50); 
 };
 
 @cds.autoexpose
@@ -115,6 +117,18 @@ entity opportunityMarketUnitVH {
 entity opportunityPriorityVH {
     key ID     : UUID;
         priority  : String(10);
+};
+
+@cds.autoexpose
+entity opportunitySSAVH {
+    key ID     : UUID;
+        SSA  : String(50);
+};
+
+@cds.autoexpose
+entity opportunitySubTaskStatus {
+    key ID     : UUID;
+        subTaskStatus  : String(50);
 };
 
 

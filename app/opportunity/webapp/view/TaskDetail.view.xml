@@ -57,8 +57,12 @@
 							<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionOwner} !== null}">
 									<Title text="{i18n>actionOwner}" class="sapUiTinyMarginBottom" />
 									<HBox>
-									<Avatar displayShape="Square" displaySize="XS" class="sapUiTinyMarginEnd" initials="{path: 'actionOwner', formatter:'.formatter.formatInitials'}"
-						 backgroundColor="{path: 'actionOwner', formatter:'.formatter.formatInitialsColor'}"/>
+									<!-- <Avatar displayShape="Square" displaySize="XS" class="sapUiTinyMarginEnd" initials="{path: 'actionOwner', formatter:'.formatter.formatInitials'}"
+						 backgroundColor="{path: 'actionOwner', formatter:'.formatter.formatInitialsColor'}"/> -->
+
+						 <Avatar src="{path: 'actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="sapUiTinyMarginEnd"
+									visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" />
+
 								<Label text="{actionOwner}"  class="sapUiTinyMarginTop"/>
 								</HBox>
 								</VBox>
@@ -84,7 +88,8 @@
 								state="{path: 'actionProgress', formatter: '.formatter.progressStatus'}" />
 								</VBox>
 
-								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
+
+<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>actionProgress}"  />
 									<Slider value="{actionProgress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
@@ -92,8 +97,22 @@
 							showHandleTooltip="false"
 							class="sapUiSmallMarginTop" enableTickmarks="true" />
 
-
+</VBox>
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" >
+								<Title text="Flow"  />
+									
+			<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
+									 content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}">
+						<commons:content>
+							<commons:MicroProcessFlowItem state="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
+							press="onPopoverPress" >
+								
+							</commons:MicroProcessFlowItem>
+						</commons:content>
+					</commons:MicroProcessFlow> 
 								</VBox>
+
+								
 							</FlexBox>
 						</u:headerContent>
 
@@ -111,16 +130,11 @@
 					
 				<Table  id="subTaskTable" items="{
 			path : 'subTaskModel>/subtasks',
-			 sorter: [
-                                            {
-                                                path: 'subTaskOwner',
-                                                group: true
-                                            },
-                                            {
-                                                path: 'subTaskCompleted',
+			 sorter:
+                                  {
+                                                path: 'subTaskOrder',
                                                 descending: false
-                                            }
-                                        ],
+                                            },
 										parameters: {
 									$count: true
 								}
@@ -152,12 +166,41 @@
 							</customData>
 							<Label text="{i18n>subTaskOwner}" tooltip="{i18n>subTaskOwner}"/>
 						</Column>
+
+
+						<Column  width="10em">
+							<customData>
+								<core:CustomData key="p13nData"/>
+							</customData>
+							<Label text="Status" tooltip="Status"/>
+						</Column>
+
+						
 						<Column  width="10em">
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "subTaskDueDate", "columnIndex" : "3", "leadingProperty": "subTaskDueDate", "sortProperty": "subTaskDueDate", "filterProperty": "subTaskDueDate ", "type":"string"}'/>
 							</customData>
 							<Label text="{i18n>subTaskDueDate}" tooltip="{i18n>subTaskDueDate}"/>
 						</Column>
+
+
+						<!-- test reorder -->
+
+						<Column  width="3em">
+							<customData>
+								<core:CustomData key="p13nData" />
+							</customData>
+							<Label />
+						</Column>
+
+						<Column  width="3em">
+							<customData>
+								<core:CustomData key="p13nData"/>
+							</customData>
+							<Label />
+						</Column>
+
+						
 						
 							</columns>
 					<items >
@@ -165,7 +208,15 @@
 							<cells >
 								
 								<Text text="{subTaskModel>subTask}" wrapping="true" />
-								<Text text="{subTaskModel>subTaskOwner}" wrapping="true" />
+								<!-- <Text text="{subTaskModel>subTaskOwner}" wrapping="true" /> -->
+								<Avatar src="{path: 'subTaskModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
+								visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}"/>
+
+								<Avatar displaySize="XS"
+										src="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
+										backgroundColor="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatAccentStatus'}"
+										visible="{= ${subTaskModel>subTaskStatus} !== null }" />
+
 								<ObjectStatus text="{path: 'subTaskModel>subTaskDueDate',
 								 type: 'sap.ui.model.type.Date',
                                                     formatOptions: {
@@ -174,7 +225,12 @@
                                                     }
 								}" icon="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatIconDueDate'}"
 								state="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${subTaskModel>subTaskDueDate} !== null}" />
+								
+								
+								<core:Icon press="onReorderUp" src="sap-icon://slim-arrow-up" size="1.2rem" color="#427cac"/>
+								<core:Icon press="onReorderDown" src="sap-icon://slim-arrow-down" size="1.2rem" color="#427cac"/>
 
+									
 								
 							</cells>
 						</ColumnListItem>
@@ -186,34 +242,6 @@
 
 
 							</u:sections>
-
-							<!-- <u:ObjectPageSection  >
-								<u:ObjectPageSubSection >
-									<commons:ProcessFlow
-			id="processflow"
-			nodes="{/opportunityHeader}"
-			lanes="{/opportunityHeader}">
-			<commons:nodes>
-				<commons:ProcessFlowNode
-					title="{account}"
-					titleAbbreviation="{primaryContact}" />
-			</commons:nodes>
-			<commons:lanes>
-				<commons:ProcessFlowLaneHeader
-					text="{account}"/>
-			</commons:lanes>
-		</commons:ProcessFlow>
-								</u:ObjectPageSubSection>
-							</u:ObjectPageSection> -->
-
-							
-
-								<!-- <commons:MicroProcessFlow renderType="Scrolling" content="{subTaskModel>/subtasks}">
-					<commons:content>
-						<commons:MicroProcessFlowItem state="Error"/>
-					</commons:content>
-					</commons:MicroProcessFlow> -->
-
 
 
 					</u:ObjectPageLayout>

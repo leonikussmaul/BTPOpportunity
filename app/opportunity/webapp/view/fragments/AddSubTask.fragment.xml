@@ -21,7 +21,7 @@
             <TextArea value="{AddSubTaskModel>/subTask}" id="subTaskInput" maxLength="800" placeholder="{i18n>subTaskPlaceholder}"/>
 
 			<Label text="Owner" />
-			<ComboBox selectedKey="{AddSubTaskModel>/subTaskOwner}" placeholder="{i18n>subTaskOwerPlaceholder}"
+			<ComboBox selectedKey="{AddSubTaskModel>/subTaskOwner}" placeholder="{i18n>subTaskOwnerPlaceholder}"
 							 items="{
                                     path: '/opportunityPrimaryContactVH',
                                     sorter: {
@@ -37,6 +37,17 @@
 			<DatePicker value="{AddSubTaskModel>/subTaskDueDate}" id="subTaskDueDateID"  />
 
 
+<Label text="Status" />
+			<ComboBox selectedKey="{AddSubTaskModel>/subTaskStatus}" placeholder="{i18n>subTaskStatus}"
+							 items="{
+                                    path: '/opportunitySubTaskStatus',
+                                    sorter: {
+                                                path: 'subTaskStatus',
+                                                descending: true
+                                            }
+                                    }">
+				<core:Item key="{subTaskStatus}" text="{subTaskStatus}"/>
+			</ComboBox>
 			<!-- <Label text="Priority" />
 			<ComboBox selectedKey="{AddSubTaskModel>/actionPriority}" placeholder="How urgent is it?">
 				<core:Item key="High" text="High"/>

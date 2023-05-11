@@ -1,6 +1,6 @@
 
 
-sap.ui.define([], function () {
+sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
   "use strict";
 
   return {
@@ -12,30 +12,65 @@ sap.ui.define([], function () {
       return sIcon;
     },
 
-    mapStatusToProgress: function (status) {
-      switch (status) {
-        case "Opportunity":
-          return 20;
-        case "Lead":
-          return 70;
-        case "Completed":
-          return 100;
+    formatterTeamPictures: function (sPerson) {
+
+      switch (sPerson) {
+        case "Abhay":
+          return "./images/Abhay.jpeg";
+        case "Ami":
+          return "./images/Ami.jpeg";
+        case "Amit":
+          return "./images/Amit.jpeg";
+        case "Andrea":
+          return "./images/Andrea.jpeg";
+        case "Arpit":
+          return "./images/Arpit.jpeg";
+        case "Bas":
+          return "./images/Bas.jpeg";
+        case "Elinor":
+          return "./images/Elinor.jpeg";
+        case "Gurpreet":
+          return "./images/Gurpreet.jpeg";
+        case "Karthik":
+          return "./images/Karthik.jpeg";
+        case "Leoni":
+          return "./images/Leoni.jpeg";
+        case "Liliana":
+          return "./images/Liliana.jpeg";
+        case "Matt":
+          return "./images/Matt.jpeg";
+          case "Nesimi":
+            return "./images/Nesimi.jpeg";
+        case "Omar":
+          return "./images/Omar.jpeg";
+        case "Peter":
+          return "./images/Peter.jpeg";
+        case "Rajat":
+          return "./images/Rajat.jpeg";
+        case "Ravi":
+          return "./images/Ravi.jpeg";
+        case "Rudolf":
+          return "./images/Rudolf.jpeg";
+        case "Sarah":
+          return "./images/Sarah.jpeg";
+        case "Shubham":
+          return "./images/Shubham.jpeg";
+        case "Sneha":
+          return "./images/Sneha.jpeg";
+        case "Stefan":
+          return "./images/Stefan.jpeg";
+        case "Sunil":
+          return "./images/Sunil.jpeg";
+        case "Vijay":
+          return "./images/Vijay.jpeg";
+
         default:
-          return 0;
+          return;
       }
+
     },
-    mapStatusToPercent: function (status) {
-      switch (status) {
-        case "Opportunity":
-          return 20;
-        case "Lead":
-          return 70;
-        case "Completed":
-          return 100;
-        default:
-          return 0;
-      }
-    },
+
+
 
     addKUnit: function (value) {
       if (value)
@@ -61,7 +96,13 @@ sap.ui.define([], function () {
         return 7;
       } else if (topic === 'Automation / AI') {
         return 8;
-      } else return 3;
+      } else if (topic === 'Governance Framework') {
+        return 3;
+      } else if (topic === 'CSD') {
+        return 1;
+      } else if (topic === 'iCCM') {
+        return 2;
+      } else return;
 
     },
 
@@ -86,6 +127,8 @@ sap.ui.define([], function () {
       switch (sStatus) {
         case "Opportunity":
           return "Information";
+        case "Delivery":
+          return "Information";
         case "Lead":
           return "Warning";
         case "Completed":
@@ -105,6 +148,8 @@ sap.ui.define([], function () {
           return "sap-icon://flag";
         case "Completed":
           return "sap-icon://checklist-item-2";
+        case "Delivery":
+          return "sap-icon://activate";
         case "Paused":
           return "sap-icon://pause";
         default:
@@ -154,8 +199,8 @@ sap.ui.define([], function () {
 
     progressPercentage: function (sValue) {
 
-      if(sValue) return sValue + '%';
-      else return; 
+      if (sValue) return sValue + '%';
+      else return;
     },
 
     progressStatus: function (sValue) {
@@ -181,9 +226,9 @@ sap.ui.define([], function () {
 
     toggleButtonPressed: function (aItems, oToggle) {
       var isMatch = aItems.some(oItem => {
-        if(oItem.topic){
+        if (oItem.topic) {
           return oItem.topic.toUpperCase() === oToggle.toUpperCase();
-        }else if(oItem.deliverable){
+        } else if (oItem.deliverable) {
           return oItem.deliverable.toUpperCase() === oToggle.toUpperCase();
         }
       });
@@ -193,23 +238,23 @@ sap.ui.define([], function () {
 
     toggleButtonEnabled: function (aItems, oToggle, editMode) {
 
-      if(editMode){
+      if (editMode) {
         return true;
-      }else{
+      } else {
 
-      var isMatch = aItems.some(oItem => {
-        if(oItem.topic){
-          return oItem.topic.toUpperCase() === oToggle.toUpperCase();
-        }else if(oItem.deliverable){
-          return oItem.deliverable.toUpperCase() === oToggle.toUpperCase();
-        }
-      });
-      if (isMatch) return true;
-      else return false;
-    }
+        var isMatch = aItems.some(oItem => {
+          if (oItem.topic) {
+            return oItem.topic.toUpperCase() === oToggle.toUpperCase();
+          } else if (oItem.deliverable) {
+            return oItem.deliverable.toUpperCase() === oToggle.toUpperCase();
+          }
+        });
+        if (isMatch) return true;
+        else return false;
+      }
     },
 
-    priortityButton: function(sPriority){
+    priortityButton: function (sPriority) {
       if (sPriority === 'High') {
         return 'Reject';
       } else if (sPriority === 'Medium') {
@@ -218,45 +263,113 @@ sap.ui.define([], function () {
         return 'Accept';
       }
 
-  },
+    },
 
-  favoriteIconFormatter: function (isFavorite) {
-    var sIcon = "sap-icon://unfavorite";
-    if (isFavorite === true) {
+    favoriteIconFormatter: function (isFavorite) {
+      var sIcon = "sap-icon://unfavorite";
+      if (isFavorite === true) {
         sIcon = "sap-icon://favorite";
-    }
-    return sIcon;
-},
+      }
+      return sIcon;
+    },
 
-formatDueDate: function(sDueDate){
+    formatDueDate: function (sDueDate) {
 
-  var sTodayDate = new Date();
-  if(sDueDate < sTodayDate) return "Error"; 
-  else if(sDueDate === sTodayDate) return "Warning"; 
+      var sTodayDate = new Date();
+      if (sDueDate < sTodayDate) return "Error";
+      else if (sDueDate === sTodayDate) return "Warning";
 
-},
-
-
-formatIconDueDate: function(sDueDate) {
-  var dueDate = new Date(sDueDate);
-  var todayDate = new Date();
-  var oneWeek = 7 * 24 * 60 * 60 * 1000; 
-
-  if (todayDate.getTime() > dueDate.getTime() + oneWeek) {
-    return "sap-icon://alert";
-  }
-  else {
-    return ""; 
-  }
-},
+    },
 
 
-SubTaskCompleted: function(sCompleted) {
-  if(sCompleted) return true; 
-  else return false; 
-},
+    formatIconDueDate: function (sDueDate) {
+      var dueDate = new Date(sDueDate);
+      var todayDate = new Date();
+      var oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+      if (todayDate.getTime() > dueDate.getTime() + oneWeek) {
+        return "sap-icon://alert";
+      }
+      else {
+        return "";
+      }
+    },
 
 
+    SubTaskCompleted: function (sCompleted) {
+      if (sCompleted) return true;
+      else return false;
+    },
+
+
+    processFlowFormatter: function(sStatus){
+      switch (sStatus) {
+        case "Paused":
+          return "None";
+        case "In Progress":
+          return "Information";
+        case "Completed":
+          return "Success";
+        case "Not Started":
+            return "Warning";
+        case "Blocked":
+          return "Error";
+        default:
+          return "None";
+      }
+    },
+
+    formatSubTaskIcon: function (sStatus) {
+      switch (sStatus) {
+        case "In Progress":
+          return "sap-icon://lateness";
+        case "Completed":
+          return "sap-icon://message-success";
+        case "Not Started":
+          return "sap-icon://begin";
+        case "Blocked":
+            return "sap-icon://error";
+        case "Paused":
+          return "sap-icon://pause";
+        default:
+          return "sap-icon://information";
+      }
+
+    },
+
+    formatSubTaskIconColor: function(sStatus){
+      switch (sStatus) {
+        case "Paused":
+          return coreLibrary.IconColor.Neutral;
+        case "In Progress":
+          return "#0a6ed1";
+        case "Completed":
+          return coreLibrary.IconColor.Positive;
+        case "Not Started":
+          return coreLibrary.IconColor.Critical;
+        case "Blocked":
+          return coreLibrary.IconColor.Negative;
+        default:
+          return coreLibrary.IconColor.Tile;
+      }
+    },
+    
+    formatAccentStatus: function(sStatus){
+      switch (sStatus) {
+        case "Paused":
+          return "Accent10";
+        case "In Progress":
+          return "Accent6";
+        case "Completed":
+          return "Accent8";
+        case "Not Started":
+          return "Accent1";
+        case "Blocked":
+          return "Accent2";
+        default:
+          return "Accent10";
+      }
+    },
 
 
 

@@ -105,3 +105,4 @@ annotate service.opportunitySubTasks with {
 annotate service.opportunitySubTasks with {
     subTask @Common.Label : 'Sub-Task'
 };
+

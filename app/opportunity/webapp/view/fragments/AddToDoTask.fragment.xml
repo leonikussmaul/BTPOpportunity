@@ -19,7 +19,7 @@
 						>
 			<Label text="{i18n>account}" required="true"/>
 			<!-- <Input value="{AddTaskModel>/account}" id="accountInput" placeholder="Which customer is the task related to?" /> -->
-			<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox"
+			<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox" showSecondaryValues= "true"
 							 items="{
                                     path: '/opportunityHeader',
                                    sorter:  {
@@ -27,8 +27,9 @@
                                                 descending: true
                                             }
                                     }">
-				<core:ListItem key="{opportunityID}" text="{account}" additionalText="{opportunityID}"/>
+				<core:ListItem key="{opportunityID}" text="{account}" additionalText = "{opportunityID}"/>
 			</ComboBox>
+
 			<Label text="{i18n>actionTitle}" required="true"/>
 			<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="{i18n>toDoPlaceholder}" />
 			<Label text="{i18n>actionTask}" required="true"/>

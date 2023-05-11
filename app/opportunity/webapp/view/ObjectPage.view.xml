@@ -25,8 +25,13 @@
 							<u:ObjectPageDynamicHeaderTitle>
 								<u:expandedHeading>
 									<HBox>
+									<VBox>
 										<Title text="{account}" />
+										<Text text="{opportunityID}" class="sapUiNeutral"/>
+										
+									</VBox>
 										<Button text="{priority}" visible="{= ${priority} !== null}" type="{path: 'priority', formatter:'.formatter.priortityButton'}" class="sapUiSmallMarginBeginEnd"/>
+
 									</HBox>
 								</u:expandedHeading>
 								<u:snappedHeading>
@@ -36,7 +41,7 @@
 										<Title text="{account}" wrapping="true"/>
 									</FlexBox>
 								</u:snappedHeading>
-								<u:expandedContent>
+								<!-- <u:expandedContent>
 									<Text text="{
 				path: 'opportunityStartDate',
 				type: 'sap.ui.model.type.Date',
@@ -44,7 +49,7 @@
 					style: 'medium'
 				}
 			}" />
-								</u:expandedContent>
+								</u:expandedContent> -->
 								<u:actions>
 									<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" class="sapUiSmallMarginEnd"/>
 									
@@ -62,15 +67,16 @@
                                     displaySize="L"
                                     press="onAvatarPress" backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                     initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"/>
-								<l:VerticalLayout class="sapUiSmallMarginBeginEnd sapUiResponsiveMargin">
+								<l:VerticalLayout class="sapUiResponsiveMargin">
 									<VBox>
-										<ObjectStatus state="Information" text="{i18n>status}" icon="sap-icon://message-information" class="sapUiSmallMarginBegin"/>
+										<ObjectStatus state="Information" text="{i18n>status}" icon="sap-icon://message-information" />
 										<HBox alignItems="Center" justifyContent="Center" width="100%" >
-											<SegmentedButton  selectionChange="onSegmentPressed" id="segmentedStatusObject" width="480px" class="sapUiSmallMarginEnd sapUiSmallMarginBegin" selectedKey="{status}">
+											<SegmentedButton  selectionChange="onSegmentPressed" id="segmentedStatusObject" width="560px" class="apUiTinyMarginBeginEnd" selectedKey="{status}">
 												<items>
-													<SegmentedButtonItem icon="sap-icon://overlay" text="Opportunity" key="Opportunity"/>
 										<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
+										<SegmentedButtonItem icon="sap-icon://overlay" text="Opp" key="Opportunity"/>
 										<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
+										<SegmentedButtonItem icon="sap-icon://activate" text="Delivery" key="Delivery"/>
 										<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
 												</items>
 											</SegmentedButton>
@@ -78,15 +84,15 @@
 									</VBox>
 								</l:VerticalLayout>
 								
-								<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${opportunityClosedQuarter} !== null}">
-									<Title text="{i18n>opportunityClosedQuarter}" class="sapUiTinyMarginBottom" />
-									<ObjectStatus text="{opportunityClosedQuarter}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" />
+								<VBox class="sapUiSmallMarginEnd sapUiMediumMarginBottom" visible="{= ${opportunityCreatedQuarter} !== null}">
+									<Title text="{i18n>opportunityCreatedQuarter}" class="sapUiTinyMarginBottom" />
+									<ObjectStatus text="{opportunityCreatedQuarter}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" />
 								</VBox>
 								<VBox class="sapUiSmallMarginBeginEnd" visible="{= ${opportunityValue} !== null}">
 									<Title text="{i18n>Value}" class="sapUiTinyMarginBottom" />
 									<ObjectNumber class="sapMObjectNumberLarge" state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}" number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"  unit="EUR" />
 								</VBox>
-								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}">
+								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}">
 									<Title text="{i18n>Progress}"  />
 									<ProgressIndicator width="100%"
 								class="sapUiSmallMarginBottom"
@@ -95,7 +101,7 @@
 								showValue="true"
 								state="{path: 'progress', formatter: '.formatter.progressStatus'}" />
 								</VBox>
-								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
+								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>Progress}"  />
 									<Slider value="{progress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
@@ -165,8 +171,8 @@
 							</u:ObjectPageSection>
 							<u:ObjectPageSection id="idSectionNotes" titleUppercase="false" title="{i18n>Notes}" >
 								<u:ObjectPageSubSection id="idSubSectionNotes">
-									<!-- <core:Fragment id="idNotesFragment" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
-									<rte:RichTextEditor 
+									<core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/>
+									<!-- <rte:RichTextEditor 
 								value="{noteText}"  
 								id="editRTE" 
 								height="400px" 
@@ -175,7 +181,7 @@
 								showGroupLink="true" 
 								showGroupUndo="true" 
 								editable="{editModel>/editMode}" 
-								/>
+								/> -->
 								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
 							<!-- <u:ObjectPageSection id="idSmartChartSection" titleUppercase="false" title="{i18n>SmartChart}" ><u:ObjectPageSubSection id="idSmartChartSubSection"><VBox alignItems="Center" alignContent="Center" justifyContent="Center" renderType="Div" visible="{= ${UISwitch>/chart1} ? true : false}"><VBox fitContainer="true" alignItems="Stretch" alignContent="Stretch" justifyContent="Start" renderType="Div" height="500px" width="700px"><core:Fragment id="idSmartChartFragment" fragmentName="opportunity.opportunity.view.fragments.SmartChart" type="XML"/></VBox></VBox></u:ObjectPageSubSection></u:ObjectPageSection> -->
@@ -187,7 +193,7 @@
 						<!-- <core:Fragment id="ToDosFragment" fragmentName="opportunity.opportunity.view.fragments.ToDosSection" type="XML"/> -->
 						<f:GridList
 		id="gridList"
-		mode="SingleSelectMaster"
+		mode="Delete"
 		items="{
 		path: 'pageModel>/actionItems',
 		sorter: {
@@ -199,6 +205,7 @@
 		selectionChange="onSelectionChange"
 		class="sapUiResponsiveContentPadding"
 		sticky="ColumnHeaders,HeaderToolbar"
+			
         >
 							<f:dragDropConfig>
 								<dnd:DragInfo sourceAggregation="items" />
@@ -208,10 +215,10 @@
 								<Toolbar >
 									<ToolbarSpacer />
 									<Button icon="sap-icon://add" tooltip="Add To Do Item" press="onAddToDoPress"/>
-									<Button icon="sap-icon://edit" tooltip="Group List" press="onGroupToDoItem"/>
+									<!-- <Button icon="sap-icon://edit" tooltip="Group List" press="onGroupToDoItem"/>
 									<Button icon="sap-icon://sort" tooltip="Sort List" press="onSortToDoItem"/>
 									<Button icon="sap-icon://filter" tooltip="Filter List" press="onFilterToDoItem"/>
-									<Button icon="sap-icon://delete" tooltip="Delete To Do Item" press="onDeleteToDo"/>
+									<Button icon="sap-icon://delete" tooltip="Delete To Do Item" press="onDeleteToDo"/> -->
 									<SearchField  />
 								</Toolbar>
 							</f:headerToolbar>
@@ -220,15 +227,19 @@
 							</f:customLayout>
 
 
-							<f:GridListItem press="onPress" detailPress="onPress"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
+							<f:GridListItem press="onGridListItemPress" detailPress="onGridListItemDetailPress" type="DetailAndActive"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
 								<VBox height="100%" justifyContent="SpaceBetween" >
 									<layoutData>
 										<FlexItemData growFactor="1" shrinkFactor="0" />
 									</layoutData>
 									<VBox class="sapUiSmallMargin">
+									 <ObjectStatus text="{pageModel>actionPriority}"
+                         state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
+                           visible="{= ${pageModel>actionPriority} !== null}" 
+                           />
 										<HBox justifyContent="SpaceBetween">
 											<Title text="{pageModel>actionTitle}" wrapping="true" />
-											<Label visible="{= ${pageModel>actionDueDate} !== null}"
+											<!-- <Label visible="{= ${pageModel>actionDueDate} !== null}"
                        text="due {
                              path: 'pageModel>actionDueDate',
                              type: 'sap.ui.model.type.Date',
@@ -237,14 +248,24 @@
                                  relativeScale: 'auto'
                              }
                            }"
+						
                        wrapping="false"
-                       class="sapUiTinyMarginBottom" />
+                       class="sapUiTinyMarginBottom" /> -->
+
+					   <ObjectStatus text="due {path: 'pageModel>actionDueDate',
+								 type: 'sap.ui.model.type.Date',
+                                                    formatOptions: {
+                                                        relative: true,
+                                                        relativeScale: 'auto'
+                                                    }
+								}" class="sapUiTinyMarginBottom" icon="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatIconDueDate'}"
+								state="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${pageModel>actionDueDate} !== null}" />
+					   
 										</HBox>
 										<!-- 			
             <HBox justifyContent="Start" alignItems="Center"> -->
 										<Label text="{pageModel>actionTask}" class="sapUiSmallMarginBottom sapUiSmallMarginTop" width="100%" wrapping="true"/>
-										<Avatar src="./images/Sarah.jpeg" displayShape="Circle" customDisplaySize="2.0rem" displaySize="Custom" class="imageDisplayBlock" />
-										<Label text="{pageModel>actionOwner}" wrapping="true" />
+										
 
 											<commons:MicroProcessFlow>
 				<commons:content>
@@ -255,28 +276,19 @@
 				</commons:content>
 			</commons:MicroProcessFlow>
 
-			<VBox>
-		<CheckBox text="Option a" selected="true" />
-		<CheckBox text="Option b" />
-		<CheckBox text="Option c" selected="true" />
-		<CheckBox text="Option d" />
-		<CheckBox text="Option e" enabled="false" />
-		<CheckBox text="Option partially selected" selected="true" partiallySelected="true" />
-		<CheckBox text="Warning" valueState="Warning" />
-		<CheckBox text="Warning disabled" valueState="Warning" enabled="false" selected="true" />
-		<CheckBox text="Error" valueState="Error" />
-		<CheckBox text="Error disabled" valueState="Error" enabled="false" selected="true" />
-		<CheckBox text="Information" valueState="Information" />
-		<CheckBox text="Information disabled" valueState="Information" enabled="false" selected="true" />
-		<CheckBox text="Checkbox with wrapping='true' and long text" wrapping="true" width="150px"/>
-	</VBox>
-
 									</VBox>
-									<OverflowToolbar design="Solid" >
-										<ObjectStatus text="{pageModel>actionPriority}" class="sapUiSmallMarginBegin"
+									<OverflowToolbar design="Solid" height="45px">
+
+<HBox >
+									<Avatar src="{path: 'pageModel>actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
+									visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}" />
+										<Label text="{pageModel>actionOwner}" class="sapUiTinyMarginTop" wrapping="true" />
+										</HBox>
+
+										<!-- <ObjectStatus text="{pageModel>actionPriority}" class="sapUiSmallMarginBegin sapUiTinyMarginBottom"
                          state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
-                           visible="{= ${pageModel>actionPriority} !== null}"
-                           />
+                           visible="{= ${pageModel>actionPriority} !== null}" 
+                           /> -->
 										<ToolbarSpacer />
 										<tnt:InfoLabel text="{pageModel>actionTopic}"
                            colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"

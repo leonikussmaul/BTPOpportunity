@@ -207,13 +207,13 @@ sap.ui.define([
                     noteDate: sTodayDate,
                     noteText: oData.noteText,
                     progress: oData.progress,
-                    actionItems: [{
-                        actionDueDate: sTodayDate,
-                        actionOwner: oData.primaryContact,
-                        actionProgress: oData.progress,
-                        actionTopic: oData.topic,
-                        actionTask: oData.account
-                    }],
+                    // actionItems: [{
+                    //     actionDueDate: sTodayDate,
+                    //     actionOwner: oData.primaryContact,
+                    //     actionProgress: oData.progress,
+                    //     actionTopic: oData.topic,
+                    //     actionTask: oData.account
+                    // }],
                     topics: aTopics,
                     deliverables: aDeliverables
                 };
@@ -465,6 +465,7 @@ sap.ui.define([
                 this.addFiltersForSelectedItems(oEvent, "opportunityCreatedQuarter");
                 this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
                 this.addFiltersForSelectedItems(oEvent, "priority");
+                this.addFiltersForSelectedItems(oEvent, "ssa");
               
                 var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 var bSwitch = oSwitch ? "Yes" : "No";
@@ -502,26 +503,37 @@ sap.ui.define([
            --------------------------------------------------------------------------------------------------------------*/
 
 
-            onDialogOpen: function (fragmentName) {
-                var oController = this;
-                if (!this._fragmentDialogs) {
-                    this._fragmentDialogs = {};
-                }
+           onDialogOpen: function (fragmentName) {
 
-                if (!this._fragmentDialogs[fragmentName]) {
-                    this._fragmentDialogs[fragmentName] = Fragment.load({ name: fragmentName, controller: this });
-                }
-
-                this._fragmentDialogs[fragmentName].then(function (fragmentDialog) {
-                    oController.getView().addDependent(fragmentDialog);
-                    fragmentDialog.open();
+            var that = this;
+            if(!this._pDialog){
+                this._pDialog = Fragment.load({
+                    id:"myDialog",
+                    name: fragmentName,
+                    controller:this
+                }).then(function(_pDialog){
+                    that.getView().addDependent(_pDialog);
+                    _pDialog.setEscapeHandler(function () {
+                        that.onCloseDialog();
+                    });
+                    return _pDialog;
                 });
-            },
+            }
+            this._pDialog.then(function(_pDialog){                
+                _pDialog.open();
+                
+            })
+    },
 
 
-            onCancelDialogPress: function (oEvent) {
-                oEvent.getSource().getParent().getParent().close();
-            },
+    onCancelDialogPress: function (oEvent) {
+            this._pDialog.then(function(_pDialog){
+                _pDialog.close();
+                _pDialog.destroy();
+            });
+            this._pDialog = null;    
+      
+    },
 
             onAddTopicPress: function () {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
@@ -625,16 +637,20 @@ sap.ui.define([
                 //     }
                 // });
 
-                var oPayload = {
-                    subTask: "2nd sub task",
-                    subTaskOwner: "Gurpreet",
-                    opptID_ID: "032c9c6c-16d0-4596-86ca-40c9550d15e6",
-                    // ID: "032c9c6c-16d0-4596-86ca-40c9550d15e6",
-                    subTaskCompleted: true
-                }
+                //Paused, Not Started, In Progress, Completed
+                //not started orange
+                //paused grey
+                //in progress blue
+                //completed green
+                //blocked
+
+
+                // var oPayload = {
+                //     subTaskStatus: "Blocked"
+                // }
                 that.getView().setBusy(true);
                 var oModel = that.getView().getModel();
-                oModel.create("/opportunitySubTasks", oPayload, {
+                oModel.create("/opportunitySubTaskStatus", oPayload, {
                     success: function (oData, response) {
                         MessageToast.show("New topic posted!");
                        

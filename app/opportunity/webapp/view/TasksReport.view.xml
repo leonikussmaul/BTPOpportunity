@@ -58,7 +58,7 @@
   class="sapUiResponsiveContentPadding" 
   showFullScreenButton="true" 
   initiallyVisibleFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionDueDate"
-  requestAtLeastFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionPriority,actionDueDate,actionPriorityNumber,actionCustomer"
+  requestAtLeastFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionPriority,actionDueDate,actionPriorityNumber,actionCustomer,subTasks"
   ignoredFields="opptID_opportunityID,ID"
   ignoreFromPersonalisation="opptID_opportunityID,ID,actionPriorityNumber"           
    >
@@ -100,7 +100,7 @@
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "actionProgress", "columnIndex" : "5", "leadingProperty": "actionProgress", "sortProperty": "actionProgress", "filterProperty": "actionProgress", "type":"integer"}'/>
 							</customData>
-							<Label text="{i18n>actionProgress}"/>
+							<Label text="Flow"/>
 						</Column>
 						<Column width="12em" importance="High">
 							<customData>
@@ -119,14 +119,29 @@
                                                text="{actionCustomer}" />
 								<Text text="{actionTask}" wrapping="true" />
 								<Text text="{actionOwner}" wrapping="true"/>
+								<!-- <Avatar src="{path: 'actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd" 
+								visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" /> -->
 								<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" renderMode="Narrow"/>
-								<ProgressIndicator width="80%"
+								<!-- <ProgressIndicator width="80%"
                                                     class="sapUiSmallMarginBottom"
                                                     visible="{= ${actionProgress} !== null}"
                                                     percentValue="{actionProgress}"
                                                     displayValue="{path: 'actionProgress', formatter: '.formatter.progressPercentage'}"
                                                     showValue="true"
-                                                    state="{path: 'actionProgress', formatter: '.formatter.progressStatus'}" />
+                                                    state="{path: 'actionProgress', formatter: '.formatter.progressStatus'}" /> -->
+
+								
+								
+								<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
+									 content="{path: 'subTasks'}">
+						<commons:content>
+							<commons:MicroProcessFlowItem state="{path: 'subTaskStatus', formatter: '.formatter.processFlowFormatter'}" 
+							press="onPopoverPress" icon="{path: 'subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"  >
+								
+							</commons:MicroProcessFlowItem>
+						</commons:content>
+					</commons:MicroProcessFlow> 
+
 								<ObjectStatus state="{path: 'actionDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${actionDueDate} !== null}" text="due {
                                                     path: 'actionDueDate',
                                                     type: 'sap.ui.model.type.Date',

@@ -32,7 +32,38 @@ sap.ui.define([
                 sap.ui.core.UIComponent.getRouterFor(this).getRoute("TasksReport").attachPatternMatched(this._onRoutePatternMatched, this);
 
 
+
+                var oPageModel = new JSONModel({});
+                this.getView().setModel(oPageModel, "actionItemModel");
                
+
+            },
+
+            onReadTasksData: function () {
+                var oModel = this.getView().getModel();
+                var oActionItemModel = this.getView().getModel("actionItemModel");
+
+                oModel.read("/opportunityActionItems", {
+                     urlParameters: {
+                         "$expand": "subTasks"
+                     },
+                    success: function (oResponse) {
+                        var aTasks = oResponse.results;
+                        var aAllSubTasks = []; 
+                        for(var i=0; i < aTasks.length; i++ ){
+                            var oItem = aTasks[i].subTasks.results;
+                            for(var j=0; j < oItem.length; j++) {
+                                aAllSubTasks.push(oItem[j]);
+                            }
+                        }
+                        
+                        oActionItemModel.setProperty("/actionItems", aTasks);
+                        oActionItemModel.setProperty("/subTasks", aAllSubTasks);
+                    }.bind(this),
+                    error: function (oError) {
+                        console.log(oError);
+                    }
+                });
 
             },
 
@@ -52,6 +83,8 @@ sap.ui.define([
                 var sViewName = this.getView().getViewName().split('.')[3]; 
                 oGlobalModel.setProperty("/viewName", sViewName);
                 oGlobalModel.setProperty("/buttonText", "Go to Opportunities");
+
+                this.onReadTasksData(); 
                
                 
             },
@@ -158,26 +191,37 @@ sap.ui.define([
 
              
 
-            onDialogOpen: function (fragmentName) {
-                var oController = this;
-                if (!this._fragmentDialogs) {
-                    this._fragmentDialogs = {};
-                }
+              onDialogOpen: function (fragmentName) {
 
-                if (!this._fragmentDialogs[fragmentName]) {
-                    this._fragmentDialogs[fragmentName] = Fragment.load({ name: fragmentName, controller: this });
+                var that = this;
+                if(!this._pDialog){
+                    this._pDialog = Fragment.load({
+                        id:"myDialog",
+                        name: fragmentName,
+                        controller:this
+                    }).then(function(_pDialog){
+                        that.getView().addDependent(_pDialog);
+                        _pDialog.setEscapeHandler(function () {
+                            that.onCloseDialog();
+                        });
+                        return _pDialog;
+                    });
                 }
+                this._pDialog.then(function(_pDialog){                
+                    _pDialog.open();
+                    
+                })
+        },
 
-                this._fragmentDialogs[fragmentName].then(function (fragmentDialog) {
-                    oController.getView().addDependent(fragmentDialog);
-                    fragmentDialog.open();
+
+        onCancelDialogPress: function (oEvent) {
+                this._pDialog.then(function(_pDialog){
+                    _pDialog.close();
+                    _pDialog.destroy();
                 });
-            },
-
-
-            onCancelDialogPress: function (oEvent) {
-                oEvent.getSource().getParent().getParent().close()
-            },
+                this._pDialog = null;    
+          
+        },
 
 
             onListItemPress: function (oEvent) {
@@ -214,6 +258,41 @@ sap.ui.define([
   
             },
 
+
+            onPopoverPress: function (oEvent) {
+                var oButton = oEvent.getSource(),
+                    oView = this.getView(),
+                    iIndex = oEvent.getSource().getBindingContext().sPath;
+            
+                    this._pPopover = Fragment.load({
+                        id: oView.getId(),
+                        name: "opportunity.opportunity.view.fragments.TaskPopover",
+                        controller: this
+                    }).then(function(oPopover) {
+                        oView.addDependent(oPopover);
+                        oPopover.bindElement({
+                            path: iIndex, 
+                            events: {
+                                change: function() {
+                                    oPopover.invalidate();  }
+                            }
+                        });
+                       
+                        return oPopover;
+                    })
+                
+                this._pPopover.then(function(oPopover) {
+                    oPopover.attachAfterClose(function() {
+                        oPopover.destroy();
+                        this._pPopover = null;
+                    }.bind(this));
+                    oPopover.openBy(oButton);
+                });
+            }
+            
+
+
+           
            
 
         });

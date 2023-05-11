@@ -33,11 +33,25 @@ sap.ui.define([
                 var AddTaskModel = new JSONModel({});
                 this.getView().setModel(AddTaskModel, "AddTaskModel");
 
+
             },
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
             --------------------------------------------------------------------------------------------------------------*/
 
+    
+        // onNotesSectionDestroy: function (oEvent) {
+        //     this._pNotes = Fragment.load({
+        //         id:"notesSection",
+        //         name: "opportunity.opportunity.view.fragments.NotesSection",
+        //         controller:this
+        //     });
+        //         this._pNotes.then(function(_pNotes){
+        //             _pNotes.destroy();
+        //         });
+        //         this._pNotes = null;    
+          
+        // },
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
                 var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
@@ -51,9 +65,7 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("TwoWay");
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID); 
-
                 this.onSetLayout(); 
-                
 
             },
 
@@ -87,8 +99,6 @@ sap.ui.define([
                 oLayout2.getBindingInfo('content').binding.refresh();
 
             },
-
-            
 
             onReadModelData: function(sOppID){
                 var oModel = this.getView().getModel();
@@ -151,6 +161,8 @@ sap.ui.define([
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     oRouter.navTo("MainReport");
                 }
+
+                //this.onNotesSectionDestroy(); 
 
 
             },
@@ -364,17 +376,6 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
 
-            onAddTopicPress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
-            },
-            onAddDeliverablePress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddDeliverable");
-            },
-            onAddToDoPress: function () {
-                var that = this;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDo");
-                
-            },
             onSubmitNewTask: function(oEvent) {
                 var that = this;
                 var oDialog = oEvent.getSource().getParent().getParent(); 
@@ -418,33 +419,54 @@ sap.ui.define([
                   }
                 });
               },
-              
-
              
 
+            onAddTopicPress: function () {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
+            },
+            onAddDeliverablePress: function () {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddDeliverable");
+            },
+            onAddToDoPress: function () {
+                var that = this;
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDo");
+                
+            },
+
             onDialogOpen: function (fragmentName) {
-                var oController = this;
-                if (!this._fragmentDialogs) {
-                    this._fragmentDialogs = {};
-                }
 
-                if (!this._fragmentDialogs[fragmentName]) {
-                    this._fragmentDialogs[fragmentName] = Fragment.load({ name: fragmentName, controller: this });
-                }
-
-                this._fragmentDialogs[fragmentName].then(function (fragmentDialog) {
-                    oController.getView().addDependent(fragmentDialog);
-                    fragmentDialog.open();
-                });
+                    var that = this;
+                    if(!this._pDialog){
+                        this._pDialog = Fragment.load({
+                            id:"myDialog",
+                            name: fragmentName,
+                            controller:this
+                        }).then(function(_pDialog){
+                            that.getView().addDependent(_pDialog);
+                            _pDialog.setEscapeHandler(function () {
+                                that.onCloseDialog();
+                            });
+                            return _pDialog;
+                        });
+                    }
+                    this._pDialog.then(function(_pDialog){                
+                        _pDialog.open();
+                        
+                    })
             },
 
 
             onCancelDialogPress: function (oEvent) {
-                oEvent.getSource().getParent().getParent().close();
-                var oAddTaskModel = this.getView().getModel("AddTaskModel");
-                oAddTaskModel.setData({}); 
+                    this._pDialog.then(function(_pDialog){
+                        _pDialog.close();
+                        _pDialog.destroy();
+                    });
+                    this._pDialog = null;    
+                    var oAddTaskModel = this.getView().getModel("AddTaskModel");
+                oAddTaskModel.setData({});
+              
             },
-
+            
 
             onDeleteToDo: function(oEvent){
                 this.getView().setBusy(true); 
@@ -656,6 +678,22 @@ sap.ui.define([
                 var filterOpportunityID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
                 oBindingParams.filters.push(filterOpportunityID);
             },
+
+            // onGridListItemDetailPress: function(oEvent){
+            //         var selectedItem = oEvent.getSource().getBindingContext("pageModel").getObject();
+            //         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            //         oRouter.navTo("TaskDetail", {
+            //             ID: selectedItem.ID
+            //         });
+            // },
+
+            onGridListItemPress: function(oEvent){
+                var selectedItem = oEvent.getSource().getBindingContext("pageModel").getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("TaskDetail", {
+                    ID: selectedItem.ID
+                });
+        }
 
 
 
