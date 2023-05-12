@@ -7,12 +7,13 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
+    "sap/ui/model/FilterType",
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType) {
         "use strict";
         var _this = this;
 
@@ -111,7 +112,7 @@ sap.ui.define([
                  var oPageModel = this.getView().getModel("pageModel");
                  oModel.read("/opportunityHeader", {
                      urlParameters: {
-                         "$expand": "actionItems,topics,deliverables"
+                         "$expand": "actionItems/subTasks,topics,deliverables"
                      },
                      filters: aFilters,
                      success: function (oResponse) {
@@ -205,23 +206,26 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onSaveObjectPress: function (oEvent) {
+                var that = this; 
                 var oModel = this.getView().getModel();
                 var oEditModel = this.getView().getModel("editModel")
 
-                if (oModel.hasPendingChanges()) {
+                //if (oModel.hasPendingChanges()) {
                     oModel.submitChanges({
                         success: function () {
                             oModel.refresh();
-                            MessageToast.show("Changes saved successfully!");
+                           // MessageToast.show("Changes saved successfully!");
                             oModel.resetChanges();
                             oEditModel.setProperty("/editMode", false);
+                            that.onReadModelData(); 
+                            
                         }.bind(this),
                         error: function (oError) {
                             MessageBox.success("Your changes could not be saved. Please try again.");
                             oModel.resetChanges();
                         }.bind(this)
                     });
-                } else MessageToast.show("No changes detected")
+                //} else MessageToast.show("No changes detected")
 
 
                 var sPath = this.getView().getBindingContext().sPath;
@@ -377,10 +381,18 @@ sap.ui.define([
 
 
             onSubmitNewTask: function(oEvent) {
+
                 var that = this;
                 var oDialog = oEvent.getSource().getParent().getParent(); 
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
+
+                if(this._bEdit){
+                    this._bEdit = false; 
+                    this.onSubmitEditedTask(); 
+
+                }else{
+
                 var sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
                 var sCustomer = this.getView().getBindingContext().getObject().account; 
                 var sDueDate;
@@ -404,7 +416,7 @@ sap.ui.define([
                   opptID_opportunityID: sOpportunityID
                 };
               
-                var sPath = "/opportunityHeader(" + sOpportunityID + "')/actionItems";
+                var sPath = "/opportunityHeader(" + sOpportunityID + ")/actionItems";
               
                 var oModel = this.getView().getModel();
                 oModel.create(sPath, oNewTask, {
@@ -418,6 +430,9 @@ sap.ui.define([
                     sap.m.MessageBox.error("Task could not be created, try again.");
                   }
                 });
+                    this._bEdit = false; 
+                }
+               
               },
              
 
@@ -438,7 +453,7 @@ sap.ui.define([
                     var that = this;
                     if(!this._pDialog){
                         this._pDialog = Fragment.load({
-                            id:"myDialog",
+                           // id:"myDialog",
                             name: fragmentName,
                             controller:this
                         }).then(function(_pDialog){
@@ -468,36 +483,7 @@ sap.ui.define([
             },
             
 
-            onDeleteToDo: function(oEvent){
-                this.getView().setBusy(true); 
-                var that = this; 
-                var oModel = this.getView().getModel(); 
-                var sPath = oEvent.getSource().getBindingContext().sPath;
-                var oGridList = this.getView().byId("gridList");
-                var aSelectedItems = oGridList.getSelectedItems();
-                if(aSelectedItems.length > 0){
-                    aSelectedItems.forEach(oItem => {
-                        var aActionItems = oItem.getBindingContext().getProperty("actionItems"); 
-                        var iSelectedIndex = oItem.getBindingContextPath().split('/')[2];
-                        var oSelect = aActionItems[iSelectedIndex].split("'")[1]; 
-                        var sDeletePath = sPath + "/actionItems(" + oSelect + ")";
-                        oModel.setUseBatch(false);
-                        oModel.remove(sDeletePath, {
-                            success: function (oData) {
-                                MessageToast.show("Task deleted");
-                                oModel.resetChanges();
-                                that.onReadModelData();
-                                that.getView().setBusy(false); 
-                                oGridList.removeSelections(); 
-                            },
-                            error: function (oError) {
-                                oModel.resetChanges();
-                                that.getView().setBusy(false); 
-                            }
-                        });
-                    });
-                }
-            },
+           
 
 
 
@@ -508,7 +494,9 @@ sap.ui.define([
 
            onSubmitTopic: function (oEvent) {
             var that = this;
-            var oDialog = sap.ui.getCore().byId("topicDialog");
+            // var oDialog = sap.ui.core.Fragment.byId("myDialog", "topicDialog");
+            // var oInput = sap.ui.core.Fragment.byId("myDialog", "topicInput");
+            var oDialog = sap.ui.getCore().byId("topicDialog"); 
             var oInput = sap.ui.getCore().byId("topicInput");
             var oValue = oInput.getValue();
             var aTopics = this.getView().getModel("pageModel").getData().topics;
@@ -564,6 +552,9 @@ sap.ui.define([
         var that = this;
         var oDialog = sap.ui.getCore().byId("deliverableDialog");
         var oInput = sap.ui.getCore().byId("deliverableInput");
+        // var oDialog = sap.ui.core.Fragment.byId("myDialog", "deliverableDialog");
+        // var oInput = sap.ui.core.Fragment.byId("myDialog", "deliverableInput");
+
         var oValue = oInput.getValue();
         var aDeliverables = this.getView().getModel("pageModel").getData().deliverables;
 
@@ -693,13 +684,148 @@ sap.ui.define([
                 oRouter.navTo("TaskDetail", {
                     ID: selectedItem.ID
                 });
-        }
+        },
 
 
+        onPopoverPress: function (oEvent) {
+            var oButton = oEvent.getSource(),
+                oView = this.getView(),
+                iIndex = oEvent.getSource().getBindingContext("pageModel").sPath;
+        
+                this._pPopover = Fragment.load({
+                    id: oView.getId(),
+                    name: "opportunity.opportunity.view.fragments.TaskPopover3",
+                    controller: this
+                }).then(function(oPopover) {
+                    oView.addDependent(oPopover);
+                    oPopover.bindElement({
+                        path: "pageModel>" + iIndex,
+                        events: {
+                            change: function() {
+                                oPopover.invalidate();  }
+                        }
+                    });
+                   
+                    return oPopover;
+                })
+            
+            this._pPopover.then(function(oPopover) {
+                oPopover.attachAfterClose(function() {
+                    oPopover.destroy();
+                    //this._pPopover = null;
+                }.bind(this));
+                oPopover.openBy(oButton);
+            });
+        },
+
+          onSearchTaskList: function (oEvent) {
+            var aFilters = [];
+            var sQuery = oEvent.getSource().getValue();
+            if (sQuery && sQuery.length > 0) {
+                var aFilters = [
+                    new Filter({
+                      filters: [
+                        new Filter({ path: "actionTitle", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "actionTask", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "actionCustomer", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "actionTopic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "actionOwner", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                
+    
+                      ],
+                      and: false
+                    })
+                  ];
+            }
+
+            var oList = this.byId("gridList");
+            var oBinding = oList.getBinding("items")
+            oBinding.filter(aFilters, FilterType.Application);
+
+        },
 
 
+        onGridListItemEdit: function (oEvent) {
+            this._bEdit = true;
+            this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDo");
+            var oAddTaskModel = this.getView().getModel("AddTaskModel");
+            var oData = oEvent.getSource().getBindingContext("pageModel").getObject();
+            oData.actionDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+            oAddTaskModel.setData(oData); 
+            
+        },
 
+        onSubmitEditedTask: function(){
+            var that = this;
+            var oModel = this.getView().getModel(); 
+            var oAddTaskModel =  this.getView().getModel("AddTaskModel");
+            var oData = oAddTaskModel.getData(); 
+            var sGuid = oData.ID; 
 
+            var oPageModel = this.getView().getModel("pageModel");
+            
+            var sPriorityNumber; 
+            if(oData.actionPriority === 'High') sPriorityNumber = 1; 
+            else if(oData.actionPriority === 'Medium') sPriorityNumber = 2; 
+            else if(oData.actionPriority === 'Low') sPriorityNumber = 3; 
+
+            var sUpdatedTask = {
+                actionDueDate: new Date(oData.actionDueDate).toISOString().split("T")[0], 
+                actionOwner: oData.actionOwner, 
+                actionPriority: oData.actionPriority,
+                actionPriorityNumber: sPriorityNumber,
+                actionProgress: oData.actionProgress, 
+                actionTask: oData.actionTask,
+                actionTitle: oData.actionTitle,
+                actionTopic: oData.actionTopic
+            }
+
+            var sPath = "/opportunityActionItems(" + sGuid + ")";
+            oModel.update(sPath, sUpdatedTask, {
+                success: function() {
+                MessageToast.show("success");
+                //close dialog
+                that.onCancelDialogPress(); 
+                oPageModel.updateBindings(); 
+                },
+                error: function(oError) {
+                  MessageBox.error("The task could not be updated: " + oError.message);
+                  //
+                }
+              });
+        },
+
+        onGridListItemDelete: function(oEvent){
+            var that = this; 
+            var oModel = this.getView().getModel(); 
+            var oContext = oEvent.getParameters().listItem.getBindingContext("pageModel").getObject(); 
+            MessageBox.warning("Are you sure you want to delete the Task '" + oContext.actionTitle + "'?", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+                    if(sAction === MessageBox.Action.OK){
+    
+                        that.getView().setBusy(true); 
+                        var sGuid = oContext.ID;
+                        var sDeletePath = "/opportunityActionItems(" + sGuid + ")";
+            
+                        oModel.remove(sDeletePath, {
+                            success: function (oData) {
+                                MessageToast.show("Task deleted");
+                                that.onReadModelData();
+                                that.getView().setBusy(false); 
+                            },
+                            error: function (oError) {
+                                that.getView().setBusy(false); 
+                            }
+                        });
+                } 
+                }
+            });
+            
+        },
+
+     
 
         });
     });

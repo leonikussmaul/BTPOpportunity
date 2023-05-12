@@ -508,7 +508,7 @@ sap.ui.define([
             var that = this;
             if(!this._pDialog){
                 this._pDialog = Fragment.load({
-                    id:"myDialog",
+                    //id:"myDialog",
                     name: fragmentName,
                     controller:this
                 }).then(function(_pDialog){

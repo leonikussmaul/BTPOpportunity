@@ -89,10 +89,10 @@ sap.ui.define([
                         oSubTaskModel.setProperty("/completedCount", iCompletedCount);
 
                         oTable.updateBindings();
-                        oTable.getSelectedItems().forEach(oItem => {
-                            oItem.mAggregations.cells[0].addStyleClass("checkSubTask");
+                        oTable.getItems().forEach(oItem => {
+                            if(oItem.getSelected()) oItem.mAggregations.cells[0].addStyleClass("checkSubTask");
+                            else if(!oItem.getSelected()) oItem.mAggregations.cells[0].removeStyleClass("checkSubTask");
                         });
-
 
 
                     }.bind(this),
@@ -136,18 +136,9 @@ sap.ui.define([
 
             },
 
-            onTableCheckPress: function (oEvent) {
-                var aSelected = this.getView().byId("subTaskTable").getTable().getSelectedItems()
-                // .addStyleClass("checkSubTask")
+           
 
-                var aItems = this.getView().byId("subTaskTable").getTable().getItems();
-                aItems.forEach(oItem => {
-                    if (oItem.getSelected()) {
-                        oItem.mAggregations.cells[0].addStyleClass("checkSubTask");
-                    }
-                })
-
-            },
+        
 
             onBeforeRebindSubTaskTable: function (oEvent) {
                 var oBindingParams = oEvent.getParameter("bindingParams");
@@ -181,6 +172,11 @@ sap.ui.define([
                 var sID = this.getView().getBindingContext().getObject().ID;
                 var sOpptID = this.getView().getBindingContext().getObject().opptID_opportunityID;
                 var sCustomer = this.getView().getBindingContext().getObject().actionCustomer;
+                var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length; 
+
+                var subTaskStatus; 
+                if(oData.subTaskStatus) subTaskStatus = oData.subTaskStatus;
+                else subTaskStatus = "Not Started";
 
                 var sDueDate;
                 if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
@@ -191,7 +187,8 @@ sap.ui.define([
                     subTaskDueDate: sDueDate,
                     opptID_ID: this._sID,
                     subTaskCompleted: false,
-                    subTaskStatus: oData.subTaskStatus
+                    subTaskStatus: subTaskStatus,
+                    subTaskOrder: iOrder 
                 };
 
                 that.getView().setBusy(true);
@@ -216,7 +213,7 @@ sap.ui.define([
                 var that = this;
                 if(!this._pDialog){
                     this._pDialog = Fragment.load({
-                        id:"myDialog",
+                        //id:"myDialog",
                         name: fragmentName,
                         controller:this
                     }).then(function(_pDialog){
@@ -262,9 +259,12 @@ sap.ui.define([
                         if (isSelected === true) oContext.subTaskCompleted = true;
                         else oContext.subTaskCompleted = false;
 
+                        // var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length; 
+
                         var oPayload = {
                             ID: oData.ID,
-                            subTaskCompleted: oContext.subTaskCompleted
+                            subTaskCompleted: oContext.subTaskCompleted,
+                            // subTaskOrder: iOrder
                         }
         
                         var oModel = this.getView().getModel();
@@ -286,40 +286,65 @@ sap.ui.define([
 
             },
 
-            onDeleteSubTasks: function (oEvent) {
-                var that = this; 
+            onDeleteSubTasks: function(oEvent) {
+                var that = this;
                 var oTable = this.getView().byId("subTaskTable");
+                var oSubTaskModel = this.getView().getModel("subTaskModel"); 
                 var aSelectedItems = oTable.getSelectedItems();
-
+              
                 if (aSelectedItems.length === 0) {
-                    sap.m.MessageToast.show("Complete at least one sub-task to delete");
-                    return;
+                  sap.m.MessageToast.show("Complete at least one sub-task to delete");
+                  return;
                 }
-                var oModel = this.getView().getModel(); 
+                var oModel = this.getView().getModel();
+              
                 sap.m.MessageBox.warning("Are you sure you want to delete all the completed sub-tasks?", {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-                    onClose: function (oAction) {
-                        if (oAction === sap.m.MessageBox.Action.YES) {
-                            for (var i = aSelectedItems.length - 1; i >= 0; i--) {
+                  actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                  onClose: function(oAction) {
+                    if (oAction === sap.m.MessageBox.Action.YES) {
+                      var promises = []; // array to store promises
+                      for (var i = aSelectedItems.length - 1; i >= 0; i--) {
+                        var oData = aSelectedItems[i].getBindingContext("subTaskModel").getObject();
+                        var sPath = "/opportunitySubTasks(guid'" + oData.ID + "')";
+              
+                        var promise = new Promise(function(resolve, reject) {
+                          oModel.remove(sPath, {
 
-                                var oData = aSelectedItems[i].getBindingContext("subTaskModel").getObject();
-                                var sPath = "/opportunitySubTasks(guid'" + oData.ID + "')"
-
-                                oModel.remove(sPath, {
-                                    success: function () {
-                                        sap.m.MessageToast.show("Sub-Task deleted successfully.");
-                                        that.onReadSubTasksData(); 
-                                        oTable.removeSelections(true); 
-                                    },
-                                    error: function () {
-                                        sap.m.MessageToast.show("Could not delete Sub-Task. Please try again later.");
-                                    }
-                                });
+                            
+                            success: function() {
+                                oModel.refresh(); 
+                                that.onReadSubTasksData();
+                                oSubTaskModel.updateBindings(); 
+                                oTable.updateBindings(); 
+                               
+                                oTable.removeSelections(true);
+                              resolve(); // resolve the promise on success
+                              
+                            },
+                            error: function() {
+                              reject(); // reject the promise on error
                             }
-                        }
+                          });
+                        });
+              
+                        promises.push(promise); // add promise to the array
+                      }
+              
+                      Promise.all(promises).then(function() {
+                        sap.m.MessageToast.show("All Sub-Tasks Completed!");
+                        that.onReadSubTasksData();
+                        oSubTaskModel.updateBindings(); 
+                        that.updateCurrentIndex();
+                      }).catch(function() {
+                        sap.m.MessageToast.show("Some Sub-Tasks could not be deleted. Please try again later.");
+                        that.onReadSubTasksData();
+                        oTable.removeSelections(true);
+                      });
                     }
+                  }
                 });
-            },
+              },
+              
 
             onDeleteTaskObjectPress: function (oEvent) {
                 var that = this;
@@ -327,7 +352,6 @@ sap.ui.define([
                 var oBindingContext = oItem.getBindingContext();
                 var sPath = oBindingContext.getPath();
 
-                
 
                 MessageBox.warning("Are you sure you want to delete this task?", {
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
@@ -364,8 +388,7 @@ sap.ui.define([
             onSaveObjectPress: function (oEvent) {
                 var oModel = this.getView().getModel();
                 var oEditModel = this.getView().getModel("editModel")
-
-                if (oModel.hasPendingChanges()) {
+                // if (oModel.hasPendingChanges()) {
                     oModel.submitChanges({
                         success: function () {
                             oModel.refresh();
@@ -378,7 +401,7 @@ sap.ui.define([
                             oModel.resetChanges();
                         }.bind(this)
                     });
-                } else MessageToast.show("No changes detected")
+                // } else MessageToast.show("No changes detected")
 
             },
 
@@ -400,15 +423,11 @@ sap.ui.define([
             },
 
             onProgressSliderChange: function(oEvent){
-
                 var oModel = this.getView().getModel(); 
-
                 var oValue = oEvent.getParameter("value");
                 var oContext = this.getView().getBindingContext();
-                
                 var sPath = oContext.getPath();
                 oModel.setProperty(sPath + "/actionProgress", oValue);
-
             },
 
             onReorderUp: function(oEvent) {
@@ -525,11 +544,55 @@ sap.ui.define([
                 this._pPopover.then(function(oPopover) {
                     oPopover.attachAfterClose(function() {
                         oPopover.destroy();
-                        this._pPopover = null;
                     }.bind(this));
                     oPopover.openBy(oButton);
                 });
-            }
+            },
+
+            onSubTaskStatusChange: function(oEvent){
+                var oModel = this.getView().getModel(); 
+                var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID; 
+                var oNewStatus = oEvent.getSource().getText(); 
+
+                var sPath = "/opportunitySubTasks(guid'" + selectedGuid + "')";
+                var oData = { subTaskStatus: oNewStatus};
+                oModel.update(sPath, oData, {
+                  success: function() {
+                    MessageToast.show("Status changed to " + oNewStatus);
+                  },
+                  error: function(oError) {
+                    MessageToast.show(oError.message);
+                  }
+                });
+
+                
+            },
+
+            updateCurrentIndex: function(oEvent){
+                var oModel = this.getView().getModel();
+                var oTable = this.getView().byId("subTaskTable");
+               
+
+               for(var i = 0; i < oTable.getItems().length; i++){
+
+                var sGuid = oTable.getItems()[i].getBindingContext("subTaskModel").getObject().ID
+                var sPath = "/opportunitySubTasks(guid'" + sGuid + "')";
+                var oData = { subTaskOrder: i};
+                oModel.update(sPath, oData, {
+                  success: function() {
+                    MessageToast.show("success");
+                  },
+                  error: function(oError) {
+                    MessageToast.show(oError.message);
+                  }
+                });
+
+               }
+                
+            },
+
+              
+
             
               
 

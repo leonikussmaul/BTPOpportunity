@@ -6,7 +6,7 @@
 
 	<Popover xmlns="sap.m"
          contentWidth="300px"
-         title="{subTaskStatus}" >
+         title="{subTaskStatus}" placement="Top">
 
   <content>
     <HBox class="sapUiTinyMargin">
@@ -35,11 +35,11 @@
 				</contentRight>
 			</Bar> -->
 
-			<OverflowToolbar design="Solid" height="45px">
+			<OverflowToolbar height="45px">
 
 <HBox >
 									<Avatar src="{path: 'subTaskOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-									visible="{= ${subTaskOwner} !== null &amp;&amp; ${subTaskOwner} !== ''}" />
+									visible="{= ${subTaskOwner} !== null &amp;&amp; ${subTaskOwner} !== ''}" tooltip="{subTaskOwner}"/>
 										<Label text="{subTaskOwner}" class="sapUiTinyMarginTop" wrapping="true" />
 										</HBox>
 

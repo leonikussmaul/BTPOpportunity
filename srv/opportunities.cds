@@ -1,7 +1,7 @@
 using {sapbtp.opportunities} from '../db/opportunities';
 
 @path     : '/Opportunity'
-// @requires : 'authenticated-user'
+@requires : 'authenticated-user'
 service OpportunityService {
 
     entity opportunityHeader    as projection on opportunities.opportunityHeader;

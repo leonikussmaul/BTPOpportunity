@@ -29,6 +29,7 @@
                                     }">
 				<core:ListItem key="{opportunityID}" text="{account}" additionalText = "{opportunityID}"/>
 			</ComboBox>
+			<Text text="{AddTaskModel>/account}"   />
 
 			<Label text="{i18n>actionTitle}" required="true"/>
 			<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="{i18n>toDoPlaceholder}" />

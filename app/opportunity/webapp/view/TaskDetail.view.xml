@@ -61,7 +61,7 @@
 						 backgroundColor="{path: 'actionOwner', formatter:'.formatter.formatInitialsColor'}"/> -->
 
 						 <Avatar src="{path: 'actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="sapUiTinyMarginEnd"
-									visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" />
+									visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" tooltip="{actionOwner}"/>
 
 								<Label text="{actionOwner}"  class="sapUiTinyMarginTop"/>
 								</HBox>
@@ -102,10 +102,10 @@
 								<Title text="Flow"  />
 									
 			<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
-									 content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}">
+									 content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}" >
 						<commons:content>
 							<commons:MicroProcessFlowItem state="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
-							press="onPopoverPress" >
+							press="onPopoverPress" icon="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}" >
 								
 							</commons:MicroProcessFlowItem>
 						</commons:content>
@@ -168,7 +168,7 @@
 						</Column>
 
 
-						<Column  width="10em">
+						<Column  width="15em">
 							<customData>
 								<core:CustomData key="p13nData"/>
 							</customData>
@@ -204,18 +204,28 @@
 						
 							</columns>
 					<items >
-						<ColumnListItem  vAlign="Middle" selected="{path: 'subTaskModel>subTaskCompleted', formatter:'.formatter.SubTaskCompleted'}">
+						<ColumnListItem  vAlign="Middle" selected="{subTaskModel>subTaskCompleted}">
 							<cells >
 								
 								<Text text="{subTaskModel>subTask}" wrapping="true" />
 								<!-- <Text text="{subTaskModel>subTaskOwner}" wrapping="true" /> -->
 								<Avatar src="{path: 'subTaskModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-								visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}"/>
+								visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}" tooltip="{subTaskModel>subTaskOwner}"/>
 
-								<Avatar displaySize="XS"
+								<!-- <Avatar displaySize="XS"
 										src="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
 										backgroundColor="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatAccentStatus'}"
-										visible="{= ${subTaskModel>subTaskStatus} !== null }" />
+										visible="{= ${subTaskModel>subTaskStatus} !== null }" /> -->
+
+										<MenuButton text="{subTaskModel>subTaskStatus}" buttonMode="Split" width="140px"  icon="{path: 'subTaskModel>subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}"
+										 >
+											<menu>
+												<Menu itemSelected="onMenuAction" items="{/opportunitySubTaskStatus}">
+													<MenuItem press="onSubTaskStatusChange" text="{subTaskStatus}" icon="{path: 'subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}" />
+													
+												</Menu>
+											</menu>
+										</MenuButton>
 
 								<ObjectStatus text="{path: 'subTaskModel>subTaskDueDate',
 								 type: 'sap.ui.model.type.Date',
@@ -227,8 +237,8 @@
 								state="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${subTaskModel>subTaskDueDate} !== null}" />
 								
 								
-								<core:Icon press="onReorderUp" src="sap-icon://slim-arrow-up" size="1.2rem" color="#427cac"/>
-								<core:Icon press="onReorderDown" src="sap-icon://slim-arrow-down" size="1.2rem" color="#427cac"/>
+								<core:Icon press="onReorderUp" src="sap-icon://slim-arrow-up" size="1.2rem" color="#427cac" tooltip="Move the Sub-Task one up"/>
+								<core:Icon press="onReorderDown" src="sap-icon://slim-arrow-down" size="1.2rem" color="#427cac" tooltip="Move the Sub-Task one down"/>
 
 									
 								

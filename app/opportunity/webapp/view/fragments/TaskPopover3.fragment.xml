@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+		xmlns:tnt="sap.tnt">
+
+	<Popover xmlns="sap.m" placement="Left"
+         contentWidth="300px"
+         title="{pageModel>subTaskStatus}" >
+
+  <content>
+    <HBox class="sapUiTinyMargin">
+      <items>
+        <core:Icon src="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}" color="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIconColor'}"
+              class="sapUiSmallMarginBegin sapUiSmallMarginEnd"/>
+
+
+        <FlexBox width="100%" renderType="Bare" direction="Column">
+          <items>
+
+            <Text text="{pageModel>subTask}"/>
+          </items>
+        </FlexBox>
+      </items>
+    </HBox>
+  </content>
+
+  <footer>
+
+			<OverflowToolbar height="45px">
+
+<HBox >
+									<Avatar src="{path: 'pageModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
+									visible="{= ${pageModel>subTaskOwner} !== null &amp;&amp; ${pageModel>subTaskOwner} !== ''}" tooltip="{pageModel>subTaskOwner}"/>
+										<Label text="{pageModel>subTaskOwner}" class="sapUiTinyMarginTop" wrapping="true" />
+										</HBox>
+										<ToolbarSpacer />
+										<ObjectStatus text="{path: 'pageModel>subTaskDueDate',
+								 type: 'sap.ui.model.type.Date',
+                                                    formatOptions: {
+                                                        relative: true,
+                                                        relativeScale: 'auto'
+                                                    }
+								}" icon="{path: 'pageModel>subTaskDueDate', formatter:'.formatter.formatIconDueDate'}"
+								state="{path: 'pageModel>subTaskDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${pageModel>subTaskDueDate} !== null}" />
+								
+									</OverflowToolbar>
+		</footer>
+
+</Popover>
+
+</core:FragmentDefinition>

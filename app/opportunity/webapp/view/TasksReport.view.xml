@@ -120,7 +120,7 @@
 								<Text text="{actionTask}" wrapping="true" />
 								<Text text="{actionOwner}" wrapping="true"/>
 								<!-- <Avatar src="{path: 'actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd" 
-								visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" /> -->
+								visible="{= ${actionOwner} !== null &amp;&amp; ${actionOwner} !== ''}" tooltip="{actionOwner}"/> -->
 								<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" renderMode="Narrow"/>
 								<!-- <ProgressIndicator width="80%"
                                                     class="sapUiSmallMarginBottom"

@@ -37,8 +37,8 @@
 								<u:snappedHeading>
 									<FlexBox  fitContainer="true" alignItems="Center">
 										<Avatar class="sapUiTinyMarginEnd" initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
-						 backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"/>
-										<Title text="{account}" wrapping="true"/>
+						 backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}" tooltip="{marketUnit}"/>
+										<Title text="{account}"  wrapping="true"/>
 									</FlexBox>
 								</u:snappedHeading>
 								<!-- <u:expandedContent>
@@ -190,7 +190,7 @@
 				</f:mainContent>
 				<f:items>
 					<f:SidePanelItem icon="sap-icon://target-group" text="{i18n>ToDos}">
-						<!-- <core:Fragment id="ToDosFragment" fragmentName="opportunity.opportunity.view.fragments.ToDosSection" type="XML"/> -->
+						
 						<f:GridList
 		id="gridList"
 		mode="Delete"
@@ -205,6 +205,7 @@
 		selectionChange="onSelectionChange"
 		class="sapUiResponsiveContentPadding"
 		sticky="ColumnHeaders,HeaderToolbar"
+		delete="onGridListItemDelete"
 			
         >
 							<f:dragDropConfig>
@@ -219,7 +220,7 @@
 									<Button icon="sap-icon://sort" tooltip="Sort List" press="onSortToDoItem"/>
 									<Button icon="sap-icon://filter" tooltip="Filter List" press="onFilterToDoItem"/>
 									<Button icon="sap-icon://delete" tooltip="Delete To Do Item" press="onDeleteToDo"/> -->
-									<SearchField  />
+									<SearchField liveChange="onSearchTaskList" />
 								</Toolbar>
 							</f:headerToolbar>
 							<f:customLayout>
@@ -227,7 +228,7 @@
 							</f:customLayout>
 
 
-							<f:GridListItem press="onGridListItemPress" detailPress="onGridListItemDetailPress" type="DetailAndActive"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
+							<f:GridListItem press="onGridListItemPress" detailPress="onGridListItemEdit"  type="DetailAndActive"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
 								<VBox height="100%" justifyContent="SpaceBetween" >
 									<layoutData>
 										<FlexItemData growFactor="1" shrinkFactor="0" />
@@ -267,21 +268,22 @@
 										<Label text="{pageModel>actionTask}" class="sapUiSmallMarginBottom sapUiSmallMarginTop" width="100%" wrapping="true"/>
 										
 
-											<commons:MicroProcessFlow>
-				<commons:content>
-					<commons:MicroProcessFlowItem />
-					<commons:MicroProcessFlowItem state="Warning"/>
-					<commons:MicroProcessFlowItem state="Warning"/>
-					<commons:MicroProcessFlowItem state="Success"/>
-				</commons:content>
-			</commons:MicroProcessFlow>
+											<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
+									 content="{path: 'pageModel>subTasks/results'}">
+						<commons:content>
+							<commons:MicroProcessFlowItem state="{path: 'pageModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}" 
+							press="onPopoverPress" icon="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"  >
+								
+							</commons:MicroProcessFlowItem>
+						</commons:content>
+					</commons:MicroProcessFlow> 
 
 									</VBox>
-									<OverflowToolbar design="Solid" height="45px">
+									<OverflowToolbar  height="45px">
 
 <HBox >
 									<Avatar src="{path: 'pageModel>actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-									visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}" />
+									visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}" tooltip="{pageModel>actionOwner}"/>
 										<Label text="{pageModel>actionOwner}" class="sapUiTinyMarginTop" wrapping="true" />
 										</HBox>
 

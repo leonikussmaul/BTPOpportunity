@@ -5,7 +5,7 @@
 		xmlns:tnt="sap.tnt">
 
 	<Popover xmlns="sap.m"
-         contentWidth="300px"
+         contentWidth="300px" placement="Top"
          title="{subTaskModel>subTaskStatus}" >
 
   <content>
@@ -27,11 +27,11 @@
 
   <footer>
 
-			<OverflowToolbar design="Solid" height="45px">
+			<OverflowToolbar height="45px">
 
 <HBox >
 									<Avatar src="{path: 'subTaskModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-									visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}" />
+									visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}" tooltip="{subTaskModel>subTaskOwner}"/>
 										<Label text="{subTaskModel>subTaskOwner}" class="sapUiTinyMarginTop" wrapping="true" />
 										</HBox>
 										<ToolbarSpacer />

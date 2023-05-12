@@ -1,5 +1,35 @@
 {
-  "scopes": [],
-  "attributes": [],
-  "role-templates": []
+  "xsappname": "BTPOpportunities-dbs-emea-north-cfdev2-dev",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    }
+  ],
+  "oauth2-configuration": {
+
+    "credential-types": [
+    "binding-secret",
+    "x509"
+   ],
+    
+    "redirect-uris": [
+    
+    "https://*.applicationstudio.cloud.sap/**"
+    
+    ]
+    
+    }
 }
+

@@ -1,13 +1,12 @@
 {
-  "authenticationMethod": "none",
+  "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/api/(.*)$",
+      "source": "^/user-api(.*)",
       "target": "$1",
-      "destination": "srv-api",
-      "authenticationType": "xsuaa"
+      "service": "sap-approuter-userapi"
     }
   ],
-  "welcomeFile": "/opportunitytracker"
+  "welcomeFile": "app/opportunity/webapp/index.html"
 }
 

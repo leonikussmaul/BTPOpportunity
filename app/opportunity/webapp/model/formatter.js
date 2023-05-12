@@ -296,10 +296,10 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
     },
 
 
-    SubTaskCompleted: function (sCompleted) {
-      if (sCompleted) return true;
-      else return false;
-    },
+    // SubTaskCompleted: function (sCompleted) {
+    //   if (sCompleted) return true;
+    //   else return false;
+    // },
 
 
     processFlowFormatter: function(sStatus){
@@ -319,14 +319,31 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
       }
     },
 
+    processFlowBtnFormatter: function(sStatus){
+      switch (sStatus) {
+        case "Paused":
+          return "Negative";
+        case "In Progress":
+          return "Negative";
+        case "Completed":
+          return "Accept";
+        case "Not Started":
+            return "Attention";
+        case "Blocked":
+          return "Critical";
+        default:
+          return "Negative";
+      }
+    },
+
     formatSubTaskIcon: function (sStatus) {
       switch (sStatus) {
         case "In Progress":
-          return "sap-icon://lateness";
+          return "sap-icon://goal";
         case "Completed":
           return "sap-icon://message-success";
         case "Not Started":
-          return "sap-icon://begin";
+          return "sap-icon://lateness";
         case "Blocked":
             return "sap-icon://error";
         case "Paused":
