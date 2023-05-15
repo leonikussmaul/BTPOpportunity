@@ -18,11 +18,6 @@
     }
   ],
   "oauth2-configuration": {
-
-    "credential-types": [
-    "binding-secret",
-    "x509"
-   ],
     
     "redirect-uris": [
     

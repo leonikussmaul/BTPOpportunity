@@ -54,7 +54,12 @@
 							<FlexBox wrap="Wrap">
 
 
+<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionTask} !== null}" width="200px">
+<!-- <Title text="{i18n>actionTask}" class="sapUiTinyMarginBottom" /> -->
+	<Text text="{actionTask}" wrapping="true" class="sapUiMediumMarginTop"/>
+	</VBox>
 							<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionOwner} !== null}">
+						
 									<Title text="{i18n>actionOwner}" class="sapUiTinyMarginBottom" />
 									<HBox>
 									<!-- <Avatar displayShape="Square" displaySize="XS" class="sapUiTinyMarginEnd" initials="{path: 'actionOwner', formatter:'.formatter.formatInitials'}"
@@ -91,17 +96,17 @@
 
 <VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>actionProgress}"  />
-									<Slider value="{actionProgress}" width="100%" step="25" change="onProgressSliderChange"
+									<Slider id="actionProgressSlider" value="{actionProgress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
 							showAdvancedTooltip="true"
 							showHandleTooltip="false"
 							class="sapUiSmallMarginTop" enableTickmarks="true" />
 
 </VBox>
-								<VBox class="sapUiMediumMarginBeginEnd" width="20%" >
+								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${subTaskModel>/subtasks}.length > 0}">
 								<Title text="Flow"  />
 									
-			<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
+			<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop" 
 									 content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}" >
 						<commons:content>
 							<commons:MicroProcessFlowItem state="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"

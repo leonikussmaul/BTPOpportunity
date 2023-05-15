@@ -7,27 +7,27 @@
 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:f="sap.ui.layout.form">
-	<smartForm:SmartForm id="smartForm" customData:useSmartField="true" validationMode="Async" editable="{editModel>/editMode}" 
-app:defaultCheckBoxDisplayBehaviour="OnOff"
-app:defaultDropDownDisplayBehaviour="idAndDescription">
-		<smartForm:layout>
-			<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
-		</smartForm:layout>
-		<smartForm:Group >
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{primaryContact}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{clientContactPerson}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{ssa}"  />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{source}" />
-			</smartForm:GroupElement>
-		</smartForm:Group>
-	</smartForm:SmartForm>
+
+		<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="simpleFormContact"
+				editable="false" columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+			layout="ColumnLayout" >
+			<f:content>
+				<Label text="{i18n>primaryContact}" />
+				<Text text="{primaryContact}" />
+				<Label text="{i18n>clientContactPerson}" />
+				<Text text="{clientContactPerson}" />
+				<Label text="{i18n>ssa}" />
+				<Text text="{ssa}" />
+				<Label text="{i18n>source}" />
+				<Text text="{source}" />
+				
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+
 </core:FragmentDefinition>
 
 

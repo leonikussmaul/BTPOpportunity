@@ -40,6 +40,9 @@ sap.ui.define([
                 var AddSubTaskModel = new JSONModel({});
                 this.getView().setModel(AddSubTaskModel, "AddSubTaskModel");
 
+                var oEditPageModel = new JSONModel({});
+                this.getView().setModel(AddSubTaskModel, "editPageModel");
+
 
             },
 
@@ -385,24 +388,33 @@ sap.ui.define([
             EDIT / CANCEL
             --------------------------------------------------------------------------------------------------------------*/
 
+
             onSaveObjectPress: function (oEvent) {
                 var oModel = this.getView().getModel();
-                var oEditModel = this.getView().getModel("editModel")
-                // if (oModel.hasPendingChanges()) {
-                    oModel.submitChanges({
-                        success: function () {
-                            oModel.refresh();
-                            MessageToast.show("Changes saved successfully!");
-                            oModel.resetChanges();
-                            oEditModel.setProperty("/editMode", false);
-                        }.bind(this),
-                        error: function (oError) {
-                            MessageBox.success("Your changes could not be saved. Please try again.");
-                            oModel.resetChanges();
-                        }.bind(this)
-                    });
-                // } else MessageToast.show("No changes detected")
+                var oEditModel = this.getView().getModel("editModel");
+                var oEditPageModel = this.getView().getModel("editPageModel"); 
+                var oData = oEditPageModel.getData();
 
+                var oPayload ={
+                    actionTask: oData.actionTask,
+                    actionTitle: oData.actionTitle,
+                    actionOwner: oData.actionOwner,
+                    actionProgress: this.getView().byId("actionProgressSlider").getValue(),
+                    actionDueDate: oData.actionDueDate,
+                    actionPriority: oData.actionPriority,
+                    actionPriorityNumber: oData.actionPriorityNumber
+                }
+
+                var sPath = this.getView().getBindingContext().sPath; 
+                oModel.update(sPath, oPayload, {
+                            success: function() {
+                            MessageToast.show("Changes saved successfully!");                  
+                            oEditModel.setProperty("/editMode", false);
+                            },
+                            error: function(oError) {
+                            MessageBox.error("Your changes could not be saved. Please try again.");
+                            }
+                          });
             },
 
             onCancelObjectPress: function (oEvent) {
@@ -419,8 +431,15 @@ sap.ui.define([
                 var oCancelBtn = oEvent.getSource();
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", true);
-
+                this.onSetEditPageModel(); 
             },
+
+            onSetEditPageModel: function(){
+                var oData = this.getView().getBindingContext().getObject();
+                var oEditPageModel = this.getView().getModel("editPageModel");
+                oEditPageModel.setData(oData); 
+            },
+                
 
             onProgressSliderChange: function(oEvent){
                 var oModel = this.getView().getModel(); 

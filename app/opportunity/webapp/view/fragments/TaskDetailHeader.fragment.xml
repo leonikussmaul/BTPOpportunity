@@ -1,47 +1,58 @@
+
 <core:FragmentDefinition
 	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
-	xmlns:smartForm="sap.ui.comp.smartform"
-	xmlns:smartField="sap.ui.comp.smartfield"
-	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<smartForm:SmartForm id="generalSmartForm" customData:useSmartField="true" validationMode="Async" editable="{editModel>/editMode}" 
-	app:defaultCheckBoxDisplayBehaviour="OnOff"
-			app:defaultDropDownDisplayBehaviour="idAndDescription" >
-		<smartForm:customData>
-			<core:CustomData key="suppressUnit" value="false" />
-			<core:CustomData key="defaultDropDownDisplayBehaviour" value='descriptionAndId' />
-		</smartForm:customData>
-		<smartForm:layout>
-			<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="3"/>
-		</smartForm:layout>
-		<!-- header group  -->
-		<smartForm:Group >
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{actionTask}" />
-			</smartForm:GroupElement>
-            <smartForm:GroupElement>
-				<smartField:SmartField value="{actionCustomer}" />
-			</smartForm:GroupElement>
-            <smartForm:GroupElement>
-				<smartField:SmartField value="{actionOwner}" />
-			</smartForm:GroupElement>
-            <smartForm:GroupElement >
-				<smartField:SmartField value="{actionTopic}" />
-			</smartForm:GroupElement>
-		</smartForm:Group>
-		<!-- more details group  -->
-		<smartForm:Group   >
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{actionPriority}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement >
-				<smartField:SmartField value="{actionDueDate}" />
-			</smartForm:GroupElement>
-			
-		</smartForm:Group >
-		
-	</smartForm:SmartForm>
+	>
+
+
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="notesSectionEdit"
+			editable="true"
+			layout="ColumnLayout" columnsM="2"
+            columnsL="3"
+            columnsXL="4">
+			<f:content>
+				<Label text="{i18n>actionTask}" />
+				<TextArea value="{editPageModel>/actionTask}" />
+				<Label text="{i18n>actionCustomer}" />
+				<Input value="{editPageModel>/actionCustomer}"/>
+				<Label text="{i18n>actionOwner}" />
+				<Select selectedKey="{editPageModel>/actionOwner}" 
+							 items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+				</Select>
+
+				<Label text="{i18n>actionPriority}" />
+				<Select selectedKey="{editPageModel>/actionPriority}" 
+							 items="{
+                                    path: '/opportunityPriorityVH',
+                                    sorter: {
+                                                path: 'priority',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{priority}" text="{priority}"/>
+				</Select>
+
+				 <Label text="{i18n>actionDueDate}" />
+                <DatePicker
+                value="{ path: 'editPageModel>/actionDueDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+               
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
 </core:FragmentDefinition>
 
 

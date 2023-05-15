@@ -103,7 +103,7 @@
 								</VBox>
 								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>Progress}"  />
-									<Slider value="{progress}" width="100%" step="25" change="onProgressSliderChange"
+									<Slider value="{editPageModel>/progress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
 							showAdvancedTooltip="true"
 							showHandleTooltip="false"
@@ -116,13 +116,22 @@
 						<!-- section fragments -->
 						<u:sections>
 							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false" title="{i18n>generalHeader}" >
-								<u:ObjectPageSubSection id="idGeneralSubSection">
+								<u:ObjectPageSubSection id="idGeneralSubSection" visible="{= !${editModel>/editMode}}">
 									<core:Fragment id="idGeneralFragment" fragmentName="opportunity.opportunity.view.fragments.GeneralSection" type="XML"/>
 								</u:ObjectPageSubSection>
+
+								<u:ObjectPageSubSection id="idGeneralSectionEdit" visible="{= ${editModel>/editMode}}">
+									<core:Fragment  fragmentName="opportunity.opportunity.view.fragments.GeneralSectionEdit" type="XML" />
+								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
+
+
 							<u:ObjectPageSection id="idSectionContact" titleUppercase="false" title="{i18n>Contact}">
-								<u:ObjectPageSubSection id="idSubSectionContact">
+								<u:ObjectPageSubSection id="idSubSectionContact" visible="{= !${editModel>/editMode}}">
 									<core:Fragment id="idContactFragment" fragmentName="opportunity.opportunity.view.fragments.ContactSection" type="XML"/>
+								</u:ObjectPageSubSection>
+								<u:ObjectPageSubSection id="idSubSectionContactEdit" visible="{= ${editModel>/editMode}}">
+									<core:Fragment id="idContactEditFragment" fragmentName="opportunity.opportunity.view.fragments.ContactSectionEdit" type="XML" />
 								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
 
@@ -171,8 +180,8 @@
 							</u:ObjectPageSection>
 							<u:ObjectPageSection id="idSectionNotes" titleUppercase="false" title="{i18n>Notes}" >
 								<u:ObjectPageSubSection id="idSubSectionNotes">
-									<core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/>
-									<!-- <rte:RichTextEditor 
+									<!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
+									<rte:RichTextEditor 
 								value="{noteText}"  
 								id="editRTE" 
 								height="400px" 
@@ -181,7 +190,7 @@
 								showGroupLink="true" 
 								showGroupUndo="true" 
 								editable="{editModel>/editMode}" 
-								/> -->
+								/>
 								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
 							<!-- <u:ObjectPageSection id="idSmartChartSection" titleUppercase="false" title="{i18n>SmartChart}" ><u:ObjectPageSubSection id="idSmartChartSubSection"><VBox alignItems="Center" alignContent="Center" justifyContent="Center" renderType="Div" visible="{= ${UISwitch>/chart1} ? true : false}"><VBox fitContainer="true" alignItems="Stretch" alignContent="Stretch" justifyContent="Start" renderType="Div" height="500px" width="700px"><core:Fragment id="idSmartChartFragment" fragmentName="opportunity.opportunity.view.fragments.SmartChart" type="XML"/></VBox></VBox></u:ObjectPageSubSection></u:ObjectPageSection> -->

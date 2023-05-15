@@ -1,66 +1,53 @@
 <core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:smartForm="sap.ui.comp.smartform"
-	xmlns:smartField="sap.ui.comp.smartfield"
-	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<smartForm:SmartForm id="generalSmartForm" customData:useSmartField="true" validationMode="Async" editable="{editModel>/editMode}" 
-	app:defaultCheckBoxDisplayBehaviour="OnOff"
-			app:defaultDropDownDisplayBehaviour="idAndDescription" >
-		<smartForm:customData>
-			<core:CustomData key="suppressUnit" value="false" />
-			<core:CustomData key="defaultDropDownDisplayBehaviour" value='descriptionAndId' />
-		</smartForm:customData>
-		<smartForm:layout>
-			<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
-		</smartForm:layout>
-		<!-- header group  -->
-		<smartForm:Group  label="{i18n>groupHeaderLabel}" visible="{editModel>/editMode}">
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{account}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement >
-				<smartField:SmartField  value="{marketUnit}" customData:mandatory="true">
-					<smartField:configuration>
-						<smartField:Configuration controlType="dropDownList" displayBehaviour="descriptionAndId" />
-					</smartField:configuration>
-				</smartField:SmartField>
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField id="statusSmartField" value="{topic}"  />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{priority}" />
-			</smartForm:GroupElement>
-		</smartForm:Group>
-		<!-- dates group  -->
-		<smartForm:Group  label="{i18n>groupDatesLabel}" >
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{opportunityCreatedQuarter}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{opportunityClosedQuarter}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement >
-				<smartField:SmartField value="{opportunityStartDate}" />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement >
-				<smartField:SmartField value="{opportunityDueDate}" />
-			</smartForm:GroupElement>
-		</smartForm:Group >
-		<!-- value group -->
-		<smartForm:Group  label="{i18n>groupValueLabel}">
-			<smartForm:GroupElement label="Value">
-				<smartField:SmartField value="{opportunityValue}"  />
-			</smartForm:GroupElement>
-			<smartForm:GroupElement>
-				<smartField:SmartField value="{opportunityInCRM}" />
-				<!-- <smartField:SmartField value="{opportunityInCRM}"><smartField:configuration><smartField:Configuration displayBehaviour="TrueFalse" /></smartField:configuration></smartField:SmartField> -->
-			</smartForm:GroupElement>
-		</smartForm:Group>
-	</smartForm:SmartForm>
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+
+    <VBox class="sapUiSmallMargin">
+        <f:SimpleForm
+            id="SimpleFormDisplayColumn_twoGroups234"
+            editable="false"
+            layout="ColumnLayout"
+            columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+        >
+            <f:content>
+
+			<!-- dates -->
+                <core:Title text="{i18n>groupDatesLabel}" />
+                <Label text="{i18n>opportunityCreatedQuarter}" />
+                <Text text="{opportunityCreatedQuarter}" />
+                <Label text="{i18n>opportunityClosedQuarter}" />
+                <Text text="{opportunityClosedQuarter}" />
+
+                <Label text="{i18n>opportunityStartDate}" />
+                <Text
+                    text="{ path: 'opportunityStartDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+                <Label text="{i18n>opportunityDueDate}" />
+                <Text
+                    text="{ path: 'opportunityDueDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+
+				<!-- values -->
+                <core:Title text="{i18n>groupValueLabel}" />
+                <Label text="{i18n>Value}" />
+                <Text text="{opportunityValue}k" />
+                <Label text="{i18n>opportunityInCRM}" />
+                <!-- <Text text="{opportunityInCRM}" /> -->
+				<CheckBox id="opportunityInCRMObject" text="{opportunityInCRM}" selected="{= ${opportunityInCRM} === 'Yes' ? true : false}" select="onCRMCheckboxSelect"/>
+
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
 </core:FragmentDefinition>
-
-
-	

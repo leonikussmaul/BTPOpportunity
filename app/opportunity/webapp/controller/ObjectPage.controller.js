@@ -34,6 +34,9 @@ sap.ui.define([
                 var AddTaskModel = new JSONModel({});
                 this.getView().setModel(AddTaskModel, "AddTaskModel");
 
+                var oEditPageModel = new JSONModel({});
+                this.getView().setModel(AddTaskModel, "editPageModel");
+
 
             },
             /* ------------------------------------------------------------------------------------------------------------
@@ -67,6 +70,8 @@ sap.ui.define([
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID); 
                 this.onSetLayout(); 
+
+            
 
             },
 
@@ -207,29 +212,86 @@ sap.ui.define([
 
             onSaveObjectPress: function (oEvent) {
                 var that = this; 
+                this._bEdit = true;
                 var oModel = this.getView().getModel();
-                var oEditModel = this.getView().getModel("editModel")
+                var oEditModel = this.getView().getModel("editModel");
+                var oEditPageModel = this.getView().getModel("editPageModel"); 
 
-                //if (oModel.hasPendingChanges()) {
-                    oModel.submitChanges({
-                        success: function () {
-                            oModel.refresh();
-                           // MessageToast.show("Changes saved successfully!");
-                            oModel.resetChanges();
+                var oData = this.getView().getModel("editPageModel").getData();
+
+
+                var oPayload ={
+                    account: oData.account,
+                    clientContactPerson: oData.clientContactPerson,
+                    marketUnit: oData.marketUnit,
+                    noteText: this.getView().byId("editRTE").getValue(),
+                    opportunityClosedQuarter: oData.opportunityClosedQuarter,
+                    opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
+                    opportunityDueDate: oData.opportunityDueDate,
+                    opportunityStartDate: oData.opportunityStartDate,
+                    opportunityInCRM: oData.opportunityInCRM,
+                    opportunityValue: oData.opportunityValue,
+                    primaryContact: oData.primaryContact,
+                    priority: oData.priority,
+                    progress: oData.progress,
+                    source: oData.source,
+                    status: this.getView().byId("segmentedStatusObject").getSelectedKey(),
+                    ssa: oData.ssa,
+                    topic: oData.topic
+                }
+
+                var sPath = this.getView().getBindingContext().sPath; 
+                oModel.update(sPath, oPayload, {
+                            success: function() {
+                            MessageToast.show("success");
+                            oModel.refresh();                                         
                             oEditModel.setProperty("/editMode", false);
                             that.onReadModelData(); 
-                            
-                        }.bind(this),
-                        error: function (oError) {
-                            MessageBox.success("Your changes could not be saved. Please try again.");
-                            oModel.resetChanges();
-                        }.bind(this)
-                    });
-                //} else MessageToast.show("No changes detected")
+                            },
+                            error: function(oError) {
+                              MessageToast.show(oError.message);
+                            }
+                          });
 
+ 
+                   
+                        //  // if (oModel.hasPendingChanges()) {
+                        //     oModel.submitChanges({
+                        //         success: function () {
+                        //             oModel.refresh();
+                        //            // MessageToast.show("Changes saved successfully!");
+                        //             oModel.resetChanges();
+                        //             oEditModel.setProperty("/editMode", false);
+                        //             that.onReadModelData(); 
+                                    
+                        //         }.bind(this),
+                        //         error: function (oError) {
+                        //             MessageBox.success("Your changes could not be saved. Please try again.");
+                        //             oModel.resetChanges();
+                        //         }.bind(this)
+                        //     });
+                        // //}
+        
 
-                var sPath = this.getView().getBindingContext().sPath;
-                var oObject = this.getView().getBindingContext().getObject();
+            //     var sPath = this.getView().getBindingContext().sPath; 
+            //     var oRTE = this.getView().byId("editRTE"); 
+            //     var oPayload = {
+            //         noteText: oRTE.getValue()
+            //     }
+
+            //     oModel.update(sPath, oPayload, {
+            //         success: function() {
+            //         MessageToast.show("success");
+            //         oModel.refresh();                                         
+            //         oEditModel.setProperty("/editMode", false);
+            //         that.onReadModelData(); 
+            //         },
+            //         error: function(oError) {
+            //           MessageToast.show(oError.message);
+            //         }
+            //       });
+
+            
             },
 
 
@@ -333,32 +395,21 @@ sap.ui.define([
                 var oCancelBtn = oEvent.getSource();
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", true);
+                this.onSetEditPageModel(); 
+            },
 
+            onSetEditPageModel: function(oEvent){
+                var oData = this.getView().getBindingContext().getObject();
+                var oEditPageModel = this.getView().getModel("editPageModel");
+                oEditPageModel.setData(oData); 
             },
 
             onSegmentPressed: function (oEvent) {
+                this.onSetEditPageModel(); 
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", true);
-
-                var oModel = this.getView().getModel(); 
-
                 var sKey = oEvent.getSource().getSelectedKey();
-                var oContext = this.getView().getBindingContext();
-
-                var sPath = oContext.getPath();
-                oModel.setProperty(sPath + "/status", sKey);
-
-            },
-
-            onProgressSliderChange: function(oEvent){
-
-                var oModel = this.getView().getModel(); 
-
-                var oValue = oEvent.getParameter("value");
-                var oContext = this.getView().getBindingContext();
-                
-                var sPath = oContext.getPath();
-                oModel.setProperty(sPath + "/progress", oValue);
+                this.getView().getModel("editPageModel").getData().status = sKey;
 
             },
 
@@ -823,6 +874,18 @@ sap.ui.define([
                 }
             });
             
+        },
+
+        onCRMCheckboxSelect: function(oEvent){
+            this.onSetEditPageModel(); 
+            var oEditModel = this.getView().getModel("editModel");
+            var oEditPageModel = this.getView().getModel("editPageModel")
+            var oCheckBox = oEvent.getSource();
+            var bSelected = oCheckBox.getSelected();
+            var sText = bSelected ? "Yes" : "No";
+            oCheckBox.setText(sText);
+            oEditModel.setProperty("/editMode", true);
+            oEditPageModel.setProperty("/opportunityInCRM", sText);
         },
 
      
