@@ -9,6 +9,8 @@
 	xmlns:f="sap.ui.layout.form">
 
 		<VBox class="sapUiSmallMargin">
+
+
 		<f:SimpleForm id="simpleFormContact"
 				editable="false" columnsM="2"
             columnsL="3"

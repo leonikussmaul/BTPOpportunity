@@ -183,7 +183,7 @@ sap.ui.define([
                     oDialog.close(); 
                   },
                   error: function(oError) {
-                    sap.m.MessageBox.error("Task could not be created, try again.");
+                    sap.m.MessageBox.error("Task could not be created, check your input and try again.");
                   }
                 });
               },
@@ -284,10 +284,35 @@ sap.ui.define([
                 this._pPopover.then(function(oPopover) {
                     oPopover.attachAfterClose(function() {
                         oPopover.destroy();
-                        this._pPopover = null;
+                        //this._pPopover = null;
                     }.bind(this));
                     oPopover.openBy(oButton);
                 });
+            },
+
+            
+            /* ------------------------------------------------------------------------------------------------------------
+            EXPORT TO EXCEL
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            onBeforeExportTasks: function(oEvent){
+
+                //var oi18nModel = this.getView().getModel("i18n")
+            var oWorkbook = oEvent.getParameter("exportSettings").workbook;
+            oWorkbook.columns.unshift({ property: 'actionPriority', label: "Priority" })
+
+            //change col order
+            // var oFavouriteCol = oWorkbook.columns[1]
+            // var oValueDriverCol = oWorkbook.columns[2]
+             oWorkbook.columns[5].label = "Progress"
+            // oWorkbook.columns[2] = oFavouriteCol;
+
+            // //customization 
+            // oWorkbook.context.sheetName = "Business Goals and Value Drivers"
+            // oWorkbook.columns[0].width = "40%";
+            // oWorkbook.columns[1].width = "50%";
+
             }
             
 

@@ -2,6 +2,7 @@ using OpportunityService as service from '../../srv/opportunities';
 
 
 annotate service.opportunityHeader with {
+    @Semantics.aggregate: true
     account @Common.Label : 'Account'
             @Common.FieldControl : #Mandatory
 };
@@ -73,7 +74,12 @@ annotate service.opportunityActionItems with {
     actionTopic @Common.Label : 'Topic'
 };
 annotate service.opportunityActionItems with {
-    actionTask @Common.Label : 'Task'
+    actionTask @Common.Label : 'Description'
+     @Common.FieldControl : #Mandatory
+};
+annotate service.opportunityActionItems with {
+    actionTitle @Common.Label : 'Task'
+     @Common.FieldControl : #Mandatory
 };
 annotate service.opportunityActionItems with {
     actionOwner @Common.Label : 'Owner'
@@ -104,5 +110,8 @@ annotate service.opportunitySubTasks with {
 
 annotate service.opportunitySubTasks with {
     subTask @Common.Label : 'Sub-Task'
+     @Common.FieldControl : #Mandatory
 };
+
+
 

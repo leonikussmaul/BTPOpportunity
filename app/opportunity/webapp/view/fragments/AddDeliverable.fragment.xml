@@ -18,6 +18,12 @@
            value=""
            id="deliverableInput"
            liveChange=".onDeliverableInputChange" />
+
+		    <MessageStrip
+				text="Please only submit relevant &amp; unique deliverables to the DB." type="Warning"
+				showIcon="true" class="sapUiTinyMarginTop">
+			</MessageStrip>
+
 		<footer>
 			<Toolbar design="Auto">
 				<content>

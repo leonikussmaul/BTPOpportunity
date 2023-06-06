@@ -64,17 +64,14 @@ sap.ui.define([
             },
 
             onReadSubTasksData: function (sthisID) {
+                var that = this; 
                 var oModel = this.getView().getModel();
-                var oTable = this.getView().byId("subTaskTable");
                 var sID;
                 if (sthisID) sID = sthisID;
                 else sID = this.getView().getBindingContext().getObject().ID;
 
                 var aFilters = [];
                 aFilters.push(new Filter("opptID_ID", FilterOperator.EQ, this._sID));
-
-                //  var aFilters = [];
-                //  aFilters.push(new Filter("ID", FilterOperator.EQ, sID));
                 var oSubTaskModel = this.getView().getModel("subTaskModel");
 
                 oModel.read("/opportunitySubTasks", {
@@ -82,26 +79,32 @@ sap.ui.define([
                     //      "$expand": "subTasks"
                     //  },
                     filters: aFilters,
+                    sorters: [
+                        new sap.ui.model.Sorter("subTaskOrder", false)
+                    ],
                     success: function (oResponse) {
                         var aTasks = oResponse.results;
                         oSubTaskModel.setProperty("/subtasks", aTasks);
-
                         var iCompletedCount = aTasks.reduce(function (iCount, oTask) {
                             return oTask.subTaskCompleted ? iCount : iCount + 1;
                         }, 0);
                         oSubTaskModel.setProperty("/completedCount", iCompletedCount);
-
-                        oTable.updateBindings();
-                        oTable.getItems().forEach(oItem => {
-                            if(oItem.getSelected()) oItem.mAggregations.cells[0].addStyleClass("checkSubTask");
-                            else if(!oItem.getSelected()) oItem.mAggregations.cells[0].removeStyleClass("checkSubTask");
-                        });
-
+                        that.onCompleteItems(); 
+                        that.updateCurrentIndex(aTasks);
 
                     }.bind(this),
                     error: function (oError) {
                         console.log(oError);
                     }
+                });
+
+            },
+
+            onCompleteItems: function(oEvent){
+                var oTable = this.getView().byId("subTaskTable");
+                oTable.getItems().forEach(oItem => {
+                    if(oItem.getSelected()) oItem.mAggregations.cells[1].addStyleClass("checkSubTask");
+                    else if(!oItem.getSelected()) oItem.mAggregations.cells[1].removeStyleClass("checkSubTask");
                 });
 
             },
@@ -139,26 +142,6 @@ sap.ui.define([
 
             },
 
-           
-
-        
-
-            onBeforeRebindSubTaskTable: function (oEvent) {
-                var oBindingParams = oEvent.getParameter("bindingParams");
-                oBindingParams.filters.push(new Filter("opptID_ID", sap.ui.model.FilterOperator.EQ, this._sID));
-
-                var oTable = this.getView().byId("subTaskTable")
-
-                var fnGroupHeaderFormatter = function (oContext) {
-                    var sHeader = oContext.getProperty("subTaskOwner");
-                    return {
-                        key: sHeader,
-                    };
-                };
-                var oGrouping = new sap.ui.model.Sorter("subTaskOwner", true, fnGroupHeaderFormatter);
-                oBindingParams.sorter.push(oGrouping);
-            },
-
 
             onAddSubTask: function () {
                 var that = this;
@@ -172,9 +155,9 @@ sap.ui.define([
                 var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
                 var oData = oAddSubTaskModel.getData();
 
-                var sID = this.getView().getBindingContext().getObject().ID;
-                var sOpptID = this.getView().getBindingContext().getObject().opptID_opportunityID;
-                var sCustomer = this.getView().getBindingContext().getObject().actionCustomer;
+                // var sID = this.getView().getBindingContext().getObject().ID;
+                // var sOpptID = this.getView().getBindingContext().getObject().opptID_opportunityID;
+                // var sCustomer = this.getView().getBindingContext().getObject().actionCustomer;
                 var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length; 
 
                 var subTaskStatus; 
@@ -199,7 +182,7 @@ sap.ui.define([
                 oModel.create("/opportunitySubTasks", oNewSubTask, {
                     success: function (oData, response) {
                         MessageToast.show("New sub-task added!");
-                        that.onReadSubTasksData();
+                       that.onReadSubTasksData();
                         that.getView().setBusy(false);
                         oDialog.close();
                         oAddSubTaskModel.setData({}); 
@@ -259,15 +242,21 @@ sap.ui.define([
                         oData = oItem.getBindingContext("subTaskModel").getObject();
                         var sPath = "/opportunitySubTasks(guid'" + oData.ID + "')"
 
-                        if (isSelected === true) oContext.subTaskCompleted = true;
-                        else oContext.subTaskCompleted = false;
+                        if (isSelected === true) {
+                            oContext.subTaskCompleted = true;
+                            oContext.subTaskStatus = "Completed"
+                        }
+                        else {
+                            oContext.subTaskCompleted = false;
+                            oContext.subTaskStatus = oData.subTaskStatus
+                        }
 
                         // var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length; 
 
                         var oPayload = {
                             ID: oData.ID,
                             subTaskCompleted: oContext.subTaskCompleted,
-                            // subTaskOrder: iOrder
+                            subTaskStatus: oContext.subTaskStatus
                         }
         
                         var oModel = this.getView().getModel();
@@ -277,6 +266,7 @@ sap.ui.define([
                                     MessageToast.show("Sub-Task Completed");
                                 }
                                 that.onReadSubTasksData();
+                                that.getView().getModel("subTaskModel").refresh(); 
                                 that.getView().setBusy(false); 
                             },
                             error: function (oError) {
@@ -312,20 +302,20 @@ sap.ui.define([
               
                         var promise = new Promise(function(resolve, reject) {
                           oModel.remove(sPath, {
-
                             
-                            success: function() {
+                            success: function(oData,oResponse) {
                                 oModel.refresh(); 
+                                oSubTaskModel.refresh(); 
                                 that.onReadSubTasksData();
                                 oSubTaskModel.updateBindings(); 
                                 oTable.updateBindings(); 
                                
                                 oTable.removeSelections(true);
-                              resolve(); // resolve the promise on success
+                              resolve(); 
                               
                             },
                             error: function() {
-                              reject(); // reject the promise on error
+                              reject();
                             }
                           });
                         });
@@ -336,11 +326,8 @@ sap.ui.define([
                       Promise.all(promises).then(function() {
                         sap.m.MessageToast.show("All Sub-Tasks Completed!");
                         that.onReadSubTasksData();
-                        oSubTaskModel.updateBindings(); 
-                        that.updateCurrentIndex();
                       }).catch(function() {
                         sap.m.MessageToast.show("Some Sub-Tasks could not be deleted. Please try again later.");
-                        that.onReadSubTasksData();
                         oTable.removeSelections(true);
                       });
                     }
@@ -449,94 +436,76 @@ sap.ui.define([
                 oModel.setProperty(sPath + "/actionProgress", oValue);
             },
 
-            onReorderUp: function(oEvent) {
-                var oSubTaskModel = this.getView().getModel("subTaskModel");
-                var aSubTasks = oSubTaskModel.getProperty("/subtasks").slice();
-                var oItem = oEvent.getSource().getBindingContext("subTaskModel").getObject();
-                var iIndex = oItem.subTaskOrder;
-                var iNewIndex = iIndex - 1;
-                [aSubTasks[iIndex], aSubTasks[iNewIndex]] = [aSubTasks[iNewIndex], aSubTasks[iIndex]];
-                aSubTasks.forEach(function(oItem, iIndex) {
-                    oItem.subTaskOrder = iIndex;
-                });
-                oSubTaskModel.setProperty("/subtasks", aSubTasks);
-                oSubTaskModel.updateBindings();
-            
-                var oSubTaskTable = this.getView().byId("subTaskTable");
-                var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID;
-                var oModel = this.getView().getModel();
-            
-                oSubTaskTable.getItems().forEach(oItem => {
-                    var guidJSON = oItem.getBindingContext("subTaskModel").getObject().ID;
-                    var iOrder = oItem.getBindingContext("subTaskModel").getObject().subTaskOrder;
-            
-                    var subTasks = oModel.getProperty(oItem.getBindingContext().getPath()).subTasks.__list;
-                    for (var i = 0; i < subTasks.length; i++) {
-                        var guidOData = subTasks[i].split('guid')[1].slice(1, -2);
-                        if (guidOData == guidJSON) {
-                            var sPath = "/opportunitySubTasks(guid'" + guidJSON + "')";
-                            var oData = { subTaskOrder: iOrder };
-                            oModel.update(sPath, oData, {
-                                success: function() {
-                                    // MessageToast.show("success");
-                                },
-                                error: function(oError) {
-                                    MessageToast.show(oError.message);
-                                }
-                            });
-                            break;
-                        }
-                    }
-                });
+            onReorderUp: function(oEvent){
+                var sDirection = "Up"
+                this.onReorderItems(oEvent,sDirection); 
             },
-            
 
-             
-            onReorderDown: function(oEvent) {
+            onReorderDown: function(oEvent){
+                var sDirection = "Down"
+                this.onReorderItems(oEvent, sDirection); 
+            },
+
+            onReorderItems: function(oEvent, sDirection) {
+                var that = this; 
                 var oSubTaskModel = this.getView().getModel("subTaskModel");
-                var aSubTasks = oSubTaskModel.getProperty("/subtasks").slice();
+                var aSubTasks = oSubTaskModel.getProperty("/subtasks");
               
+                // Remove undefined items
+                // aSubTasks = aSubTasks.filter(function(oItem) {
+                //   return oItem !== undefined;
+                // });
                 var oItem = oEvent.getSource().getBindingContext("subTaskModel").getObject();
                 var iIndex = oItem.subTaskOrder;
-                var iNewIndex = iIndex + 1;
               
-                [aSubTasks[iIndex], aSubTasks[iNewIndex]] = [aSubTasks[iNewIndex], aSubTasks[iIndex]];
+                // Order up or down
+                var iNewIndex = iIndex;
+                if (sDirection === "Up" && iIndex > 0) {
+                  iNewIndex = iIndex - 1;
+                } else if (sDirection === "Down" && iIndex < aSubTasks.length - 1) {
+                  iNewIndex = iIndex + 1;
+                }
               
-                aSubTasks.forEach(function(oItem, iIndex) {
-                  oItem.subTaskOrder = iIndex;
-                });
+                if (iIndex !== iNewIndex) {
+                  aSubTasks.splice(iNewIndex, 0, aSubTasks.splice(iIndex, 1)[0]);
+                  aSubTasks.forEach(function(oItem, iIndex) {
+                    if (oItem) {
+                      oItem.subTaskOrder = iIndex;
+                    }
+                  });
+                  aSubTasks = aSubTasks.filter(function(oItem) {
+                    return oItem !== undefined;
+                  });
+                  oSubTaskModel.setProperty("/subtasks", aSubTasks);
+                  oSubTaskModel.updateBindings();
               
-                oSubTaskModel.setProperty("/subtasks", aSubTasks);
-                oSubTaskModel.updateBindings();
-              
-                var oSubTaskTable = this.getView().byId("subTaskTable");
-                var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID; 
-                var oModel = this.getView().getModel();
-              
-                var subTaskItems = oSubTaskTable.getItems().forEach(oItem =>{
-                  var guidJSON = oItem.getBindingContext("subTaskModel").getObject().ID; 
-                  var iOrder = oItem.getBindingContext("subTaskModel").getObject().subTaskOrder; 
-              
-                  var subTasks = oItem.getBindingContext().getObject().subTasks.__list; 
-                  for(var i=0; i < subTasks.length; i++){
-                    var guidOData = subTasks[i].split('guid')[1].slice(1,-2);
-                    if(guidOData == guidJSON) {
-                      console.log("success");
+                  // Update the server-side data if required
+                  var oModel = this.getView().getModel();
+                  aSubTasks.forEach(function(oItem, iIndex) {
+                    if (oItem) {
+                      var guidJSON = oItem.ID;
+                      var iOrder = oItem.subTaskOrder;
                       var sPath = "/opportunitySubTasks(guid'" + guidJSON + "')";
-                      var oData = { subTaskOrder: iOrder};
+                      var oData = { subTaskOrder: iOrder };
                       oModel.update(sPath, oData, {
                         success: function() {
-                        //   MessageToast.show("success");
+                            that.onCompleteItems(); 
+                            that.getView().getModel("subTaskModel").refresh(); 
                         },
                         error: function(oError) {
                           MessageToast.show(oError.message);
                         }
                       });
-                    } 
-                  }
-                })
+                    } else {
+                      // Skip creating a new item
+                      aSubTasks.splice(iIndex, 1);
+                    }
+                  });
+                }
               },
+              
 
+              
             onPopoverPress: function (oEvent) {
                 var oButton = oEvent.getSource(),
                     oView = this.getView(),
@@ -549,10 +518,10 @@ sap.ui.define([
                     }).then(function(oPopover) {
                         oView.addDependent(oPopover);
                         oPopover.bindElement({
-                            path: "subTaskModel>" + iIndex, // set the binding path based on the clicked index
+                            path: "subTaskModel>" + iIndex, 
                             events: {
                                 change: function() {
-                                    oPopover.invalidate(); // invalidate the popover to force it to update with the new data
+                                    oPopover.invalidate(); 
                                 }
                             }
                         });
@@ -569,37 +538,50 @@ sap.ui.define([
             },
 
             onSubTaskStatusChange: function(oEvent){
+                var that = this; 
                 var oModel = this.getView().getModel(); 
                 var selectedGuid = oEvent.getSource().getBindingContext("subTaskModel").getObject().ID; 
                 var oNewStatus = oEvent.getSource().getText(); 
 
+                var oData = { subTaskStatus: oNewStatus, subTaskCompleted: false};
+                if(oNewStatus === "Completed") {
+                    oEvent.getSource().getParent().getParent().getParent().setSelected(true);
+                    oData = { subTaskStatus: oNewStatus,
+                    subTaskCompleted: true};
+                }
+                
                 var sPath = "/opportunitySubTasks(guid'" + selectedGuid + "')";
-                var oData = { subTaskStatus: oNewStatus};
+                
                 oModel.update(sPath, oData, {
                   success: function() {
                     MessageToast.show("Status changed to " + oNewStatus);
+                    // that.onReadSubTasksData();
+                    that.onCompleteItems(); 
+                    that.getView().getModel("subTaskModel").refresh(); 
                   },
                   error: function(oError) {
                     MessageToast.show(oError.message);
                   }
                 });
-
-                
             },
 
-            updateCurrentIndex: function(oEvent){
+            updateCurrentIndex: function(aTasks){
+                var that = this; 
                 var oModel = this.getView().getModel();
                 var oTable = this.getView().byId("subTaskTable");
-               
-
-               for(var i = 0; i < oTable.getItems().length; i++){
-
-                var sGuid = oTable.getItems()[i].getBindingContext("subTaskModel").getObject().ID
+                var oSubTaskModel = this.getView().getModel("subTaskModel"); 
+               var aTasks = this.getView().getModel("subTaskModel").getProperty("/subtasks");
+               for(var i = 0; i < aTasks.length; i++){
+                var sGuid = aTasks[i].ID
                 var sPath = "/opportunitySubTasks(guid'" + sGuid + "')";
                 var oData = { subTaskOrder: i};
                 oModel.update(sPath, oData, {
                   success: function() {
-                    MessageToast.show("success");
+                    oTable.updateBindings(); 
+                    oSubTaskModel.updateBindings(); 
+                    oModel.refresh();
+                    that.getView().getModel("subTaskModel").refresh(); 
+
                   },
                   error: function(oError) {
                     MessageToast.show(oError.message);
@@ -609,6 +591,15 @@ sap.ui.define([
                }
                 
             },
+
+            onGoToOpportunity: function(oEvent){
+                var oppID = this.getView().getBindingContext().getObject().opptID_opportunityID; 
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("ObjectPage", {
+                    opportunityID: oppID
+                });
+            }
 
               
 

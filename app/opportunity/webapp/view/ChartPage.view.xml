@@ -1,0 +1,96 @@
+<mvc:View
+    controllerName="opportunity.opportunity.controller.ChartPage"
+    id="view1"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:table="sap.ui.table"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:layout="sap.ui.layout"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:sl="sap.ui.comp.navpopover"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    
+>
+    <f:DynamicPage
+        id="ChartPage"
+        title="Opportunity Chart"
+        backgroundDesign="List"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="Analytics &amp; Overview"
+                        id="headerTitle"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- <f:header>
+			<f:DynamicPageHeader pinnable="true">
+			
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header> -->
+        <f:content>
+            <IconTabBar class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter text="Account Overview">
+                        <content>
+                            <smartchart:SmartChart
+                                id="smartChart1"
+                                enableAutoBinding="true"
+                                entitySet="opportunityHeader"
+                                beforeRebindChart="onBeforeRebindChart"
+                                useVariantManagement="false"
+                                useChartPersonalisation="true"
+                                header="Value per Opportunity"
+                                showFullScreenButton="true"
+                                selectionMode="Multi"
+                                showChartTooltip="true"
+                                showDrillBreadcrumbs="true"
+                                showDetailsButton="false"
+                                showDrillButtons="true"
+                                showSemanticNavigationButton="true"
+                                showDownloadButton="true"
+                            />
+                        </content>
+                    </IconTabFilter>
+
+                     <IconTabFilter text="Market Unit Overview">
+                        <content>
+                            <smartchart:SmartChart
+                                id="smartChart2"
+                                enableAutoBinding="true"
+                                entitySet="opportunityHeader"
+                                useVariantManagement="false"
+                                useChartPersonalisation="true"
+                                header="Value per Market Unit"
+                                showFullScreenButton="true"
+                                showChartTooltip="true"
+                                showDrillBreadcrumbs="false"
+                                showDetailsButton="false"
+                                showDrillButtons="false"
+                                showSemanticNavigationButton="false" 
+                                showDownloadButton="true"
+                                data:chartQualifier="Pie_Chart"
+
+                            />
+                        </content>
+                    </IconTabFilter>
+
+                </items>
+            </IconTabBar>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

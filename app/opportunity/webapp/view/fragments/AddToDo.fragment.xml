@@ -16,6 +16,13 @@
 			</Bar>
 		</customHeader>
 		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}" id="actionTaskInput"  /> -->
+
+		 <MessageStrip
+				text="You can add Sub-Tasks later on in the Task Page."
+				showIcon="true" class="sapUiTinyMarginTop">
+			</MessageStrip>
+
+
 		<form:SimpleForm editable="true"
 						>
 			<Label text="{i18n>account}" required="true"/>

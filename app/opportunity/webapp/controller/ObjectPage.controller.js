@@ -8,12 +8,13 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/ui/core/Fragment",
     "sap/ui/model/FilterType",
+    "sap/ui/core/routing/History",
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History) {
         "use strict";
         var _this = this;
 
@@ -143,6 +144,8 @@ sap.ui.define([
             onNavBackPress: function (oEvent) {
 
                 var oModel = this.getView().getModel();
+                var oHistory = History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
 
                 var oEditModel = this.getView().getModel("editModel");
                 var bEditMode = oEditModel.getProperty("/editMode");
@@ -152,7 +155,8 @@ sap.ui.define([
                             if (oAction === MessageBox.Action.OK) {
                                 // If user confirms, navigate back
                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                                oRouter.navTo("MainReport");
+                                if (sPreviousHash !== undefined) window.history.go(-1);
+                                else oRouter.navTo("MainReport");
                                 oEditModel.setProperty("/editMode", false);
 
                                 if (oModel.hasPendingChanges()) {
@@ -165,13 +169,16 @@ sap.ui.define([
                 } else {
                     // If edit mode is disabled, directly navigate back
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("MainReport");
+                    if (sPreviousHash !== undefined) window.history.go(-1);
+                    else  oRouter.navTo("MainReport");
                 }
 
                 //this.onNotesSectionDestroy(); 
 
 
             },
+
+
 
             /* ------------------------------------------------------------------------------------------------------------
             DELETE
@@ -243,54 +250,15 @@ sap.ui.define([
                 var sPath = this.getView().getBindingContext().sPath; 
                 oModel.update(sPath, oPayload, {
                             success: function() {
-                            MessageToast.show("success");
+                            MessageToast.show("Changes saved successfully!");
                             oModel.refresh();                                         
                             oEditModel.setProperty("/editMode", false);
                             that.onReadModelData(); 
                             },
                             error: function(oError) {
-                              MessageToast.show(oError.message);
+                                sap.m.MessageBox.error("Changes could not be saved. Details: " +  oError.message);
                             }
                           });
-
- 
-                   
-                        //  // if (oModel.hasPendingChanges()) {
-                        //     oModel.submitChanges({
-                        //         success: function () {
-                        //             oModel.refresh();
-                        //            // MessageToast.show("Changes saved successfully!");
-                        //             oModel.resetChanges();
-                        //             oEditModel.setProperty("/editMode", false);
-                        //             that.onReadModelData(); 
-                                    
-                        //         }.bind(this),
-                        //         error: function (oError) {
-                        //             MessageBox.success("Your changes could not be saved. Please try again.");
-                        //             oModel.resetChanges();
-                        //         }.bind(this)
-                        //     });
-                        // //}
-        
-
-            //     var sPath = this.getView().getBindingContext().sPath; 
-            //     var oRTE = this.getView().byId("editRTE"); 
-            //     var oPayload = {
-            //         noteText: oRTE.getValue()
-            //     }
-
-            //     oModel.update(sPath, oPayload, {
-            //         success: function() {
-            //         MessageToast.show("success");
-            //         oModel.refresh();                                         
-            //         oEditModel.setProperty("/editMode", false);
-            //         that.onReadModelData(); 
-            //         },
-            //         error: function(oError) {
-            //           MessageToast.show(oError.message);
-            //         }
-            //       });
-
             
             },
 
@@ -305,8 +273,9 @@ sap.ui.define([
             },
 
             onPressToggle1: function(oEvent){
-                var bPressed = oEvent.getSource().getPressed(); 
-                var sTopic = oEvent.getSource().getText(); 
+                var oButton = oEvent.getSource();
+                var bPressed = oButton.getPressed(); 
+                var sTopic = oButton.getText(); 
                 var oContext = this.getView().getBindingContext();
                 var sPath = oContext.getPath();
                 var oModel = this.getView().getModel(); 
@@ -320,32 +289,44 @@ sap.ui.define([
                     var sNewPath = sPath + "/topics";
                     oModel.create(sNewPath, oNewTopic, {
                         success: function(oData, response) {
-                            MessageToast.show("New Topic added!");
+                            MessageToast.show("'" + sTopic + "' added!");
                         },
                         error: function(oError) {
                             sap.m.MessageBox.error("Topic could not be added, try again.");
                         }
                     });
                 }else{
-        //             var aTopics = oModel.getProperty(sPath + "/topics");
-                   
-        // var sTopicPath = sPath + "/topics(ID='" + oNewTopic.opptID_opportunityID + "')";
-        // oModel.remove(sTopicPath, {
-        //     success: function(oData, response) {
-        //         MessageToast.show("Topic removed!");
-        //     },
-        //     error: function(oError) {
-        //         sap.m.MessageBox.error("Topic could not be removed, try again.");
-        //     }
-        // });
+                    var sTopicPath; 
+                    var sSource = oButton.getCustomData()[0].getValue(); 
+                    var aTopics = oModel.getProperty(sPath + "/topics");
+                    aTopics.forEach(oItem =>{
+                        if(oModel.getProperty("/" + oItem)){
+                            var oTopic = oModel.getProperty("/" + oItem).topic;
+                            if (oTopic === sSource){
+                                sTopicPath = "/" + oItem; 
+                            }
+                        }
+                    });
+
+                oModel.remove(sTopicPath, {
+                    success: function(oData, response) {
+                        oButton.setEnabled(false); 
+                        MessageToast.show("'" + sSource + "' removed!");
+                        
+                    },
+                    error: function(oError) {
+                        sap.m.MessageBox.error("Topic '" + sSource + "' could not be removed, try again.");
+                    }
+                });
 
                 }
              
             },
 
             onPressToggle2: function(oEvent){
-                var bPressed = oEvent.getSource().getPressed(); 
-                var sDeliverable = oEvent.getSource().getText(); 
+                var oButton = oEvent.getSource();
+                var bPressed = oButton.getPressed(); 
+                var sDeliverable = oButton.getText(); 
                 var oContext = this.getView().getBindingContext();
                 var sPath = oContext.getPath();
                 var oModel = this.getView().getModel(); 
@@ -359,13 +340,33 @@ sap.ui.define([
                     var sNewPath = sPath + "/deliverables";
                     oModel.create(sNewPath, oNewDeliverable, {
                         success: function(oData, response) {
-                            MessageToast.show("New Deliverable added!");
+                            MessageToast.show("'" + sDeliverable + "' added!");
                         },
                         error: function(oError) {
                             sap.m.MessageBox.error("Deliverable could not be added, try again.");
                         }
                     });
                 }else{
+                    var sDeliverablePath; 
+                    var sSource = oButton.getCustomData()[0].getValue(); 
+                    var aDeliverables = oModel.getProperty(sPath + "/deliverables");
+                    aDeliverables.forEach(oItem =>{
+                        var oDeliverable = oModel.getProperty("/" + oItem).deliverable;
+                        if (oDeliverable === sSource){
+                            sDeliverablePath = "/" + oItem; 
+                        }
+                    })
+
+                oModel.remove(sDeliverablePath, {
+                    success: function(oData, response) {
+                        oButton.setEnabled(false); 
+                        MessageToast.show("'" + sSource + "' removed!");
+                        
+                    },
+                    error: function(oError) {
+                        sap.m.MessageBox.error("Deliverable '" + sSource + "' could not be removed, try again.");
+                    }
+                });
 
                 }
              
@@ -478,7 +479,7 @@ sap.ui.define([
                     oAddTaskModel.setData({}); 
                   },
                   error: function(oError) {
-                    sap.m.MessageBox.error("Task could not be created, try again.");
+                    sap.m.MessageBox.error("Task could not be created, check your input and try again.");
                   }
                 });
                     this._bEdit = false; 

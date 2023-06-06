@@ -48,7 +48,7 @@
   smartFilterId="smartFilterBar" 
   beforeRebindTable="onBeforeRebindTaskTable"
   tableType="ResponsiveTable"  
-  beforeExport="onBeforeExport"
+  beforeExport="onBeforeExportTasks"
   useVariantManagement="false" 
   useTablePersonalisation="true" 
   header="{i18n>taskTableHeader}"

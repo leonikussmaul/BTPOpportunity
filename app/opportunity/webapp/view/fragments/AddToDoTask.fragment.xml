@@ -7,7 +7,7 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="{i18n>addToDo}"/>
+					<Title text="Add Task"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
@@ -15,6 +15,12 @@
 			</Bar>
 		</customHeader>
 		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}"  /> -->
+
+		  <MessageStrip
+				text="Add a new task against an existing opportunity."
+				showIcon="true" class="sapUiTinyMarginTop">
+			</MessageStrip>
+
 		<form:SimpleForm editable="true"
 						>
 			<Label text="{i18n>account}" required="true"/>

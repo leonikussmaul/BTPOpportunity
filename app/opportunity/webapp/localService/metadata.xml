@@ -6,7 +6,7 @@
 <edmx:DataServices>
 <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="OpportunityService">
 <EntityContainer Name="EntityContainer">
-<EntitySet Name="opportunityHeader" EntityType="OpportunityService.opportunityHeader">
+<EntitySet Name="opportunityHeader" EntityType="OpportunityService.opportunityHeader"> 
 <NavigationPropertyBinding Path="actionItems" Target="opportunityActionItems"/>
 <NavigationPropertyBinding Path="topics" Target="opportunityTopics"/>
 <NavigationPropertyBinding Path="deliverables" Target="opportunityDeliverables"/>
@@ -31,8 +31,11 @@
 <Key>
 <PropertyRef Name="opportunityID"/>
 </Key>
-<Property Name="opportunityID" Type="Edm.Int32" Nullable="false" />
-<Property Name="source" Type="Edm.String" MaxLength="20"/>
+<Property Name="opportunityID" Type="Edm.Int32" Nullable="false" sap:aggregation-role="dimension" sap:label="Product ID"
+		sap:sortable="true" sap:filterable="true" />
+<Property Name="source" Type="Edm.String" MaxLength="20"
+sap:aggregation-role="dimension" sap:label="Product Category"
+					sap:sortable="true" sap:filterable="true"/>
 <Property Name="priority" Type="Edm.String" MaxLength="20"/>
 <Property Name="clientContactPerson" Type="Edm.String" MaxLength="255"/>
 <Property Name="ssa" Type="Edm.String" MaxLength="255"/>

@@ -13,11 +13,18 @@
 				</contentRight>
 			</Bar>
 		</customHeader>
+
 		<Label text="{i18n>addNew}" />
 		<Input type="Text"
            value=""
            id="topicInput"
            liveChange=".onTopicInputChange" />
+
+		   <MessageStrip
+				text="Please only submit relevant &amp; unique topics to the DB." type="Warning"
+				showIcon="true" class="sapUiTinyMarginTop">
+			</MessageStrip>
+
 		<footer>
 			<Toolbar design="Auto">
 				<content>

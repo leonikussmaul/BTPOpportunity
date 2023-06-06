@@ -135,8 +135,9 @@
 								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
 
-							<u:ObjectPageSection id="idSectionTopics" titleUppercase="false" title="{i18n>Topics}" >
-								<u:ObjectPageSubSection id="idSubSectionTopics">
+							<u:ObjectPageSection id="idSectionTopics" titleUppercase="false" title="{i18n>Content}" >
+							
+								<u:ObjectPageSubSection id="idSubSectionTopics" titleUppercase="false" title="{i18n>Topics}" class="sapUiSmallMarginTop">
 									<u:actions>
 										<Link  text="{i18n>addTopic}" press="onAddTopicPress"/>
 									</u:actions>
@@ -146,22 +147,18 @@
 											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
 											tooltip="{i18n>toggle1Tooltip}">
 												<customData>
-													<core:CustomData key="ID" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
+													<core:CustomData key="topic" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
 												</customData>
 											</ToggleButton>
 										</l:HorizontalLayout>
 									</HBox>
-									 <!-- <u:moreBlocks>
-										<Link text="Add Topic" press="onAddTopicLink"/>
-									</u:moreBlocks> -->
 								</u:ObjectPageSubSection>
-							</u:ObjectPageSection>
 
-							<u:ObjectPageSection id="idSectionDeliverables" titleUppercase="false" title="{i18n>Deliverables}" >
-								<u:ObjectPageSubSection id="idSubSectionDeliverables">
+								<u:ObjectPageSubSection id="idSubSectionDeliverables" titleUppercase="false" title="{i18n>Deliverables}" class="sapUiSmallMarginTop">
 									<u:actions>
 										<Link  text="{i18n>addDeliverable}" press="onAddDeliverablePress"/>
 									</u:actions>
+									
 									<HBox class="sapUiSmallMarginTopBottom">
 										<l:HorizontalLayout id="DeliverablesFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
 											<ToggleButton text="{deliverable}"  press="onPressToggle2"  class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
@@ -173,12 +170,15 @@
 											</ToggleButton>
 										</l:HorizontalLayout>
 									</HBox>
-									 <!-- <u:moreBlocks>
-										<Link text="Add Deliverable" press="onAddDeliverableLink"/>
-									</u:moreBlocks> -->
 								</u:ObjectPageSubSection>
+								
 							</u:ObjectPageSection>
+							
 							<u:ObjectPageSection id="idSectionNotes" titleUppercase="false" title="{i18n>Notes}" >
+							<u:heading>
+										<MessageStrip showIcon="true" text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more." showCloseButton="true" />
+								</u:heading>
+								
 								<u:ObjectPageSubSection id="idSubSectionNotes">
 									<!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
 									<rte:RichTextEditor 
@@ -193,12 +193,12 @@
 								/>
 								</u:ObjectPageSubSection>
 							</u:ObjectPageSection>
-							<!-- <u:ObjectPageSection id="idSmartChartSection" titleUppercase="false" title="{i18n>SmartChart}" ><u:ObjectPageSubSection id="idSmartChartSubSection"><VBox alignItems="Center" alignContent="Center" justifyContent="Center" renderType="Div" visible="{= ${UISwitch>/chart1} ? true : false}"><VBox fitContainer="true" alignItems="Stretch" alignContent="Stretch" justifyContent="Start" renderType="Div" height="500px" width="700px"><core:Fragment id="idSmartChartFragment" fragmentName="opportunity.opportunity.view.fragments.SmartChart" type="XML"/></VBox></VBox></u:ObjectPageSubSection></u:ObjectPageSection> -->
+							<u:ObjectPageSection id="idSmartChartSection" titleUppercase="false" title="{i18n>SmartChart}" ><u:ObjectPageSubSection id="idSmartChartSubSection"><VBox alignItems="Center" alignContent="Center" justifyContent="Center" renderType="Div"><VBox fitContainer="true" alignItems="Stretch" alignContent="Stretch" justifyContent="Start" renderType="Div" height="500px" width="700px"><core:Fragment id="idSmartChartFragment" fragmentName="opportunity.opportunity.view.fragments.SmartChart" type="XML"/></VBox></VBox></u:ObjectPageSubSection></u:ObjectPageSection>
 						</u:sections>
 					</u:ObjectPageLayout>
 				</f:mainContent>
 				<f:items>
-					<f:SidePanelItem icon="sap-icon://target-group" text="{i18n>ToDos}">
+					<f:SidePanelItem icon="sap-icon://target-group" text="{i18n>Tasks}">
 						
 						<f:GridList
 		id="gridList"
@@ -215,6 +215,7 @@
 		class="sapUiResponsiveContentPadding"
 		sticky="ColumnHeaders,HeaderToolbar"
 		delete="onGridListItemDelete"
+		noDataText="No Tasks Found"
 			
         >
 							<f:dragDropConfig>

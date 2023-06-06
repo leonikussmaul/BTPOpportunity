@@ -11,7 +11,7 @@
                                     entitySet="opportunityHeader" beforeRebindChart="beforeRebindChart"
                                     useVariantManagement="false"
 			                        useChartPersonalisation="true"
-			                        header="{i18n>chartLabel}" showFullScreenButton="true" selectionMode="Multi"
+			                        header="Opportunities per Market Unit" showFullScreenButton="true" selectionMode="Multi"
 			                        showChartTooltip="true" showDrillBreadcrumbs="false"
 			                        showDetailsButton="false" showDrillButtons="true"
 			                        showSemanticNavigationButton="true"></smartchart:SmartChart>

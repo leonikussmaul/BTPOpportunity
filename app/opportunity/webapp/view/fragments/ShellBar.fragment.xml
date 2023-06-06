@@ -13,7 +13,12 @@
                 visible="{ parts: [ {path: 'UISwitch>/downloadReport'},
                                     {path: 'UserModel>/scopes'}],
                                     formatter: '.formatter.showDownloadButton'}" ><menu><Menu itemSelected="onMenuAction"><MenuItem text="Goals and Value Drivers report" icon="sap-icon://download" press="onDataExport_CustomerGoalValueDriverReport"/><MenuItem text="Value Drivers report"           icon="sap-icon://download" press="onDataExport_CustomerValueDriverReport"/></Menu></menu></MenuButton> -->
+			
+			
+
 			<m:Button press="onNavToTasksPage" text="{globalModel>/buttonText}" id="flipButton" tooltip="{i18n>navOtherPageTooltip}"/>
+			<m:Button press="onNavToChartPage"  icon="sap-icon://vertical-bar-chart" tooltip="Go to the Chart Overview"/>
+
 			<m:Button press="onOpenServiceCatalog" icon="sap-icon://education" tooltip="{i18n>serviceCatalogTooltip}"/>
 			<m:Button press="onOpenAnalyticsStore" icon="sap-icon://business-objects-experience" tooltip="{i18n>analyticsStoreTooltip}"/>
 			<m:Button press="onOpenSharePoint" icon="sap-icon://idea-wall" tooltip="{i18n>sharePointTooltip}"/>

@@ -35,7 +35,7 @@
 					<steps>
 						<!-- step 1 -->
 						<WizardStep id="WizardStep1" 
-					title="{i18n>step1Title}" validated="true"
+					title="{i18n>step1Title}" validated="true" 
 					>
 							<Title titleStyle="H5" text="{i18n>step1SubTitle}" class="sapUiSmallMarginBottom"/>
 							<form:SimpleForm editable="true"
@@ -240,7 +240,7 @@
 				<Toolbar>
 					<content>
 						<ToolbarSpacer />
-						<Button text="{i18n>delete}" press="onDeleteTopic" />
+						<!-- <Button text="{i18n>delete}" press="onDeleteTopic" /> -->
 						<!-- <Button text="Previous Step" press="onPreviousStep" /> -->
 						<Button type="Reject" text="{i18n>cancel}" press="onCloseWizardPress" />
 						<Button type="Accept" text="{i18n>save}" press="onSaveWizardPress" />

@@ -730,6 +730,19 @@ sap.ui.define([
                 }
             },
 
+
+            /* ------------------------------------------------------------------------------------------------------------
+            EXPORT TO EXCEL
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            onBeforeExportOpportunities: function(oEvent){
+            var oWorkbook = oEvent.getParameter("exportSettings").workbook;
+            oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" })
+
+
+            }
+
           
 
 

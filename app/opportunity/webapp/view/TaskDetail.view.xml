@@ -37,12 +37,12 @@
 									<FlexBox  fitContainer="true" alignItems="Center">
 						 				<VBox >
 										<Title text="{actionTitle}" wrapping="true"/>
-										<Text text="{actionCustomer}" />
+										<Link text="{actionCustomer}" press="onGoToOpportunity" emphasized="true" tooltip="Navigate to the Opportunity"/>
 										</VBox>
 									</FlexBox>
 								</u:snappedHeading>
 								<u:expandedContent>
-									<Text text="{actionCustomer}" />
+									<Link text="{actionCustomer}" press="onGoToOpportunity" emphasized="true" tooltip="Navigate to the Opportunity"/>
 								</u:expandedContent>
 								<u:actions>
 									<tnt:InfoLabel  text="{actionTopic}" colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${actionTopic} !== null}" class="sapUiSmallMarginEnd"/>
@@ -54,9 +54,9 @@
 							<FlexBox wrap="Wrap">
 
 
-<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionTask} !== null}" width="200px">
+<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionTask} !== null}" width="20%" >
 <!-- <Title text="{i18n>actionTask}" class="sapUiTinyMarginBottom" /> -->
-	<Text text="{actionTask}" wrapping="true" class="sapUiMediumMarginTop"/>
+	<Text text="{actionTask}" wrapping="true" class="sapUiMediumMarginTop" />
 	</VBox>
 							<VBox class="sapUiMediumMarginEnd sapUiMediumMarginBottom" visible="{= ${actionOwner} !== null}">
 						
@@ -83,7 +83,7 @@
 								</VBox>
 
 								
-								<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${actionProgress} !== null &amp;&amp; !${editModel>/editMode}}">
+								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${actionProgress} !== null &amp;&amp; !${editModel>/editMode}}">
 									<Title text="{i18n>actionProgress}"  />
 									<ProgressIndicator width="100%"
 								class="sapUiSmallMarginBottom"
@@ -94,7 +94,7 @@
 								</VBox>
 
 
-<VBox class="sapUiMediumMarginBeginEnd" width="20%" visible="{= ${editModel>/editMode}}">
+<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${editModel>/editMode}}">
 									<Title text="{i18n>actionProgress}"  />
 									<Slider id="actionProgressSlider" value="{actionProgress}" width="100%" step="25" change="onProgressSliderChange"
 							min="0" max="100"
@@ -134,7 +134,7 @@
 								<u:ObjectPageSubSection id="idSubTaskSubSection">
 					
 				<Table  id="subTaskTable" items="{
-			path : 'subTaskModel>/subtasks',
+			path : 'subTaskModel>/subtasks', templateShareable:false,
 			 sorter:
                                   {
                                                 path: 'subTaskOrder',
@@ -159,6 +159,14 @@
 		</headerToolbar>
 					
 					<columns>
+
+					<Column hAlign="Center" width="3em">
+							<customData>
+								<core:CustomData key="p13nData"/>
+							</customData>
+							<Label />
+						</Column>
+
 						<Column width="90%" >
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "subTask", "columnIndex" : "1", "leadingProperty": "subTask", "sortProperty": "subTask", "filterProperty": "subTask ", "type":"string"}'/>
@@ -188,7 +196,6 @@
 							<Label text="{i18n>subTaskDueDate}" tooltip="{i18n>subTaskDueDate}"/>
 						</Column>
 
-
 						<!-- test reorder -->
 
 						<Column  width="3em">
@@ -206,11 +213,15 @@
 						</Column>
 
 						
+
+						
 						
 							</columns>
 					<items >
 						<ColumnListItem  vAlign="Middle" selected="{subTaskModel>subTaskCompleted}">
 							<cells >
+
+							<Text  text="{= ${subTaskModel>subTaskOrder} + 1}.)"  />
 								
 								<Text text="{subTaskModel>subTask}" wrapping="true" />
 								<!-- <Text text="{subTaskModel>subTaskOwner}" wrapping="true" /> -->
@@ -225,7 +236,7 @@
 										<MenuButton text="{subTaskModel>subTaskStatus}" buttonMode="Split" width="140px"  icon="{path: 'subTaskModel>subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}"
 										 >
 											<menu>
-												<Menu itemSelected="onMenuAction" items="{/opportunitySubTaskStatus}">
+												<Menu itemSelected="onMenuAction" items="{path: '/opportunitySubTaskStatus', templateShareable:false}">
 													<MenuItem press="onSubTaskStatusChange" text="{subTaskStatus}" icon="{path: 'subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}" />
 													
 												</Menu>
@@ -245,7 +256,6 @@
 								<core:Icon press="onReorderUp" src="sap-icon://slim-arrow-up" size="1.2rem" color="#427cac" tooltip="Move the Sub-Task one up"/>
 								<core:Icon press="onReorderDown" src="sap-icon://slim-arrow-down" size="1.2rem" color="#427cac" tooltip="Move the Sub-Task one down"/>
 
-									
 								
 							</cells>
 						</ColumnListItem>
@@ -266,6 +276,7 @@
 			<Toolbar>
 				<ToolbarSpacer />
 				<Button id="Cancel" text="{i18n>cancel}" press="onCancelObjectPress" type="Reject" visible="{editModel>/editMode}"/>
+				<Button id="OppBtn" text="Opportunity" icon="sap-icon://shortcut" press="onGoToOpportunity" visible="{= !${editModel>/editMode}}" tooltip="Navigate to the Opportunity"/>
 				<Button id="EditBtn" text="{i18n>edit}" press="onEditObjectPress" type="Emphasized" visible="{= !${editModel>/editMode}}"/>
 				<Button id="SaveBtn" text="{i18n>save}" press="onSaveObjectPress" type="Success" visible="{editModel>/editMode}" />
 			</Toolbar>

@@ -57,7 +57,12 @@ sap.ui.define(
           // var sViewName = oGlobalModel.getProperty("/viewName");
          
 
-      }
+      },
+
+      onNavToChartPage: function(oEvent){
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("ChartPage");
+        },
 
 
 

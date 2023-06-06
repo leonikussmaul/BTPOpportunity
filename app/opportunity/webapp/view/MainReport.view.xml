@@ -265,6 +265,9 @@
 			</f:DynamicPageHeader>
 		</f:header>
 		<f:content>
+
+
+
 			<smartTable:SmartTable 
   id="mySmartTable" 
   persistencyKey="persistencyKey"
@@ -272,7 +275,7 @@
   smartFilterId="smartFilterBar" 
   beforeRebindTable="onBeforeRebindTable"
   tableType="ResponsiveTable"  
-  beforeExport="onBeforeExport"
+  beforeExport="onBeforeExportOpportunities"
   useVariantManagement="true" 
   useTablePersonalisation="true" 
   header="{i18n>mySmartTableHeader}"
