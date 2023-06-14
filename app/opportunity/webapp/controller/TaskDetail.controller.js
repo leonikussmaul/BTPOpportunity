@@ -599,13 +599,25 @@ sap.ui.define([
                 oRouter.navTo("ObjectPage", {
                     opportunityID: oppID
                 });
-            }
+            },
 
-              
-
+            onSubTaskFilter: function(oEvent) {
+                var oTable = this.byId("subTaskTable");
+                var oBinding = oTable.getBinding("items");
+                var oSelected = oEvent.getSource().getSelectedKey();
+                var oFilter;
             
-              
-
+                if (oSelected === 'Open') {
+                    oFilter = new sap.ui.model.Filter("subTaskCompleted", sap.ui.model.FilterOperator.EQ, false);
+                } else if (oSelected === 'Completed') {
+                    oFilter = new sap.ui.model.Filter("subTaskCompleted", sap.ui.model.FilterOperator.EQ, true);
+                } else {
+                    oFilter = null;
+                }
+            
+                oBinding.filter(oFilter, sap.ui.model.FilterType.Application);
+            }
+            
 
         });
     });

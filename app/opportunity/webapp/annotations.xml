@@ -13,75 +13,18 @@
 		<edmx:Include Namespace="com.sap.vocabularies.UI.v1"
 			Alias="UI"/>
 	</edmx:Reference>
-    	<edmx:DataServices m:DataServiceVersion="2.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+
+	
 		<Schema Namespace="EPM_REF_APPS_PROD_MAN_SRV"
-			sap:schema-version="0" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-
-           
-
-        <!-- <Annotations Target="OpportunityService.opportunityMarketUnitVH/marketUnit">
-    <Annotation Term="Common.Text" Path="marketUnit">
-        <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
-    </Annotation>
-    <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
-    <Annotation Term="Common.ValueList">
-        <Record>
-            <PropertyValue Property="CollectionPath" String="opportunityMarketUnitVH"/>
-            <PropertyValue Property="Parameters">
-                <Collection>
-                    <Record Type="Common.ValueListParameterInOut">
-                        <PropertyValue Property="LocalDataProperty" PropertyPath="marketUnit"/>
-                        <PropertyValue Property="ValueListProperty" String="marketUnit"/>
-                    </Record>
-                    <Record Type="Common.ValueListParameterOut">
-                        <PropertyValue Property="LocalDataProperty" PropertyPath="marketUnit"/>
-                        <PropertyValue Property="ValueListProperty" String="marketUnit"/>
-                    </Record>
-                </Collection>
-            </PropertyValue>
-        </Record>
-    </Annotation>
-</Annotations> -->
-
-<Schema Namespace="ODataDemoService" xmlns="http://schemas.microsoft.com/ado/2007/05/edm"
-            xmlns:sap="http://www.sap.com/Protocols/SAPData">
-   <EntityType Name="opportunityHeader">
-<Key>
-<PropertyRef Name="opportunityID"/>
-</Key>
-<Property Name="opportunityID" Type="Edm.Int32" Nullable="false" sap:aggregation-role="dimension" sap:label="Product ID"
-		sap:sortable="true" sap:filterable="true" />
-<Property Name="source" Type="Edm.String" MaxLength="20"
-sap:aggregation-role="dimension" sap:label="Product Category"
-					sap:sortable="true" sap:filterable="true"/>
-<Property Name="priority" Type="Edm.String" MaxLength="20"/>
-<Property Name="clientContactPerson" Type="Edm.String" MaxLength="255"/>
-<Property Name="ssa" Type="Edm.String" MaxLength="255"/>
-<Property Name="account" Type="Edm.String" MaxLength="255" />
-<Property Name="marketUnit" Type="Edm.String" MaxLength="255"/>
-<Property Name="topic" Type="Edm.String" MaxLength="255"/>
-<Property Name="status" Type="Edm.String" MaxLength="50"/>
-<Property Name="primaryContact" Type="Edm.String" MaxLength="255"/>
-<Property Name="opportunityStartDate" Type="Edm.Date"/>
-<Property Name="opportunityDueDate" Type="Edm.Date"/>
-<Property Name="progress" Type="Edm.Int32"/>
-<Property Name="isFavorite" Type="Edm.Boolean"/>
-<Property Name="opportunityCreatedQuarter" Type="Edm.String" MaxLength="2"/>
-<Property Name="opportunityClosedQuarter" Type="Edm.String" MaxLength="2"/>
-<Property Name="opportunityValue" Type="Edm.Int32"/>
-<Property Name="opportunityInCRM" Type="Edm.String" MaxLength="3"/>
-<Property Name="noteText" Type="Edm.String" MaxLength="800"/>
-<Property Name="noteDate" Type="Edm.Date"/>
-</EntityType>
-<EntityContainer Name="EntityContainer">
-<EntitySet Name="opportunityHeader" EntityType="OpportunityService.opportunityHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false"
-					sap:pageable="false" sap:content-version="1" />
-			</EntityContainer>
-
-</Schema>
+			sap:schema-version="0"
+			xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 
 
-  <Annotations Target="OpportunityService.opportunityHeader"
+
+
+
+			<Annotations Target="OpportunityService.opportunityHeader"
 				xmlns="http://docs.oasis-open.org/odata/ns/edm">
 				<Annotation Term="com.sap.vocabularies.UI.v1.LineItem">
 					<Collection>
@@ -95,18 +38,11 @@ sap:aggregation-role="dimension" sap:label="Product Category"
 							<Annotation Term="com.sap.vocabularies.UI.v1.Importance"
 								EnumMember="com.sap.vocabularies.UI.v1.ImportanceType/High"/>
 						</Record>
-
-
-
-
-
 					</Collection>
 				</Annotation>
 			</Annotations>
-
-
-
-            	<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm"
+			<Annotations
+				xmlns="http://docs.oasis-open.org/odata/ns/edm"
 						 Target="OpportunityService.opportunityHeader/priority">
 				<Annotation Term="com.sap.vocabularies.UI.v1.ValueCriticality">
 					<Collection>
@@ -114,87 +50,87 @@ sap:aggregation-role="dimension" sap:label="Product Category"
 							<PropertyValue Property="Value" String="High" />
 							<PropertyValue Property="Criticality" EnumMember="com.sap.vocabularies.UI.v1.CriticalityType/Negative" />
 						</Record>
-
-                        <Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
+						<Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
 							<PropertyValue Property="Value" String="Medium" />
 							<PropertyValue Property="Criticality" EnumMember="com.sap.vocabularies.UI.v1.CriticalityType/Critical" />
 						</Record>
-
-                        <Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
+						<Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
 							<PropertyValue Property="Value" String="Low" />
 							<PropertyValue Property="Criticality" EnumMember="com.sap.vocabularies.UI.v1.CriticalityType/Positive" />
 						</Record>
-
-                         <Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
+						<Record Type="com.sap.vocabularies.UI.v1.ValueCriticalityType">
 							<PropertyValue Property="Value" String="Other" />
 							<PropertyValue Property="Criticality" EnumMember="com.sap.vocabularies.UI.v1.CriticalityType/Neutral" />
 						</Record>
-						
 					</Collection>
 				</Annotation>
 			</Annotations>
-
-			<Annotations Target="OpportunityService.opportunityHeader" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-  <Annotation Term="com.sap.vocabularies.UI.v1.Chart">
-    <Record>
-      <PropertyValue Property="Title" String="Opportunity Chart"/>
-      <PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column"/>
-      <PropertyValue Property="Dimensions">
-        <Collection>
-          <PropertyPath>account</PropertyPath>
-          <PropertyPath>marketUnit</PropertyPath>
-         <PropertyPath>priority</PropertyPath>
-        </Collection>
-      </PropertyValue>
-      <PropertyValue Property="Measures">
-        <Collection>
-          <PropertyPath>opportunityValue</PropertyPath>
-           
-        </Collection>
-      </PropertyValue>
-    </Record>
-  </Annotation>
-
-  
-
-
-  	<Annotation Term="com.sap.vocabularies.UI.v1.Chart"
+			<Annotations Target="OpportunityService.opportunityHeader"
+				xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Term="com.sap.vocabularies.UI.v1.Chart">
+					<Record>
+						<PropertyValue Property="Title" String="Opportunity Chart"/>
+						<PropertyValue Property="ChartType" EnumMember="com.sap.vocabularies.UI.v1.ChartType/Column"/>
+						<PropertyValue Property="Dimensions">
+							<Collection>
+								<PropertyPath>account</PropertyPath>
+								<PropertyPath>marketUnit</PropertyPath>
+								<PropertyPath>priority</PropertyPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="Measures">
+							<Collection>
+								<PropertyPath>opportunityValue</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.UI.v1.Chart"
 					Qualifier="Pie_Chart">
 					<Record>
 						<PropertyValue Property="ChartType"
 							EnumMember="com.sap.vocabularies.UI.v1.ChartType/Pie" />
 						<PropertyValue Property="Dimensions">
-							 <Collection>
-          <PropertyPath>marketUnit</PropertyPath>
-        </Collection>
+							<Collection>
+								<PropertyPath>marketUnit</PropertyPath>
+							</Collection>
 						</PropertyValue>
 						<PropertyValue Property="Measures">
-							  <Collection>
-          <PropertyPath>opportunityValue</PropertyPath>
-           
-        </Collection>
+							<Collection>
+								<PropertyPath>opportunityValue</PropertyPath>
+							</Collection>
 						</PropertyValue>
 					</Record>
 				</Annotation>
-
-  <Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
-</Annotations>
-
-
-
-
-
+				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
+				<Annotation Term="com.sap.vocabularies.UI.v1.Chart"
+					Qualifier="Quarter_Chart">
+					<Record>
+						<PropertyValue Property="ChartType"
+							EnumMember="com.sap.vocabularies.UI.v1.ChartType/Line" />
+						<PropertyValue Property="Dimensions">
+							<Collection>
+								<PropertyPath>opportunityClosedQuarter</PropertyPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="Measures">
+							<Collection>
+								<PropertyPath>opportunityValue</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
+			</Annotations>
 			<Annotations Target="OpportunityService.opportunityHeader"
 				xmlns="http://docs.oasis-open.org/odata/ns/edm">
 				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject"
 					String="SemanticObjectCategory"/>
-			</Annotations> 
-           
-           
+			</Annotations>
 
-           
 
-          
-        </Schema>
-    </edmx:DataServices>
+
+
+		</Schema>
+	</edmx:DataServices>
 </edmx:Edmx>

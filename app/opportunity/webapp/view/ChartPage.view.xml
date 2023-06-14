@@ -89,6 +89,29 @@
                         </content>
                     </IconTabFilter>
 
+                    <IconTabFilter text="Closing Quarter Overview">
+                        <content>
+                            <smartchart:SmartChart
+                                id="smartChart3"
+                                enableAutoBinding="true"
+                                entitySet="opportunityHeader"
+                                useVariantManagement="false"
+                                useChartPersonalisation="true"
+                                header="Value per Q. Closed"
+                                showFullScreenButton="true"
+                                showChartTooltip="true"
+                                showDrillBreadcrumbs="false"
+                                showDetailsButton="false"
+                                showDrillButtons="false"
+                                showSemanticNavigationButton="false" 
+                                showDownloadButton="true"
+                                data:chartQualifier="Quarter_Chart"
+                                beforeRebindChart="onBeforeRebindQuarterChart"
+
+                            />
+                        </content>
+                    </IconTabFilter>
+
                 </items>
             </IconTabBar>
         </f:content>

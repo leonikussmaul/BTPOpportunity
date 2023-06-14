@@ -21,6 +21,16 @@ sap.ui.define(
         oBindingParams.sorter.push(ValueSorter);
         },
 
+        onBeforeRebindQuarterChart: function(oEvent){
+      
+          var oBindingParams = oEvent.getParameter('bindingParams');
+          var MUSorter = new sap.ui.model.Sorter('opportunityClosedQuarter', false);
+         
+          oBindingParams.sorter.push(MUSorter);
+
+          
+          },
+
 
 
         

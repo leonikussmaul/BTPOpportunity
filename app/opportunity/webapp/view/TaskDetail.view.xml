@@ -123,6 +123,7 @@
 
 						
 						<u:sections>
+						
 						<u:ObjectPageSection id="idTaskDetailSection" titleUppercase="false" title="{i18n>editTask}" visible="{editModel>/editMode}">
 								<u:ObjectPageSubSection id="idTaskDetailSubSection">
 									<core:Fragment id="idTaskDetailFragment" fragmentName="opportunity.opportunity.view.fragments.TaskDetailHeader"  type="XML"/>
@@ -149,12 +150,20 @@
 						<headerToolbar>
 							
 			<OverflowToolbar design="Transparent">
-			<Title text="Open Sub-Tasks ({subTaskModel>/completedCount})" level="H2"/>
+			<!-- <Title text="Sub-Tasks" level="H2"/> -->
+				<SegmentedButton selectedKey="all" selectionChange="onSubTaskFilter" class="sapMSegmentedButtonNoAutoWidth">
+											<items>
+												<SegmentedButtonItem text="All" key="All"/>
+												<SegmentedButtonItem text="Open ({subTaskModel>/completedCount})" key="Open"/>
+												<SegmentedButtonItem text="Completed" key="Completed"/>
+											</items>
+										</SegmentedButton>
+
 						<ToolbarSpacer/>
 						
 						<!-- <OverflowToolbarButton icon="sap-icon://accept" tooltip="Add Table Item" press="onTableCheckPress"/> -->
 						<OverflowToolbarButton icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddSubTask"/>
-						<Button text="{i18n>cleanUp}" icon="sap-icon://clear-all" tooltip="{i18n>deleteSelected}" press="onDeleteSubTasks"/>
+						<Button text="Clear completed" icon="sap-icon://clear-all" tooltip="{i18n>deleteSelected}" press="onDeleteSubTasks"/>
 					</OverflowToolbar>
 		</headerToolbar>
 					
