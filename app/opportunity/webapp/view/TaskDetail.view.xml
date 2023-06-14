@@ -151,7 +151,7 @@
 							
 			<OverflowToolbar design="Transparent">
 			<!-- <Title text="Sub-Tasks" level="H2"/> -->
-				<SegmentedButton selectedKey="all" selectionChange="onSubTaskFilter" class="sapMSegmentedButtonNoAutoWidth">
+				<SegmentedButton id="subTaskFilter" selectedKey="all" selectionChange="onSubTaskFilter" class="sapMSegmentedButtonNoAutoWidth">
 											<items>
 												<SegmentedButtonItem text="All" key="All"/>
 												<SegmentedButtonItem text="Open ({subTaskModel>/completedCount})" key="Open"/>

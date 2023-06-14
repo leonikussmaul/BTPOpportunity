@@ -186,6 +186,7 @@ sap.ui.define([
                         that.getView().setBusy(false);
                         oDialog.close();
                         oAddSubTaskModel.setData({}); 
+                        
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
@@ -601,21 +602,25 @@ sap.ui.define([
                 });
             },
 
-            onSubTaskFilter: function(oEvent) {
+            onSubTaskFilter: function() {
                 var oTable = this.byId("subTaskTable");
                 var oBinding = oTable.getBinding("items");
-                var oSelected = oEvent.getSource().getSelectedKey();
+                var oSelected = this.getView().byId("subTaskFilter").getSelectedKey();
                 var oFilter;
             
                 if (oSelected === 'Open') {
                     oFilter = new sap.ui.model.Filter("subTaskCompleted", sap.ui.model.FilterOperator.EQ, false);
+                    
                 } else if (oSelected === 'Completed') {
                     oFilter = new sap.ui.model.Filter("subTaskCompleted", sap.ui.model.FilterOperator.EQ, true);
+                   
                 } else {
                     oFilter = null;
+                   
                 }
             
                 oBinding.filter(oFilter, sap.ui.model.FilterType.Application);
+                this.onReadSubTasksData();
             }
             
 
