@@ -1,0 +1,72 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form">
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="30%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="{i18n>addSubTaskFor} {actionCustomer}"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<!-- <Input type="Text" value="{AddSubTaskModel>/actionTask}" id="actionTaskInput"  /> -->
+		<form:SimpleForm editable="true"
+						>
+			<Label text="Title" required="true"/>
+            <TextArea value="{AddSubTaskModel>/subTask}" id="subTaskInput" maxLength="800" placeholder="{i18n>subTaskPlaceholder}"/>
+
+			<Label text="Owner" />
+			<ComboBox selectedKey="{AddSubTaskModel>/subTaskOwner}" placeholder="{i18n>subTaskOwnerPlaceholder}"
+							 items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+			</ComboBox>
+
+
+			<Label text="{i18n>dueDate}"/>
+			<DatePicker value="{AddSubTaskModel>/subTaskDueDate}" id="subTaskDueDateID"  />
+
+
+<Label text="Status" />
+			<ComboBox selectedKey="{AddSubTaskModel>/subTaskStatus}" placeholder="{i18n>subTaskStatus}"
+							 items="{
+                                    path: '/opportunitySubTaskStatus',
+                                    sorter: {
+                                                path: 'subTaskStatus',
+                                                descending: true
+                                            }
+                                    }">
+				<core:Item key="{subTaskStatus}" text="{subTaskStatus}"/>
+			</ComboBox>
+			<!-- <Label text="Priority" />
+			<ComboBox selectedKey="{AddSubTaskModel>/actionPriority}" placeholder="How urgent is it?">
+				<core:Item key="High" text="High"/>
+				<core:Item key="Medium" text="Medium"/>
+				<core:Item key="Low" text="Low"/>
+			</ComboBox>
+			<Label text="Progress"/>
+			<Slider value="{AddSubTaskModel>/actionProgress}" width="100%" step="25"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false" enableTickmarks="true"/> -->
+		</form:SimpleForm>
+		<footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitNewSubTask" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>

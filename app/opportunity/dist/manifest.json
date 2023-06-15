@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/v2/Opportunity/",
+                "uri": "v2/Opportunity/",
                 "type": "OData",
                 "settings": {
                     "annotations": [
@@ -29,21 +29,21 @@
                 }
             },
             "V4Service": {
-              "uri": "/Opportunity/",
-              "type": "OData",
-              "settings": {
-                  "annotations": [],
-                  "localUri": "localService/metadata2.xml",
-                  "odataVersion": "4.0"
-              }
-          },
-          "annotations": {
-            "type": "ODataAnnotation",
-            "uri": "./annotations.xml",
-            "settings": {
-              "localUri": "./annotations.xml"
+                "uri": "Opportunity/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata2.xml",
+                    "odataVersion": "4.0"
+                }
+            },
+            "annotations": {
+                "type": "ODataAnnotation",
+                "uri": "./annotations.xml",
+                "settings": {
+                    "localUri": "./annotations.xml"
+                }
             }
-          }
         }
     },
     "sap.ui": {
@@ -97,15 +97,15 @@
                 }
             },
             "V4Service": {
-              "dataSource": "V4Service",
-              "preload": true,
-              "settings": {
-                "synchronizationMode": "None",
-                "operationMode": "Server",
-                "autoExpandSelect": true,
-                "earlyRequests": true
+                "dataSource": "V4Service",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
             }
-          }
         },
         "resources": {
             "css": [
@@ -143,12 +143,12 @@
                 },
                 {
                     "name": "TaskDetail",
-                    "pattern": "TaskReport/{ID}", 
+                    "pattern": "TaskReport/{ID}",
                     "target": "TaskDetail"
                 },
                 {
                     "name": "ChartPage",
-                    "pattern": "ChartPage", 
+                    "pattern": "ChartPage",
                     "target": "ChartPage"
                 }
             ],

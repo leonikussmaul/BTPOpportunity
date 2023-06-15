@@ -21,7 +21,8 @@
     
     "redirect-uris": [
     
-    "https://*.applicationstudio.cloud.sap/**"
+    "https://*.applicationstudio.cloud.sap/**",
+    "https://*.eu10-004.hana.ondemand.com/**"
     
     ]
     

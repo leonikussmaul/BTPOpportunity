@@ -45,9 +45,9 @@ modules:
       name: ui5
       url: https://ui5.sap.com
   parameters:
-    disk-quota: 256M
+    disk-quota: 1024M
     keep-existing-routes: true
-    memory: 256M
+    memory: 1024M
 - name: BTPOpportunities-app-content
   type: com.sap.application.content
   path: .
@@ -68,7 +68,7 @@ modules:
       target-path: resources/
 - name: opportunitytracker
   type: html5
-  path: app/tracker
+  path: app/opportunity
   build-parameters:
     build-result: dist
     builder: custom

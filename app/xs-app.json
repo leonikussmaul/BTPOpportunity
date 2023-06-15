@@ -1,12 +1,25 @@
 {
+  "welcomeFile": "/app/opportunity/webapp/index.html",
   "authenticationMethod": "route",
   "routes": [
+    {
+      "source": "^/Opportunity/(.*)$",
+      "target": "/Opportunity/$1",
+      "destination": "opportunity",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/app/(.*)$",
+      "target": "$1",
+      "localDir": ".",
+      "authenticationType": "xsuaa",
+      "cacheControl": "no-cache, no-store, must-revalidate"
+    },
     {
       "source": "^/user-api(.*)",
       "target": "$1",
       "service": "sap-approuter-userapi"
     }
-  ],
-  "welcomeFile": "app/opportunity/webapp/index.html"
+  ]
 }
-

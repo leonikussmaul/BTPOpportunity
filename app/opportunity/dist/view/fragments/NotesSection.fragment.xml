@@ -1,0 +1,17 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:rte="sap.ui.richtexteditor"
+>
+
+<rte:RichTextEditor 
+								value="{noteText}"  
+								id="editRTE" 
+								height="400px" 
+								width="100%" 
+								showGroupFont="true" 
+								showGroupLink="true" 
+								showGroupUndo="true" 
+								editable="{editModel>/editMode}" 
+								/> 
+</core:FragmentDefinition>

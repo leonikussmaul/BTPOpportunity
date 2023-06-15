@@ -1,0 +1,392 @@
+<mvc:View controllerName="opportunity.opportunity.controller.MainReport"
+    id="view1"
+	xmlns:u="sap.uxap"
+	xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:table="sap.ui.table"
+	xmlns:plugins="sap.ui.table.plugins"
+	xmlns:tnt="sap.tnt"
+	xmlns:main="sap.ui.webc.main"
+	xmlns:layout="sap.ui.layout"
+>
+	<f:DynamicPage id="page" title="{i18n>title}" backgroundDesign="List">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>title}" id="headerTitle" />
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<layout:HorizontalLayout  class="sapUiSmallMarginBottom">
+					<Title
+		titleStyle="H4" text="Hi Sarah, here is today's Demand Generation at a Glance. " class="sapUiSmallMarginBottom"/>
+				</layout:HorizontalLayout>
+				<f:content>
+					<smartFilterBar:SmartFilterBar
+					id="smartFilterBar"
+					entitySet="opportunityHeader"
+					persistencyKey="persistencyKey"
+                    liveMode="true"
+                    showClearOnFB="true"
+                    showGoOnFB="false"
+                    showMessages="true"
+                    useDateRangeType="true"
+                    clear="onClearSmartFilterBar"
+                    >
+						<smartFilterBar:controlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="marketUnit"
+							index="0"
+							label="{i18n>marketUnit}"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="marketUnitFilter"
+									customData:hasValue="false"
+									selectionChange="customFieldChange"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityMarketUnitVH',
+                                    sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }">
+										<core:Item key="marketUnit" text="{marketUnit}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="status"
+							index="1"
+							label="{i18n>status}"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="statusFilter"
+									customData:hasValue="false"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityStatusVH',
+                                    sorter: {
+                                                path: 'status',
+                                                descending: true
+                                            }
+                                    }">
+										<core:Item key="status" text="{status}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="topic"
+							index="2"
+							label="{i18n>topic}"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="topicFilter"
+									customData:hasValue="false"
+									selectionChange="customFieldChange" 
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityTopicsVH',
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }">
+										<core:Item key="topic" text="{topic}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="primaryContact"
+							index="3"
+							label="{i18n>primaryContact}"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="primaryContactFilter"
+									customData:hasValue="false"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+										<core:Item key="primaryContact" text="{primaryContact}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="opportunityClosedQuarter"
+							index="4"
+							label="{i18n>opportunityClosedQuarter}"
+							visibleInAdvancedArea="false">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="opportunityQuarterClosedFilter"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }">
+										<core:Item key="opportunityQuarter" text="{opportunityQuarter}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="opportunityCreatedQuarter"
+							index="5"
+							label="{i18n>opportunityCreatedQuarter}"
+							visibleInAdvancedArea="false">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="opportunityCreatedFilter"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }">
+										<core:Item key="opportunityQuarter" text="{opportunityQuarter}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+
+							<smartFilterBar:ControlConfiguration
+							key="ssa"
+							label="{i18n>SSA}"
+							visibleInAdvancedArea="false" index="6">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="ssaFilter"
+									customData:hasValue="false"
+                                    showSelectAll="true"
+                                    items="{
+                                    path: '/opportunitySSAVH',
+                                    sorter: {
+                                                path: 'SSA',
+                                                descending: false
+                                            }
+                                    }">
+										<core:Item key="SSA" text="{SSA}"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+
+
+							<smartFilterBar:ControlConfiguration
+							key="priority"
+							index="5"
+							label="{i18n>priority}"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<MultiComboBox
+									id="priorityFilterID"
+                                    showSelectAll="true" selectionChange="onChangePrioritySelect"
+                                    >
+										<core:Item key="{priority}" text="Low" />
+										<core:Item key="{priority}" text="Medium"/>
+										<core:Item key="{priority}" text="High"/>
+									</MultiComboBox>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="opportunityID"
+							label="Opportunity ID"
+							visibleInAdvancedArea="false"
+							visible="false"></smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="opportunityInCRM"
+							label="{i18n>opportunityInCRM}" index="20"
+							visibleInAdvancedArea="true">
+								<smartFilterBar:customControl>
+									<Switch
+									id="customSwitch"
+                                    customTextOff="No" customTextOn="Yes"
+									customData:hasValue="false"/>
+								</smartFilterBar:customControl>
+							</smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="isFavorite"
+							label="{i18n>isFavorite}"
+							visibleInAdvancedArea="false"
+                            visible="false"></smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="noteDate"
+							label="Note Date"
+							visibleInAdvancedArea="false"
+                            visible="false"></smartFilterBar:ControlConfiguration>
+							<smartFilterBar:ControlConfiguration
+							key="noteText"
+							label="Note Text"
+							visibleInAdvancedArea="false"
+                            visible="false"></smartFilterBar:ControlConfiguration>
+
+						</smartFilterBar:controlConfiguration>
+
+						
+
+					</smartFilterBar:SmartFilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+
+
+
+			<smartTable:SmartTable 
+  id="mySmartTable" 
+  persistencyKey="persistencyKey"
+  entitySet="opportunityHeader" 
+  smartFilterId="smartFilterBar" 
+  beforeRebindTable="onBeforeRebindTable"
+  tableType="ResponsiveTable"  
+  beforeExport="onBeforeExportOpportunities"
+  useVariantManagement="true" 
+  useTablePersonalisation="true" 
+  header="{i18n>mySmartTableHeader}"
+  showRowCount="true"
+  enableAutoBinding="true"
+  demandPopin="true" 
+  class="sapUiResponsiveContentPadding" 
+  showFullScreenButton="true" 
+  initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
+  requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority"
+  ignoredFields="opportunityID"
+  ignoreFromPersonalisation="opportunityID,noteDate,noteText"   
+                 
+   >
+				<smartTable:customToolbar>
+					<OverflowToolbar design="Transparent">
+						<ToolbarSpacer/>
+						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
+						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onWizardDialogPress"/>
+						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
+						<ToggleButton id="favoriteToggle" icon="sap-icon://unfavorite" tooltip="Show Favorite Items" press="onFavoriteToolbarPress"/>
+					</OverflowToolbar>
+				</smartTable:customToolbar>
+				<!-- <Table mode="MultiSelect"><items><ColumnListItem
+				type="Active"
+				vAlign="Middle"
+				press="onListItemPress"></ColumnListItem></items></Table> -->
+				<Table inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Nothing here. Please adjust your search critera.">
+					<columns>
+						<Column width="12em">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "account", "columnIndex" : "1", "leadingProperty": "account", "sortProperty": "account", "filterProperty": "account ", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>account}" tooltip="{i18n>account}"/>
+						</Column>
+						<Column hAlign="Center" width="20%">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "topic", "columnIndex" : "2", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topic", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>topic}"/>
+						</Column>
+						<Column>
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "primaryContact", "columnIndex" : "3", "leadingProperty": "primaryContact", "sortProperty": "primaryContact", "filterProperty": "primaryContact", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>primaryContact}" tooltip="{i18n>primaryContact}"/>
+						</Column>
+						<Column>
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "ssa", "columnIndex" : "4", "leadingProperty": "ssa", "sortProperty": "ssa", "filterProperty": "ssa", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>ssa}"/>
+						</Column>
+						<!-- 
+                                                      <Column hAlign="Center" width="5rem" demandPopin="true"><customData><core:CustomData key="p13nData" value='\{"columnKey": "priority", "columnIndex" : "5", "leadingProperty": "priority", "sortProperty": "priority", "filterProperty": "priority", "type":"string"}'/></customData><Label text="{i18n>priority}"/></Column> -->
+						<Column hAlign="Center">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "opportunityClosedQuarter", "columnIndex" : "5", "leadingProperty": "opportunityClosedQuarter", "sortProperty": "opportunityClosedQuarter", "filterProperty": "opportunityClosedQuarter", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>opportunityClosedQuarter}"/>
+						</Column>
+						<Column hAlign="Center">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "opportunityValue", "columnIndex" : "6", "leadingProperty": "opportunityValue", "sortProperty": "opportunityValue", "filterProperty": "opportunityValue", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>opportunityValue}"/>
+						</Column>
+						<Column hAlign="Center" width="20%">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "status", "columnIndex" : "7", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'/>
+							</customData>
+							<Label text="{i18n>status}"/>
+						</Column>
+						<Column  width="6%" hAlign="Center">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "isFavorite", "columnIndex" : "8", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'/>
+							</customData>
+							<Label text="{i18n>Favourite}"/>
+						</Column>
+					</columns>
+					<items >
+						<ColumnListItem type="Navigation" vAlign="Middle"  press="onListItemPress"
+                                                     highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}">
+							<cells >
+								<ObjectIdentifier
+                                                title="{account}"
+                                                text="{priority}"/>
+								<!-- <Text text="{account}" wrapping="true"/> -->
+								<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" renderMode="Narrow"/>
+								<Text text="{primaryContact}" />
+								<Text text="{ssa}" />
+								<Text text="{opportunityClosedQuarter}" />
+								<ObjectNumber
+                                                    number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
+                                                    unit="EUR"
+                                                    visible="{= ${opportunityValue} !== null}"/>
+								<ObjectStatus text="{status}" state="{path: 'status', formatter:'.formatter.formatStatusColor'}" visible="{= ${status} !== null}"
+                                                    icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}" iconDensityAware="true"/>
+								<core:Icon press="onFavoritePress"
+                                                                src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                                size="1.2rem"
+                                                                color="#427cac"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</smartTable:SmartTable>
+
+
+
+
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

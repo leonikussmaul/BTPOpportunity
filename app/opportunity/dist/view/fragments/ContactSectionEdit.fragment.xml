@@ -1,0 +1,44 @@
+
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+
+		<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="notesSectionEdit"
+			editable="true"
+			layout="ColumnLayout" columnsM="2"
+            columnsL="3"
+            columnsXL="4">
+			<f:content>
+				<Label text="{i18n>primaryContact}" />
+				
+
+                	<Select selectedKey="{editPageModel>/primaryContact}" 
+							 items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+			</Select>
+
+                <!-- opportunityPrimaryContactVH -->
+				<Label text="{i18n>clientContactPerson}" />
+				<Input value="{editPageModel>/clientContactPerson}"/>
+				<Label text="{i18n>ssa}" />
+					<Select id="ssa" selectedKey="{editPageModel>/ssa}" items="{/opportunitySSAVH}">
+						<core:Item text="{SSA}" key="{SSA}"/>
+				</Select>
+				<Label text="{i18n>source}" />
+				<Input id="source" value="{editPageModel>/source}" />
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+
+</core:FragmentDefinition>
+
+
+	

@@ -10,6 +10,13 @@
       "csrfProtection": false
     },
     {
+      "source": "^/v2/Opportunity/(.*)$",
+      "target": "/v2/Opportunity/$1",
+      "destination": "opportunity",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
       "source": "^/resources/(.*)$",
       "target": "/resources/$1",
       "authenticationType": "none",

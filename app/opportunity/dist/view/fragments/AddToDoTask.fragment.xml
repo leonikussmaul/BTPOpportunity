@@ -1,0 +1,92 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form">
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="35%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Add Task"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<!-- <Input type="Text" value="{AddTaskModel>/actionTask}"  /> -->
+
+		  <MessageStrip
+				text="Add a new task against an existing opportunity."
+				showIcon="true" class="sapUiTinyMarginTop">
+			</MessageStrip>
+
+		<form:SimpleForm editable="true"
+						>
+			<Label text="{i18n>account}" required="true"/>
+			<!-- <Input value="{AddTaskModel>/account}" id="accountInput" placeholder="Which customer is the task related to?" /> -->
+			<ComboBox  selectedKey="{AddTaskModel>/account}" id="accountComboBox" showSecondaryValues= "true"
+							 items="{
+                                    path: '/opportunityHeader',
+                                   sorter:  {
+                                                path: 'account',
+                                                descending: true
+                                            }
+                                    }">
+				<core:ListItem key="{opportunityID}" text="{account}" additionalText = "{opportunityID}"/>
+			</ComboBox>
+			<Text text="{AddTaskModel>/account}"   />
+
+			<Label text="{i18n>actionTitle}" required="true"/>
+			<Input value="{AddTaskModel>/actionTitle}" id="actionTitleInputTask" placeholder="{i18n>toDoPlaceholder}" />
+			<Label text="{i18n>actionTask}" required="true"/>
+			<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInputTask" placeholder="{i18n>shortDescPlaceholder}"
+							maxLength="800"/>
+			<Label text="{i18n>actionOwner}" />
+			<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}"><core:Item key="Sarah" text="Sarah"/><core:Item key="Karthik" text="Karthik"/><core:Item key="Ravi" text="Ravi"/></ComboBox> -->
+			<ComboBox selectedKey="{AddTaskModel>/actionOwner}" placeholder="{i18n>OwnerPlaceholder}"
+							 items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+			</ComboBox>
+			<Label text="{i18n>actionTopic}" />
+			<!-- <ComboBox selectedKey="{AddTaskModel>/actionTopic}"><core:Item key="Analytics" text="Analytics"/><core:Item key="Data" text="Data"/><core:Item key="Automation / AI" text="Automation / AI"/><core:Item key="Integration" text="Integration"/></ComboBox> -->
+			<ComboBox selectedKey="{AddTaskModel>/actionTopic}" placeholder="{i18n>topicPlaceholder}"
+							 items="{
+                                    path: '/opportunityTopicsVH',
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{topic}" text="{topic}"/>
+			</ComboBox>
+			<Label text="{i18n>actionDueDate}"/>
+			<DatePicker value="{AddTaskModel>/actionDueDate}" id="actionDueDateTask"  />
+			<Label text="{i18n>actionPriority}" />
+			<ComboBox selectedKey="{AddTaskModel>/actionPriority}" placeholder="{i18n>priorityPlaceholder}">
+				<core:Item key="High" text="High"/>
+				<core:Item key="Medium" text="Medium"/>
+				<core:Item key="Low" text="Low"/>
+			</ComboBox>
+			<Label text="{i18n>actionProgress}"/>
+			<Slider value="{AddTaskModel>/actionProgress}" width="100%" step="25"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false" enableTickmarks="true"/>
+		</form:SimpleForm>
+		<footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitNewTask" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>
