@@ -27,3 +27,9 @@
 .sapTntSideNavigationSeparator {
     background-color: #ccd8e3 !important;
 }
+
+
+.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapMTabContainer.sapUiResponsiveContentPadding > .sapMTabContainerContent > .sapMTabContainerInnerContent, .sapMTabContainer.sapUiResponsiveContentPadding > .sapMTabContainerContent > .sapMTabContainerInnerContent {
+    padding: 1rem 1rem 0rem 1rem!important;
+    box-sizing: border-box;
+}

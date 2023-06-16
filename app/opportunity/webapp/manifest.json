@@ -150,6 +150,16 @@
                     "name": "ChartPage",
                     "pattern": "ChartPage", 
                     "target": "ChartPage"
+                },
+                {
+                    "name": "Team",
+                    "pattern": "Team", 
+                    "target": "Team"
+                },
+                {
+                    "name": "Resources",
+                    "pattern": "Resources/{userID}", 
+                    "target": "Resources/{userID}"
                 }
             ],
             "targets": {
@@ -192,6 +202,22 @@
                     "viewId": "ChartPage",
                     "viewName": "ChartPage",
                     "viewLevel": 0
+                },
+                "Team": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Team",
+                    "viewName": "Team",
+                    "viewLevel": 0
+                },
+                "Resources": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Resources",
+                    "viewName": "Resources",
+                    "viewLevel": 1
                 }
             }
         },

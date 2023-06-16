@@ -36,6 +36,18 @@ sap.ui.define([
 
                 this.setModel(new JSONModel(), "tabModel");
                 this.getModel("tabModel").setProperty("/tabs", []);
+
+               
+                var aData = [
+                {"primaryContact": "Sarah"},
+                {"primaryContact": "Rajat"},
+                {"primaryContact": "Ravi"},
+            ];
+
+            this.setModel(new JSONModel(), "teamModel");
+            this.getModel("teamModel").setProperty("/members", aData);
+
+
             }
         });
     }

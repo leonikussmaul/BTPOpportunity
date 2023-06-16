@@ -100,23 +100,23 @@ sap.ui.define([
                     opportunityID: selectedItem.opportunityID
                 });
 
-                this.onOpenTab(selectedItem); 
+                // this.onOpenTab(selectedItem); 
             },
 
-            onOpenTab: function(selectedItem) {
-                var oTabModel = this.getOwnerComponent().getModel("tabModel");
-                var aData = oTabModel.getProperty("/tabs");
+            // onOpenTab: function(selectedItem) {
+            //     var oTabModel = this.getOwnerComponent().getModel("tabModel");
+            //     var aData = oTabModel.getProperty("/tabs");
               
-                // Check if opportunityID already exists in the array
-                var isExisting = aData.some(function(item) {
-                  return item.opportunityID === selectedItem.opportunityID;
-                });
+            //     // Check if opportunityID already exists in the array
+            //     var isExisting = aData.some(function(item) {
+            //       return item.opportunityID === selectedItem.opportunityID;
+            //     });
               
-                if (!isExisting) {
-                  aData.unshift(selectedItem);
-                  oTabModel.setProperty("/tabs", aData);
-                }
-              },
+            //     if (!isExisting) {
+            //       aData.unshift(selectedItem);
+            //       oTabModel.setProperty("/tabs", aData);
+            //     }
+            //   },
               
             /* ------------------------------------------------------------------------------------------------------------
             WIZARD

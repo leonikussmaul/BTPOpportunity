@@ -594,7 +594,15 @@ sap.ui.define([
             },
 
             onGoToOpportunity: function(oEvent){
-                var oppID = this.getView().getBindingContext().getObject().opptID_opportunityID; 
+                var oContext = this.getView().getBindingContext().getObject(); 
+                var oppID = oContext.opptID_opportunityID; 
+                
+                // var oTabModel = this.getOwnerComponent().getModel("tabModel");
+                // var aData = oTabModel.getData().tabs; 
+
+                // var oObject = this.getView().getModel().getProperty("/opportunityHeader(" + oppID + ")");
+                // aData.unshift(oObject); 
+                // oTabModel.setProperty("/tabs", aData); 
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {

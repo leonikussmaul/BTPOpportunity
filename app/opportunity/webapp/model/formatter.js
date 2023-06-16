@@ -21,8 +21,6 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
           return "./images/Ami.jpeg";
         case "Amit":
           return "./images/Amit.jpeg";
-        case "Andrea":
-          return "./images/Andrea.jpeg";
         case "Arpit":
           return "./images/Arpit.jpeg";
         case "Bas":

@@ -85,7 +85,14 @@ sap.ui.define(
 
         onOpenAbout: function(oEvent){
           sap.m.MessageToast.show("Details will come soon! Stay tuned.")
-        }
+        },
+
+        onOpenTeam: function(oEvent){
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("Team");
+          },
+
+
 
 
 

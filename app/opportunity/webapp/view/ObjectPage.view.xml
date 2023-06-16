@@ -1,55 +1,98 @@
-<mvc:View controllerName="opportunity.opportunity.controller.ObjectPage"
-	xmlns:u="sap.uxap"
-	xmlns:mvc="sap.ui.core.mvc"
+<mvc:View
+    controllerName="opportunity.opportunity.controller.ObjectPage"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
-	xmlns:form="sap.ui.layout.form"
-	xmlns:f="sap.f"
-	xmlns:l="sap.ui.layout"
-	xmlns:t="sap.ui.table"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:suite="sap.suite.ui.commons"
-	xmlns:rte="sap.ui.richtexteditor"
-	xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:tnt="sap.tnt"
-	xmlns:dnd="sap.ui.core.dnd"
-	xmlns:dnd-grid="sap.f.dnd"
-	xmlns:commons="sap.suite.ui.commons"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:suite="sap.suite.ui.commons"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:tnt="sap.tnt"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:commons="sap.suite.ui.commons"
 >
-<TabContainer items="{ path: 'tabModel>/tabs' }" id="myTabContainer" itemSelect="onTabItemSwitch"
-					showAddNewButton="true"
-					class="sapUiResponsiveContentPadding sapUiResponsivePadding--header"
-					addNewButtonPress="onWizardDialogPress" itemClose="onTabItemClose">
-		<items >
-			<TabContainerItem name="{tabModel>account}" key="{tabModel>opportunityID}" modified="{modified}">
-				<content>
-					
-	<Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
-		<content>
-			<f:SidePanel id="mySidePanel"  sidePanelResizable="true" sidePanelMinWidth="30rem" sidePanelWidth="20rem" toggle="onToggleSidePanel">
-				<f:mainContent>
-					<u:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showEditHeaderButton="true" editHeaderButtonPress="handleEditBtnPress" upperCaseAnchorBar="false">
-						<u:headerTitle>
-							<u:ObjectPageDynamicHeaderTitle>
-								<u:expandedHeading>
-									<HBox>
-									<VBox>
-										<Title text="{account}" />
-										<Text text="{opportunityID}" class="sapUiNeutral"/>
-										
-									</VBox>
-										<Button text="{priority}" visible="{= ${priority} !== null}" type="{path: 'priority', formatter:'.formatter.priortityButton'}" class="sapUiSmallMarginBeginEnd"/>
-
-									</HBox>
-								</u:expandedHeading>
-								<u:snappedHeading>
-									<FlexBox  fitContainer="true" alignItems="Center">
-										<Avatar class="sapUiTinyMarginEnd" initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
-						 backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}" tooltip="{marketUnit}"/>
-										<Title text="{account}"  wrapping="true"/>
-									</FlexBox>
-								</u:snappedHeading>
-								<!-- <u:expandedContent>
+    <TabContainer
+        items="{ path: 'tabModel>/tabs' }"
+        id="myTabContainer"
+        itemSelect="onTabItemSwitch"
+        showAddNewButton="true"
+        class="sapUiResponsiveContentPadding sapUiResponsivePadding--header"
+        addNewButtonPress="onWizardDialogPress"
+        itemClose="onTabItemClose"
+    >
+        <items>
+            <TabContainerItem
+                name="{tabModel>account}"
+                key="{tabModel>opportunityID}"
+                additionalText="{tabModel>marketUnit}"
+            >
+                <content>
+                    <Page
+                        id="ObjectPage"
+                        showHeader="true"
+                        showNavButton="true"
+                        navButtonPress="onNavBackPress"
+                    >
+                        <content>
+                            <f:SidePanel
+                                id="mySidePanel"
+                                sidePanelResizable="true"
+                                sidePanelMinWidth="30rem"
+                                sidePanelWidth="20rem"
+                            >
+                                <f:mainContent>
+                                    <u:ObjectPageLayout
+                                        id="ObjectPageLayout"
+                                        showTitleInHeaderContent="true"
+                                        showEditHeaderButton="true"
+                                        editHeaderButtonPress="handleEditBtnPress"
+                                        upperCaseAnchorBar="false"
+                                    >
+                                        <u:headerTitle>
+                                            <u:ObjectPageDynamicHeaderTitle>
+                                                <u:expandedHeading>
+                                                    <HBox>
+                                                        <VBox>
+                                                            <Title
+                                                                text="{account}"
+                                                            />
+                                                            <Text
+                                                                text="{opportunityID}"
+                                                                class="sapUiNeutral"
+                                                            />
+                                                        </VBox>
+                                                        <Button
+                                                            text="{priority}"
+                                                            visible="{= ${priority} !== null}"
+                                                            type="{path: 'priority', formatter:'.formatter.priortityButton'}"
+                                                            class="sapUiSmallMarginBeginEnd"
+                                                        />
+                                                    </HBox>
+                                                </u:expandedHeading>
+                                                <u:snappedHeading>
+                                                    <FlexBox
+                                                        fitContainer="true"
+                                                        alignItems="Center"
+                                                    >
+                                                        <Avatar
+                                                            class="sapUiTinyMarginEnd"
+                                                            initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
+                                                            backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
+                                                            tooltip="{marketUnit}"
+                                                        />
+                                                        <Title
+                                                            text="{account}"
+                                                            wrapping="true"
+                                                        />
+                                                    </FlexBox>
+                                                </u:snappedHeading>
+                                                <!-- <u:expandedContent>
 									<Text text="{
 				path: 'opportunityStartDate',
 				type: 'sap.ui.model.type.Date',
@@ -58,138 +101,323 @@
 				}
 			}" />
 								</u:expandedContent> -->
-								<u:actions>
-									<tnt:InfoLabel  text="{topic}" colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}" visible="{= ${topic} !== null}" class="sapUiSmallMarginEnd"/>
-									
-									<core:Icon press="onFavoriteObjectPress" tooltip="{i18n>favoriteItemTooltip}"
-                                                                src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
-                                                                size="1.1rem"
-                                                                color="#427cac"/>
-									<u:ObjectPageHeaderActionButton icon="sap-icon://delete" text="{i18n>deleteItemTooltip}" tooltip="{i18n>deleteItemTooltip}" press="onDeleteObjectPress"  />
-								</u:actions>
-							</u:ObjectPageDynamicHeaderTitle>
-						</u:headerTitle>
-						<u:headerContent>
-							<FlexBox wrap="Wrap">
-								<Avatar 
-                                    displaySize="L"
-                                    press="onAvatarPress" backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
-                                    initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"/>
-								<l:VerticalLayout class="sapUiResponsiveMargin">
-									<VBox>
-										<ObjectStatus state="Information" text="{i18n>status}" icon="sap-icon://message-information" />
-										<HBox alignItems="Center" justifyContent="Center" width="100%" >
-											<SegmentedButton  selectionChange="onSegmentPressed" id="segmentedStatusObject" width="560px" class="apUiTinyMarginBeginEnd" selectedKey="{status}">
-												<items>
-										<SegmentedButtonItem icon="sap-icon://flag-2" text="Lead" key="Lead"/>
-										<SegmentedButtonItem icon="sap-icon://overlay" text="Opp" key="Opportunity"/>
-										<SegmentedButtonItem icon="sap-icon://pause" text="Paused"  key="Paused"/>
-										<SegmentedButtonItem icon="sap-icon://activate" text="Delivery" key="Delivery"/>
-										<SegmentedButtonItem icon="sap-icon://checklist-item" text="Completed" key="Completed"/>
-												</items>
-											</SegmentedButton>
-										</HBox>
-									</VBox>
-								</l:VerticalLayout>
-								
-								<VBox class="sapUiSmallMarginEnd sapUiMediumMarginBottom" visible="{= ${opportunityCreatedQuarter} !== null}">
-									<Title text="{i18n>opportunityCreatedQuarter}" class="sapUiTinyMarginBottom" />
-									<ObjectStatus text="{opportunityCreatedQuarter}" icon="sap-icon://workflow-tasks" class="sapMObjectStatusLarge" />
-								</VBox>
-								<VBox class="sapUiSmallMarginBeginEnd" visible="{= ${opportunityValue} !== null}">
-									<Title text="{i18n>Value}" class="sapUiTinyMarginBottom" />
-									<ObjectNumber class="sapMObjectNumberLarge" state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}" number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"  unit="EUR" />
-								</VBox>
-								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}">
-									<Title text="{i18n>Progress}"  />
-									<ProgressIndicator width="100%"
-								class="sapUiSmallMarginBottom"
-								percentValue="{progress}"
-								displayValue="{path: 'progress', formatter: '.formatter.progressPercentage'}"
-								showValue="true"
-								state="{path: 'progress', formatter: '.formatter.progressStatus'}" />
-								</VBox>
-								<VBox class="sapUiMediumMarginBeginEnd" width="15%" visible="{= ${editModel>/editMode}}">
-									<Title text="{i18n>Progress}"  />
-									<Slider value="{editPageModel>/progress}" width="100%" step="25" change="onProgressSliderChange"
-							min="0" max="100"
-							showAdvancedTooltip="true"
-							showHandleTooltip="false"
-							class="sapUiSmallMarginTop" enableTickmarks="true" />
+                                                <u:actions>
+                                                    <tnt:InfoLabel
+                                                        text="{topic}"
+                                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                                        visible="{= ${topic} !== null}"
+                                                        class="sapUiSmallMarginEnd"
+                                                    />
 
+                                                    <core:Icon
+                                                        press="onFavoriteObjectPress"
+                                                        tooltip="{i18n>favoriteItemTooltip}"
+                                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                        size="1.1rem"
+                                                        color="#427cac"
+                                                    />
+                                                    <u:ObjectPageHeaderActionButton
+                                                        icon="sap-icon://delete"
+                                                        text="{i18n>deleteItemTooltip}"
+                                                        tooltip="{i18n>deleteItemTooltip}"
+                                                        press="onDeleteObjectPress"
+                                                    />
+                                                </u:actions>
+                                            </u:ObjectPageDynamicHeaderTitle>
+                                        </u:headerTitle>
+                                        <u:headerContent>
+                                            <FlexBox wrap="Wrap">
+                                                <Avatar
+                                                    displaySize="L"
+                                                    press="onAvatarPress"
+                                                    backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
+                                                    initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
+                                                />
+                                                <l:VerticalLayout
+                                                    class="sapUiResponsiveMargin"
+                                                >
+                                                    <VBox>
+                                                        <ObjectStatus
+                                                            state="Information"
+                                                            text="{i18n>status}"
+                                                            icon="sap-icon://message-information"
+                                                        />
+                                                        <HBox
+                                                            alignItems="Center"
+                                                            justifyContent="Center"
+                                                            width="100%"
+                                                        >
+                                                            <SegmentedButton
+                                                                selectionChange="onSegmentPressed"
+                                                                id="segmentedStatusObject"
+                                                                width="560px"
+                                                                class="apUiTinyMarginBeginEnd"
+                                                                selectedKey="{status}"
+                                                            >
+                                                                <items>
+                                                                    <SegmentedButtonItem
+                                                                        icon="sap-icon://flag-2"
+                                                                        text="Lead"
+                                                                        key="Lead"
+                                                                    />
+                                                                    <SegmentedButtonItem
+                                                                        icon="sap-icon://overlay"
+                                                                        text="Opp"
+                                                                        key="Opportunity"
+                                                                    />
+                                                                    <SegmentedButtonItem
+                                                                        icon="sap-icon://pause"
+                                                                        text="Paused"
+                                                                        key="Paused"
+                                                                    />
+                                                                    <SegmentedButtonItem
+                                                                        icon="sap-icon://activate"
+                                                                        text="Delivery"
+                                                                        key="Delivery"
+                                                                    />
+                                                                    <SegmentedButtonItem
+                                                                        icon="sap-icon://checklist-item"
+                                                                        text="Completed"
+                                                                        key="Completed"
+                                                                    />
+                                                                </items>
+                                                            </SegmentedButton>
+                                                        </HBox>
+                                                    </VBox>
+                                                </l:VerticalLayout>
 
-								</VBox>
-							</FlexBox>
-						</u:headerContent>
-						<!-- section fragments -->
-						<u:sections>
-							<u:ObjectPageSection id="idGeneralSection" titleUppercase="false" title="{i18n>generalHeader}" >
-								<u:ObjectPageSubSection id="idGeneralSubSection" visible="{= !${editModel>/editMode}}">
-									<core:Fragment id="idGeneralFragment" fragmentName="opportunity.opportunity.view.fragments.GeneralSection" type="XML"/>
-								</u:ObjectPageSubSection>
+                                                <VBox
+                                                    class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
+                                                    visible="{= ${opportunityCreatedQuarter} !== null}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>opportunityCreatedQuarter}"
+                                                        class="sapUiTinyMarginBottom"
+                                                    />
+                                                    <ObjectStatus
+                                                        text="{opportunityCreatedQuarter}"
+                                                        icon="sap-icon://workflow-tasks"
+                                                        class="sapMObjectStatusLarge"
+                                                    />
+                                                </VBox>
+                                                <VBox
+                                                    class="sapUiSmallMarginBeginEnd"
+                                                    visible="{= ${opportunityValue} !== null}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>Value}"
+                                                        class="sapUiTinyMarginBottom"
+                                                    />
+                                                    <ObjectNumber
+                                                        class="sapMObjectNumberLarge"
+                                                        state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}"
+                                                        number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
+                                                        unit="EUR"
+                                                    />
+                                                </VBox>
+                                                <VBox
+                                                    class="sapUiMediumMarginBeginEnd"
+                                                    width="15%"
+                                                    visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>Progress}"
+                                                    />
+                                                    <ProgressIndicator
+                                                        width="100%"
+                                                        class="sapUiSmallMarginBottom"
+                                                        percentValue="{progress}"
+                                                        displayValue="{path: 'progress', formatter: '.formatter.progressPercentage'}"
+                                                        showValue="true"
+                                                        state="{path: 'progress', formatter: '.formatter.progressStatus'}"
+                                                    />
+                                                </VBox>
+                                                <VBox
+                                                    class="sapUiMediumMarginBeginEnd"
+                                                    width="15%"
+                                                    visible="{= ${editModel>/editMode}}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>Progress}"
+                                                    />
+                                                    <Slider
+                                                        value="{editPageModel>/progress}"
+                                                        width="100%"
+                                                        step="25"
+                                                        change="onProgressSliderChange"
+                                                        min="0"
+                                                        max="100"
+                                                        showAdvancedTooltip="true"
+                                                        showHandleTooltip="false"
+                                                        class="sapUiSmallMarginTop"
+                                                        enableTickmarks="true"
+                                                    />
+                                                </VBox>
+                                            </FlexBox>
+                                        </u:headerContent>
+                                        <!-- section fragments -->
+                                        <u:sections>
+                                            <u:ObjectPageSection
+                                                id="idGeneralSection"
+                                                titleUppercase="false"
+                                                title="{i18n>generalHeader}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idGeneralSubSection"
+                                                    visible="{= !${editModel>/editMode}}"
+                                                >
+                                                    <core:Fragment
+                                                        id="idGeneralFragment"
+                                                        fragmentName="opportunity.opportunity.view.fragments.GeneralSection"
+                                                        type="XML"
+                                                    />
+                                                </u:ObjectPageSubSection>
 
-								<u:ObjectPageSubSection id="idGeneralSectionEdit" visible="{= ${editModel>/editMode}}">
-									<core:Fragment  fragmentName="opportunity.opportunity.view.fragments.GeneralSectionEdit" type="XML" />
-								</u:ObjectPageSubSection>
-							</u:ObjectPageSection>
+                                                <u:ObjectPageSubSection
+                                                    id="idGeneralSectionEdit"
+                                                    visible="{= ${editModel>/editMode}}"
+                                                >
+                                                    <core:Fragment
+                                                        fragmentName="opportunity.opportunity.view.fragments.GeneralSectionEdit"
+                                                        type="XML"
+                                                    />
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
 
+                                            <u:ObjectPageSection
+                                                id="idSectionContact"
+                                                titleUppercase="false"
+                                                title="{i18n>Contact}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionContact"
+                                                    visible="{= !${editModel>/editMode}}"
+                                                >
+                                                    <core:Fragment
+                                                        id="idContactFragment"
+                                                        fragmentName="opportunity.opportunity.view.fragments.ContactSection"
+                                                        type="XML"
+                                                    />
+                                                </u:ObjectPageSubSection>
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionContactEdit"
+                                                    visible="{= ${editModel>/editMode}}"
+                                                >
+                                                    <core:Fragment
+                                                        id="idContactEditFragment"
+                                                        fragmentName="opportunity.opportunity.view.fragments.ContactSectionEdit"
+                                                        type="XML"
+                                                    />
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
 
-							<u:ObjectPageSection id="idSectionContact" titleUppercase="false" title="{i18n>Contact}">
-								<u:ObjectPageSubSection id="idSubSectionContact" visible="{= !${editModel>/editMode}}">
-									<core:Fragment id="idContactFragment" fragmentName="opportunity.opportunity.view.fragments.ContactSection" type="XML"/>
-								</u:ObjectPageSubSection>
-								<u:ObjectPageSubSection id="idSubSectionContactEdit" visible="{= ${editModel>/editMode}}">
-									<core:Fragment id="idContactEditFragment" fragmentName="opportunity.opportunity.view.fragments.ContactSectionEdit" type="XML" />
-								</u:ObjectPageSubSection>
-							</u:ObjectPageSection>
+                                            <u:ObjectPageSection
+                                                id="idSectionTopics"
+                                                titleUppercase="false"
+                                                title="{i18n>Content}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionTopics"
+                                                    titleUppercase="false"
+                                                    title="{i18n>Topics}"
+                                                    class="sapUiSmallMarginTop"
+                                                >
+                                                    <u:actions>
+                                                        <Link
+                                                            text="{i18n>addTopic}"
+                                                            press="onAddTopicPress"
+                                                        />
+                                                    </u:actions>
+                                                    <HBox
+                                                        class="sapUiSmallMarginTopBottom"
+                                                    >
+                                                        <l:HorizontalLayout
+                                                            id="TopicFiltersObject"
+                                                            allowWrapping="true"
+                                                            class="sapUiResponsiveMargin "
+                                                            content="{}"
+                                                        >
+                                                            <ToggleButton
+                                                                text="{topic}"
+                                                                press="onPressToggle1"
+                                                                class="sapUiSmallMarginEnd"
+                                                                pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                                enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                                tooltip="{i18n>toggle1Tooltip}"
+                                                            >
+                                                                <customData>
+                                                                    <core:CustomData
+                                                                        key="topic"
+                                                                        value="{topic}"
+                                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                                    />
+                                                                </customData>
+                                                            </ToggleButton>
+                                                        </l:HorizontalLayout>
+                                                    </HBox>
+                                                </u:ObjectPageSubSection>
 
-							<u:ObjectPageSection id="idSectionTopics" titleUppercase="false" title="{i18n>Content}" >
-							
-								<u:ObjectPageSubSection id="idSubSectionTopics" titleUppercase="false" title="{i18n>Topics}" class="sapUiSmallMarginTop">
-									<u:actions>
-										<Link  text="{i18n>addTopic}" press="onAddTopicPress"/>
-									</u:actions>
-									<HBox class="sapUiSmallMarginTopBottom" >
-										<l:HorizontalLayout id="TopicFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
-											<ToggleButton text="{topic}" press="onPressToggle1" class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-											tooltip="{i18n>toggle1Tooltip}">
-												<customData>
-													<core:CustomData key="topic" value="{topic}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
-												</customData>
-											</ToggleButton>
-										</l:HorizontalLayout>
-									</HBox>
-								</u:ObjectPageSubSection>
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionDeliverables"
+                                                    titleUppercase="false"
+                                                    title="{i18n>Deliverables}"
+                                                    class="sapUiSmallMarginTop"
+                                                >
+                                                    <u:actions>
+                                                        <Link
+                                                            text="{i18n>addDeliverable}"
+                                                            press="onAddDeliverablePress"
+                                                        />
+                                                    </u:actions>
 
-								<u:ObjectPageSubSection id="idSubSectionDeliverables" titleUppercase="false" title="{i18n>Deliverables}" class="sapUiSmallMarginTop">
-									<u:actions>
-										<Link  text="{i18n>addDeliverable}" press="onAddDeliverablePress"/>
-									</u:actions>
-									
-									<HBox class="sapUiSmallMarginTopBottom">
-										<l:HorizontalLayout id="DeliverablesFiltersObject" allowWrapping="true" class="sapUiResponsiveMargin " content="{}"  >
-											<ToggleButton text="{deliverable}"  press="onPressToggle2"  class="sapUiSmallMarginEnd" pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
-											enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-											tooltip="{i18n>toggle2Tooltip}">
-												<customData>
-													<core:CustomData key="ID" value="{deliverable}" class="sapUiNoMarginTop sapUiNoMarginBottom"/>
-												</customData>
-											</ToggleButton>
-										</l:HorizontalLayout>
-									</HBox>
-								</u:ObjectPageSubSection>
-								
-							</u:ObjectPageSection>
-							
-							<u:ObjectPageSection id="idSectionNotes" titleUppercase="false" title="{i18n>Notes}" >
-							<u:heading>
-										<MessageStrip showIcon="true" text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more." showCloseButton="true" />
-								</u:heading>
-								
-								<u:ObjectPageSubSection id="idSubSectionNotes">
-									<!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
-									<rte:RichTextEditor 
+                                                    <HBox
+                                                        class="sapUiSmallMarginTopBottom"
+                                                    >
+                                                        <l:HorizontalLayout
+                                                            id="DeliverablesFiltersObject"
+                                                            allowWrapping="true"
+                                                            class="sapUiResponsiveMargin "
+                                                            content="{}"
+                                                        >
+                                                            <ToggleButton
+                                                                text="{deliverable}"
+                                                                press="onPressToggle2"
+                                                                class="sapUiSmallMarginEnd"
+                                                                pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                                enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                                tooltip="{i18n>toggle2Tooltip}"
+                                                            >
+                                                                <customData>
+                                                                    <core:CustomData
+                                                                        key="ID"
+                                                                        value="{deliverable}"
+                                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                                    />
+                                                                </customData>
+                                                            </ToggleButton>
+                                                        </l:HorizontalLayout>
+                                                    </HBox>
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+
+                                            <u:ObjectPageSection
+                                                id="idSectionNotes"
+                                                titleUppercase="false"
+                                                title="{i18n>Notes}"
+                                            >
+                                                <u:heading>
+                                                    <MessageStrip
+                                                        showIcon="true"
+                                                        text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more."
+                                                        showCloseButton="true"
+                                                    />
+                                                </u:heading>
+
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionNotes"
+                                                >
+                                                    <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
+                                                    <!-- <rte:RichTextEditor 
 								value="{noteText}"  
 								id="editRTE" 
 								height="400px" 
@@ -198,20 +426,53 @@
 								showGroupLink="true" 
 								showGroupUndo="true" 
 								editable="{editModel>/editMode}" 
-								/>
-								</u:ObjectPageSubSection>
-							</u:ObjectPageSection>
-							<u:ObjectPageSection id="idSmartChartSection" titleUppercase="false" title="{i18n>SmartChart}" ><u:ObjectPageSubSection id="idSmartChartSubSection"><VBox alignItems="Center" alignContent="Center" justifyContent="Center" renderType="Div"><VBox fitContainer="true" alignItems="Stretch" alignContent="Stretch" justifyContent="Start" renderType="Div" height="500px" width="700px"><core:Fragment id="idSmartChartFragment" fragmentName="opportunity.opportunity.view.fragments.SmartChart" type="XML"/></VBox></VBox></u:ObjectPageSubSection></u:ObjectPageSection>
-						</u:sections>
-					</u:ObjectPageLayout>
-				</f:mainContent>
-				<f:items>
-					<f:SidePanelItem icon="sap-icon://target-group" text="{i18n>Tasks}">
-						
-						<f:GridList
-		id="gridList"
-		mode="Delete"
-		items="{
+								/> -->
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+                                            <u:ObjectPageSection
+                                                id="idSmartChartSection"
+                                                titleUppercase="false"
+                                                title="Comparison"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSmartChartSubSection"
+                                                >
+                                                    <VBox
+                                                        alignItems="Center"
+                                                        alignContent="Center"
+                                                        justifyContent="Center"
+                                                        renderType="Div"
+                                                    >
+                                                        <VBox
+                                                            fitContainer="true"
+                                                            alignItems="Stretch"
+                                                            alignContent="Stretch"
+                                                            justifyContent="Start"
+                                                            renderType="Div"
+                                                            height="520px"
+                                                            width="700px"
+                                                        >
+                                                            <core:Fragment
+                                                                id="idSmartChartFragment"
+                                                                fragmentName="opportunity.opportunity.view.fragments.SmartChart"
+                                                                type="XML"
+                                                            />
+                                                        </VBox>
+                                                    </VBox>
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+                                        </u:sections>
+                                    </u:ObjectPageLayout>
+                                </f:mainContent>
+                                <f:items>
+                                    <f:SidePanelItem
+                                        icon="sap-icon://activities"
+                                        text="{i18n>Tasks}"
+                                    >
+                                        <f:GridList
+                                            id="gridList"
+                                            mode="Delete"
+                                            items="{
 		path: 'pageModel>/actionItems',
 		sorter: {
 					path: 'actionPriority',
@@ -219,46 +480,79 @@
 					group: true
 				}
 		}"
-		selectionChange="onSelectionChange"
-		class="sapUiResponsiveContentPadding"
-		sticky="ColumnHeaders,HeaderToolbar"
-		delete="onGridListItemDelete"
-		noDataText="No Tasks Found"
-			
-        >
-							<f:dragDropConfig>
-								<dnd:DragInfo sourceAggregation="items" />
-								<dnd-grid:GridDropInfo targetAggregation="items" dropPosition="Between" dropLayout="Horizontal" drop="onDrop" />
-							</f:dragDropConfig>
-							<f:headerToolbar>
-								<Toolbar >
-									<ToolbarSpacer />
-									<Button icon="sap-icon://add" tooltip="Add To Do Item" press="onAddToDoPress"/>
-									<!-- <Button icon="sap-icon://edit" tooltip="Group List" press="onGroupToDoItem"/>
+                                            selectionChange="onSelectionChange"
+                                            class="sapUiResponsiveContentPadding"
+                                            sticky="ColumnHeaders,HeaderToolbar"
+                                            delete="onGridListItemDelete"
+                                            noDataText="No Tasks Found"
+                                        >
+                                            <f:dragDropConfig>
+                                                <dnd:DragInfo
+                                                    sourceAggregation="items"
+                                                />
+                                                <dnd-grid:GridDropInfo
+                                                    targetAggregation="items"
+                                                    dropPosition="Between"
+                                                    dropLayout="Horizontal"
+                                                    drop="onDrop"
+                                                />
+                                            </f:dragDropConfig>
+                                            <f:headerToolbar>
+                                                <Toolbar>
+                                                    <ToolbarSpacer />
+                                                    <Button
+                                                        icon="sap-icon://add"
+                                                        tooltip="Add To Do Item"
+                                                        press="onAddToDoPress"
+                                                    />
+                                                    <!-- <Button icon="sap-icon://edit" tooltip="Group List" press="onGroupToDoItem"/>
 									<Button icon="sap-icon://sort" tooltip="Sort List" press="onSortToDoItem"/>
 									<Button icon="sap-icon://filter" tooltip="Filter List" press="onFilterToDoItem"/>
 									<Button icon="sap-icon://delete" tooltip="Delete To Do Item" press="onDeleteToDo"/> -->
-									<SearchField liveChange="onSearchTaskList" />
-								</Toolbar>
-							</f:headerToolbar>
-							<f:customLayout>
-								<grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(16rem, 1fr))" gridGap="0.5rem" />
-							</f:customLayout>
+                                                    <SearchField
+                                                        liveChange="onSearchTaskList"
+                                                    />
+                                                </Toolbar>
+                                            </f:headerToolbar>
+                                            <f:customLayout>
+                                                <grid:GridBasicLayout
+                                                    gridTemplateColumns="repeat(auto-fit, minmax(16rem, 1fr))"
+                                                    gridGap="0.5rem"
+                                                />
+                                            </f:customLayout>
 
-
-							<f:GridListItem press="onGridListItemPress" detailPress="onGridListItemEdit"  type="DetailAndActive"  highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}">
-								<VBox height="100%" justifyContent="SpaceBetween" >
-									<layoutData>
-										<FlexItemData growFactor="1" shrinkFactor="0" />
-									</layoutData>
-									<VBox class="sapUiSmallMargin">
-									 <ObjectStatus text="{pageModel>actionPriority}"
-                         state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
-                           visible="{= ${pageModel>actionPriority} !== null}" 
-                           />
-										<HBox justifyContent="SpaceBetween">
-											<Title text="{pageModel>actionTitle}" wrapping="true" />
-											<!-- <Label visible="{= ${pageModel>actionDueDate} !== null}"
+                                            <f:GridListItem
+                                                press="onGridListItemPress"
+                                                detailPress="onGridListItemEdit"
+                                                type="DetailAndActive"
+                                                highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
+                                            >
+                                                <VBox
+                                                    height="100%"
+                                                    justifyContent="SpaceBetween"
+                                                >
+                                                    <layoutData>
+                                                        <FlexItemData
+                                                            growFactor="1"
+                                                            shrinkFactor="0"
+                                                        />
+                                                    </layoutData>
+                                                    <VBox
+                                                        class="sapUiSmallMargin"
+                                                    >
+                                                        <ObjectStatus
+                                                            text="{pageModel>actionPriority}"
+                                                            state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
+                                                            visible="{= ${pageModel>actionPriority} !== null}"
+                                                        />
+                                                        <HBox
+                                                            justifyContent="SpaceBetween"
+                                                        >
+                                                            <Title
+                                                                text="{pageModel>actionTitle}"
+                                                                wrapping="true"
+                                                            />
+                                                            <!-- <Label visible="{= ${pageModel>actionDueDate} !== null}"
                        text="due {
                              path: 'pageModel>actionDueDate',
                              type: 'sap.ui.model.type.Date',
@@ -271,71 +565,167 @@
                        wrapping="false"
                        class="sapUiTinyMarginBottom" /> -->
 
-					   <ObjectStatus text="due {path: 'pageModel>actionDueDate',
+                                                            <ObjectStatus
+                                                                text="due {path: 'pageModel>actionDueDate',
 								 type: 'sap.ui.model.type.Date',
                                                     formatOptions: {
                                                         relative: true,
                                                         relativeScale: 'auto'
                                                     }
-								}" class="sapUiTinyMarginBottom" icon="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatIconDueDate'}"
-								state="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatDueDate'}" visible="{= ${pageModel>actionDueDate} !== null}" />
-					   
-										</HBox>
-										<!-- 			
+								}"
+                                                                class="sapUiTinyMarginBottom"
+                                                                icon="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatIconDueDate'}"
+                                                                state="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatDueDate'}"
+                                                                visible="{= ${pageModel>actionDueDate} !== null}"
+                                                            />
+                                                        </HBox>
+                                                        <!-- 			
             <HBox justifyContent="Start" alignItems="Center"> -->
-										<Label text="{pageModel>actionTask}" class="sapUiSmallMarginBottom sapUiSmallMarginTop" width="100%" wrapping="true"/>
-										
+                                                        <Label
+                                                            text="{pageModel>actionTask}"
+                                                            class="sapUiSmallMarginBottom sapUiSmallMarginTop"
+                                                            width="100%"
+                                                            wrapping="true"
+                                                        />
 
-											<commons:MicroProcessFlow renderType="Scrolling" class="sapUiSmallMarginTop"
-									 content="{path: 'pageModel>subTasks/results'}">
-						<commons:content>
-							<commons:MicroProcessFlowItem state="{path: 'pageModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}" 
-							press="onPopoverPress" icon="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"  >
-								
-							</commons:MicroProcessFlowItem>
-						</commons:content>
-					</commons:MicroProcessFlow> 
+                                                        <commons:MicroProcessFlow
+                                                            renderType="Scrolling"
+                                                            class="sapUiSmallMarginTop"
+                                                            content="{path: 'pageModel>subTasks/results'}"
+                                                        >
+                                                            <commons:content>
+                                                                <commons:MicroProcessFlowItem
+                                                                    state="{path: 'pageModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
+                                                                    press="onPopoverPress"
+                                                                    icon="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
+                                                                />
+                                                            </commons:content>
+                                                        </commons:MicroProcessFlow>
+                                                    </VBox>
+                                                    <OverflowToolbar
+                                                        height="45px"
+                                                    >
+                                                        <HBox>
+                                                            <Avatar
+                                                                src="{path: 'pageModel>actionOwner', formatter: '.formatter.formatterTeamPictures'}"
+                                                                displayShape="Circle"
+                                                                displaySize="XS"
+                                                                class="imageDisplayBlock sapUiTinyMarginBeginEnd"
+                                                                visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}"
+                                                                tooltip="{pageModel>actionOwner}"
+                                                            />
+                                                            <Label
+                                                                text="{pageModel>actionOwner}"
+                                                                class="sapUiTinyMarginTop"
+                                                                wrapping="true"
+                                                            />
+                                                        </HBox>
 
-									</VBox>
-									<OverflowToolbar  height="45px">
-
-<HBox >
-									<Avatar src="{path: 'pageModel>actionOwner', formatter: '.formatter.formatterTeamPictures'}" displayShape="Circle" displaySize="XS" class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-									visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}" tooltip="{pageModel>actionOwner}"/>
-										<Label text="{pageModel>actionOwner}" class="sapUiTinyMarginTop" wrapping="true" />
-										</HBox>
-
-										<!-- <ObjectStatus text="{pageModel>actionPriority}" class="sapUiSmallMarginBegin sapUiTinyMarginBottom"
+                                                        <!-- <ObjectStatus text="{pageModel>actionPriority}" class="sapUiSmallMarginBegin sapUiTinyMarginBottom"
                          state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
                            visible="{= ${pageModel>actionPriority} !== null}" 
                            /> -->
-										<ToolbarSpacer />
-										<tnt:InfoLabel text="{pageModel>actionTopic}"
-                           colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                           visible="{= ${pageModel>actionTopic} !== null}"
-                           renderMode="Narrow" />
-									</OverflowToolbar>
-								</VBox>
-							</f:GridListItem>
-						</f:GridList>
-					</f:SidePanelItem>
-				</f:items>
-			</f:SidePanel>
-		</content>
-		<footer>
-			<Toolbar>
-				<ToolbarSpacer />
-				<Button id="Cancel" text="{i18n>cancel}" press="onCancelObjectPress" type="Reject" visible="{editModel>/editMode}"/>
-				<Button id="EditBtn" text="{i18n>edit}" press="onEditObjectPress" type="Emphasized" visible="{= !${editModel>/editMode}}"/>
-				<Button id="SaveBtn" text="{i18n>save}" press="onSaveObjectPress" type="Success" visible="{editModel>/editMode}" />
-			</Toolbar>
-		</footer>
-	</Page>
+                                                        <ToolbarSpacer />
+                                                        <tnt:InfoLabel
+                                                            text="{pageModel>actionTopic}"
+                                                            colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                                            visible="{= ${pageModel>actionTopic} !== null}"
+                                                            renderMode="Narrow"
+                                                        />
+                                                    </OverflowToolbar>
+                                                </VBox>
+                                            </f:GridListItem>
+                                        </f:GridList>
+                                    </f:SidePanelItem>
 
-		</content>
-			</TabContainerItem>
-		</items>
-	</TabContainer>
+                                    <f:SidePanelItem
+                                        icon="sap-icon://discussion-2"
+                                        text="Comments"
+                                        id="sidePanel2"
+                                    >
+                                        <VBox width="100%">
+                                            <!-- <commons:Timeline width="100%"
+									id="idTimeline"
+									enableDoubleSided="true"
+									content="{/opportunityHeader}"
+									filterList="{/opportunityHeader}">
+									<commons:content>
+										<commons:TimelineItem
+											id="idTemplateItem"
+											userNameClicked="onUserNameClick"
+											select="onPressItems"
+											dateTime="{opportunityDueDate}"
+											title="{account}"
+											text="{account}"
+											userName="{account} {account}"
+											filterValue="{account}">
+										</commons:TimelineItem>
+									</commons:content>
+									<commons:filterList>
+										<commons:TimelineFilterListItem
+											id="idTimelineFilterListItem"
+											key="{account}"
+											text="{account} {account}">
+										</commons:TimelineFilterListItem>
+									</commons:filterList>
+								</commons:Timeline>
+							 -->
 
-
+                                            <List items="{/opportunityHeader}" width="100%">
+                                                <FeedListItem
+                                                    sender="{primaryContact}"
+                                                    info="{account}"
+                                                  
+														timestamp="{ path: 'opportunityDueDate',
+														type: 'sap.ui.model.type.Date',
+																		formatOptions: {
+																			relative: true,
+																			relativeScale: 'auto'
+																		}
+																	}"
+                                                    text="{topic}"
+													icon="{path: 'primaryContact', formatter: '.formatter.formatterTeamPictures'}" iconSize="XS"
+													
+                                                />
+                                            </List>
+                                            <FeedInput
+                                                showIcon="false" placeholder="Add a comment to this task" id="feedInputObject" maxLength="800"
+                                                
+                                            />
+                                        </VBox>
+                                    </f:SidePanelItem>
+                                </f:items>
+                            </f:SidePanel>
+                        </content>
+                        <footer>
+                            <Toolbar>
+                                <ToolbarSpacer />
+                                <Button
+                                    id="Cancel"
+                                    text="{i18n>cancel}"
+                                    press="onCancelObjectPress"
+                                    type="Reject"
+                                    visible="{editModel>/editMode}"
+                                />
+                                <Button
+                                    id="EditBtn"
+                                    text="{i18n>edit}"
+                                    press="onEditObjectPress"
+                                    type="Emphasized"
+                                    visible="{= !${editModel>/editMode}}"
+                                />
+                                <Button
+                                    id="SaveBtn"
+                                    text="{i18n>save}"
+                                    press="onSaveObjectPress"
+                                    type="Success"
+                                    visible="{editModel>/editMode}"
+                                />
+                            </Toolbar>
+                        </footer>
+                    </Page>
+                </content>
+            </TabContainerItem>
+        </items>
+    </TabContainer>
 </mvc:View>
