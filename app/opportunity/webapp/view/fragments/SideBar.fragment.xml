@@ -1,0 +1,51 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:tnt="sap.tnt"
+	xmlns:core="sap.ui.core">
+   
+
+	<tnt:SideNavigation 
+    id="sideNavigation" 
+				expanded="false"
+				selectedKey="{/selectedKey}"
+				itemSelect=".onItemSelect">
+				<tnt:NavigationList >
+
+                <tnt:NavigationListItem
+    icon="sap-icon://menu2" hasExpander="false" select="onToggleSideMenu"
+>
+</tnt:NavigationListItem>
+
+                
+					<tnt:NavigationListItem
+						text="Opportunities" icon="sap-icon://target-group" select="onNavToOpportunities" tooltip="Go to the Opportunities Report"
+						>
+					</tnt:NavigationListItem>
+
+                    <tnt:NavigationListItem
+						text="Tasks" icon="sap-icon://activities" select="onNavToTasks" tooltip="Go to the Tasks and Sub-Tasks List"
+						>
+					</tnt:NavigationListItem>
+
+                    <tnt:NavigationListItem
+						text="Analytics" icon="sap-icon://filter-analytics" select="onNavToChartPage"  tooltip="Go to the Chart Overview"
+						>
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList >
+                    <tnt:NavigationListItem text="About Demand Genius" select="onOpenAbout" icon="sap-icon://hint" />
+                    <!-- <tnt:NavigationListItem text="Service Catalog" select="onOpenServiceCatalog" icon="sap-icon://education" tooltip="{i18n>serviceCatalogTooltip}"/>
+                    <tnt:NavigationListItem text="Analytics Store" select="onOpenAnalyticsStore" icon="sap-icon://business-objects-experience"  tooltip="{i18n>analyticsStoreTooltip}"/>
+                    <tnt:NavigationListItem text="SharePoint" select="onOpenSharePoint" icon="sap-icon://idea-wall" tooltip="{i18n>sharePointTooltip}"/>
+                    <tnt:NavigationListItem text="SAP One" select="onOpenSAPOne" icon="sap-icon://Chart-Tree-Map" tooltip="{i18n>sapOneTooltip}"/> 
+					 -->
+
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+
+</core:FragmentDefinition>
+
+
+

@@ -59,10 +59,33 @@ sap.ui.define(
 
       },
 
+      onNavToOpportunities: function(oEvent){
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("MainReport");
+        },
+
+        onNavToTasks: function(oEvent){
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("TasksReport");
+          },
+
+
       onNavToChartPage: function(oEvent){
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           oRouter.navTo("ChartPage");
         },
+
+        onToggleSideMenu: function(oEvent){
+
+          var oToolPage = this.byId("toolPage");
+          var bSideExpanded = oToolPage.getSideExpanded();
+          oToolPage.setSideExpanded(!bSideExpanded);
+         // this.byId("sideNavigation").setVisible(!bSideExpanded);
+        },
+
+        onOpenAbout: function(oEvent){
+          sap.m.MessageToast.show("Details will come soon! Stay tuned.")
+        }
 
 
 

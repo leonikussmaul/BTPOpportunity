@@ -13,3 +13,17 @@
 .sapUiNeutral{
     color:#788fa6;
 }
+
+.sapTntNavLIItem .sapTntNavLIGroupIcon {
+    color: #1d2d3e !important;
+    font-size: 1.125rem;
+}
+
+
+.sapFShellBar {
+    padding: 0 1rem!important;
+}
+
+.sapTntSideNavigationSeparator {
+    background-color: #ccd8e3 !important;
+}

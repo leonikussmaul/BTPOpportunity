@@ -293,7 +293,7 @@
 				<smartTable:customToolbar>
 					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
-						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
+						<SearchField  width="30%" liveChange="onSearch" class="sapUiSizeCompact"/>
 						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onWizardDialogPress"/>
 						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
 						<ToggleButton id="favoriteToggle" icon="sap-icon://unfavorite" tooltip="Show Favorite Items" press="onFavoriteToolbarPress"/>

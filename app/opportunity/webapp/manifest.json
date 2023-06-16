@@ -175,7 +175,7 @@
                     "clearControlAggregation": false,
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",
-                    "viewLevel": 1
+                    "viewLevel": 0
                 },
                 "TaskDetail": {
                     "viewType": "XML",
@@ -183,7 +183,7 @@
                     "clearControlAggregation": false,
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
-                    "viewLevel": 2
+                    "viewLevel": 1
                 },
                 "ChartPage": {
                     "viewType": "XML",
@@ -191,7 +191,7 @@
                     "clearControlAggregation": false,
                     "viewId": "ChartPage",
                     "viewName": "ChartPage",
-                    "viewLevel": 1
+                    "viewLevel": 0
                 }
             }
         },

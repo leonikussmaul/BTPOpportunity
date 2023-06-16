@@ -18,7 +18,10 @@
 	xmlns:main="sap.ui.webc.main"
 	xmlns:layout="sap.ui.layout"
 >
-	<f:DynamicPage id="page" title="{i18n>title}" backgroundDesign="List">
+    
+
+	<f:DynamicPage id="page" title="{i18n>title}" backgroundDesign="List" >
+	
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
@@ -28,11 +31,16 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader pinnable="true">
-				<layout:HorizontalLayout  class="sapUiSmallMarginBottom">
-					<Title
+
+				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+				<Title
 		titleStyle="H4" text="Hi Sarah, here is today's Demand Generation at a Glance. " class="sapUiSmallMarginBottom"/>
-				</layout:HorizontalLayout>
+
+		<Button text="New Opp" icon="sap-icon://add" type="Accept" id="createBtn" press="onWizardDialogPress" tooltip="Create a New Opportunity in the System"/>
+		</FlexBox>
 				<f:content>
+
+				
 					<smartFilterBar:SmartFilterBar
 					id="smartFilterBar"
 					entitySet="opportunityHeader"
@@ -43,6 +51,7 @@
                     showMessages="true"
                     useDateRangeType="true"
                     clear="onClearSmartFilterBar"
+					
                     >
 						<smartFilterBar:controlConfiguration>
 							<smartFilterBar:ControlConfiguration
@@ -261,9 +270,13 @@
 						
 
 					</smartFilterBar:SmartFilterBar>
+
+				
 				</f:content>
 			</f:DynamicPageHeader>
+			
 		</f:header>
+		
 		<f:content>
 
 
@@ -276,7 +289,7 @@
   beforeRebindTable="onBeforeRebindTable"
   tableType="ResponsiveTable"  
   beforeExport="onBeforeExportOpportunities"
-  useVariantManagement="true" 
+  useVariantManagement="false" 
   useTablePersonalisation="true" 
   header="{i18n>mySmartTableHeader}"
   showRowCount="true"
@@ -293,8 +306,8 @@
 				<smartTable:customToolbar>
 					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
-						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
-						<OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onWizardDialogPress"/>
+						<SearchField  width="30%" liveChange="onSearch" class="sapUiSizeCompact"/>
+						<!-- <OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onWizardDialogPress"/> -->
 						<OverflowToolbarButton icon="sap-icon://delete" tooltip="Delete selected Item" press="onDeleteTableItem"/>
 						<ToggleButton id="favoriteToggle" icon="sap-icon://unfavorite" tooltip="Show Favorite Items" press="onFavoriteToolbarPress"/>
 					</OverflowToolbar>
@@ -305,13 +318,13 @@
 				press="onListItemPress"></ColumnListItem></items></Table> -->
 				<Table inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="Nothing here. Please adjust your search critera.">
 					<columns>
-						<Column width="12em">
+						<Column >
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "account", "columnIndex" : "1", "leadingProperty": "account", "sortProperty": "account", "filterProperty": "account ", "type":"string"}'/>
 							</customData>
 							<Label text="{i18n>account}" tooltip="{i18n>account}"/>
 						</Column>
-						<Column hAlign="Center" width="20%">
+						<Column hAlign="Center" width="15%">
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "topic", "columnIndex" : "2", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topic", "type":"string"}'/>
 							</customData>
@@ -343,7 +356,7 @@
 							</customData>
 							<Label text="{i18n>opportunityValue}"/>
 						</Column>
-						<Column hAlign="Center" width="20%">
+						<Column hAlign="Center" width="15%">
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "status", "columnIndex" : "7", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'/>
 							</customData>

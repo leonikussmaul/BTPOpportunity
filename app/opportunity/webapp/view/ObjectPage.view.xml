@@ -16,6 +16,14 @@
 	xmlns:dnd-grid="sap.f.dnd"
 	xmlns:commons="sap.suite.ui.commons"
 >
+<TabContainer items="{ path: 'tabModel>/tabs' }" id="myTabContainer" itemSelect="onTabItemSwitch"
+					showAddNewButton="true"
+					class="sapUiResponsiveContentPadding sapUiResponsivePadding--header"
+					addNewButtonPress="onWizardDialogPress" itemClose="onTabItemClose">
+		<items >
+			<TabContainerItem name="{tabModel>account}" key="{tabModel>opportunityID}" modified="{modified}">
+				<content>
+					
 	<Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress">
 		<content>
 			<f:SidePanel id="mySidePanel"  sidePanelResizable="true" sidePanelMinWidth="30rem" sidePanelWidth="20rem" toggle="onToggleSidePanel">
@@ -323,4 +331,11 @@
 			</Toolbar>
 		</footer>
 	</Page>
+
+		</content>
+			</TabContainerItem>
+		</items>
+	</TabContainer>
+
+
 </mvc:View>

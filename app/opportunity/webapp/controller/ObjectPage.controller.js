@@ -23,6 +23,7 @@ sap.ui.define([
             onInit: function () {
 
                 sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
+                
 
                 var oPageModel = new JSONModel({});
                 this.getView().setModel(oPageModel, "pageModel");
@@ -37,6 +38,13 @@ sap.ui.define([
 
                 var oEditPageModel = new JSONModel({});
                 this.getView().setModel(AddTaskModel, "editPageModel");
+
+                var oView = this.getView();
+                oView.setModel(new JSONModel({
+                }), "viewModel");
+
+                oView.setModel(new sap.ui.model.json.JSONModel({
+                }), "localModel");
 
 
             },
@@ -67,14 +75,102 @@ sap.ui.define([
                     }
 
                 });
+
+                var aTabs = [];
+                var oTabModel = this.getOwnerComponent().getModel("tabModel");
+                if(oTabModel.getData().tabs.length < 1){
+                    aTabs.push({"opportunityID": sOpportunityID, "account": "New Tab"});
+                    oTabModel.setProperty("/tabs", aTabs);
+
+
+                }
+                
                 oModel.setDefaultBindingMode("TwoWay");
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID); 
                 this.onSetLayout(); 
 
-            
+                this.getView().byId("myTabContainer").setSelectedItem(); 
+
+                //this.onAddTabtoModel(); 
+                
 
             },
+            onTabItemSwitch: function(oEvent){
+              
+                this.getView().setBusy(true);
+                var oModel = this.getView().getModel();
+                //if(oEvent.mParameters.item){
+                //var sOpportunityID = oEvent.mParameters.item.getKey();
+                var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
+                this.getView().bindElement({
+                    path: "/opportunityHeader/" + sOpportunityID,
+                    parameters: {
+                        expand: "actionItems"
+                    }
+
+                });
+                this.getView().setBusy(false);
+                 //oModel read for tasks deep entity 
+                 this.onReadModelData(sOpportunityID); 
+                 this.onSetLayout(); 
+
+                
+               
+            //}
+
+            },
+
+            // onAddTabtoModel: function(oEvent){
+
+            //    var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
+            //    var oContext = this.getView().getModel().getProperty("/opportunityHeader(" + sOpportunityID + ")");
+
+            //    var oTabModel = this.getOwnerComponent().getModel("tabModel");
+            //    var aData = oTabModel.getData().tabs; 
+            //    aData.push(oContext); 
+            //  oTabModel.setProperty("/tabs", aData); 
+
+
+            // },
+
+            onTabItemClose: function(oEvent) {
+                var selectedItemKey = oEvent.getParameter('item').getKey();
+              
+                var oTabModel = this.getOwnerComponent().getModel("tabModel");
+                var aData = oTabModel.getProperty("/tabs");
+              
+                // Remove the item from the array based on the specified value
+                aData.forEach((oItem, index) => {
+                    if (oItem.opportunityID.toString() === selectedItemKey) {
+                      aData.splice(index, 1);
+                    }
+                  });
+              
+                oTabModel.setProperty("/tabs", aData);
+
+                if(oTabModel.getData().tabs.length < 1){
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    oRouter.navTo("MainReport");
+                }
+              },
+              
+
+            onOpenTab: function(selectedItem) {
+                var oTabModel = this.getOwnerComponent().getModel("tabModel");
+                var aData = oTabModel.getProperty("/tabs");
+              
+                // Check if opportunityID already exists in the array
+                var isExisting = aData.some(function(item) {
+                  return item.opportunityID === selectedItem.opportunityID;
+                });
+              
+                if (!isExisting) {
+                  aData.unshift(selectedItem);
+                  oTabModel.setProperty("/tabs", aData);
+                }
+              },
+              
 
             onPress: function(oEvent){
                 var selectedItem = oEvent.getSource().getBindingContext().getObject();
@@ -94,7 +190,7 @@ sap.ui.define([
                     template: oTemplate1,
                     sorter: new sap.ui.model.Sorter('topic', false)
                 });
-                oLayout1.getBindingInfo('content').binding.refresh();
+               // oLayout1.getBindingInfo('content').binding.refresh();
 
                 var oLayout2 = this.getView().byId("DeliverablesFiltersObject");
                 var oTemplate2 = oLayout2.getBindingInfo("content").template;
@@ -103,7 +199,7 @@ sap.ui.define([
                     template: oTemplate2,
                     sorter: new sap.ui.model.Sorter('deliverable', false)
                 });
-                oLayout2.getBindingInfo('content').binding.refresh();
+               // oLayout2.getBindingInfo('content').binding.refresh();
 
             },
 
@@ -888,6 +984,356 @@ sap.ui.define([
             oEditModel.setProperty("/editMode", true);
             oEditPageModel.setProperty("/opportunityInCRM", sText);
         },
+
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+            WIZARD
+            --------------------------------------------------------------------------------------------------------------*/
+
+            onWizardDialogPress: function (oEvent) {
+                var oController = this;
+                oController.getView().setBusy(true);
+                if (!this._oDialog) {
+                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.WizardDialog", controller: this });
+                }
+                this._oDialog.then(function (_oDialog) {
+                    oController.getView().addDependent(_oDialog);
+                    _oDialog.open();
+
+                    oController.onReadTopics(); 
+                    oController.onReadDeliverables(); 
+
+                    var oLayout1 = sap.ui.getCore().byId("TopicFilters");
+                    var oTemplate1 = oLayout1.getBindingInfo("content").template;
+                    oLayout1.bindAggregation("content", {
+                        path: '/opportunityTopicsVH',
+                        template: oTemplate1,
+                        sorter: new sap.ui.model.Sorter('topic', false)
+                    });
+                    oLayout1.getBindingInfo('content').binding.refresh();
+
+                    var oLayout2 = sap.ui.getCore().byId("DeliverablesFilters");
+                    var oTemplate2 = oLayout2.getBindingInfo("content").template;
+                    oLayout2.bindAggregation("content", {
+                        path: '/opportunityDeliverablesVH',
+                        template: oTemplate2,
+                        sorter: new sap.ui.model.Sorter('deliverable', false)
+                    });
+                    oLayout2.getBindingInfo('content').binding.refresh();
+                });
+            },
+
+            onSaveWizardPress: function (oEvent) {
+
+                var that = this;
+                that.getView().setBusy(true);
+                var oViewModel = this.getView().getModel("viewModel");
+                var oData = oViewModel.getData();
+
+                var sDate, sDueDate, bCRM, sTodayDate;
+
+                sTodayDate = new Date().toISOString().split("T")[0];
+                if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
+                if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+
+                if (oData.opportunityInCRM) bCRM = "Yes"
+                else bCRM = "No"
+
+                // var sTopic, sDeliverable;
+                // //push into array once deep create supported
+                // sap.ui.getCore().byId("TopicFilters").getContent().forEach(oBtn => {
+                //     if (oBtn.getPressed()) sTopic = oBtn.getText();
+                // });
+                // sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(oBtn => {
+                //     if (oBtn.getPressed()) sDeliverable = oBtn.getText();
+                // });
+
+                var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+
+                var aTopics = [];
+                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent(); 
+                aTopicFilters.forEach(oItem =>{
+                    if (oItem.getPressed()) {
+                        var oTopic = {
+                            topic: oItem.getText()
+                        };
+                        aTopics.push(oTopic);
+                    }
+                });
+                var aDeliverables = [];
+                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent(); 
+                aDeliverablesFilters.forEach(oItem =>{
+                    if (oItem.getPressed()) {
+                        var oDeliverable = {
+                            deliverable: oItem.getText()
+                        };
+                        aDeliverables.push(oDeliverable);
+                    }
+                })
+               
+
+                //add deliverable field to odata
+                var oNewItem = {
+                    account: oData.account,
+                    topic: oData.topic,
+                    marketUnit: oData.marketUnit,
+                    opportunityStartDate: sDate,
+                    opportunityStartDate: sDueDate,
+                    opportunityValue: oData.opportunityValue,
+                    opportunityInCRM: bCRM,
+                    source: oData.source,
+                    ssa: oData.ssa,
+                    clientContactPerson: oData.clientContactPerson,
+                    status: sStatus,
+                    primaryContact: oData.primaryContact,
+                    opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
+                    opportunityClosedQuarter: oData.opportunityClosedQuarter,
+                    priority: oData.priority,
+                    noteDate: sTodayDate,
+                    noteText: oData.noteText,
+                    progress: oData.progress,
+                    // actionItems: [{
+                    //     actionDueDate: sTodayDate,
+                    //     actionOwner: oData.primaryContact,
+                    //     actionProgress: oData.progress,
+                    //     actionTopic: oData.topic,
+                    //     actionTask: oData.account
+                    // }],
+                    topics: aTopics,
+                    deliverables: aDeliverables
+                };
+
+                // 3. Use the `create` method of the OData model to create a new item in your service
+                var oModel = this.getView().getModel();
+                oModel.create("/opportunityHeader", oNewItem, {
+                    success: function (oData, response) {
+
+                        MessageToast.show("New Opportunity created!");
+                        that.onCloseWizardPress(oEvent);
+                        that.getView().setBusy(false);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        sap.m.MessageBox.error("Opportunity could not be created. Double check your input.");
+                    }
+                });
+
+            },
+
+
+                  /* ------------------------------------------------------------------------------------------------------------
+                ADD TOPIC
+           --------------------------------------------------------------------------------------------------------------*/
+
+
+           onSubmitTopic: function (oEvent) {
+            var that = this;
+            var oDialog = sap.ui.getCore().byId("topicDialog");
+            var oInput = sap.ui.getCore().byId("topicInput");
+            var oValue = oInput.getValue();
+            var aTopics = this.getView().getModel("localModel").getData().topics;
+
+            if (oValue != "" && oInput != null) {
+                MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if(sAction === MessageBox.Action.OK){
+                        var isMatch = aTopics.some(oItem => {
+                            return oItem.topic.toUpperCase() === oValue.toUpperCase();
+                        });
+                        // if (isMatch) {
+                        //     //prevent POST call 
+                        //     MessageBox.error("This topic already exists!");
+                        //     oInput.setValue("");
+                        //     oDialog.close();
+                        // }else {
+                            // POST call 
+                            var oNewTopic = {
+                                topic: oValue
+                            }
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            oModel.create("/opportunityTopicsVH", oNewTopic, {
+                                success: function (oData, response) {
+                                    MessageToast.show("New topic posted!");
+                                    oDialog.close();
+                                    oInput.setValue("");
+                                    that.getView().setBusy(false);
+                                },
+                                error: function (oError) {
+                                    that.getView().setBusy(false);
+                                    MessageBox.error("Topic could not be posted. Please check your input.");
+                                }
+                            });
+                        //}
+                    } else{
+                        oInput.setValue("");
+                        that.getView().setBusy(false);
+                    }
+                    }
+                });
+            } else MessageToast.show("Enter a new topic first");
+        },
+
+              /* ------------------------------------------------------------------------------------------------------------
+            ADD DELIVERABLE
+       --------------------------------------------------------------------------------------------------------------*/
+
+       onSubmitDeliverable: function (oEvent) {
+        var that = this;
+        var oDialog = sap.ui.getCore().byId("deliverableDialog");
+        var oInput = sap.ui.getCore().byId("deliverableInput");
+        var oValue = oInput.getValue();
+        var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
+
+        if (oValue != "" && oInput != null) {
+            MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+                    if(sAction === MessageBox.Action.OK){
+                    // var isMatch = aDeliverables.some(oItem => {
+                    //     return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
+                    // });
+                    // if (isMatch) {
+                    //     //prevent POST call 
+                    //     MessageBox.error("This deliverable already exists!");
+                    //     oInput.setValue("");
+                    //     oDialog.close();
+                    // }else {
+                        // POST call 
+                        var oNewDeliverable = {
+                            deliverable: oValue
+                        }
+                        that.getView().setBusy(true);
+                        var oModel = that.getView().getModel();
+                        oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
+                            success: function (oData, response) {
+                                MessageToast.show("New deliverable posted!");
+                                oDialog.close();
+                                oInput.setValue("");
+                                that.getView().setBusy(false);
+                            },
+                            error: function (oError) {
+                                that.getView().setBusy(false);
+                                MessageBox.error("Deliverable could not be posted. Please check your input.");
+                            }
+                        });
+                    //}
+                } else{
+                    oInput.setValue("");
+                    that.getView().setBusy(false);
+                }
+                }
+            });
+        } else MessageToast.show("Enter a new deliverable first");
+    },
+
+        onSelectAllTopicsPress: function (oEvent) {
+            sap.ui.getCore().byId("TopicFilters").getContent().forEach(function (oToggle) {
+                var bPressed = oToggle.getPressed();
+                oToggle.setPressed(!bPressed);
+            });
+        },
+        onSelectAllDeliverablesPress: function (oEvent) {
+            sap.ui.getCore().byId("DeliverablesFilters").getContent().forEach(function (oToggle) {
+                var bPressed = oToggle.getPressed();
+                oToggle.setPressed(!bPressed);
+            });
+        },
+
+        onCloseWizardPress: function (oEvent) {
+            var oWizardDialog = sap.ui.getCore().byId("myWizardDialog");
+            oWizardDialog.close();
+            var oDialog = sap.ui.getCore().byId("WizardDialog");
+            oDialog.setCurrentStep("WizardStep1");
+            this.getView().getModel("viewModel").setData({});
+            this.getView().setBusy(false);
+        },
+
+        onCRMCheckboxSelect: function (oEvent) {
+            var oCheckBox = oEvent.getSource();
+            var bSelected = oCheckBox.getSelected();
+            var sText = bSelected ? "Yes" : "No";
+            oCheckBox.setText(sText);
+        },
+
+        onFullScreenButtonPress: function (oEvent) {
+            var oDialog = oEvent.getSource().getParent().getParent();
+            var pFullSize = oDialog.getContentWidth();
+            if (pFullSize == "70%") {
+                oDialog.setContentWidth("100%");
+                oDialog.setContentHeight("100%");
+                oEvent.getSource().setIcon('sap-icon://exit-full-screen');
+
+            } else {
+                oDialog.setContentWidth("70%");
+                oDialog.setContentHeight("80%");
+                oEvent.getSource().setIcon('sap-icon://full-screen');
+            }
+        },
+
+        onPreviousStep: function (oEvent) {
+            sap.ui.getCore().byId("WizardDialog").previousStep();
+
+        },
+
+        // onNextStep: function(oEvent){
+        //     sap.ui.getCore().byId("WizardDialog").nextStep(); 
+        // },
+
+        onToggleInCRM: function (oEvent) {
+            var bPressed = oEvent.getSource().getPressed();
+            var sValue = bPressed ? "Yes" : "No";
+            oEvent.getSource().setText(sValue);
+
+            var sFilterValue = bPressed ? "Yes" : "";
+            var oFilter = new Filter("opportunityInCRM", FilterOperator.Contains, sFilterValue);
+            var oTable = this.getView().byId("mainTable");
+            oTable.getBinding("items").filter(oFilter);
+        },
+
+        onReadTopics: function () {
+            var that = this;
+            that.getView().setBusy(true);
+            var oLocalModel = that.getView().getModel("localModel");
+            var oModel = that.getView().getModel();
+            oModel.read("/opportunityTopics", {
+                urlParameters: {
+                    "$orderby": "topic"
+                  },
+                success: function (oResponse) {
+                    var aTopics = oResponse.results;
+                    oLocalModel.setProperty("/topics", aTopics);
+                }.bind(this),
+                error: function (oError) {
+                    console.log(oError);
+                }
+            });
+        },
+        onReadDeliverables: function () {
+            var that = this;
+            that.getView().setBusy(true);
+            var oLocalModel = that.getView().getModel("localModel");
+            var oModel = that.getView().getModel();
+            oModel.read("/opportunityDeliverables", {
+                urlParameters: {
+                    "$orderby": "deliverable"
+                  },
+                success: function (oResponse) {
+                    var aDeliverables = oResponse.results;
+                    oLocalModel.setProperty("/deliverables", aDeliverables);
+                    that.getView().setBusy(false);
+                }.bind(this),
+                error: function (oError) {
+                    console.log(oError);
+                    that.getView().setBusy(false);
+                }
+            });
+        },
+
 
      
 

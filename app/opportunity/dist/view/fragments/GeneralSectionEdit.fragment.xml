@@ -20,7 +20,7 @@
                 <Input value="{editPageModel>/account}" />
                 <Label text="{i18n>marketUnit}" required="true"/>
                 <Select id="marketUnitEdit" selectedKey="{editPageModel>/marketUnit}" items="{
-                                    path: '/opportunityMarketUnitVH',
+                                    path: '/opportunityMarketUnitVH', templateShareable:false,
                                    sorter: 
                                             {
                                                 path: 'marketUnit',
@@ -31,7 +31,7 @@
 				</Select>
                   <Label text="{i18n>topic}" />
                    <Select id="topicsEdit" selectedKey="{editPageModel>/topic}" items="{
-                                    path: '/opportunityTopicsVH',
+                                    path: '/opportunityTopicsVH', templateShareable:false,
                                    sorter: 
                                             {
                                                 path: 'topic',
@@ -43,7 +43,7 @@
 
                    <Label text="{i18n>priority}" />
                  <Select id="priorityEdit" selectedKey="{editPageModel>/priority}" items="{
-                                    path: '/opportunityPriorityVH',
+                                    path: '/opportunityPriorityVH', templateShareable:false,
                                    sorter: 
                                             {
                                                 path: 'priority',
@@ -59,7 +59,7 @@
 
                 <Label text="{i18n>opportunityCreatedQuarter}" />
                 <Select id="opportunityCreatedQuarter" selectedKey="{editPageModel>/opportunityCreatedQuarter}" items="{
-                                    path: '/opportunityQuartersVH',
+                                    path: '/opportunityQuartersVH', templateShareable:false,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -78,7 +78,7 @@
 
                 <Label text="{i18n>opportunityClosedQuarter}" />
                 	<Select id="opportunityClosedQuarter" selectedKey="{editPageModel>/opportunityClosedQuarter}"  items="{
-                                    path: '/opportunityQuartersVH',
+                                    path: '/opportunityQuartersVH', templateShareable:false,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',

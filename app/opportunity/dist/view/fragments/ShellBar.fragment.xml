@@ -2,7 +2,7 @@
 	xmlns:m="sap.m"
 	xmlns="sap.f"
 	xmlns:core="sap.ui.core">
-	<ShellBar title="{i18n>shellBarTitle}"
+	<ShellBar title="{i18n>shellBarTitle}" showMenuButton="true" menuButtonPressed=""
 		secondTitle="{i18n>secondTitle}"
 		homeIcon="https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg.adapt.svg/1493030643828.svg" homeIconPressed="onHomeIconPressed"
 		>

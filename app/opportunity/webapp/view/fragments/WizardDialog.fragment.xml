@@ -90,7 +90,7 @@
 						<WizardStep id="WizardStep2" 
 					title="{i18n>step2Title}" 
 					>
-							<Title titleStyle="H5" text="i18n>step2SubTitle" class="sapUiSmallMarginBottom"/>
+							<Title titleStyle="H5" text="{i18n>step2SubTitle}" class="sapUiSmallMarginBottom"/>
 							<form:SimpleForm editable="true"
 						>
 								<Label text="{i18n>opportunityCreatedQuarter}" />
@@ -183,7 +183,7 @@
 							</form:SimpleForm>
 						</WizardStep>
 						<!-- step 4 -->
-						<WizardStep id="WizardStep4" title="{18n>step4Title}">
+						<WizardStep id="WizardStep4" title="{i18n>step4Title}">
 							<Title titleStyle="H5" text="{i18n>step4SubTitle}" class="sapUiSmallMarginBottom"/>
 							<VBox justifyContent="Center" alignContent="Center">
 								<Toolbar class="sapUiResponsiveMargin">

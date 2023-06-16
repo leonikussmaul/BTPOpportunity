@@ -33,10 +33,14 @@
 		</f:title>
 		<f:header>
 			<f:DynamicPageHeader pinnable="true" >
-				<layout:HorizontalLayout  class="sapUiSmallMarginBottom">
-					<Title
+				
+
+				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
+				<Title
 		titleStyle="H4" text="Hi Sarah, here are all open tasks for the team. " class="sapUiSmallMarginBottom"/>
-				</layout:HorizontalLayout>
+		<Button text="New Task" type="Accept" icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddToDoTablePress"/>
+		
+		</FlexBox>
 				<f:content></f:content>
 			</f:DynamicPageHeader>
 		</f:header>
@@ -65,14 +69,14 @@
 				<smartTable:customToolbar>
 					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
-						<SearchField  width="20%" liveChange="onSearch" class="sapUiSizeCompact"/>
-						<OverflowToolbarButton icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddToDoTablePress"/>
+						<SearchField  width="30%" liveChange="onSearch" class="sapUiSizeCompact"/>
+						<!-- <OverflowToolbarButton icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddToDoTablePress"/> -->
 						<OverflowToolbarButton icon="sap-icon://delete" tooltip="{i18n>deleteSelected}" press="onDeleteTableItem"/>
 					</OverflowToolbar>
 				</smartTable:customToolbar>
 				<Table inset="false"  growing="true" growingScrollToLoad="true" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar" noDataText="{i18n>noDataTaskTable}">
 					<columns>
-						<Column width="12em" importance="High">
+						<Column  importance="High">
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "actionTitle", "columnIndex" : "1", "leadingProperty": "actionTitle", "sortProperty": "actionTitle", "filterProperty": "actionTitle ", "type":"string"}'/>
 							</customData>
@@ -84,7 +88,7 @@
 							</customData>
 							<Label text="{i18n>actionTask}"/>
 						</Column>
-						<Column width="6em">
+						<Column width="5em">
 							<customData>
 								<core:CustomData key="p13nData" value='\{"columnKey": "actionOwner", "columnIndex" : "3", "leadingProperty": "actionOwner", "sortProperty": "actionOwner", "filterProperty": "actionOwner", "type":"string"}'/>
 							</customData>
