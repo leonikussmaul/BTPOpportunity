@@ -9,12 +9,14 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/FilterType",
     "sap/ui/core/routing/History",
+    "sap/ui/core/date/UI5Date",
+    "sap/ui/core/format/DateFormat"
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat) {
         "use strict";
         var _this = this;
 
@@ -57,15 +59,32 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: "/opportunityHeader/" + sOpportunityID,
                     parameters: {
-                        expand: "actionItems"
+                        expand: "actionItems,comments"
                     }
                 });
 
+
+                this.onFilterComments(sOpportunityID);
+                // var oList = this.getView().byId("opportunityComments")
+                //   var commentTemp = this.getView().byId("commentItem");
+                //   var oSorter = new sap.ui.model.Sorter("postedOn", true);
+
+                //   var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                //   oList.bindAggregation("items", {
+                //       template: commentTemp,
+                //       path: "/opportunityComments",
+                //       sorter: oSorter,
+                //       filters: aCommentFilters
+                //   });
+
+
                 this.getOwnerComponent().getModel().attachRequestCompleted(function (oEvent) {
+
 
                     var oTabModel = this.getOwnerComponent().getModel("tabModel");
                     // var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
                     var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
+
                     var oContext = this.getView().getModel().getProperty("/opportunityHeader(" + sOpportunityID + ")");
                     var aData = oTabModel.getData().tabs;
 
@@ -84,10 +103,11 @@ sap.ui.define([
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID);
                 this.onSetLayout();
-               // this.initRichTextEditor(); 
+                // this.initRichTextEditor(); 
 
 
             },
+
 
             beforeRebindChart: function (oEvent) {
                 var oBindingParams = oEvent.getParameter('bindingParams');
@@ -98,25 +118,25 @@ sap.ui.define([
 
             onBeforeRendering: function () {
                 var that = this;
-                   sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library"],
+                sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library"],
                     function (RTE, library) {
                         //var EditorType = library.EditorType;
                         that.oRichTextEditor = new RTE("myRTE", {
-                           // editorType: bIsTinyMCE5 ? EditorType.TinyMCE5 : EditorType.TinyMCE6,
-                                width: "100%",
-                                value:"{noteText}",
-                                height: "400px",
-                                showGroupFont: true,
-                                showGroupLink: true, 
-                                showGroupUndo: true,
-                                editable: "{editModel>/editMode}",
-                                id: "editRTE" 
-                          
+                            // editorType: bIsTinyMCE5 ? EditorType.TinyMCE5 : EditorType.TinyMCE6,
+                            width: "100%",
+                            value: "{noteText}",
+                            height: "400px",
+                            showGroupFont: true,
+                            showGroupLink: true,
+                            showGroupUndo: true,
+                            editable: "{editModel>/editMode}",
+                            id: "editRTE"
+
                         });
-    
+
                         that.getView().byId("idSubSectionNotes").addBlock(that.oRichTextEditor);
                         //that.oRichTextEditor.placeAt(that.getView().byId("idSubSectionNotes"))
-                });
+                    });
             },
 
             // destroyRichTextEditor: function () {
@@ -137,6 +157,12 @@ sap.ui.define([
                 }
                 else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
 
+                //this.getView().getModel("pageModel").setProperty("/opptID", parseInt(sOpportunityID))
+
+                // var oFilter = new sap.ui.model.Filter("opptID_opportunityID",sap.ui.model.FilterOperator.EQ, parseInt(sOpportunityID));
+                // var oComments = this.getView().byId("opportunityComments").getItems();
+                // oComments.filter([oFilter]); 
+
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {
                     opportunityID: sOpportunityID
@@ -153,13 +179,14 @@ sap.ui.define([
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID);
                 this.onSetLayout();
+                this.onFilterComments(sOpportunityID); 
 
-               
 
 
                 //}
 
             },
+
 
             onTabItemClose: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -187,7 +214,7 @@ sap.ui.define([
 
                 }
 
-                
+
             },
 
 
@@ -275,7 +302,7 @@ sap.ui.define([
             onNavBackPress: function (oEvent) {
 
                 this.oRichTextEditor.destroy();
-               
+
 
                 var oModel = this.getView().getModel();
                 var oHistory = History.getInstance();
@@ -307,7 +334,7 @@ sap.ui.define([
                     else oRouter.navTo("MainReport");
                 }
 
-               // this.destroyRichTextEditor(); 
+                // this.destroyRichTextEditor(); 
                 //this.onNotesSectionDestroy(); 
 
 
@@ -1011,6 +1038,7 @@ sap.ui.define([
                     }
                 });
 
+
             },
 
             onCRMCheckboxSelect: function (oEvent) {
@@ -1149,9 +1177,9 @@ sap.ui.define([
                 oModel.create("/opportunityHeader", oNewItem, {
                     success: function (oData, response) {
 
-                        var oTabModel = that.getOwnerComponent().getModel("tabModel"); 
+                        var oTabModel = that.getOwnerComponent().getModel("tabModel");
                         var aData = oTabModel.getData().tabs;
-                        aData.push(oData); 
+                        aData.push(oData);
                         oTabModel.setProperty("/tabs", aData);
 
                         MessageToast.show("New Opportunity created!");
@@ -1377,6 +1405,75 @@ sap.ui.define([
                         that.getView().setBusy(false);
                     }
                 });
+            },
+
+            /* ------------------------------------------------------------------------------------------------------------
+COMMENTS
+   --------------------------------------------------------------------------------------------------------------*/
+
+
+            onFilterComments(sOpportunityID) {
+                var oList = this.getView().byId("opportunityComments")
+                var commentTemp = this.getView().byId("commentItem");
+                var oSorter = new sap.ui.model.Sorter("postedOn", true);
+
+                var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                oList.bindAggregation("items", {
+                    template: commentTemp,
+                    path: "/opportunityComments",
+                    sorter: oSorter,
+                    filters: aCommentFilters
+                });
+                oList.updateBindings(); 
+
+            },
+
+            onPostComment: function (oEvent) {
+
+                var that = this;
+                var oValue = oEvent.mParameters.value;
+                this.customerID = this.getView().getBindingContext().getObject().opportunityID;
+
+
+                var oPayload = {
+                    comment: oValue,
+                    postedBy: "Sarah",
+                    postedOn: UI5Date.getInstance(),
+                    opptID_opportunityID: this.customerID
+                }
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunityComments", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New comment added!");
+                        that.getView().setBusy(false);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        MessageBox.error("Comment could not be posted. Please check your input.");
+                    }
+                });
+
+
+            },
+
+            onDeleteComment: function (oEvent) {
+                var that = this;
+                this.customerID = this.getView().getBindingContext().getObject().opportunityID;
+                var sPath = oEvent.mParameters.listItem.getBindingContext().sPath;
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.remove(sPath, {
+                    success: function () {
+                        sap.m.MessageToast.show("Comment has been deleted");
+                        that.getView().setBusy(false);
+                    },
+                    error: function () {
+                        sap.m.MessageToast.show("Comment could not be deleted. Please try again.");
+                        that.getView().setBusy(false);
+                    }
+                });
+
             },
 
 

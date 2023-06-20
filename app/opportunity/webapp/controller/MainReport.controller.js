@@ -47,8 +47,8 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
 
-                var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
-                var sViewName = this.getView().getViewName().split('.')[3]; 
+                var oGlobalModel = this.getOwnerComponent().getModel("globalModel");
+                var sViewName = this.getView().getViewName().split('.')[3];
                 oGlobalModel.setProperty("/viewName", sViewName);
                 oGlobalModel.setProperty("/buttonText", "Go to Tasks");
             },
@@ -71,24 +71,24 @@ sap.ui.define([
                 if (sQuery && sQuery.length > 0) {
                     var aFilters = [
                         new Filter({
-                          filters: [
-                            new Filter({ path: "marketUnit", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "account", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "topic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "primaryContact", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "ssa", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "opportunityClosedQuarter", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                          ],
-                          and: false
+                            filters: [
+                                new Filter({ path: "marketUnit", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "account", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "topic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "primaryContact", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "ssa", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "opportunityClosedQuarter", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            ],
+                            and: false
                         })
-                      ];
+                    ];
                 }
 
                 var oList = this.byId("mySmartTable").getTable();
                 var oBinding = oList.getBinding("items")
                 oBinding.filter(aFilters, FilterType.Application);
-  
+
             },
 
 
@@ -106,18 +106,18 @@ sap.ui.define([
             // onOpenTab: function(selectedItem) {
             //     var oTabModel = this.getOwnerComponent().getModel("tabModel");
             //     var aData = oTabModel.getProperty("/tabs");
-              
+
             //     // Check if opportunityID already exists in the array
             //     var isExisting = aData.some(function(item) {
             //       return item.opportunityID === selectedItem.opportunityID;
             //     });
-              
+
             //     if (!isExisting) {
             //       aData.unshift(selectedItem);
             //       oTabModel.setProperty("/tabs", aData);
             //     }
             //   },
-              
+
             /* ------------------------------------------------------------------------------------------------------------
             WIZARD
             --------------------------------------------------------------------------------------------------------------*/
@@ -132,8 +132,8 @@ sap.ui.define([
                     oController.getView().addDependent(_oDialog);
                     _oDialog.open();
 
-                    oController.onReadTopics(); 
-                    oController.onReadDeliverables(); 
+                    oController.onReadTopics();
+                    oController.onReadDeliverables();
 
                     var oLayout1 = sap.ui.getCore().byId("TopicFilters");
                     var oTemplate1 = oLayout1.getBindingInfo("content").template;
@@ -183,8 +183,8 @@ sap.ui.define([
                 var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                 var aTopics = [];
-                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent(); 
-                aTopicFilters.forEach(oItem =>{
+                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent();
+                aTopicFilters.forEach(oItem => {
                     if (oItem.getPressed()) {
                         var oTopic = {
                             topic: oItem.getText()
@@ -193,8 +193,8 @@ sap.ui.define([
                     }
                 });
                 var aDeliverables = [];
-                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent(); 
-                aDeliverablesFilters.forEach(oItem =>{
+                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent();
+                aDeliverablesFilters.forEach(oItem => {
                     if (oItem.getPressed()) {
                         var oDeliverable = {
                             deliverable: oItem.getText()
@@ -202,7 +202,7 @@ sap.ui.define([
                         aDeliverables.push(oDeliverable);
                     }
                 })
-               
+
 
                 //add deliverable field to odata
                 var oNewItem = {
@@ -252,9 +252,9 @@ sap.ui.define([
 
             },
 
-                  /* ------------------------------------------------------------------------------------------------------------
-                ADD TOPIC
-           --------------------------------------------------------------------------------------------------------------*/
+            /* ------------------------------------------------------------------------------------------------------------
+          ADD TOPIC
+     --------------------------------------------------------------------------------------------------------------*/
 
 
             onSubmitTopic: function (oEvent) {
@@ -269,16 +269,16 @@ sap.ui.define([
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
                         onClose: function (sAction) {
-                            if(sAction === MessageBox.Action.OK){
-                            var isMatch = aTopics.some(oItem => {
-                                return oItem.topic.toUpperCase() === oValue.toUpperCase();
-                            });
-                            // if (isMatch) {
-                            //     //prevent POST call 
-                            //     MessageBox.error("This topic already exists!");
-                            //     oInput.setValue("");
-                            //     oDialog.close();
-                            // }else {
+                            if (sAction === MessageBox.Action.OK) {
+                                var isMatch = aTopics.some(oItem => {
+                                    return oItem.topic.toUpperCase() === oValue.toUpperCase();
+                                });
+                                // if (isMatch) {
+                                //     //prevent POST call 
+                                //     MessageBox.error("This topic already exists!");
+                                //     oInput.setValue("");
+                                //     oDialog.close();
+                                // }else {
                                 // POST call 
                                 var oNewTopic = {
                                     topic: oValue
@@ -297,69 +297,88 @@ sap.ui.define([
                                         MessageBox.error("Topic could not be posted. Please check your input.");
                                     }
                                 });
-                            //}
-                        } else{
-                            oInput.setValue("");
-                            that.getView().setBusy(false);
-                        }
+                                //}
+                            } else {
+                                oInput.setValue("");
+                                that.getView().setBusy(false);
+                            }
                         }
                     });
                 } else MessageToast.show("Enter a new topic first");
             },
 
-                  /* ------------------------------------------------------------------------------------------------------------
-                ADD DELIVERABLE
-           --------------------------------------------------------------------------------------------------------------*/
+            onPostNewItem: function () {
 
-           onSubmitDeliverable: function (oEvent) {
-            var that = this;
-            var oDialog = sap.ui.getCore().byId("deliverableDialog");
-            var oInput = sap.ui.getCore().byId("deliverableInput");
-            var oValue = oInput.getValue();
-            var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
+                var that = this;
 
-            if (oValue != "" && oInput != null) {
-                MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
-                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                    emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (sAction) {
-                        if(sAction === MessageBox.Action.OK){
-                        // var isMatch = aDeliverables.some(oItem => {
-                        //     return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
-                        // });
-                        // if (isMatch) {
-                        //     //prevent POST call 
-                        //     MessageBox.error("This deliverable already exists!");
-                        //     oInput.setValue("");
-                        //     oDialog.close();
-                        // }else {
-                            // POST call 
-                            var oNewDeliverable = {
-                                deliverable: oValue
-                            }
-                            that.getView().setBusy(true);
-                            var oModel = that.getView().getModel();
-                            oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
-                                success: function (oData, response) {
-                                    MessageToast.show("New deliverable posted!");
-                                    oDialog.close();
-                                    oInput.setValue("");
-                                    that.getView().setBusy(false);
-                                },
-                                error: function (oError) {
-                                    that.getView().setBusy(false);
-                                    MessageBox.error("Deliverable could not be posted. Please check your input.");
-                                }
-                            });
-                        //}
-                    } else{
-                        oInput.setValue("");
-                        that.getView().setBusy(false);
-                    }
+                var oPayload = {
+                    marketUnit: "France"
+                }
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunityMarketUnitVH", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New topic posted!");
+                    },
+                    error: function (oError) {
+                        MessageBox.error("Topic could not be posted. Please check your input.");
                     }
                 });
-            } else MessageToast.show("Enter a new deliverable first");
+
         },
+
+            /* ------------------------------------------------------------------------------------------------------------
+          ADD DELIVERABLE
+     --------------------------------------------------------------------------------------------------------------*/
+
+            onSubmitDeliverable: function (oEvent) {
+                var that = this;
+                var oDialog = sap.ui.getCore().byId("deliverableDialog");
+                var oInput = sap.ui.getCore().byId("deliverableInput");
+                var oValue = oInput.getValue();
+                var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
+
+                if (oValue != "" && oInput != null) {
+                    MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
+                        actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                        emphasizedAction: MessageBox.Action.OK,
+                        onClose: function (sAction) {
+                            if (sAction === MessageBox.Action.OK) {
+                                // var isMatch = aDeliverables.some(oItem => {
+                                //     return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
+                                // });
+                                // if (isMatch) {
+                                //     //prevent POST call 
+                                //     MessageBox.error("This deliverable already exists!");
+                                //     oInput.setValue("");
+                                //     oDialog.close();
+                                // }else {
+                                // POST call 
+                                var oNewDeliverable = {
+                                    deliverable: oValue
+                                }
+                                that.getView().setBusy(true);
+                                var oModel = that.getView().getModel();
+                                oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
+                                    success: function (oData, response) {
+                                        MessageToast.show("New deliverable posted!");
+                                        oDialog.close();
+                                        oInput.setValue("");
+                                        that.getView().setBusy(false);
+                                    },
+                                    error: function (oError) {
+                                        that.getView().setBusy(false);
+                                        MessageBox.error("Deliverable could not be posted. Please check your input.");
+                                    }
+                                });
+                                //}
+                            } else {
+                                oInput.setValue("");
+                                that.getView().setBusy(false);
+                            }
+                        }
+                    });
+                } else MessageToast.show("Enter a new deliverable first");
+            },
 
             onSelectAllTopicsPress: function (oEvent) {
                 sap.ui.getCore().byId("TopicFilters").getContent().forEach(function (oToggle) {
@@ -465,16 +484,16 @@ sap.ui.define([
             onBeforeRebindTable: function (oEvent) {
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
-              
+
                 var fnGroupHeaderFormatter = function (oContext) {
-                  var sHeader = oContext.getProperty("marketUnit");
-                  return {
-                    key: sHeader,
-                  };
+                    var sHeader = oContext.getProperty("marketUnit");
+                    return {
+                        key: sHeader,
+                    };
                 };
                 var oGrouping = new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter);
                 oBindingParams.sorter.push(oGrouping);
-              
+
                 this.addFiltersForSelectedItems(oEvent, "marketUnit");
                 this.addFiltersForSelectedItems(oEvent, "topic");
                 this.addFiltersForSelectedItems(oEvent, "primaryContact");
@@ -483,23 +502,23 @@ sap.ui.define([
                 this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
                 this.addFiltersForSelectedItems(oEvent, "priority");
                 this.addFiltersForSelectedItems(oEvent, "ssa");
-              
+
                 var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 var bSwitch = oSwitch ? "Yes" : "No";
                 if (bSwitch === "Yes") {
-                  oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
+                    oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
                 }
-              },
+            },
 
             addFiltersForSelectedItems: function (oEvent, filterKey) {
-                var oSmartFilterBar =  this.getView().byId("smartFilterBar");
+                var oSmartFilterBar = this.getView().byId("smartFilterBar");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var selectedItems = oSmartFilterBar.getControlByKey(filterKey)?.getSelectedItems() || [];
                 selectedItems.forEach(function (oToken) {
-                  oBindingParams.filters.push(new Filter(filterKey, sap.ui.model.FilterOperator.EQ, oToken.getText()));
+                    oBindingParams.filters.push(new Filter(filterKey, sap.ui.model.FilterOperator.EQ, oToken.getText()));
                 })
-              },
-              
+            },
+
 
             onClearSmartFilterBar: function (oEvent) {
                 var oSmartFilterBar = oEvent.getSource();
@@ -520,37 +539,37 @@ sap.ui.define([
            --------------------------------------------------------------------------------------------------------------*/
 
 
-           onDialogOpen: function (fragmentName) {
+            onDialogOpen: function (fragmentName) {
 
-            var that = this;
-            if(!this._pDialog){
-                this._pDialog = Fragment.load({
-                    //id:"myDialog",
-                    name: fragmentName,
-                    controller:this
-                }).then(function(_pDialog){
-                    that.getView().addDependent(_pDialog);
-                    _pDialog.setEscapeHandler(function () {
-                        that.onCloseDialog();
+                var that = this;
+                if (!this._pDialog) {
+                    this._pDialog = Fragment.load({
+                        //id:"myDialog",
+                        name: fragmentName,
+                        controller: this
+                    }).then(function (_pDialog) {
+                        that.getView().addDependent(_pDialog);
+                        _pDialog.setEscapeHandler(function () {
+                            that.onCloseDialog();
+                        });
+                        return _pDialog;
                     });
-                    return _pDialog;
+                }
+                this._pDialog.then(function (_pDialog) {
+                    _pDialog.open();
+
+                })
+            },
+
+
+            onCancelDialogPress: function (oEvent) {
+                this._pDialog.then(function (_pDialog) {
+                    _pDialog.close();
+                    _pDialog.destroy();
                 });
-            }
-            this._pDialog.then(function(_pDialog){                
-                _pDialog.open();
-                
-            })
-    },
+                this._pDialog = null;
 
-
-    onCancelDialogPress: function (oEvent) {
-            this._pDialog.then(function(_pDialog){
-                _pDialog.close();
-                _pDialog.destroy();
-            });
-            this._pDialog = null;    
-      
-    },
+            },
 
             onAddTopicPress: function () {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
@@ -566,9 +585,9 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onFavoriteToolbarPress: function (oEvent) {
-                var oBtn = oEvent.getSource(); 
+                var oBtn = oEvent.getSource();
                 var bToggle = oBtn.getPressed()
-                if(bToggle) {
+                if (bToggle) {
                     oBtn.setIcon('sap-icon://favorite')
                 } else oBtn.setIcon('sap-icon://unfavorite')
 
@@ -577,12 +596,12 @@ sap.ui.define([
                 if (bFavorite) {
                     var aFilters = [
                         new Filter({
-                          filters: [
-                            new Filter({ path: "isFavorite", operator: FilterOperator.EQ, value1: true,}),
-                          ],
-                          and: false
+                            filters: [
+                                new Filter({ path: "isFavorite", operator: FilterOperator.EQ, value1: true, }),
+                            ],
+                            and: false
                         })
-                      ];
+                    ];
                 }
                 var oList = this.byId("mySmartTable").getTable();
                 var oBinding = oList.getBinding("items")
@@ -591,14 +610,14 @@ sap.ui.define([
             },
 
             onFavoritePress: function (oEvent) {
-                var that = this; 
+                var that = this;
                 var oIcon = oEvent.getSource();
                 var oBinding = oIcon.getBindingContext();
                 var sPath = oBinding.getPath();
-                var oContext = oIcon.getBindingContext().getObject(); 
+                var oContext = oIcon.getBindingContext().getObject();
 
                 var isFavorite = oContext.isFavorite;
-    
+
                 if (isFavorite === true) {
                     isFavorite = false;
                     // removeFavourite
@@ -609,39 +628,39 @@ sap.ui.define([
                     that.postFavouriteCustomer(isFavorite, oContext, sPath);
                 }
             },
-    
+
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 //post isFavourite 
-                var that = this; 
+                var that = this;
                 if (isFavorite === true) {
-                    oContext.isFavorite = true; 
+                    oContext.isFavorite = true;
                 } else {
-                    oContext.isFavorite = false; 
+                    oContext.isFavorite = false;
                 }
 
-                var oModel = this.getView().getModel(); 
+                var oModel = this.getView().getModel();
                 oModel.update(sPath, oContext, {
-                    success: function() {
-                    var sMessage = "";
-                    if (isFavorite === true) {
-                        sMessage = "'" + oContext.account + "' added to favorites";
-                    } else {
-                        sMessage = "'" + oContext.account + "' removed from favorites";
-                    }
-                    MessageToast.show(sMessage);
+                    success: function () {
+                        var sMessage = "";
+                        if (isFavorite === true) {
+                            sMessage = "'" + oContext.account + "' added to favorites";
+                        } else {
+                            sMessage = "'" + oContext.account + "' removed from favorites";
+                        }
+                        MessageToast.show(sMessage);
                     },
-                    error: function(oError) {
-                      MessageToast.show(oError.message);
+                    error: function (oError) {
+                        MessageToast.show(oError.message);
                     }
-                  });
+                });
 
             },
 
 
-           
-            onDeleteTopic: function(){
 
-                var that = this; 
+            onDeleteTopic: function () {
+
+                var that = this;
                 var oModel = this.getView().getModel();
                 // var sPath = "/opportunityQuartersVH(842e5db9-2562-48aa-8bc0-211ef201945f)"
 
@@ -670,7 +689,7 @@ sap.ui.define([
                 oModel.create("/opportunitySubTaskStatus", oPayload, {
                     success: function (oData, response) {
                         MessageToast.show("New topic posted!");
-                       
+
                         that.getView().setBusy(false);
                     },
                     error: function (oError) {
@@ -680,7 +699,7 @@ sap.ui.define([
                 });
             },
 
-             onReadTopics: function () {
+            onReadTopics: function () {
                 var that = this;
                 that.getView().setBusy(true);
                 var oLocalModel = that.getView().getModel("localModel");
@@ -688,7 +707,7 @@ sap.ui.define([
                 oModel.read("/opportunityTopics", {
                     urlParameters: {
                         "$orderby": "topic"
-                      },
+                    },
                     success: function (oResponse) {
                         var aTopics = oResponse.results;
                         oLocalModel.setProperty("/topics", aTopics);
@@ -706,7 +725,7 @@ sap.ui.define([
                 oModel.read("/opportunityDeliverables", {
                     urlParameters: {
                         "$orderby": "deliverable"
-                      },
+                    },
                     success: function (oResponse) {
                         var aDeliverables = oResponse.results;
                         oLocalModel.setProperty("/deliverables", aDeliverables);
@@ -724,16 +743,16 @@ sap.ui.define([
                 var oController = this;
                 var oIcon = oEvent.getSource();
                 var userModel = this.getOwnerComponent().getModel("UserModel");
-    
+
                 var oBinding = oIcon.getBindingContext();
                 var sPath = oBinding.getPath();
                 var dataGoal = sap.ui.getCore().byId("GoalCatalogTable").getModel().getProperty(sPath);
-    
+
                 var isFavorite = dataGoal.isFavourite;
                 var valueDriverID = dataGoal.valueDriverID;
                 var valueDriverName = dataGoal.valueDriverDescription;
                 var userID = userModel.getProperty("/username");
-    
+
                 if (isFavorite === true) {
                     console.log("Unfavorite");
                     isFavorite = false;
@@ -753,9 +772,9 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
 
-            onBeforeExportOpportunities: function(oEvent){
-            var oWorkbook = oEvent.getParameter("exportSettings").workbook;
-            oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" })
+            onBeforeExportOpportunities: function (oEvent) {
+                var oWorkbook = oEvent.getParameter("exportSettings").workbook;
+                oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" })
 
 
             }

@@ -45,6 +45,7 @@
                                 sidePanelResizable="true"
                                 sidePanelMinWidth="30rem"
                                 sidePanelWidth="20rem"
+                                toggle="onSidePanelToggle"
                             >
                                 <f:mainContent>
                                     <u:ObjectPageLayout
@@ -671,26 +672,36 @@
 								</commons:Timeline>
 							 -->
 
-                                            <List items="{/opportunityHeader}" width="100%">
+                                            <List
+                                                items="{}"                                 id="opportunityComments"
+                                                width="100%"
+                                                noDataText="Looks like there are no comments yet."
+                                                mode="Delete"
+                                                delete="onDeleteComment" 
+                                            >
                                                 <FeedListItem
-                                                    sender="{primaryContact}"
-                                                    info="{account}"
-                                                  
-														timestamp="{ path: 'opportunityDueDate',
-														type: 'sap.ui.model.type.Date',
+                                                id="commentItem"
+                                                    sender="{postedBy}"
+                                                    timestamp="{ path: 'postedOn',
+														type: 'sap.ui.model.type.DateTime',
+                                                        
+		                       
+                                                        
 																		formatOptions: {
-																			relative: true,
-																			relativeScale: 'auto'
+																			style: 'medium'
 																		}
 																	}"
-                                                    text="{topic}"
-													icon="{path: 'primaryContact', formatter: '.formatter.formatterTeamPictures'}" iconSize="XS"
-													
+                                                    text="{comment}"
+                                                    icon="{path: 'postedBy', formatter: '.formatter.formatterTeamPictures'}"
+                                                    iconSize="XS"
                                                 />
                                             </List>
                                             <FeedInput
-                                                showIcon="false" placeholder="Add a comment to this task" id="feedInputObject" maxLength="800"
-                                                
+                                                showIcon="false"
+                                                placeholder="Add a comment to this task"
+                                                id="feedInputObject"
+                                                maxLength="800"
+                                                post="onPostComment"
                                             />
                                         </VBox>
                                     </f:SidePanelItem>

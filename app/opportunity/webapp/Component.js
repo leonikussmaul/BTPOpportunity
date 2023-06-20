@@ -3,11 +3,11 @@
  */
 
 sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "sap/ui/Device",
-        "opportunity/opportunity/model/models",
-        "sap/ui/model/json/JSONModel"
-    ],
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "opportunity/opportunity/model/models",
+    "sap/ui/model/json/JSONModel"
+],
     function (UIComponent, Device, models, JSONModel) {
         "use strict";
 
@@ -37,15 +37,121 @@ sap.ui.define([
                 this.setModel(new JSONModel(), "tabModel");
                 this.getModel("tabModel").setProperty("/tabs", []);
 
-               
-                var aData = [
-                {"primaryContact": "Sarah"},
-                {"primaryContact": "Rajat"},
-                {"primaryContact": "Ravi"},
-            ];
+                
+                var aTeam = {
 
-            this.setModel(new JSONModel(), "teamModel");
-            this.getModel("teamModel").setProperty("/members", aData);
+                    "lines": [
+                        {
+                            "from": "Rajat",
+                            "to": "Ravi"
+                        },
+                        {
+                            "from": "Rajat",
+                            "to": "Sarah"
+                        },
+                        {
+                            "from": "Ravi",
+                            "to": "Leoni"
+                        }
+                    ]
+                }
+
+                // var aTeam = {
+
+                //     "lines": [
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Ravi"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Sarah"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Vijay"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Stefan"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Gurpreet"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Sunil"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Nesimi"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Bas"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Matt"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Peter"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Elinor"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Rudolf"
+                //         },
+                //         {
+                //             "from": "Rajat",
+                //             "to": "Omar"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Amit"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Leoni"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Liliana"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Shubham"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Karthik"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Sneha"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Arpit"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Ami"
+                //         },
+                //         {
+                //             "from": "Ravi",
+                //             "to": "Abhay"
+                //         }
+                //     ]
+                // }
+
+                this.setModel(new JSONModel(), "teamModel");
+                this.getModel("teamModel").setData(aTeam);
 
 
             }

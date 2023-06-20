@@ -36,6 +36,8 @@
 				<Title
 		titleStyle="H4" text="Hi Sarah, here is today's Demand Generation at a Glance. " class="sapUiSmallMarginBottom"/>
 
+
+<Button text="POST" icon="sap-icon://add" type="Accept" id="postBtn" press="onPostNewItem" tooltip="Create a New Opportunity in the System"/>
 		<Button text="New Opp" icon="sap-icon://add" type="Accept" id="createBtn" press="onWizardDialogPress" tooltip="Create a New Opportunity in the System"/>
 		</FlexBox>
 				<f:content>

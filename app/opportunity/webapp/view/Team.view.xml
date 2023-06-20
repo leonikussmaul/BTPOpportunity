@@ -42,8 +42,8 @@
       
 	<Graph enableWheelZoom="false"
 		   orientation="TopBottom"
-		   nodes="{/opportunityHeader}"
-		   lines="{/opportunityHeader}"
+		   nodes="{/teamMembers}"
+		   lines="{teamModel>/lines}"
 		   layout="Layered"
 		   searchSuggest="suggest"
 		   search="search"
@@ -57,28 +57,33 @@
        
 		<nodes>
 			<Node icon="sap-icon://action-settings"
-				  key="{account}"
-				  description="{primaryContact}"
-				  title="{primaryContact}"
+				  key="{firstName}"
+				  description="{mainArea}"
+				  title="{firstName} {lastName}"
 				  width="90"
                   
 				  showActionLinksButton="true"
 				  showDetailButton="true"
 				  descriptionLineSize="0"
 				  shape="Box">
-				
+					<customData>
+					<core:CustomData key="email" value="{email}"/>
+					<core:CustomData key="role" value="{role}"/>
+					<core:CustomData key="joined" value="{joined}"/>
+					<core:CustomData key="description" value="{description}"/>
+				</customData>
 				<attributes>
-					<ElementAttribute label="{account}" value="{account}"/>
+					<ElementAttribute label="{inumber}" value="{city}, {country}"/>
 				</attributes>
-				<!-- <image>
-					<NodeImage src="{account}"
-							   width="80"
-							   height="100"/>
-				</image> -->
+				<image>
+					<NodeImage src="{path: 'firstName', formatter: '.formatter.formatterTeamPictures'}" 
+							   width="60"
+							   height="80"/>
+				</image>
 			</Node>
 		</nodes>
 		<lines>
-			<Line from="Signify" to="VDL" arrowOrientation="None" press="linePress" />
+			<Line from="{teamModel>from}" to="{teamModel>to}" arrowOrientation="None" press="linePress" />
 		</lines>
 	</Graph>
 

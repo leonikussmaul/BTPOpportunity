@@ -5,18 +5,20 @@ sap.ui.define([
 		"sap/suite/ui/commons/networkgraph/layout/ForceBasedLayout",
 		"sap/suite/ui/commons/networkgraph/ActionButton",
 		"sap/suite/ui/commons/networkgraph/Node",
-		"sap/ui/core/Fragment"
+		"sap/ui/core/Fragment",
+        "../model/formatter",
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, LayeredLayout, ForceBasedLayout, ActionButton, Node, Fragment) {
+    function (Controller, JSONModel, LayeredLayout, ForceBasedLayout, ActionButton, Node, Fragment,formatter) {
         "use strict";
 
 
         return Controller.extend("opportunity.opportunity.controller.Team", {
-
+            formatter: formatter,
             onInit: function () {
+                
 
                 // this._graph = this.getView().byId("graph");
                 // var that = this; 

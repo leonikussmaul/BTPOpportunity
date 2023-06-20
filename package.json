@@ -1,87 +1,87 @@
 {
-    "name": "BTPOpportunities",
-    "version": "1.0.0",
-    "description": "A simple CAP project.",
-    "repository": "<Add your repository here>",
-    "license": "UNLICENSED",
-    "private": true,
-    "dependencies": {
-        "@sap/approuter": "^14.1.1",
-        "@sap/audit-logging": "^5.0.0",
-        "@sap/cds": "^5",
-        "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
-        "@sap/hana-client": "^2.6.61",
-        "@sap/xsenv": "^3.4.0",
-        "@sap/xssec": "^3.2.17",
-        "express": "^4",
-        "hdb": "^0.18.3",
-        "passport": "^0.4.1"
+  "name": "BTPOpportunities",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/approuter": "^14.1.1",
+    "@sap/audit-logging": "^5.0.0",
+    "@sap/cds": "^5",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
+    "@sap/hana-client": "^2.6.61",
+    "@sap/xsenv": "^3.4.0",
+    "@sap/xssec": "^3.2.17",
+    "express": "^4",
+    "hdb": "^0.18.3",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "4.4.1",
+    "@sap/ux-specification": "^1.108.3",
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.4"
+  },
+  "scripts": {
+    "start": "cds run",
+    "watch-tracker": "cds watch --open tracker/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy BTPOpportunities --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-opportunity": "cds watch --open opportunity/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
     },
-    "devDependencies": {
-        "@sap/hdi-deploy": "4.4.1",
-        "@sap/ux-specification": "^1.108.3",
-        "rimraf": "^3.0.2",
-        "sqlite3": "^5.0.4"
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
     },
-    "scripts": {
-        "start": "cds run",
-        "watch-tracker": "cds watch --open tracker/webapp/index.html?sap-ui-xx-viewCache=false",
-        "undeploy": "cf undeploy BTPOpportunities --delete-services --delete-service-keys --delete-service-brokers",
-        "build": "rimraf resources mta_archives && mbt build --mtar archive",
-        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-        "watch-opportunity": "cds watch --open opportunity/webapp/index.html?sap-ui-xx-viewCache=false"
-    },
-    "eslintConfig": {
-        "extends": "eslint:recommended",
-        "env": {
-            "es2020": true,
-            "node": true,
-            "jest": true,
-            "mocha": true
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "build": {
+      "tasks": [
+        {
+          "for": "hana",
+          "dest": "../db"
         },
-        "globals": {
-            "SELECT": true,
-            "INSERT": true,
-            "UPDATE": true,
-            "DELETE": true,
-            "CREATE": true,
-            "DROP": true,
-            "CDL": true,
-            "CQL": true,
-            "CXL": true,
-            "cds": true
-        },
-        "rules": {
-            "no-console": "off",
-            "require-atomic-updates": "off"
+        {
+          "for": "node-cf"
         }
+      ]
     },
-    "cds": {
-        "build": {
-            "tasks": [
-                {
-                    "for": "hana",
-                    "dest": "../db"
-                },
-                {
-                    "for": "node-cf"
-                }
-            ]
-        },
-        "hana": {
-            "deploy-format": "hdbtable"
-        },
-        "requires": {
-            "db": {
-                "kind": "hana-cloud"
-            },
-            "approuter": {
-                "kind": "cloudfoundry"
-            }
-        }
+    "hana": {
+      "deploy-format": "hdbtable"
     },
-    "sapux": [
-        "app/tracker",
-        "app/opportunity"
-    ]
+    "requires": {
+      "db": {
+        "kind": "hana-cloud"
+      },
+      "approuter": {
+        "kind": "cloudfoundry"
+      }
+    }
+  },
+  "sapux": [
+    "app/tracker",
+    "app/opportunity"
+  ]
 }

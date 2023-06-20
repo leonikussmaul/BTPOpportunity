@@ -94,7 +94,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
         return 7;
       } else if (topic === 'Automation / AI') {
         return 8;
-      } else if (topic === 'Governance Framework') {
+      } else if (topic === 'Governance') {
         return 3;
       } else if (topic === 'CSD') {
         return 1;

@@ -47,6 +47,8 @@ entity opportunityActionItems {
         actionPriorityNumber : Integer;
         subTasks             : Composition of many opportunitySubTasks
                                    on subTasks.opptID = $self;
+        comments                  : Composition of many opportunityTasksComments
+                                        on comments.opptID = $self;
 };
 
 @cds.autoexpose
@@ -74,10 +76,20 @@ entity opportunityComments {
         opptID   : Association to opportunityHeader;
         comment  : String(800);
         postedBy : String(20);
-        postedOn : Date;
+        postedOn : DateTime;
         imageSrc : String(255);
-        urgent   : Boolean;
 };
+
+@cds.autoexpose
+entity opportunityTasksComments {
+    key ID       : UUID;
+        opptID           : Association to opportunityActionItems;
+        comment  : String(800);
+        postedBy : String(20);
+        postedOn : DateTime;
+        imageSrc : String(255);
+};
+
 
 @cds.autoexpose
 entity opportunityTopicsVH {
@@ -151,11 +163,13 @@ entity teamMembers {
         initials  : String(5);
         photoSrc  : String(255);
         email     : String(255);
-        location  : String(55);
+        country   : String(55);
+        city      : String(55);
         role      : String(55);
         joined    : Date;
         manager   : String(55);
-        noteDate  : Date;
+        mainArea   : String(55);
+        description  : String(800);
         skills    : Composition of many teamSkills
                         on skills.userID = $self;
         tools     : Composition of many teamTools
@@ -199,15 +213,17 @@ entity teamProjects {
         descriptionDate  : Date;
         percentage       : Integer;
         goLive           : Date;
-// comments           : Composition of many projectComments
-//                                 on comments.userID = $self;
+        lastUpdated      : DateTime; 
+        comments           : Composition of many projectComments
+                                        on comments.user = $self;
 };
 
-// @cds.autoexpose
-// entity projectComments {
-//     key commentID     : UUID;
-//         userID : Association to teamMembers;
-//         tool: String(255);
-//         level: String(20);
-//         sap: Boolean;
-// };
+@cds.autoexpose
+entity projectComments {
+    key commentID       : UUID;
+        user : Association to teamProjects;
+        comment  : String(800);
+        postedBy : String(20);
+        postedOn : DateTime;
+        imageSrc : String(255);
+};

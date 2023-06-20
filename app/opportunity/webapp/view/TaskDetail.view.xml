@@ -232,7 +232,8 @@
 
                     <u:ObjectPageSection
                         id="idSubTaskSection"
-                        titleUppercase="false"  title="Sub-Tasks"
+                        titleUppercase="false"
+                        title="Sub-Tasks"
                     >
                         <u:ObjectPageSubSection id="idSubTaskSubSection">
                             <Table
@@ -467,55 +468,80 @@
                                 <layoutData>
                                     <FlexItemData growFactor="1" />
                                 </layoutData>
+
                                 <commons:Timeline
                                     width="100%"
                                     id="idTimeline"
                                     enableDoubleSided="true"
-                                    content="{/opportunityHeader}"
-                                    filterList="{/opportunityHeader}"
+                                    content="{/opportunityTasksComments}"
+                                    filterList="{/opportunityTasksComments}"
                                     enableScroll="false"
                                     forceGrowing="false"
                                     growingThreshold="1"
                                     showHeaderBar="true"
                                     sortOldestFirst="false"
                                     enableModelFilter="true"
-									showIcons="false"
+                                    showIcons="false"
+                                    filterTitle="User"
+                                    textHeight="automatic"
                                 >
-
                                     <commons:content>
                                         <commons:TimelineItem
+                                       
                                             id="timelineTasks"
                                             userNameClicked="onUserNameClick"
                                             select="onPressItems"
-                                            dateTime="{ path: 'opportunityDueDate',
-														type: 'sap.ui.model.type.Date',
+                                            dateTime="{ path: 'postedOn',
+														type: 'sap.ui.model.type.DateTime',
+                                                        
+		                       
+                                                        
 																		formatOptions: {
-																			relative: true,
-																			relativeScale: 'auto'
+																			style: 'medium'
 																		}
 																	}"
-                                            title="{account}"
-                                            text="{account}"
-                                            userName="{account} {account}"
-                                            filterValue="{account}"
-                                            userPicture="{path: 'primaryContact', formatter: '.formatter.formatterTeamPictures'}" iconSize="XS"
+                                            text="{comment}"
+                                            userName="{postedBy}"
+                                            filterValue="{postedOn}"
+                                            userPicture="{path: 'postedBy', formatter: '.formatter.formatterTeamPictures'}"
+                                            iconSize="XS"
                                             icon="sap-icon://discussion"
-											maxCharacters="200"
-											
-                                        />
+                                            maxCharacters="200"
+                                            userNameClickable="true" 
+                                        >
+                                        
+                                            <commons:embeddedControl>
+                                             <VBox  >
+                                             <Text class="sapUiSmallMarginBegin" text="{comment}" width="90%" ></Text >
+                                                   
+                                               
+                                                <HBox  justifyContent="End">
+                                                    <Button
+                                                        icon="sap-icon://delete" type="Transparent"
+                                                        press="onDeleteTaskComment"
+                                                    />
+                                                </HBox>
+
+                                                 </VBox>
+                                            </commons:embeddedControl>
+                                        </commons:TimelineItem>
                                     </commons:content>
-                                    <commons:filterList>
+
+                                     <commons:filterList>
                                         <commons:TimelineFilterListItem
                                             id="idTimelineFilterListItem"
-                                            key="{account}"
-                                            text="{account} {account}"
+                                            key="{postedBy}"
+                                            text="{postedBy}"
                                         />
-                                    </commons:filterList>
+                                    </commons:filterList> 
                                 </commons:Timeline>
-								   <FeedInput id="feedInputTask" maxLength="800"
-                                                showIcon="false" placeholder="Add a comment to this task"
-                                                
-                                            />
+                                <FeedInput
+                                    id="feedInputTask"
+                                    maxLength="800"
+                                    showIcon="false"
+                                    placeholder="Add a comment to this task"
+                                    post="onPostComment"
+                                />
                             </VBox>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
