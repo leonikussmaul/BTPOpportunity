@@ -377,7 +377,7 @@
                                                         <l:HorizontalLayout
                                                             id="DeliverablesFiltersObject"
                                                             allowWrapping="true"
-                                                            class="sapUiResponsiveMargin "
+                                                            class="sapUiResponsiveMargin"
                                                             content="{}"
                                                         >
                                                             <ToggleButton
@@ -401,18 +401,37 @@
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
 
-                                            <u:ObjectPageSection
-                                                id="idSectionNotes"
+                                             <u:ObjectPageSection
+                                                id="idSectionActivities"
                                                 titleUppercase="false"
-                                                title="{i18n>Notes}"
+                                                title="{i18n>Activities}"
                                             >
-                                                <u:heading>
+                                              <u:heading>
                                                     <MessageStrip
                                                         showIcon="true"
                                                         text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more."
                                                         showCloseButton="true"
                                                     />
                                                 </u:heading>
+                                               
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionActivities"
+                                                >
+                                                 <u:actions>
+                                                        <Button icon="sap-icon://add"
+                                                            press="onAddActivityPress" type="Accept"
+                                                        />
+                                                    </u:actions>
+                                                    <core:Fragment fragmentName="opportunity.opportunity.view.fragments.ActivitiesSection" type="XML"/>
+                                                    
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+
+                                            <u:ObjectPageSection
+                                                id="idSectionNotes"
+                                                titleUppercase="false"
+                                                title="{i18n>Notes}"
+                                            >
 
                                                 <u:ObjectPageSubSection
                                                     id="idSubSectionNotes"
@@ -707,6 +726,8 @@
                                     </f:SidePanelItem>
                                 </f:items>
                             </f:SidePanel>
+
+
                         </content>
                         <footer>
                             <Toolbar>

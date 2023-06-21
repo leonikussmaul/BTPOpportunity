@@ -599,6 +599,7 @@ sap.ui.define([
             onGoToOpportunity: function (oEvent) {
                 var oContext = this.getView().getBindingContext().getObject();
                 var oppID = oContext.opptID_opportunityID;
+                this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", oppID);
 
                 // var oTabModel = this.getOwnerComponent().getModel("tabModel");
                 // var aData = oTabModel.getData().tabs; 
@@ -658,12 +659,13 @@ COMMENTS
                 var that = this;
                 var oValue = oEvent.mParameters.value;
                 this.taskID = this.getView().getBindingContext().getObject().ID; 
+                var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");  
                 //this.opptID = this.getView().getBindingContext().getObject().opptID_opportunityID;
 
                 var oPayload = {
                     opptID_ID: this.taskID,
                     comment: oValue,
-                    postedBy: "Sarah",
+                    postedBy: sPostedBy,
                     postedOn: UI5Date.getInstance()
                 }
                 that.getView().setBusy(true);

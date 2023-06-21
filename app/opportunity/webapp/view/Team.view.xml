@@ -47,7 +47,8 @@
 		   layout="Layered"
 		   searchSuggest="suggest"
 		   search="search"
-		   id="graph">
+		   id="graph"
+		   beforeLayouting="onSelectionChange">
 		<layoutAlgorithm>
 			<layout:LayeredLayout
 					mergeEdges="true"

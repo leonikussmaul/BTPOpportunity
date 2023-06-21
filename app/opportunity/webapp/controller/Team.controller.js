@@ -17,48 +17,91 @@ sap.ui.define([
 
         return Controller.extend("opportunity.opportunity.controller.Team", {
             formatter: formatter,
-            onInit: function () {
-                
-
-                // this._graph = this.getView().byId("graph");
-                // var that = this; 
-
-                // this._graph.attachEvent("beforeLayouting", function (oEvent) {
-                //     var oGraph = that.getView().byId("graph"); 
-                //     oGraph.preventInvalidation(true);
-                //     oGraph.getNodes().forEach(function (oNode) {
-                //         var oExpandButton, oDetailButton, oUpOneLevelButton;
-                //             //sTeamSize = this._getCustomDataValue(oNode, "team"),
-                          
-    
-                //        // oNode.removeAllActionButtons();
-
-                //         oNode.setCollapsed(true);
-                //         oExpandButton = new ActionButton({
-                //             title: "Expand",
-                //             icon: "sap-icon://sys-add",
-                //             press: function () {
-                //                 oNode.setCollapsed(false);
-                //                 //this._loadMore(oNode.getKey());
-                //             }.bind(this)
-                //         });
-                //         oNode.addActionButton(oExpandButton);
-
-                //         oDetailButton = new ActionButton({
-                //             title: "Detail",
-                //             icon: "sap-icon://person-placeholder",
-                //             press: function (oEvent) {
-                //                // this._openDetail(oNode, oEvent.getParameter("buttonElement"));
-                //             }.bind(this)
-                //         });
-                //         oNode.addActionButton(oDetailButton);
-    
-                //     });
-    
-                // }); 
-
-                
+            onInit: function() {
             },
+            
+            onSelectionChange: function(oEvent) {
+                const oGraph = this.getView().byId("graph");
+            
+                oGraph.getNodes().forEach((oNode) => {
+                    const oDetailButton = new sap.suite.ui.commons.networkgraph.ActionButton({
+                        title: "Detail",
+                        icon: "sap-icon://person-placeholder",
+                        press: (oEvent) => {
+                            this.onPersonDetails(oNode, oEvent.getParameter("buttonElement"));
+                        }
+                    });
+                    oNode.addActionButton(oDetailButton);
+
+                    const oEngagementButton = new sap.suite.ui.commons.networkgraph.ActionButton({
+                        title: "Engagement",
+                        icon: "sap-icon://workflow-tasks",
+                        press: (oEvent) => {
+                            this.onPressEngagement(oNode, oEvent.getParameter("buttonElement"));
+                        }
+                    });
+                    oNode.addActionButton(oEngagementButton);
+                });
+            },
+            
+            onPersonDetails: function(oNode, oButton) {
+                if (!this._oQuickView) {
+                    sap.ui.core.Fragment.load({
+                        name: "opportunity.opportunity.view.fragments.PersonDetail",
+                        type: "XML"
+                    }).then((oFragment) => {
+                        this._oQuickView = oFragment;
+                        this._oQuickView.setModel(new sap.ui.model.json.JSONModel({
+                            icon: oNode.getImage() && oNode.getImage().getProperty("src"),
+                            title: oNode.getDescription(),
+                            description: this._getCustomDataValue(oNode, "position"),
+                            location: this._getCustomDataValue(oNode, "location"),
+                            email: this._getCustomDataValue(oNode, "email"),
+                            phone: this._getCustomDataValue(oNode, "phone")
+                        }));
+            
+                        setTimeout(() => {
+                            this._oQuickView.openBy(oButton);
+                        }, 0);
+                    });
+                } else {
+                    this._oQuickView.setModel(new sap.ui.model.json.JSONModel({
+                        icon: oNode.getImage() && oNode.getImage().getProperty("src"),
+                        title: oNode.getDescription(),
+                        description: this._getCustomDataValue(oNode, "position"),
+                        location: this._getCustomDataValue(oNode, "location"),
+                        email: this._getCustomDataValue(oNode, "email"),
+                        phone: this._getCustomDataValue(oNode, "phone")
+                    }));
+            
+                    setTimeout(() => {
+                        this._oQuickView.openBy(oButton);
+                    }, 0);
+                }
+            },
+            
+            _getCustomDataValue: function (oNode, sName) {
+                var aItems = oNode.getCustomData().filter(function (oData) {
+                    return oData.getKey() === sName;
+                });
+    
+                return aItems.length > 0 && aItems[0].getValue();
+            },
+
+            onPressEngagement: function(oNode, oButton){
+
+               // var selectedItem = oEvent.getSource().getBindingContext().getObject();
+               var inumber =  oNode.getAttributes()[0].getLabel();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("Resources", {
+                    inumber: inumber
+                }
+                );
+
+              
+
+            }
+            
 
             
 

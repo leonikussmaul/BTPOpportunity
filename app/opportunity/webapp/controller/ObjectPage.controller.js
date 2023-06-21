@@ -56,15 +56,20 @@ sap.ui.define([
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
                 var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
+                if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID")
+                this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
+
                 this.getView().bindElement({
                     path: "/opportunityHeader/" + sOpportunityID,
                     parameters: {
-                        expand: "actionItems,comments"
+                        expand: "actionItems,comments,deliverables"
                     }
                 });
 
-
+                this.sOpportunityID = sOpportunityID;
                 this.onFilterComments(sOpportunityID);
+
+               // this.getView().byId("myTabContainer").setSelectedItem(0);
                 // var oList = this.getView().byId("opportunityComments")
                 //   var commentTemp = this.getView().byId("commentItem");
                 //   var oSorter = new sap.ui.model.Sorter("postedOn", true);
@@ -77,13 +82,12 @@ sap.ui.define([
                 //       filters: aCommentFilters
                 //   });
 
-
                 this.getOwnerComponent().getModel().attachRequestCompleted(function (oEvent) {
 
 
                     var oTabModel = this.getOwnerComponent().getModel("tabModel");
                     // var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
-                    var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
+                    //var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
 
                     var oContext = this.getView().getModel().getProperty("/opportunityHeader(" + sOpportunityID + ")");
                     var aData = oTabModel.getData().tabs;
@@ -93,7 +97,7 @@ sap.ui.define([
                     });
 
                     if (!isExisting && oContext != undefined) {
-                        aData.unshift(oContext);
+                        aData.push(oContext);
                         oTabModel.setProperty("/tabs", aData);
                     }
 
@@ -108,12 +112,13 @@ sap.ui.define([
 
             },
 
-
             beforeRebindChart: function (oEvent) {
                 var oBindingParams = oEvent.getParameter('bindingParams');
-                var sOpportunityID = oArguments.opportunityID;
+                //var sOpportunityID = oArguments.opportunityID;
+                var sOpportunityID = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
                 var filterCustomerID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
                 oBindingParams.filters.push(filterCustomerID);
+                
             },
 
             onBeforeRendering: function () {
@@ -148,42 +153,17 @@ sap.ui.define([
 
             onTabItemSwitch: function (oEvent) {
 
-                this.getView().setBusy(true);
-                var oModel = this.getView().getModel();
-
-                //if(oEvent.mParameters.item){
                 if (oEvent.mParameters.item) {
                     var sOpportunityID = oEvent.mParameters.item.getKey();
-                }
-                else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
+                    //this.getOwnerComponent.getModel("userModel").setProperty("/opportunityID", sOppt)
 
-                //this.getView().getModel("pageModel").setProperty("/opptID", parseInt(sOpportunityID))
-
-                // var oFilter = new sap.ui.model.Filter("opptID_opportunityID",sap.ui.model.FilterOperator.EQ, parseInt(sOpportunityID));
-                // var oComments = this.getView().byId("opportunityComments").getItems();
-                // oComments.filter([oFilter]); 
-
+                } else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
+                
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {
                     opportunityID: sOpportunityID
                 });
-
-                // this.getView().bindElement({
-                //     path: "/opportunityHeader/" + sOpportunityID,
-                //     parameters: {
-                //         expand: "actionItems"
-                //     }
-
-                // });
-                this.getView().setBusy(false);
-                //oModel read for tasks deep entity 
-                this.onReadModelData(sOpportunityID);
-                this.onSetLayout();
-                this.onFilterComments(sOpportunityID); 
-
-
-
-                //}
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
 
             },
 
@@ -201,7 +181,6 @@ sap.ui.define([
                         aData.splice(index, 1);
                     }
                 });
-
                 oTabModel.setProperty("/tabs", aData);
 
                 if (oTabModel.getData().tabs.length < 1) {
@@ -214,24 +193,7 @@ sap.ui.define([
 
                 }
 
-
             },
-
-
-            // onOpenTab: function(selectedItem) {
-            //     var oTabModel = this.getOwnerComponent().getModel("tabModel");
-            //     var aData = oTabModel.getProperty("/tabs");
-
-            //     // Check if opportunityID already exists in the array
-            //     var isExisting = aData.some(function(item) {
-            //       return item.opportunityID === selectedItem.opportunityID;
-            //     });
-
-            //     if (!isExisting) {
-            //       aData.unshift(selectedItem);
-            //       oTabModel.setProperty("/tabs", aData);
-            //     }
-            //   },
 
 
             onPress: function (oEvent) {
@@ -877,7 +839,7 @@ sap.ui.define([
 
 
             beforeRebindChart: function (oEvent) {
-                var sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
+                var sOpportunityID = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
                 var oBindingParams = oEvent.getParameter('bindingParams');
 
                 var filterOpportunityID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
@@ -1424,7 +1386,7 @@ COMMENTS
                     sorter: oSorter,
                     filters: aCommentFilters
                 });
-                oList.updateBindings(); 
+                oList.updateBindings();
 
             },
 
@@ -1433,11 +1395,12 @@ COMMENTS
                 var that = this;
                 var oValue = oEvent.mParameters.value;
                 this.customerID = this.getView().getBindingContext().getObject().opportunityID;
+                var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname"); 
 
 
                 var oPayload = {
                     comment: oValue,
-                    postedBy: "Sarah",
+                    postedBy: sPostedBy,
                     postedOn: UI5Date.getInstance(),
                     opptID_opportunityID: this.customerID
                 }
@@ -1475,6 +1438,118 @@ COMMENTS
                 });
 
             },
+
+
+            onBeforeRebindActivitiesTable: function (oEvent) {
+
+                // var oBindingParams = oEvent.getParameter('bindingParams');
+                // // var sOpportunityID = this.getView().getBindingContext().getObject().opportunityID; 
+                // //var sOpportunityID = parseFloat(window.location.href.split('#')[1].split('/')[2]); 
+                // //var sOpportunityID = 1000000001; 
+                // var sOppt = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
+                // oBindingParams.filters.push(new Filter("opptID_opportunityID", sap.ui.model.FilterOperator.EQ, sOppt));
+
+                //  var mBindingParams = oEvent.getParameter("bindingParams");
+                // mBindingParams.parameters["expand"] = "deliverables"; 
+
+                oEvent.getSource().setTableBindingPath("/opportunityHeader(" + this.sOpportunityID + ")/deliverables");
+                
+                var oBindingParams = oEvent.getParameter("bindingParams");
+
+                var fnGroupHeaderFormatter = function (oContext) {
+                    var sHeader = oContext.getProperty("deliverable");
+                    return {
+                        key: sHeader,
+                    };
+                };
+                var oGrouping = new sap.ui.model.Sorter("deliverable", true, fnGroupHeaderFormatter);
+                oBindingParams.sorter.push(oGrouping);
+
+            },
+
+
+
+           
+
+            onAddActivityPress: function () {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddActivity");
+            },
+
+            onSubmitActivity: function(oEvent){
+
+                var that = this;
+                var oDialog = oEvent.getSource().getParent().getParent();
+                var oAddTaskModel = this.getView().getModel("AddTaskModel");
+                var oData = oAddTaskModel.getData();
+
+                
+                this.sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
+
+
+              var sDate, sCompletedOn; 
+                if (oData.deliverableDate) sDate = new Date(oData.deliverableDate).toISOString().split("T")[0];
+                if (oData.completedOn) sCompletedOn = new Date(oData.completedOn).toISOString().split("T")[0];
+
+                    var oPayload = {
+                        deliverable: oData.deliverable,
+                        deliverableDate: sDate,
+                        completed: oData.completed,
+                        completedOn: sCompletedOn,
+                        primaryContact: oData.primaryContact,
+                        shortDescription: oData.shortDescription,
+                        status: oData.status,
+                        opptID_opportunityID: this.sOpportunityID
+                    };
+
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunityDeliverables", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New activity added!");
+                        that.getView().setBusy(false);
+                        oDialog.close();
+                        oAddTaskModel.setData({});
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        MessageBox.error("Activity could not be posted. Please check your input.");
+                    }
+                });
+               
+
+            },
+
+
+            onDeleteActivity: function (oEvent) {
+                var that = this;
+                var oItem = oEvent.mParameters.listItem;
+                var sDeliverable = oItem.getBindingContext().getObject().deliverable;
+
+                MessageBox.warning("Are you sure you want to delete the activity '" + sDeliverable + "'?", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
+                            var sPath = oItem.getBindingContextPath();
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            oModel.remove(sPath, {
+                                success: function () {
+                                    sap.m.MessageToast.show("Activity has been deleted");
+                                    that.getView().setBusy(false);
+                                },
+                                error: function () {
+                                    sap.m.MessageToast.show("Activity could not be deleted. Please try again.");
+                                    that.getView().setBusy(false);
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+
+            }
 
 
 

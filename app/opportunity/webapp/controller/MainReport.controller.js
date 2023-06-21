@@ -100,6 +100,9 @@ sap.ui.define([
                     opportunityID: selectedItem.opportunityID
                 });
 
+                var userModel = this.getOwnerComponent().getModel("userModel");
+                userModel.setProperty("/opportunityID", selectedItem.opportunityID);
+
                 // this.onOpenTab(selectedItem); 
             },
 

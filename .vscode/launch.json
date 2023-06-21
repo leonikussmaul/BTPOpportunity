@@ -20,6 +20,25 @@
       ]
     },
     {
+      "name": "Run Tracker UI",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/web-ui/index.html",
+        "--ui5",
+        "{\"version\":\".\"}"
+      ],
+      "cwd": "${workspaceFolder}/web-ui",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/BTPOpportunities/web-ui\"}"
+      },
+      "envFile": "${workspaceFolder}/web-ui/.env1"
+    },
+    {
       "name": "Run BTPOpportunities",
       "request": "launch",
       "type": "pwa-node",
@@ -40,25 +59,6 @@
         "NODE_ENV": "development",
         "run.config": "{\"handlerId\":\"cap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/BTPOpportunities\\\",\\\"profileName\\\":\\\"development\\\"}\"}"
       }
-    },
-    {
-      "name": "Run Tracker UI",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/node_modules/@sap/html5-repo-mock/index.js",
-      "args": [
-        "--standalone",
-        "/web-ui/index.html",
-        "--ui5",
-        "{\"version\":\".\"}"
-      ],
-      "cwd": "${workspaceFolder}/web-ui",
-      "env": {
-        "PORT": "6004",
-        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
-        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/BTPOpportunities/web-ui\"}"
-      },
-      "envFile": "${workspaceFolder}/web-ui/.env1"
     }
   ]
 }

@@ -13,17 +13,24 @@
     xmlns:layout="sap.suite.ui.commons.networkgraph.layout"
     height="100%"
     xmlns:dnd="sap.ui.core.dnd"
+    xmlns:t="sap.ui.table"
+    xmlns:suite="sap.suite.ui.commons"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:tnt="sap.tnt"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:commons="sap.suite.ui.commons"
 >
     <f:DynamicPage
         id="TeamPage"
-        title="The Team"
+        title="Engagement"
         backgroundDesign="List"
     >
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
                     <Title
-                        text="Team Overview"
+                        text="{firstName}'s Engagement Snapshot"
                         id="headerTitle"
                     />
                 </f:heading>
@@ -36,359 +43,455 @@
 			</f:DynamicPageHeader>
 		</f:header> -->
         <f:content>
-		<VBox>
-            <HBox renderType="Bare">
+            <VBox>
+                <HBox renderType="Bare">
+                    <f:GridList
+                        id="gridList"
+                        mode="None"
+                        items="{path: '/teamProjects'}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Projects Found"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Text text="Sent for Proposal" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add To Do Item"
+                                    press="onAddToDoPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem 
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{status}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                        text="{topic}"
+                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>topic} !== null}"
+                                        renderMode="Narrow"
+                                    />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox
+                        justifyContent="Center"
+                    >
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="moveToSelectedProductsTable"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="moveToAvailableProductsTable"
+                        />
+                    </VBox>
+
+                    <f:GridList
+                        id="gridList2"
+                        mode="None"
+                        items="{path: '/teamProjects'}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Projects Found"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Text text="RFP's" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add To Do Item"
+                                    press="onAddToDoPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem 
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{status}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                        text="{topic}"
+                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>topic} !== null}"
+                                        renderMode="Narrow"
+                                    />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox
+                        justifyContent="Center"
+                    >
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="moveToSelectedProductsTable"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="moveToAvailableProductsTable"
+                        />
+                    </VBox>
+
+                     <f:GridList
+                        id="gridList3"
+                        mode="None"
+                        items="{path: '/teamProjects'}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Projects Found"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Text text="On-Going" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add To Do Item"
+                                    press="onAddToDoPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem 
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{status}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                        text="{topic}"
+                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>topic} !== null}"
+                                        renderMode="Narrow"
+                                    />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox
+                        justifyContent="Center"
+                    >
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="moveToSelectedProductsTable"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="moveToAvailableProductsTable"
+                        />
+                    </VBox>
+
+                     <f:GridList
+                        id="gridList4"
+                        mode="None"
+                        items="{path: '/teamProjects'}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Projects Found"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Text text="Go-Lives" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add To Do Item"
+                                    press="onAddToDoPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem 
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{status}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                        text="{topic}"
+                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>topic} !== null}"
+                                        renderMode="Narrow"
+                                    />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+
+
+                     <VBox
+                        justifyContent="Center"
+                    >
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="moveToSelectedProductsTable"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="moveToAvailableProductsTable"
+                        />
+                    </VBox>
+
+                     <f:GridList
+                        id="gridList5"
+                        mode="None"
+                        items="{path: '/teamProjects'}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Projects Found"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Text text="Archive" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add To Do Item"
+                                    press="onAddToDoPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem 
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{status}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                        text="{topic}"
+                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>topic} !== null}"
+                                        renderMode="Narrow"
+                                    />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                </HBox>
+
+                <!-- horizontal table, go live  -->
+<!-- 
                 <Table
-                    id="table"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10"
-                    beforeOpenContextMenu="onBeforeOpenContextMenu"
-                    items="{
-			path: '/opportunityHeader'
-		}"
-                >
-                    <contextMenu>
-                        <Menu>
-                            <MenuItem
-                                text="Move to Selected Products"
-                                press="moveToSelectedProductsTable"
-                            />
-                        </Menu>
-                    </contextMenu>
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="New Requests" />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column hAlign="Center">
-                            <Text text="Product Name" />
-                        </Column>
-                        <!-- <Column>
-				<Text text="Category" />
-			</Column> -->
-                    </columns>
-                    <dragDropConfig>
-                        <dnd:DragInfo
-                            groupName="available2selected"
-                            sourceAggregation="items"
-                        />
-                        <dnd:DropInfo
-                            groupName="selected2available"
-                            drop="onDropAvailableProductsTable"
-                        />
-                    </dragDropConfig>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text
-                                    text="{account}"
-                                    wrapping="false"
-                                />
-                                <!-- <Text text="{marketUnit}" wrapping="false" /> -->
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-                <VBox
-                    justifyContent="Center"
-                    class="sapUiTinyMarginBeginEnd"
-                >
-                    <Button
-                        class="sapUiTinyMarginBottom"
-                        icon="sap-icon://navigation-right-arrow"
-                        tooltip="Move to selected"
-                        press="moveToSelectedProductsTable"
-                    />
-                    <Button
-                        icon="sap-icon://navigation-left-arrow"
-                        tooltip="Move to available"
-                        press="moveToAvailableProductsTable"
-                    />
-                </VBox>
-
-                <Table
-                    id="tableDrop"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10"
-                    beforeOpenContextMenu="onBeforeOpenContextMenu"
-                    items="{
-			path: '/opportunityHeader'
-		}"
-                    noDataText="Please drag-and-drop products here."
-                >
-                    <contextMenu>
-                        <Menu>
-                            <MenuItem
-                                text="Move to Available Products"
-                                press="moveToAvailableProductsTable"
-                            />
-                            <MenuItem
-                                text="Move up"
-                                press="moveUp"
-                            />
-                            <MenuItem
-                                text="Move down"
-                                press="moveDown"
-                            />
-                        </Menu>
-                    </contextMenu>
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="RFPs" />
-                            <ToolbarSpacer />
-                            <Button
-                                icon="sap-icon://navigation-up-arrow"
-                                tooltip="Move up"
-                                press="moveUp"
-                            />
-                            <Button
-                                icon="sap-icon://navigation-down-arrow"
-                                tooltip="Move down"
-                                press="moveDown"
-                            />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column>
-                            <Text text="Product Name" />
-                        </Column>
-                        <Column>
-                            <Text text="Category" />
-                        </Column>
-                    </columns>
-                    <dragDropConfig>
-                        <dnd:DragInfo
-                            groupName="selected2available"
-                            sourceAggregation="items"
-                        />
-                        <dnd:DropInfo
-                            groupName="available2selected"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                        <dnd:DragDropInfo
-                            sourceAggregation="items"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                    </dragDropConfig>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text
-                                    text="{account}"
-                                    wrapping="false"
-                                />
-                                <Text
-                                    text="{marketUnit}"
-                                    wrapping="false"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-
-                <VBox
-                    justifyContent="Center"
-                    class="sapUiTinyMarginBeginEnd"
-                >
-                    <Button
-                        class="sapUiTinyMarginBottom"
-                        icon="sap-icon://navigation-right-arrow"
-                        tooltip="Move to selected"
-                        press="moveToSelectedProductsTable"
-                    />
-                    <Button
-                        icon="sap-icon://navigation-left-arrow"
-                        tooltip="Move to available"
-                        press="moveToAvailableProductsTable"
-                    />
-                </VBox>
-
-                <Table
-                    id="tableDrop2"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10"
-                    beforeOpenContextMenu="onBeforeOpenContextMenu"
-                    items="{
-			path: '/opportunityHeader'
-		}"
-                    noDataText="Please drag-and-drop products here."
-                >
-                    <contextMenu>
-                        <Menu>
-                            <MenuItem
-                                text="Move to Available Products"
-                                press="moveToAvailableProductsTable"
-                            />
-                            <MenuItem
-                                text="Move up"
-                                press="moveUp"
-                            />
-                            <MenuItem
-                                text="Move down"
-                                press="moveDown"
-                            />
-                        </Menu>
-                    </contextMenu>
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="Ongoing" />
-                            <ToolbarSpacer />
-                            <Button
-                                icon="sap-icon://navigation-up-arrow"
-                                tooltip="Move up"
-                                press="moveUp"
-                            />
-                            <Button
-                                icon="sap-icon://navigation-down-arrow"
-                                tooltip="Move down"
-                                press="moveDown"
-                            />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column hAlign="Center">
-                            <Text text="Product Name" />
-                        </Column>
-                    </columns>
-                    <dragDropConfig>
-                        <dnd:DragInfo
-                            groupName="selected2available"
-                            sourceAggregation="items"
-                        />
-                        <dnd:DropInfo
-                            groupName="available2selected"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                        <dnd:DragDropInfo
-                            sourceAggregation="items"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                    </dragDropConfig>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text
-                                    text="{account}"
-                                    wrapping="false"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-
-                <VBox
-                    justifyContent="Center"
-                    class="sapUiTinyMarginBeginEnd"
-                >
-                    <Button
-                        class="sapUiTinyMarginBottom"
-                        icon="sap-icon://navigation-right-arrow"
-                        tooltip="Move to selected"
-                        press="moveToSelectedProductsTable"
-                    />
-                    <Button
-                        icon="sap-icon://navigation-left-arrow"
-                        tooltip="Move to available"
-                        press="moveToAvailableProductsTable"
-                    />
-                </VBox>
-
-                <Table
-                    id="tableDrop3"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10"
-                    beforeOpenContextMenu="onBeforeOpenContextMenu"
-                    items="{
-			path: '/opportunityHeader'
-		}"
-                    noDataText="Please drag-and-drop products here."
-                >
-                    <contextMenu>
-                        <Menu>
-                            <MenuItem
-                                text="Move to Available Products"
-                                press="moveToAvailableProductsTable"
-                            />
-                            <MenuItem
-                                text="Move up"
-                                press="moveUp"
-                            />
-                            <MenuItem
-                                text="Move down"
-                                press="moveDown"
-                            />
-                        </Menu>
-                    </contextMenu>
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="Past" />
-                            <ToolbarSpacer />
-                            <Button
-                                icon="sap-icon://navigation-up-arrow"
-                                tooltip="Move up"
-                                press="moveUp"
-                            />
-                            <Button
-                                icon="sap-icon://navigation-down-arrow"
-                                tooltip="Move down"
-                                press="moveDown"
-                            />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column hAlign="Center">
-                            <Text text="Product Name" />
-                        </Column>
-                    </columns>
-                    <dragDropConfig>
-                        <dnd:DragInfo
-                            groupName="selected2available"
-                            sourceAggregation="items"
-                        />
-                        <dnd:DropInfo
-                            groupName="available2selected"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                        <dnd:DragDropInfo
-                            sourceAggregation="items"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                    </dragDropConfig>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text
-                                    text="{account}"
-                                    wrapping="false"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-
- </HBox >
-
-
-<!-- horizontal table, go live  -->
-
-				   <Table class="sapUiLargeMarginTop"
+                    class="sapUiLargeMarginTop"
                     id="tableDrop4"
                     mode="SingleSelectMaster"
                     growing="true"
@@ -464,9 +567,8 @@
                             </cells>
                         </ColumnListItem>
                     </items>
-                </Table>
+                </Table> -->
             </VBox>
-
         </f:content>
     </f:DynamicPage>
 </mvc:View>

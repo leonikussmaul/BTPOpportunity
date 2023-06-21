@@ -1,0 +1,119 @@
+
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:suite="sap.suite.ui.commons"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:tnt="sap.tnt"
+	xmlns:commons="sap.suite.ui.commons"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+
+    xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:table="sap.ui.table"
+	xmlns:plugins="sap.ui.table.plugins"
+	xmlns:main="sap.ui.webc.main"
+	xmlns:layout="sap.ui.layout"
+
+    xmlns:u="sap.uxap"
+ 
+	>
+
+    
+
+	<smartTable:SmartTable 
+  id="myActivitiesTable" 
+  entitySet="opportunityDeliverables" 
+  beforeRebindTable="onBeforeRebindActivitiesTable"
+  tableType="ResponsiveTable"  
+  enableExport="false"
+  useVariantManagement="false" 
+  useTablePersonalisation="true" 
+  showRowCount="false"
+  enableAutoBinding="true"
+  demandPopin="true" 
+  header="Planned, On-Going &amp; Completed"
+  class="sapUiResponsiveContentPadding" 
+  showFullScreenButton="true" 
+  initiallyVisibleFields="deliverable,status,primaryContact,shortDescription,deliverableDate,completedOn"
+  requestAtLeastFields="deliverable,status,primaryContact,shortDescription,deliverableDate,completedOn,primaryContact" 
+  ignoredFields="ID,opptID_opportunityID"       
+   >
+				
+                 <Table mode="Delete" delete="onDeleteActivity" growingThreshold="10" growing="true" noDataText="Looks like there are no activities yet.">
+					<!-- <columns>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "deliverable", "columnIndex" : "0", "leadingProperty": "deliverable", "sortProperty": "deliverable", "filterProperty": "deliverable"}'/>
+							</customData>
+							<Label text="{i18n>deliverable}" tooltip="{i18n>deliverable}"/>
+						</Column>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "status", "columnIndex" : "2", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status"}'/>
+							</customData>
+							<Label text="{i18n>status}"/>
+						</Column>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "completed", "columnIndex" : "3", "leadingProperty": "completed", "sortProperty": "completed", "filterProperty": "completed"}'/>
+							</customData>
+							<Label text="{i18n>completed}" tooltip="{i18n>completed}"/>
+						</Column>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "deliverableDate", "columnIndex" : "4", "leadingProperty": "deliverableDate", "sortProperty": "deliverableDate", "filterProperty": "deliverableDate"}'/>
+							</customData>
+							<Label text="{i18n>deliverableDate}"/>
+						</Column>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "completedOn", "columnIndex" : "5", "leadingProperty": "completedOn", "sortProperty": "completedOn", "filterProperty": "completedOn"}'/>
+							</customData>
+							<Label text="Completed On"/>
+						</Column>
+						<Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "primaryContact", "columnIndex" : "6", "leadingProperty": "primaryContact", "sortProperty": "primaryContact", "filterProperty": "primaryContact"}'/>
+							</customData>
+							<Label text="{i18n>primaryContact}"/>
+						</Column>
+                        <Column >
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "shortDescription", "columnIndex" : "7", "leadingProperty": "shortDescription", "sortProperty": "shortDescription", "filterProperty": "shortDescription"}'/>
+							</customData>
+							<Label text="{i18n>shortDescription}"/>
+						</Column>
+						
+					</columns>
+					<items >
+						<ColumnListItem 
+                                                     >
+							<cells >
+							
+                                               <ObjectIdentifier text="{deliverable}"  />
+                                               <Text text="{status}"  />
+								<Text text="{completed}" />
+								<Text text="{deliverableDate}" />
+                                <Text text="{completedOn}" />
+                                <Text text="{primaryContact}"/>
+                                <Text text="{shortDescription}" />
+
+
+							</cells>
+						</ColumnListItem>
+					</items> -->
+				</Table> 
+			</smartTable:SmartTable>
+
+
+</core:FragmentDefinition>
+
+
+	

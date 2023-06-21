@@ -32,7 +32,6 @@
 			<Label text="{i18n>actionTask}" required="true"/>
 			<TextArea value="{AddTaskModel>/actionTask}" id="actionTaskInput" maxLength="800" placeholder="{i18n>shortDescPlaceholder}"/>
 			<Label text="{i18n>actionOwner}" />
-			<!-- <ComboBox selectedKey="{AddTaskModel>/actionOwner}"><core:Item key="Sarah" text="Sarah"/><core:Item key="Karthik" text="Karthik"/><core:Item key="Ravi" text="Ravi"/></ComboBox> -->
 			<ComboBox selectedKey="{AddTaskModel>/actionOwner}" placeholder="{i18n>OwnerPlaceholder}"
 							 items="{
                                     path: '/opportunityPrimaryContactVH',

@@ -37,7 +37,7 @@
 
 				<FlexBox alignItems="Start" justifyContent="SpaceBetween">
 				<Title
-		titleStyle="H4" text="Hi Sarah, here are all open tasks for the team. " class="sapUiSmallMarginBottom"/>
+		titleStyle="H4" text="Hi {user>/firstname}, here are all open tasks for the team. " class="sapUiSmallMarginBottom"/>
 		<Button text="New Task" type="Accept" icon="sap-icon://add" tooltip="{i18n>addTableItem}" press="onAddToDoTablePress"/>
 		
 		</FlexBox>

@@ -1,142 +1,67 @@
- using OpportunityService as service from '../../srv/opportunities';
+using OpportunityService as service from '../../srv/opportunities';
 
 annotate service.opportunityHeader with {
     // @Semantics.aggregate: true
-    account @Common.Label       : 'Account'
-            @Common.FieldControl: #Mandatory
+    account                   @Common.Label        : 'Account'
+                              @Common.FieldControl : #Mandatory;
+    marketUnit                @Common.Label        : 'Market Unit'
+                              @Common.FieldControl : #Mandatory;
+    clientContactPerson       @Common.Label        : 'Client Contact';
+    opportunityClosedQuarter  @Common.Label        : 'Q. Closed';
+    opportunityCreatedQuarter @Common.Label        : 'Q. Created';
+    opportunityID             @Common.Label        : 'Opportunity ID';
+    opportunityInCRM          @Common.Label        : 'Value in CRM';
+    opportunityValue          @Common.Label        : 'Value';
+    primaryContact            @Common.Label        : 'Owner';
+    source                    @Common.Label        : 'Source';
+    ssa                       @Common.Label        : 'SSA';
+    status                    @Common.Label        : 'Status';
+    topic                     @Common.Label        : 'Topic';
+    priority                  @Common.Label        : 'Priority';
+    opportunityStartDate      @Common.Label        : 'Start Date';
+    opportunityDueDate        @Common.Label        : 'Due Date';
+    progress                  @Common.Label        : 'Progress';
+    isFavorite                @Common.Label        : 'Favorite';
+    noteDate                  @Common.Label        : 'Note Date';
+    noteText                  @Common.Label        : 'Note Text';
+
 };
 
-annotate service.opportunityHeader with {
-    clientContactPerson @Common.Label: 'Client Contact'
-};
-
-annotate service.opportunityHeader with {
-    marketUnit @Common.Label       : 'Market Unit'
-               @Common.FieldControl: #Mandatory
-};
-
-annotate service.opportunityHeader with {
-    opportunityClosedQuarter @Common.Label: 'Q. Closed'
-};
-
-annotate service.opportunityHeader with {
-    opportunityCreatedQuarter @Common.Label: 'Q. Created'
-};
-
-annotate service.opportunityHeader with {
-    opportunityID @Common.Label: 'Opportunity ID'
-};
-
-annotate service.opportunityHeader with {
-    opportunityInCRM @Common.Label: 'Value in CRM'
-};
-
-annotate service.opportunityHeader with {
-    opportunityValue @Common.Label: 'Value'
-};
-
-annotate service.opportunityHeader with {
-    primaryContact @Common.Label: 'Owner'
-};
-
-annotate service.opportunityHeader with {
-    source @Common.Label: 'Source'
-};
-
-annotate service.opportunityHeader with {
-    ssa @Common.Label: 'SSA'
-};
-
-annotate service.opportunityHeader with {
-    status @Common.Label: 'Status'
-};
-
-annotate service.opportunityHeader with {
-    topic @Common.Label: 'Topic'
-};
-
-annotate service.opportunityHeader with {
-    priority @Common.Label: 'Priority'
-};
-
-annotate service.opportunityHeader with {
-    opportunityStartDate @Common.Label: 'Start Date'
-};
-
-annotate service.opportunityHeader with {
-    opportunityDueDate @Common.Label: 'Due Date'
-};
-
-annotate service.opportunityHeader with {
-    progress @Common.Label: 'Progress'
-};
-
-annotate service.opportunityHeader with {
-    isFavorite @Common.Label: 'Favorite'
-};
-
-annotate service.opportunityHeader with {
-    noteDate @Common.Label: 'Note Date'
-};
-
-annotate service.opportunityHeader with {
-    noteText @Common.Label: 'Note Text'
-};
 
 // tasks and actions
 annotate service.opportunityActionItems with {
-    actionProgress @Common.Label: 'Progress'
-};
+    actionTask     @Common.Label        : 'Description'
+                   @Common.FieldControl : #Mandatory;
+    actionTitle    @Common.Label        : 'Task'
+                   @Common.FieldControl : #Mandatory;
+    actionProgress @Common.Label        : 'Progress';
+    actionTopic    @Common.Label        : 'Topic';
+    actionOwner    @Common.Label        : 'Owner';
+    actionDueDate  @Common.Label        : 'Due Date';
+    actionPriority @Common.Label        : 'Priority';
+    actionCustomer @Common.Label        : 'Account';
 
-annotate service.opportunityActionItems with {
-    actionTopic @Common.Label: 'Topic'
 };
-
-annotate service.opportunityActionItems with {
-    actionTask @Common.Label       : 'Description'
-               @Common.FieldControl: #Mandatory
-};
-
-annotate service.opportunityActionItems with {
-    actionTitle @Common.Label       : 'Task'
-                @Common.FieldControl: #Mandatory
-};
-
-annotate service.opportunityActionItems with {
-    actionOwner @Common.Label: 'Owner'
-};
-
-annotate service.opportunityActionItems with {
-    actionDueDate @Common.Label: 'Due Date'
-};
-
-annotate service.opportunityActionItems with {
-    actionPriority @Common.Label: 'Priority'
-};
-
-annotate service.opportunityActionItems with {
-    actionCustomer @Common.Label: 'Account'
-};
-
 
 // subtasks
 annotate service.opportunitySubTasks with {
-    subTaskCompleted @Common.Label: 'Completed'
+    subTask          @Common.Label        : 'Sub-Task'
+                     @Common.FieldControl : #Mandatory;
+    subTaskCompleted @Common.Label        : 'Completed';
+    subTaskDueDate   @Common.Label        : 'Due Date';
+    subTaskOwner     @Common.Label        : 'Owner';
 };
 
-annotate service.opportunitySubTasks with {
-    subTaskDueDate @Common.Label: 'Due Date'
-};
 
-annotate service.opportunitySubTasks with {
-    subTaskOwner @Common.Label: 'Owner'
+annotate service.opportunityDeliverables with {
+    deliverable      @Common.Label : 'Deliverable';
+    primaryContact   @Common.Label : 'Owner';
+    deliverableDate  @Common.Label : 'Date';
+    status           @Common.Label : 'Status';
+    shortDescription @Common.Label : 'Short Desc.';
+    completed        @Common.Label : 'Completed';
+    completedOn      @Common.Label : 'Completed On';
 };
-
-annotate service.opportunitySubTasks with {
-    subTask @Common.Label       : 'Sub-Task'
-            @Common.FieldControl: #Mandatory
-};
-
 
 
 // annotate  {
@@ -209,5 +134,3 @@ annotate service.opportunitySubTasks with {
 //     }]
 //   };
 // }
-
-

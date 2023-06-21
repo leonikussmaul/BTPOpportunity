@@ -34,6 +34,11 @@ sap.ui.define([
                 this.setModel(new JSONModel(), "globalModel");
                 this.getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
 
+                this.setModel(new JSONModel(), "userModel");
+                this.getModel("userModel").setProperty("/opportunityID");
+
+                this.setModel(models.createUserModel(), "user");
+
                 this.setModel(new JSONModel(), "tabModel");
                 this.getModel("tabModel").setProperty("/tabs", []);
 

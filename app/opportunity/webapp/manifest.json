@@ -28,22 +28,30 @@
                     "defaultBindingMode": "TwoWay"
                 }
             },
+            "userapi": {
+                "uri": "/user-api/attributes",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "2.0"
+                }
+            },
             "V4Service": {
-              "uri": "/Opportunity/",
-              "type": "OData",
-              "settings": {
-                  "annotations": [],
-                  "localUri": "localService/metadata2.xml",
-                  "odataVersion": "4.0"
-              }
-          },
-          "annotations": {
-            "type": "ODataAnnotation",
-            "uri": "./annotations.xml",
-            "settings": {
-              "localUri": "./annotations.xml"
+                "uri": "/Opportunity/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata2.xml",
+                    "odataVersion": "4.0"
+                }
+            },
+            "annotations": {
+                "type": "ODataAnnotation",
+                "uri": "./annotations.xml",
+                "settings": {
+                    "localUri": "./annotations.xml"
+                }
             }
-          }
         }
     },
     "sap.ui": {
@@ -97,15 +105,23 @@
                 }
             },
             "V4Service": {
-              "dataSource": "V4Service",
-              "preload": true,
-              "settings": {
-                "synchronizationMode": "None",
-                "operationMode": "Server",
-                "autoExpandSelect": true,
-                "earlyRequests": true
+                "dataSource": "V4Service",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "userapi": {
+                "dataSource": "userapi",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
             }
-          }
         },
         "resources": {
             "css": [
@@ -143,23 +159,23 @@
                 },
                 {
                     "name": "TaskDetail",
-                    "pattern": "TaskReport/{ID}", 
+                    "pattern": "TaskReport/{ID}",
                     "target": "TaskDetail"
                 },
                 {
                     "name": "ChartPage",
-                    "pattern": "ChartPage", 
+                    "pattern": "ChartPage",
                     "target": "ChartPage"
                 },
                 {
                     "name": "Team",
-                    "pattern": "Team", 
+                    "pattern": "Team",
                     "target": "Team"
                 },
                 {
                     "name": "Resources",
-                    "pattern": "Resources/{userID}", 
-                    "target": "Resources/{userID}"
+                    "pattern": "Resources/{inumber}",
+                    "target": "Resources"
                 }
             ],
             "targets": {

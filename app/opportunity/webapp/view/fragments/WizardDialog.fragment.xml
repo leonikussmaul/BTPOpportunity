@@ -225,7 +225,6 @@
 							<Title titleStyle="H5" text="{i18n>step5SubTitle}" class="sapUiSmallMarginBottom"/>
 							<rte:RichTextEditor 
 						value="{viewModel>/noteText}"
-						id="myRTE" 
 						width="100%" 
 						height="500px" 
 						showGroupFont="true" 

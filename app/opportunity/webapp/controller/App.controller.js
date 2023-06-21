@@ -92,6 +92,11 @@ sap.ui.define(
             oRouter.navTo("Team");
           },
 
+          onOpenResources: function(oEvent){
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+              oRouter.navTo("Resources");
+            },
+
 
 
 

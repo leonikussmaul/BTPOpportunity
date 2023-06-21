@@ -40,12 +40,20 @@
         <tnt:fixedItem>
             <tnt:NavigationList>
 
-            <tnt:NavigationListItem
+             <tnt:NavigationListItem
+                    text="Team"
+                    select="onOpenResources"
+                    icon="sap-icon://workflow-tasks"
+                />
+
+
+              <tnt:NavigationListItem
                     text="Team"
                     select="onOpenTeam"
                     icon="sap-icon://family-protection"
                 />
 
+           
                 <tnt:NavigationListItem
                     text="About Demand Genius"
                     select="onOpenAbout"
