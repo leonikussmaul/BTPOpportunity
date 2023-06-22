@@ -377,11 +377,19 @@
                             class="sapUiSizeCompact"
                         />
                         <!-- <OverflowToolbarButton icon="sap-icon://add" tooltip="Add Table Item" press="onWizardDialogPress"/> -->
-                        <OverflowToolbarButton
+                         <ToggleButton
+                            icon="sap-icon://edit"
+                            id="editButton"
+                            text="Edit"
+                            tooltip="Go into Edit Mode to Delete items"
+                            press="onEditTable"
+                        />
+                        
+                        <!-- <OverflowToolbarButton
                             icon="sap-icon://delete"
                             tooltip="Delete selected Item"
                             press="onDeleteTableItem"
-                        />
+                        /> -->
                         <ToggleButton
                             id="favoriteToggle"
                             icon="sap-icon://unfavorite"
@@ -398,9 +406,9 @@
                     inset="false"
                     growing="true"
                     growingScrollToLoad="true"
-                    mode="MultiSelect"
+                    mode="None"
                     sticky="ColumnHeaders,HeaderToolbar"
-                    noDataText="Nothing here. Please adjust your search critera."
+                    noDataText="Nothing here. Please adjust your search critera." delete="onDeleteTableItem"
                 >
                     <columns>
                         <Column>

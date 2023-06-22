@@ -1,3 +1,6 @@
+
+
+
 <mvc:View
     controllerName="opportunity.opportunity.controller.Resources"
     id="Team"
@@ -21,6 +24,8 @@
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:commons="sap.suite.ui.commons"
 >
+
+
     <f:DynamicPage
         id="TeamPage"
         title="Engagement"
@@ -46,17 +51,20 @@
             <VBox>
                 <HBox renderType="Bare">
                     <f:GridList
-                        id="gridList"
-                        mode="None"
-                        items="{path: '/teamProjects'}"
+                        id="sentForProposalTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/sentForProposal'}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="No Projects Found"
+                        noDataText="Hmm.. time to send new Proposals?" 
+                        
                     >
+                       
+
                         <f:dragDropConfig>
-                            <dnd:DragInfo sourceAggregation="items" />
+                             <dnd:DragInfo sourceAggregation="items" />
                             <dnd-grid:GridDropInfo
                                 targetAggregation="items"
                                 dropPosition="Between"
@@ -94,12 +102,12 @@
                                 <VBox class="sapUiSmallMargin">
                                     <HBox justifyContent="SpaceBetween">
                                         <Title
-                                            text="{account}"
+                                            text="{ProjectModel>account}"
                                             wrapping="true"
                                         />
 
                                         <ObjectStatus
-                                            text="{status}"
+                                            text="{ProjectModel>status}"
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
@@ -107,9 +115,9 @@
                                 <OverflowToolbar height="45px">
                                     <HBox>
                                         <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${>topic} !== null}"
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null}"
                                         renderMode="Narrow"
                                     />
                                     </HBox>
@@ -127,27 +135,27 @@
                             class="sapUiTinyMarginBottom"
                             icon="sap-icon://navigation-right-arrow"
                             tooltip="Move to selected"
-                            press="moveToSelectedProductsTable"
+                            press="onRightSentForProposal"
                         />
                         <Button
                             icon="sap-icon://navigation-left-arrow"
                             tooltip="Move to available"
-                            press="moveToAvailableProductsTable"
+                            press="onLeftRFP"
                         />
                     </VBox>
 
                     <f:GridList
-                        id="gridList2"
-                        mode="None"
-                        items="{path: '/teamProjects'}"
+                        id="RFPTable"
+                       mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/RFP'}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="No Projects Found"
+                        noDataText="No RFP's"
                     >
                         <f:dragDropConfig>
-                            <dnd:DragInfo sourceAggregation="items" />
+                             <dnd:DragInfo sourceAggregation="items" />
                             <dnd-grid:GridDropInfo
                                 targetAggregation="items"
                                 dropPosition="Between"
@@ -157,7 +165,7 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="RFP's" />
+                                <Text text="RFP" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
@@ -185,12 +193,12 @@
                                 <VBox class="sapUiSmallMargin">
                                     <HBox justifyContent="SpaceBetween">
                                         <Title
-                                            text="{account}"
+                                            text="{ProjectModel>account}"
                                             wrapping="true"
                                         />
 
                                         <ObjectStatus
-                                            text="{status}"
+                                            text="{ProjectModel>status}"
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
@@ -198,9 +206,9 @@
                                 <OverflowToolbar height="45px">
                                     <HBox>
                                         <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${>topic} !== null}"
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null}"
                                         renderMode="Narrow"
                                     />
                                     </HBox>
@@ -218,27 +226,28 @@
                             class="sapUiTinyMarginBottom"
                             icon="sap-icon://navigation-right-arrow"
                             tooltip="Move to selected"
-                            press="moveToSelectedProductsTable"
+                            press="onRightRFP"
                         />
                         <Button
                             icon="sap-icon://navigation-left-arrow"
                             tooltip="Move to available"
-                            press="moveToAvailableProductsTable"
+                           press="onLeftOnGoing"
                         />
                     </VBox>
 
                      <f:GridList
-                        id="gridList3"
-                        mode="None"
-                        items="{path: '/teamProjects'}"
+                        id="OnGoingTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/On-Going'}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="No Projects Found"
+                        noDataText="No On-Going Projects" 
                     >
-                        <f:dragDropConfig>
-                            <dnd:DragInfo sourceAggregation="items" />
+
+                       <f:dragDropConfig>
+                             <dnd:DragInfo sourceAggregation="items" />
                             <dnd-grid:GridDropInfo
                                 targetAggregation="items"
                                 dropPosition="Between"
@@ -246,6 +255,8 @@
                                 drop="onDrop"
                             />
                         </f:dragDropConfig>
+
+
                         <f:headerToolbar>
                             <Toolbar width="100%">
                                 <Text text="On-Going" />
@@ -276,12 +287,12 @@
                                 <VBox class="sapUiSmallMargin">
                                     <HBox justifyContent="SpaceBetween">
                                         <Title
-                                            text="{account}"
+                                            text="{ProjectModel>account}"
                                             wrapping="true"
                                         />
 
                                         <ObjectStatus
-                                            text="{status}"
+                                            text="{ProjectModel>status}"
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
@@ -289,9 +300,9 @@
                                 <OverflowToolbar height="45px">
                                     <HBox>
                                         <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${>topic} !== null}"
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null}"
                                         renderMode="Narrow"
                                     />
                                     </HBox>
@@ -309,27 +320,27 @@
                             class="sapUiTinyMarginBottom"
                             icon="sap-icon://navigation-right-arrow"
                             tooltip="Move to selected"
-                            press="moveToSelectedProductsTable"
+                            press="onRightOnGoing"
                         />
                         <Button
                             icon="sap-icon://navigation-left-arrow"
                             tooltip="Move to available"
-                            press="moveToAvailableProductsTable"
+                            press="onLeftGoLive"
                         />
                     </VBox>
 
                      <f:GridList
-                        id="gridList4"
-                        mode="None"
-                        items="{path: '/teamProjects'}"
+                        id="GoLiveTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/Go-Live'}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="No Projects Found"
+                        noDataText="No Go-Lives" 
                     >
                         <f:dragDropConfig>
-                            <dnd:DragInfo sourceAggregation="items" />
+                             <dnd:DragInfo sourceAggregation="items" />
                             <dnd-grid:GridDropInfo
                                 targetAggregation="items"
                                 dropPosition="Between"
@@ -367,12 +378,12 @@
                                 <VBox class="sapUiSmallMargin">
                                     <HBox justifyContent="SpaceBetween">
                                         <Title
-                                            text="{account}"
+                                            text="{ProjectModel>account}"
                                             wrapping="true"
                                         />
 
                                         <ObjectStatus
-                                            text="{status}"
+                                            text="{ProjectModel>status}"
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
@@ -380,9 +391,9 @@
                                 <OverflowToolbar height="45px">
                                     <HBox>
                                         <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${>topic} !== null}"
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>ProjectModel>topic} !== null}"
                                         renderMode="Narrow"
                                     />
                                     </HBox>
@@ -402,27 +413,39 @@
                             class="sapUiTinyMarginBottom"
                             icon="sap-icon://navigation-right-arrow"
                             tooltip="Move to selected"
-                            press="moveToSelectedProductsTable"
+                            press="onRightGoLive"
                         />
                         <Button
                             icon="sap-icon://navigation-left-arrow"
                             tooltip="Move to available"
-                            press="moveToAvailableProductsTable"
+                            press="onLeftPast"
                         />
                     </VBox>
 
                      <f:GridList
-                        id="gridList5"
-                        mode="None"
-                        items="{path: '/teamProjects'}"
+                        id="PastTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/Past'}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="No Projects Found"
+                        noDataText="No Past Projects" 
                     >
-                        <f:dragDropConfig>
+                        <!-- <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig> -->
+
+                         
+
+                         <f:dragDropConfig>
+                             <dnd:DragInfo sourceAggregation="items" />
                             <dnd-grid:GridDropInfo
                                 targetAggregation="items"
                                 dropPosition="Between"
@@ -460,12 +483,12 @@
                                 <VBox class="sapUiSmallMargin">
                                     <HBox justifyContent="SpaceBetween">
                                         <Title
-                                            text="{account}"
+                                            text="{ProjectModel>account}"
                                             wrapping="true"
                                         />
 
                                         <ObjectStatus
-                                            text="{status}"
+                                            text="{ProjectModel>status}"
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
@@ -473,9 +496,9 @@
                                 <OverflowToolbar height="45px">
                                     <HBox>
                                         <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${>topic} !== null}"
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${>ProjectModel>topic} !== null}"
                                         renderMode="Narrow"
                                     />
                                     </HBox>

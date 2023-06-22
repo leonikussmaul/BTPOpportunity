@@ -10,6 +10,7 @@ sap.ui.define(
         onInit() {
         },
 
+       
         onHomeIconPressed: function(){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           oRouter.navTo("MainReport");
@@ -97,13 +98,12 @@ sap.ui.define(
               oRouter.navTo("Resources");
             },
 
-
-
-
-
         
 
-    
+             
+             
+          
+
       });
     }
   );

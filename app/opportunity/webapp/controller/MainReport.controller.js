@@ -452,14 +452,32 @@ sap.ui.define([
             DELETE
             --------------------------------------------------------------------------------------------------------------*/
 
+
+            onEditTable: function(oEvent){
+                var oSmartTable = this.getView().byId("mySmartTable").getTable();
+                var oBtn = oEvent.getSource(); 
+                var bToggle = oBtn.getPressed()
+                if (bToggle) {
+                    oBtn.setIcon('')
+                    oBtn.setText("Cancel"); 
+                    oSmartTable.setMode("Delete"); 
+                } else {
+                    oBtn.setIcon('sap-icon://edit')
+                    oBtn.setText("Edit"); 
+                    oSmartTable.setMode("None"); 
+                }
+                
+                
+
+            },
             onDeleteTableItem: function (oEvent) {
                 var oSmartTable = this.getView().byId("mySmartTable");
-                var aSelectedItems = oSmartTable.getTable().getSelectedItems();
+                // var aSelectedItems = oSmartTable.getTable().getSelectedItems();
 
-                if (aSelectedItems.length === 0) {
-                    sap.m.MessageToast.show("Select at least one item to delete");
-                    return;
-                }
+                // if (aSelectedItems.length === 0) {
+                //     sap.m.MessageToast.show("Select at least one item to delete");
+                //     return;
+                // }
                 var oModel = oSmartTable.getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected items?", {
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],

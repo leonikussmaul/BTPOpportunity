@@ -47,7 +47,7 @@
 		   layout="Layered"
 		   searchSuggest="suggest"
 		   search="search"
-		   id="graph"
+		   id="graph" 
 		   beforeLayouting="onSelectionChange">
 		<layoutAlgorithm>
 			<layout:LayeredLayout
@@ -59,12 +59,11 @@
 		<nodes>
 			<Node icon="sap-icon://action-settings"
 				  key="{firstName}"
-				  description="{mainArea}"
+				  description="{role}"
 				  title="{firstName} {lastName}"
 				  width="90"
-                  
-				  showActionLinksButton="true"
-				  showDetailButton="true"
+				  showActionLinksButton="false"
+				  showDetailButton="false"
 				  descriptionLineSize="0"
 				  shape="Box">
 					<customData>
@@ -72,9 +71,13 @@
 					<core:CustomData key="role" value="{role}"/>
 					<core:CustomData key="joined" value="{joined}"/>
 					<core:CustomData key="description" value="{description}"/>
+					<core:CustomData key="mainArea" value="{mainArea}"/>
+					<core:CustomData key="location" value="{location}"/>
+					<core:CustomData key="inumber" value="{inumber}"/>
+
 				</customData>
 				<attributes>
-					<ElementAttribute label="{inumber}" value="{city}, {country}"/>
+					<ElementAttribute label="{inumber}" value="{location}"/>
 				</attributes>
 				<image>
 					<NodeImage src="{path: 'firstName', formatter: '.formatter.formatterTeamPictures'}" 

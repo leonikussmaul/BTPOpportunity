@@ -170,19 +170,21 @@ entity teamMembers {
         initials    : String(5);
         photoSrc    : String(255);
         email       : String(255);
-        country     : String(55);
-        city        : String(55);
+        location        : String(55);
         role        : String(55);
         joined      : Date;
         manager     : String(55);
         mainArea    : String(55);
         description : String(800);
+        utilization: Integer; 
         skills      : Composition of many teamSkills
                           on skills.userID = $self;
         tools       : Composition of many teamTools
                           on tools.userID = $self;
         projects    : Composition of many teamProjects
                           on projects.userID = $self;
+        forecast    : Composition of many teamForecast
+                          on forecast.userID = $self;
 
 };
 
@@ -193,6 +195,17 @@ entity teamSkills {
         skill   : String(255);
         level   : String(20);
         sap     : Boolean;
+};
+
+@cds.autoexpose
+entity teamForecast {
+    key forecastID : UUID;
+        userID  : Association to teamMembers;
+        month   : String(20);
+        year   : Integer;
+        forecast     : Integer;
+        actual: Integer; 
+        average: Integer; 
 };
 
 @cds.autoexpose
@@ -225,6 +238,7 @@ entity teamProjects {
                                on comments.user = $self;
 };
 
+
 @cds.autoexpose
 entity projectComments {
     key commentID : UUID;
@@ -233,4 +247,10 @@ entity projectComments {
         postedBy  : String(20);
         postedOn  : DateTime;
         imageSrc  : String(255);
+};
+
+@cds.autoexpose
+entity projectStatusVH {
+    key ID                 : UUID;
+        status : String(20);
 };

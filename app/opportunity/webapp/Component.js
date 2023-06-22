@@ -46,19 +46,95 @@ sap.ui.define([
                 var aTeam = {
 
                     "lines": [
-                        {
-                            "from": "Rajat",
-                            "to": "Ravi"
-                        },
-                        {
-                            "from": "Rajat",
-                            "to": "Sarah"
-                        },
-                        {
-                            "from": "Ravi",
-                            "to": "Leoni"
-                        }
-                    ]
+                                {
+                                    "from": "Rajat",
+                                    "to": "Ravi"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Sarah"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Vijay"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Stefan"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Gurpreet"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Sunil"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Nesimi"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Bas"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Matt"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Peter"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Elinor"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Rudolf"
+                                },
+                                {
+                                    "from": "Rajat",
+                                    "to": "Omar"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Amit"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Leoni"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Liliana"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Shubham"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Karthik"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Sneha"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Arpit"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Ami"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Abhay"
+                                }
+                            ]
                 }
 
                 // var aTeam = {
