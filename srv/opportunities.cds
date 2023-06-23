@@ -22,9 +22,10 @@ service OpportunityService {
     entity opportunityTasksComments    as projection on opportunities.opportunityTasksComments;
     entity teamMembers                 as projection on opportunities.teamMembers;
     entity teamProjects                as projection on opportunities.teamProjects;
-    entity teamSkills                  as projection on opportunities.teamSkills;
     entity teamTools                   as projection on opportunities.teamTools;
     entity projectComments             as projection on opportunities.projectComments;
+    entity skills                      as projection on opportunities.skills;
+    entity projectStatusVH             as projection on opportunities.projectStatusVH;
    
 
 

@@ -20,6 +20,9 @@ sap.ui.define([
         var oProjectModel = new JSONModel({});
         this.getView().setModel(oProjectModel, "ProjectModel");
 
+        var AddProjectModel = new JSONModel({});
+        this.getView().setModel(AddProjectModel, "AddProjectModel");
+
       },
 
       _onRoutePatternMatched: function (oEvent) {
@@ -130,11 +133,6 @@ sap.ui.define([
         });
       },
 
-      onDropSelected: function (oEvent) {
-        alert("drop selected")
-
-      },
-
       //right
       onRightSentForProposal: function(){
         var oTable = this.getView().byId("sentForProposalTable");
@@ -236,7 +234,118 @@ sap.ui.define([
           }
         });
 
-      }
+      },
+
+      onAddProjectPress: function(oEvent){
+        //status: "Sent for Proposal"
+        var oAddProjectModel = this.getView().getModel("AddProjectModel"); 
+
+        var sPath = oEvent.getSource().getParent().getParent().mBindingInfos.items.path.substr(1);
+
+        var sStatus; 
+        if(sPath === "sentForProposal") sStatus = "Sent for Proposal";
+        else if(sPath === "RFP") sStatus = "RFP"; 
+        else if(sPath === "On-Going") sStatus = "On-Going"; 
+        else if(sPath === "Go-Live") sStatus = "Go-Live"
+        else if(sPath === "Past") sStatus = "Past"
+
+        oAddProjectModel.setProperty("/status", sStatus); 
+        this.onDialogOpen("opportunity.opportunity.view.fragments.AddProject");
+
+      },
+
+      onSubmitNewProject: function (oEvent) {
+
+        var that = this;
+        var oDialog = oEvent.getSource().getParent().getParent();
+        var oAddProjectModel = this.getView().getModel("AddProjectModel");
+        var oData = oAddProjectModel.getData();
+
+            var inumber = this.getView().getBindingContext().getObject().inumber;
+
+            var sStartDate, sEndDate, sGoLiveDate; 
+            if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toISOString().split("T")[0]; 
+            if (oData.projectEndDate) sEndDate = new Date(oData.projectEndDate).toISOString().split("T")[0]; 
+            if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0]; 
+
+            var oPayload = {
+              userID_inumber: inumber, 
+              account: oData.account, 
+              priority: oData.priority,
+              marketUnit: oData.marketUnit,
+              topic: oData.topic,
+              status: oData.status,
+              projectStartDate: sStartDate,
+              projectEndDate: sEndDate,
+              descriptionText: oData.descriptionText,
+              percentage: oData.percentage, 
+              goLive: sGoLiveDate,
+              lastUpdated: new Date()
+            };
+
+            var sPath = "/teamProjects"
+
+            var oModel = this.getView().getModel();
+            oModel.create(sPath, oPayload, {
+                success: function (oData, response) {
+                    MessageToast.show("New Project created!");
+                    oDialog.close();
+                    that.onStatusMethod(inumber);
+                    that.getView().getModel("ProjectModel").refresh();
+                    
+                    oAddProjectModel.setData({});
+                },
+                error: function (oError) {
+                    sap.m.MessageBox.error("Project could not be created, check your input and try again.");
+                }
+            });
+
+    },
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+                Dialogs
+           --------------------------------------------------------------------------------------------------------------*/
+
+
+           onDialogOpen: function (fragmentName) {
+
+            var that = this;
+            if (!this._pDialog) {
+                this._pDialog = Fragment.load({
+                    //id:"myDialog",
+                    name: fragmentName,
+                    controller: this
+                }).then(function (_pDialog) {
+                    that.getView().addDependent(_pDialog);
+                    _pDialog.setEscapeHandler(function () {
+                        that.onCloseDialog();
+                    });
+                    return _pDialog;
+                });
+            }
+            this._pDialog.then(function (_pDialog) {
+                _pDialog.open();
+
+            })
+        },
+
+
+        onCancelDialogPress: function (oEvent) {
+            this._pDialog.then(function (_pDialog) {
+                _pDialog.close();
+                _pDialog.destroy();
+            });
+            this._pDialog = null;
+
+        },
+
+        onProjectPopup: function(oEvent){
+
+          this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject");
+
+        },
+        
 
 
 

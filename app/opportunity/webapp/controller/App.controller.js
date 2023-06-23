@@ -1,12 +1,18 @@
 sap.ui.define(
     [
         "sap/ui/core/mvc/Controller",
-        'sap/m/library'
+        'sap/m/library',
+        "sap/ui/core/Fragment",
+        "../model/formatter",
+        "sap/ui/model/Filter",
+        "sap/ui/model/FilterOperator",
+        "sap/ui/model/FilterType",
     ],
-    function(BaseController, library) {
+    function(BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType) {
       "use strict";
   
       return BaseController.extend("opportunity.opportunity.controller.App", {
+        formatter: formatter,
         onInit() {
         },
 
@@ -94,9 +100,71 @@ sap.ui.define(
           },
 
           onOpenResources: function(oEvent){
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-              oRouter.navTo("Resources");
+            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            //   oRouter.navTo("Resources");
+
+            
+        
+              var oButton = oEvent.getSource(),
+                oView = this.getView();
+        
+              // create popover
+              if (!this._pPopover) {
+                this._pPopover = Fragment.load({
+                  id: oView.getId(),
+                  name: "opportunity.opportunity.view.fragments.TeamSelection",
+                  controller: this
+                }).then(function(oPopover){
+                  oView.addDependent(oPopover);
+                  return oPopover;
+                });
+              }
+        
+              this._pPopover.then(function(oPopover){
+                oPopover.openBy(oButton);
+              });
+  
+        
+
             },
+
+            onOpenCalendar: function(oEvent){
+              var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("Calendar");
+              },
+
+              onSelectTeamMember: function(oEvent){
+                var inumber = oEvent.getSource().getBindingContext().getObject().inumber; 
+                
+                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                 oRouter.navTo("Resources", {
+                     inumber: inumber
+                 }
+                 );
+
+              },
+
+              onSearchTeamMember: function(oEvent){
+
+                var aFilters = [];
+                var sQuery = oEvent.getSource().getValue();
+                if (sQuery && sQuery.length > 0) {
+                    var aFilters = [
+                        new Filter({
+                            filters: [
+                                new Filter({ path: "firstName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "lastName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                            ],
+                            and: false
+                        })
+                    ];
+                }
+
+                var oList = this.byId("teamMemberList").getBinding("items");
+                oList.filter(aFilters, FilterType.Application);
+
+              }
+  
 
         
 

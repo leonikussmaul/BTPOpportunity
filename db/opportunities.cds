@@ -177,7 +177,7 @@ entity teamMembers {
         mainArea    : String(55);
         description : String(800);
         utilization: Integer; 
-        skills      : Composition of many teamSkills
+        skills      : Composition of many skills
                           on skills.userID = $self;
         tools       : Composition of many teamTools
                           on tools.userID = $self;
@@ -189,12 +189,13 @@ entity teamMembers {
 };
 
 @cds.autoexpose
-entity teamSkills {
+entity skills {
     key skillID : UUID;
         userID  : Association to teamMembers;
         skill   : String(255);
         level   : String(20);
         sap     : Boolean;
+        projectID:  Association to teamProjects;
 };
 
 @cds.autoexpose
@@ -236,6 +237,8 @@ entity teamProjects {
         lastUpdated      : DateTime;
         comments         : Composition of many projectComments
                                on comments.user = $self;
+        skills      : Composition of many skills
+                                on skills.projectID = $self;
 };
 
 

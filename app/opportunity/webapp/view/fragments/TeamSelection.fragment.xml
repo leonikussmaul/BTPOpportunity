@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+		xmlns:tnt="sap.tnt">
+
+		<Popover
+		id="myPopover" 
+		placement="Right" 	title="View the Engagement for:"
+		ariaLabelledBy="master-title" contentHeight="500px">
+       <SearchField 
+                                                        liveChange="onSearchTeamMember"
+                                                    />
+			<List
+			id="teamMemberList"
+			items="{path:'/teamMembers',
+            sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }}" >
+			<StandardListItem
+				title="{firstName} {lastName}"
+				type="Active" press="onSelectTeamMember"
+                icon="{path: 'firstName', formatter: '.formatter.formatterTeamPictures'}"
+				iconDensityAware="false"
+				iconInset="false"/>
+		</List>
+	</Popover>
+
+</core:FragmentDefinition>

@@ -176,6 +176,11 @@
                     "name": "Resources",
                     "pattern": "Resources/{inumber}",
                     "target": "Resources"
+                },
+                {
+                    "name": "Calendar",
+                    "pattern": "Calendar",
+                    "target": "Calendar"
                 }
             ],
             "targets": {
@@ -217,6 +222,14 @@
                     "clearControlAggregation": false,
                     "viewId": "ChartPage",
                     "viewName": "ChartPage",
+                    "viewLevel": 0
+                },
+                "Calendar": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Calendar",
+                    "viewName": "Calendar",
                     "viewLevel": 0
                 },
                 "Team": {

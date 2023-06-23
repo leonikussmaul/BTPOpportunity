@@ -1,0 +1,152 @@
+<core:FragmentDefinition
+
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+	xmlns:u="sap.ui.unified"
+	xmlns:layout="sap.ui.layout"
+        xmlns:tnt="sap.tnt">
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="50%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Sent for Proposal"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+
+			<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
+			<!-- DynamicPage Title -->
+			<f:title>
+				<f:DynamicPageTitle>
+					<f:heading>
+						<Title text="Project"/>
+					</f:heading>
+					
+					<f:content>
+						<OverflowToolbar>
+                        <ToolbarSpacer />
+
+                         <tnt:InfoLabel
+                                                        text="Clean Core"
+                                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                                        class="sapUiSmallMarginEnd"
+                                                    />
+                        
+                        <Label text="Go Live" />
+							<GenericTag text="Jan 17th, 2023"
+								status="Success"
+								press="onPressOpenPopover"
+								design="StatusIconHidden">
+							</GenericTag>
+						</OverflowToolbar>
+					</f:content>
+				
+				</f:DynamicPageTitle>
+			</f:title>
+			<!-- DynamicPage Header -->
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="false">
+
+						<layout:VerticalLayout >
+							  <ObjectAttribute text="This is a short description for this project. It is strategic blahblah"/>
+						</layout:VerticalLayout>
+<!-- 
+                        	<layout:VerticalLayout width="150px">
+							<ObjectAttribute title="Project End"/>
+							  <ObjectAttribute text="Apr, 17th, 2023"/>
+						</layout:VerticalLayout> -->
+
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+			</f:header>
+			
+			<f:content>
+				<form:SimpleForm id="SimpleFormDisplay354wideDual"
+			editable="false"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false" >
+			<form:content>
+				<core:Title text="Overview" />
+
+                <Label text="Owner" />
+				<Text  text="Ravi" />
+
+                <Label text="Contact" />
+				<Text  text="Vishal Butterfly" />
+
+				<Label text="Market Unit" />
+				<Text  text="France" />
+
+                  <Label text="Topic" />
+				<Text text="CSD" />
+
+					<Label text="Start Date" />
+				<Text text="17th Jan, 2023" />
+
+                <Label text="End Date" />
+				<Text text="10th Apr, 2024" />
+
+                <core:Title text="Involvement (in %)" />
+
+				<ProgressIndicator percentValue="{percentage}" displayOnly="true" />
+
+
+				<core:Title text="Skills" />
+
+
+
+                            <Tokenizer>
+				<Token text="Ui5"/>
+				<Token text="Fiori"/>
+			</Tokenizer>
+
+            	<core:Title text="Tools" />
+				   <Tokenizer>
+				<Token text="BAS"/>
+				<Token text="SAP Build"/>
+			</Tokenizer>
+
+			
+			</form:content>
+		</form:SimpleForm>
+
+
+
+
+        <!-- add skills section -->
+
+        <!-- add tools section -->
+
+			</f:content>
+
+		</f:DynamicPage>
+
+        <footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Emphasized" text="Edit" press="onEditProject" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>
