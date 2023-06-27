@@ -48,6 +48,8 @@
 			</f:DynamicPageHeader>
 		</f:header> -->
         <f:content>
+
+        <!-- 1. Sent for Proposal Table -->
             <VBox>
                 <HBox renderType="Bare">
                     <f:GridList
@@ -74,7 +76,7 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="Sent for Proposal" />
+                                <Title text="SENT FOR PROPOSAL" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
@@ -148,6 +150,8 @@
                         />
                     </VBox>
 
+
+<!-- 2. RFP Table -->
                     <f:GridList
                         id="RFPTable"
                        mode="SingleSelectMaster"
@@ -169,7 +173,7 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="RFP" />
+                                <Title text="RFP" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
@@ -239,6 +243,8 @@
                         />
                     </VBox>
 
+                    <!-- 3. on going table -->
+
                      <f:GridList
                         id="OnGoingTable"
                         mode="SingleSelectMaster"
@@ -258,10 +264,9 @@
                             />
                         </f:dragDropConfig>
 
-
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="On-Going" />
+                                <Title text="ON-GOING" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
@@ -331,6 +336,8 @@
                         />
                     </VBox>
 
+                    <!-- 4. Go Live Table -->
+
                      <f:GridList
                         id="GoLiveTable"
                         mode="SingleSelectMaster"
@@ -352,7 +359,7 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="Go-Lives" />
+                                <Title text="GO-LIVE" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
@@ -424,6 +431,7 @@
                         />
                     </VBox>
 
+<!-- 5. Archive Table -->
                      <f:GridList
                         id="PastTable"
                         mode="SingleSelectMaster"
@@ -445,12 +453,17 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Text text="Archive" />
+                                <Title text="ARCHIVE" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
                                      tooltip="Add New Project to 'Past'"
                                     press="onAddProjectPress"
+                                />
+                                 <Button
+                                    icon="sap-icon://delete"
+                                     tooltip="Select a Project to Delete"
+                                    press="onDeleteProjectPress"
                                 />
                             </Toolbar>
                         </f:headerToolbar>
@@ -500,87 +513,6 @@
                     </f:GridList>
 
                 </HBox>
-
-                <!-- horizontal table, go live  -->
-<!-- 
-                <Table
-                    class="sapUiLargeMarginTop"
-                    id="tableDrop4"
-                    mode="SingleSelectMaster"
-                    growing="true"
-                    growingThreshold="10"
-                    beforeOpenContextMenu="onBeforeOpenContextMenu"
-                    items="{
-			path: '/opportunityHeader'
-		}"
-                    noDataText="Please drag-and-drop products here."
-                >
-                    <contextMenu>
-                        <Menu>
-                            <MenuItem
-                                text="Move to Available Products"
-                                press="moveToAvailableProductsTable"
-                            />
-                            <MenuItem
-                                text="Move up"
-                                press="moveUp"
-                            />
-                            <MenuItem
-                                text="Move down"
-                                press="moveDown"
-                            />
-                        </Menu>
-                    </contextMenu>
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="Go Live" />
-                            <ToolbarSpacer />
-                            <Button
-                                icon="sap-icon://navigation-up-arrow"
-                                tooltip="Move up"
-                                press="moveUp"
-                            />
-                            <Button
-                                icon="sap-icon://navigation-down-arrow"
-                                tooltip="Move down"
-                                press="moveDown"
-                            />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column hAlign="Center">
-                            <Text text="Product Name" />
-                        </Column>
-                    </columns>
-                    <dragDropConfig>
-                        <dnd:DragInfo
-                            groupName="selected2available"
-                            sourceAggregation="items"
-                        />
-                        <dnd:DropInfo
-                            groupName="available2selected"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                        <dnd:DragDropInfo
-                            sourceAggregation="items"
-                            targetAggregation="items"
-                            dropPosition="Between"
-                            drop="onDropSelectedProductsTable"
-                        />
-                    </dragDropConfig>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text
-                                    text="{account}"
-                                    wrapping="false"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table> -->
             </VBox>
         </f:content>
     </f:DynamicPage>

@@ -211,6 +211,18 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
       }
 
     },
+
+    projectInvolvement: function(sValue){
+      if (sValue < 10) {
+        return 'Error';
+      } else if (sValue >= 10 && sValue < 50) {
+        return 'Warning';
+      } else if (sValue >= 50) {
+        return 'Success';
+      }
+
+    },
+
     piorityFormatter: function (sPriority) {
       if (sPriority === 'High') {
         return 'Error';

@@ -7,29 +7,17 @@
 	<VBox class="sapUiSmallMargin">
 		<PlanningCalendar
 			id="PC1"
-			startDate="{path: '/startDate'}"
+			startDate="{path: '/projectStartDate'}"
 			rows="{path: '/people'}"
-			appointmentsVisualization="Filled"
+			appointmentsVisualization="Filled" 
 			appointmentSelect="handleAppointmentSelect"
 			showEmptyIntervalHeaders="false"
-			showWeekNumbers="true">
-			<toolbarContent>
-				<Title text="Title" titleStyle="H4"/>
-				<Select id="primaryCalendarTypeSelect" change="onCalendarTypeSelect" selectedKey="None">
-					<core:Item key="Gregorian" text="Gregorian" />
-					<core:Item key="Islamic" text="Islamic" />
-					<core:Item key="Japanese" text="Japanese" />
-					<core:Item key="Persian" text="Persian" />
-					<core:Item key="Buddhist" text="Buddhist" />
-				</Select>
-				<!-- <Select id="secondaryCalendarTypeSelect" change="onCalendarSecondaryTypeSelect" selectedKey="None">
-					<core:Item text="Select secondary calendar type" key="None" />
-					<core:Item key="Gregorian" text="Gregorian" />
-					<core:Item key="Islamic" text="Islamic" />
-					<core:Item key="Japanese" text="Japanese" />
-					<core:Item key="Persian" text="Persian" />
-					<core:Item key="Buddhist" text="Buddhist" />
-				</Select> -->
+			showWeekNumbers="true" builtInViews="Month,OneMonth,Week,Day">
+				<toolbarContent>
+				<Title text="Team Overview" titleStyle="H4"/>
+				<!-- <ToggleButton icon="sap-icon://decrease-line-height"
+							  tooltip="Toggle Day Names Line"
+							  press="toggleDayNamesLine"/> -->
 			</toolbarContent>
 			<rows>
 				<PlanningCalendarRow
@@ -43,39 +31,27 @@
 					</customData>
 					<appointments>
 						<unified:CalendarAppointment
-							startDate="{start}"
-							endDate="{end}"
+							startDate="{projectStartDate}"
+							endDate="{projectEndDate}"
 							icon="{pic}"
-							title="{title}"
-							text="{info}"
+							title="{account}"
+							text="{descriptionText}"
 							type="{type}"
 							tentative="{tentative}">
 						</unified:CalendarAppointment>
 					</appointments>
 					<intervalHeaders>
 						<unified:CalendarAppointment
-							startDate="{start}"
-							endDate="{end}"
+							startDate="{projectStartDate}"
+							endDate="{projectEndDate}"
 							icon="{pic}"
-							title="{title}"
+							title="{account}"
 							type="{type}">
 						</unified:CalendarAppointment>
 					</intervalHeaders>
 				</PlanningCalendarRow>
 			</rows>
 		</PlanningCalendar>
-		<Label text="Add available built-in views to the example:"/>
-		<MultiComboBox
-				selectionFinish="handleSelectionFinish"
-				width="230px"
-				placeholder="Choose built-in views">
-			<items>
-				<core:Item key="Hour" text="Hour" />
-				<core:Item key="Day" text="Day" />
-				<core:Item key="Month" text="Month" />
-				<core:Item key="Week" text="1 week" />
-				<core:Item key="One Month" text="1 month" />
-			</items>
-		</MultiComboBox>
+		
 	</VBox>
 </mvc:View>

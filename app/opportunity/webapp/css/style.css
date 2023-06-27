@@ -7,11 +7,11 @@
 }
 
 .checkSubTask {
-    text-decoration: line-through!important;
+    text-decoration: line-through !important;
 }
 
-.sapUiNeutral{
-    color:#788fa6;
+.sapUiNeutral {
+    color: #788fa6;
 }
 
 .sapTntNavLIItem .sapTntNavLIGroupIcon {
@@ -21,7 +21,7 @@
 
 
 .sapFShellBar {
-    padding: 0 1rem!important;
+    padding: 0 1rem !important;
 }
 
 .sapTntSideNavigationSeparator {
@@ -29,7 +29,41 @@
 }
 
 
-.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapMTabContainer.sapUiResponsiveContentPadding > .sapMTabContainerContent > .sapMTabContainerInnerContent, .sapMTabContainer.sapUiResponsiveContentPadding > .sapMTabContainerContent > .sapMTabContainerInnerContent {
-    padding: 1rem 1rem 0rem 1rem!important;
+.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapMTabContainer.sapUiResponsiveContentPadding>.sapMTabContainerContent>.sapMTabContainerInnerContent,
+.sapMTabContainer.sapUiResponsiveContentPadding>.sapMTabContainerContent>.sapMTabContainerInnerContent {
+    padding: 1rem 1rem 0rem 1rem !important;
     box-sizing: border-box;
 }
+
+.sapMTokenizer .sapMToken {
+
+    float: left;
+
+}
+
+
+
+/* .sentForProposal .sapMBtnInner {
+    background-color: #B9E6FF !important;
+    border-color: #B9E6FF !important;
+}
+
+.rfp .sapMBtnInner {
+    background-color: #5C95FF !important;
+    border-color: #5C95FF !important;
+}
+
+.onGoing .sapMBtnInner {
+    background-color: #FFA9A3 !important;
+    border-color: #FFA9A3 !important;
+}
+
+.goLive .sapMBtnInner {
+    background-color: #F87575 !important;
+    border-color: #F87575 !important;
+}
+
+.archive .sapMBtnInner {
+    background-color: #7E6C6C !important;
+    border-color: #7E6C6C !important;
+} */

@@ -1,152 +1,350 @@
 <core:FragmentDefinition
-
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
     xmlns:f="sap.f"
-	xmlns:u="sap.ui.unified"
-	xmlns:layout="sap.ui.layout"
-        xmlns:tnt="sap.tnt">
-	<Dialog 
-          class="sapUiPopupWithPadding" contentWidth="50%"  resizable="true" draggable="true">
-		<customHeader>
-			<Bar>
-				<contentMiddle>
-					<Title text="Sent for Proposal"/>
-				</contentMiddle>
-				<contentRight>
-					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
-				</contentRight>
-			</Bar>
-		</customHeader>
+    xmlns:u="sap.ui.unified"
+    xmlns:layout="sap.ui.layout"
+    xmlns:tnt="sap.tnt"
+>
+    <Dialog
+        class="sapUiPopupWithPadding"
+        contentWidth="50%"
+        resizable="true"
+        draggable="true"
+    >
+    	
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title text="{status}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onCancelDialogPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
 
-			<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
-			<!-- DynamicPage Title -->
-			<f:title>
-				<f:DynamicPageTitle>
-					<f:heading>
-						<Title text="Project"/>
-					</f:heading>
-					
-					<f:content>
-						<OverflowToolbar>
-                        <ToolbarSpacer />
+<NavContainer id="navContainer"
+			>
+        <f:DynamicPage
+            id="dynamicPageId"
+        >
+            <f:title>
+                <f:DynamicPageTitle>
+                    <f:heading>
+                        <Title text="{account}" />
+                    </f:heading>
 
-                         <tnt:InfoLabel
-                                                        text="Clean Core"
-                                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                                        class="sapUiSmallMarginEnd"
-                                                    />
-                        
-                        <Label text="Go Live" />
-							<GenericTag text="Jan 17th, 2023"
-								status="Success"
-								press="onPressOpenPopover"
-								design="StatusIconHidden">
-							</GenericTag>
-						</OverflowToolbar>
-					</f:content>
+                    <f:content>
+                        <OverflowToolbar>
+                            <tnt:InfoLabel
+                                text="{topic}"
+                                colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                class="sapUiSmallMarginEnd"
+                            />
+
+                            <ToolbarSpacer />
+
+                            <Label text="Go Live" />
+                            <GenericTag
+                                text="{= ${goLive} ? ${path: 'goLive', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }} : 'N/A'}"
+                                status="Success"
+                                press="onPressOpenPopover"
+                                design="StatusIconHidden"
+                            />
+                        </OverflowToolbar>
+                    </f:content>
+                </f:DynamicPageTitle>
+            </f:title>
+            <f:header>
+                <f:DynamicPageHeader pinnable="true">
+                    <layout:HorizontalLayout allowWrapping="false">
+                        <layout:VerticalLayout>
+                            <ObjectAttribute text="{descriptionText}" />
+                        </layout:VerticalLayout>
+                    </layout:HorizontalLayout>
+                </f:DynamicPageHeader>
+            </f:header>
+
+            <f:content>
+                <form:SimpleForm
+                    id="ProjectForm"
+                    class="sapUiMediumMarginBottom"
+                    editable="false"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="3"
+                    labelSpanM="4"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="4"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="2"
+                    columnsL="2"
+                    columnsM="2"
+                    singleContainerFullSize="false"
+                >
+                    <form:content>
+                        <core:Title text="Overview" />
+
+                        <Label text="Owner" />
+                        <Text text="{primaryContact}" />
+
+                        <Label text="Contact" />
+                        <Text text="{projectContact}" />
+
+                        <Label text="Market Unit" />
+                        <Text text="{marketUnit}" />
+
+                        <Label text="Topic" />
+                        <Text text="CSD" />
+
+                        <Label text="Start Date" />
+                        <Text
+                            text="{path: 'projectStartDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
+                        />
+
+                        <Label text="End Date" />
+                        <Text
+                            text="{path: 'projectEndDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
+                        />
+
+                        <core:Title text="Involvement" />
+
+                        <ProgressIndicator
+                            percentValue="{percentage}"
+                            displayOnly="true"
+                            displayValue="{percentage}%"
+                            showValue="true" width="80%"
+                            state="{path: 'percentage', formatter: '.formatter.projectInvolvement'}"
+                        />
+
+						
+                        <core:Title text="Skills" />
 				
-				</f:DynamicPageTitle>
-			</f:title>
-			<!-- DynamicPage Header -->
-			<f:header>
-				<f:DynamicPageHeader pinnable="true">
-					<layout:HorizontalLayout allowWrapping="false">
+					
+					<VBox>
+                        <Tokenizer id="skillTokens" tokens="{}" >
+                            <Token id="skillItem" text="{skill}" delete="onDeleteToken" />
+                        </Tokenizer>
+						<Link text="Add Skill" press="onAddProjectSkill" class="sapUiTinyMarginTop"/>
+						
+						</VBox>
 
-						<layout:VerticalLayout >
-							  <ObjectAttribute text="This is a short description for this project. It is strategic blahblah"/>
-						</layout:VerticalLayout>
-<!-- 
-                        	<layout:VerticalLayout width="150px">
-							<ObjectAttribute title="Project End"/>
-							  <ObjectAttribute text="Apr, 17th, 2023"/>
-						</layout:VerticalLayout> -->
+                        <core:Title text="Tools" />
+						<VBox>
+                        <Tokenizer id="toolTokens" tokens="{}">
+                            <Token id="toolItem" text="{tool}" delete="onDeleteToken"/>
+                        </Tokenizer>
+						<Link text="Add Tool" press="onAddProjectTool" class="sapUiTinyMarginTop"/>
+						</VBox>
 
-					</layout:HorizontalLayout>
-				</f:DynamicPageHeader>
-			</f:header>
-			
-			<f:content>
-				<form:SimpleForm id="SimpleFormDisplay354wideDual"
-			editable="false"
-			layout="ResponsiveGridLayout"
-			labelSpanXL="4"
-			labelSpanL="3"
-			labelSpanM="4"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="4"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="2"
-			columnsL="2"
-			columnsM="2"
-			singleContainerFullSize="false" >
-			<form:content>
-				<core:Title text="Overview" />
+						
+                    </form:content>
+                </form:SimpleForm>
 
-                <Label text="Owner" />
-				<Text  text="Ravi" />
-
-                <Label text="Contact" />
-				<Text  text="Vishal Butterfly" />
-
-				<Label text="Market Unit" />
-				<Text  text="France" />
-
-                  <Label text="Topic" />
-				<Text text="CSD" />
-
-					<Label text="Start Date" />
-				<Text text="17th Jan, 2023" />
-
-                <Label text="End Date" />
-				<Text text="10th Apr, 2024" />
-
-                <core:Title text="Involvement (in %)" />
-
-				<ProgressIndicator percentValue="{percentage}" displayOnly="true" />
-
-
-				<core:Title text="Skills" />
+            </f:content>
+        </f:DynamicPage>
 
 
 
-                            <Tokenizer>
-				<Token text="Ui5"/>
-				<Token text="Fiori"/>
-			</Tokenizer>
+           <f:DynamicPage
+            id="dynamicPage2"
+        >
+            <f:title>
+                <f:DynamicPageTitle>
+                    <f:heading>
+                        <Title text="{account}" />
+                    </f:heading>
 
-            	<core:Title text="Tools" />
-				   <Tokenizer>
-				<Token text="BAS"/>
-				<Token text="SAP Build"/>
-			</Tokenizer>
-
-			
-			</form:content>
-		</form:SimpleForm>
-
+                    <f:content>
+                        <Toolbar >
+                        
+                            <tnt:InfoLabel
+                                text="{topic}"
+                                colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                class="sapUiSmallMarginEnd"
+                            />
 
 
 
-        <!-- add skills section -->
+                            <ToolbarSpacer />                    <Label text="Go Live:" />
+                          <DatePicker  value="{ path: 'goLive',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}" placeholder="When is go-live?"
+                            width="45%" id="goLiveDate"
+                />
+                        </Toolbar>
+                    </f:content>
+                </f:DynamicPageTitle>
+            </f:title>
+            <f:header>
+                <f:DynamicPageHeader pinnable="true">
+                    <layout:HorizontalLayout allowWrapping="false">
+                        <layout:VerticalLayout>
+                            <!-- <ObjectAttribute text="{descriptionText}" /> -->
+                          
+                        </layout:VerticalLayout>
+                    </layout:HorizontalLayout>
+                </f:DynamicPageHeader>
+            </f:header>
 
-        <!-- add tools section -->
+            <f:content>
+                <form:SimpleForm
+                    id="ProjectForm2"
+                    class="sapUiMediumMarginBottom"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4"
+                    labelSpanL="3"
+                    labelSpanM="4"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="0"
+                    emptySpanL="4"
+                    emptySpanM="0"
+                    emptySpanS="0"
+                    columnsXL="2"
+                    columnsL="2"
+                    columnsM="2"
+                    singleContainerFullSize="false"
+                >
+                    <form:content>
+                        <core:Title text="Overview" />
 
-			</f:content>
+                        <Label text="Owner" />
+                        <Text text="{primaryContact}" id="projectOwner" />
 
-		</f:DynamicPage>
+                        <Label text="Contact" />
+                        <Input value="{projectContact}" id="projectContact" placeholder="Who can be contacted?"/>
+
+                        <Label text="Market Unit" />
+                       	<ComboBox selectedKey="{marketUnit}" id="projectMU" placeholder="Which market unit?"
+							 items="{
+                                    path: '/opportunityMarketUnitVH',
+                                    sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{marketUnit}" text="{marketUnit}"/>
+                </ComboBox>
+
+                        <Label text="Topic" />
+                       	<ComboBox selectedKey="{topic}" id="projectTopic" placeholder="Is there a main topic?"
+							 items="{
+                                    path: '/opportunityTopicsVH',
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{topic}" text="{topic}"/>
+			</ComboBox>
+
+                        	
+			<Label text="Dates"/>
+
+            	<DateRangeSelection placeholder="Start Date - End Date" id="projectDates"
+			value= "{
+				'type': 'sap.ui.model.type.DateInterval',
+				'formatOptions': {
+					'pattern': 'yyyy/MM/dd'
+				},
+				'parts': [
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': 'projectStartDate'
+					},
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': 'projectEndDate'
+					}
+				]
+			}"/>
+
+                        <!-- <Label text="End Date" />
+                        <DatePicker
+                            value="{path: 'projectEndDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
+                        /> -->
+                        <core:Title text="Involvement (in %)" />
+
+                        <VBox>
+                        <Slider width="80%" value="{percentage}" class="sapUiMediumMarginBottom" id="projectPercentage"
+                        
+                                                      
+                                                        step="25"
+                
+                                                        min="0"
+                                                        max="100"
+                                                        showAdvancedTooltip="true"
+                                                        showHandleTooltip="false"
+                                                        enableTickmarks="true"
+                           
+                        />
+
+<Label text="Project Description:"/>
+                         <TextArea id="projectDesc" value="{descriptionText}" width="90%" rows="3" placeholder="Give a short description of the project"  />
+
+                          </VBox>
+
+						
+                       <!--  <core:Title text="Skills" />
+				
+					
+					<VBox>
+                        <Tokenizer id="skillTokens" tokens="{}" >
+                            <Token id="skillItem" text="{skill}" delete="onDeleteToken" />
+                        </Tokenizer>
+						<Link text="Add Skill" press="onAddProjectSkill" class="sapUiTinyMarginTop"/>
+						
+						</VBox>
+
+                        <core:Title text="Tools" />
+						<VBox>
+                        <Tokenizer id="toolTokens" tokens="{}">
+                            <Token id="toolItem" text="{tool}" delete="onDeleteToken"/>
+                        </Tokenizer>
+						<Link text="Add Tool" press="onAddProjectTool" class="sapUiTinyMarginTop"/>
+						</VBox> -->
+
+						
+                    </form:content>
+                </form:SimpleForm>
+
+            </f:content>
+        </f:DynamicPage>
+        </NavContainer>
 
         <footer>
-			<Toolbar design="Auto">
-				<content>
-					<ToolbarSpacer />
-					<Button type="Emphasized" text="Edit" press="onEditProject" />
-				</content>
-			</Toolbar>
-		</footer>
-	</Dialog>
+            <Toolbar design="Auto">
+                <content>
+                    <ToolbarSpacer />
+                      <Button
+                    visible="{= ${editModel>/editMode}}"
+                        type="Accept"
+                        text="Save"
+                        press="onSaveProject"
+                    />
+
+                    <Button
+                    visible="{= !${editModel>/editMode}}"
+                        type="Emphasized"
+                        text="Edit"
+                        press="onEditProject"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+        	
+    </Dialog>
 </core:FragmentDefinition>
+

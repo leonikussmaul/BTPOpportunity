@@ -43,13 +43,13 @@
              <tnt:NavigationListItem
                     text="Calendar"
                     select="onOpenCalendar"
-                    icon="sap-icon://calendar"
+                    icon="sap-icon://workflow-tasks"
                 />
 
              <tnt:NavigationListItem
                     text="Team"
                     select="onOpenResources"
-                    icon="sap-icon://workflow-tasks"
+                    icon="sap-icon://work-history"
                 />
 
 

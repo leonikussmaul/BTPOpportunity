@@ -4,7 +4,7 @@
 	xmlns:core="sap.ui.core"
 	xmlns:form="sap.ui.layout.form">
 	<Dialog 
-          class="sapUiPopupWithPadding" contentWidth="30%"  resizable="true" draggable="true">
+          class="sapUiPopupWithPadding" contentWidth="40%"  resizable="true" draggable="true">
 		<customHeader>
 			<Bar>
 				<contentMiddle>
@@ -21,20 +21,7 @@
 			<Label text="Project" required="true"/>
 			<Input value="{AddProjectModel>/account}" id="projectName" placeholder="What's the project name?" />
 
-            <Label text="Project Status" />
-			<ComboBox selectedKey="{AddProjectModel>/marketUnit}" placeholder="Which market unit?"
-							 items="{
-                                    path: '/opportunityMarketUnitVH',
-                                    sorter: {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
-                                    }">
-				<core:Item key="{marketUnit}" text="{marketUnit}"/>
-			</ComboBox>
-
-
-            <Label text="Project Status" />
+			 <Label text="Project Status" required="true"/>
 			<ComboBox selectedKey="{AddProjectModel>/status}" placeholder="What's the status of the project?"
 							 items="{
                                     path: '/projectStatusVH',
@@ -46,8 +33,25 @@
 				<core:Item key="{status}" text="{status}"/>
 			</ComboBox>
 
-			<Label text="Short Descr." required="true"/>
-			<TextArea value="{AddProjectModel>/descriptionText}" id="projectDescr" maxLength="800" placeholder="Add a short project description"/>
+
+            <Label text="Market Unit" />
+			<ComboBox selectedKey="{AddProjectModel>/marketUnit}" placeholder="Which market unit?"
+							 items="{
+                                    path: '/opportunityMarketUnitVH',
+                                    sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{marketUnit}" text="{marketUnit}"/>
+			</ComboBox>
+
+			<Label text="Project Contact" />
+			<Input value="{AddProjectModel>/projectContact}" id="projectContact" placeholder="Who can be contacted?" />
+
+
+			<Label text="Short Descr." />
+			<TextArea value="{AddProjectModel>/descriptionText}" rows="3" id="projectDescr" maxLength="800" placeholder="Add a short project description"/>
 
             <Label text="{i18n>topic}" />
 			<ComboBox selectedKey="{AddProjectModel>/topic}" placeholder="Is there a main topic?"

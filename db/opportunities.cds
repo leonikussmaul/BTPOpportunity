@@ -216,12 +216,15 @@ entity teamTools {
         tool   : String(255);
         level  : String(20);
         sap    : Boolean;
+        projectID:  Association to teamProjects;
 };
 
 @cds.autoexpose
 entity teamProjects {
     key projectID        : UUID;
         userID           : Association to teamMembers;
+        primaryContact   : String(50);
+        projectContact   : String(70);
         priority         : String(20);
         account          : String(255);
         marketUnit       : String(255);
@@ -239,6 +242,8 @@ entity teamProjects {
                                on comments.user = $self;
         skills      : Composition of many skills
                                 on skills.projectID = $self;
+        tools       : Composition of many teamTools
+                                on tools.projectID = $self;
 };
 
 

@@ -3,12 +3,14 @@ sap.ui.define([
   "sap/ui/model/json/JSONModel",
   "sap/ui/core/Fragment",
   "../model/formatter",
-  "sap/m/MessageToast"
+  "sap/m/MessageToast",
+  "sap/ui/model/Filter",
+  "sap/ui/model/FilterOperator"
 ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Fragment, formatter, MessageToast) {
+  function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator) {
     "use strict";
 
 
@@ -23,19 +25,26 @@ sap.ui.define([
         var AddProjectModel = new JSONModel({});
         this.getView().setModel(AddProjectModel, "AddProjectModel");
 
+        var oEditModel = new JSONModel({
+          editMode: false
+      });
+      this.getView().setModel(oEditModel, "editModel");
+
+        
+
       },
 
       _onRoutePatternMatched: function (oEvent) {
-        var inumber = oEvent.getParameter("arguments").inumber;
+        this.inumber = oEvent.getParameter("arguments").inumber;
 
         this.getView().bindElement({
-          path: "/teamMembers/" + inumber,
+          path: "/teamMembers/" + this.inumber,
           parameters: {
             expand: "skills,tools,projects"
           }
         });
 
-        this.onStatusMethod(inumber);
+        this.onStatusMethod(this.inumber);
 
       },
 
@@ -270,6 +279,8 @@ sap.ui.define([
 
             var oPayload = {
               userID_inumber: inumber, 
+              primaryContact: this.getView().getBindingContext().getObject().firstName,
+              projectContact: oData.projectContact,
               account: oData.account, 
               priority: oData.priority,
               marketUnit: oData.marketUnit,
@@ -308,12 +319,14 @@ sap.ui.define([
            --------------------------------------------------------------------------------------------------------------*/
 
 
-           onDialogOpen: function (fragmentName) {
+           onDialogOpen: function (fragmentName, sPath, sProjectID) {
+
+            var oEditModel = this.getView().getModel("editModel"); 
+              oEditModel.setProperty("/editMode", false); 
 
             var that = this;
             if (!this._pDialog) {
                 this._pDialog = Fragment.load({
-                    //id:"myDialog",
                     name: fragmentName,
                     controller: this
                 }).then(function (_pDialog) {
@@ -325,10 +338,51 @@ sap.ui.define([
                 });
             }
             this._pDialog.then(function (_pDialog) {
-                _pDialog.open();
+              if(sPath) {
+                _pDialog.bindElement({
+                path: sPath,
+                parameters: {
+                    expand: "comments,skills,tools"
+                }
+              })
+                 that.onFilterSkills(sProjectID);
+                 that.onFilterTools(sProjectID);
+            }
+            _pDialog.open();
 
             })
         },
+
+        onFilterSkills(sProjectID) {
+          var oList = sap.ui.getCore().byId("skillTokens")
+          var oTemplate = sap.ui.getCore().byId("skillItem");
+          var oSorter = new sap.ui.model.Sorter("skill", false);
+
+          var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+          oList.bindAggregation("tokens", {
+              template: oTemplate,
+              path: "/skills",
+              sorter: oSorter,
+              filters: aFilters
+          });
+          oList.updateBindings();
+      },
+
+      onFilterTools(sProjectID) {
+        var oList = sap.ui.getCore().byId("toolTokens")
+        var oTemplate = sap.ui.getCore().byId("toolItem");
+        var oSorter = new sap.ui.model.Sorter("tool", false);
+
+        var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+        oList.bindAggregation("tokens", {
+            template: oTemplate,
+            path: "/teamTools",
+            sorter: oSorter,
+            filters: aFilters
+        });
+        oList.updateBindings();
+
+    },
 
 
         onCancelDialogPress: function (oEvent) {
@@ -342,9 +396,229 @@ sap.ui.define([
 
         onProjectPopup: function(oEvent){
 
-          this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject");
+          var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel"); 
+          var oContext = oBinding.getObject(); 
+          var sProjectID = oContext.projectID; 
+
+          this.sProjectID = oContext.projectID;
+          var sPath = "/teamProjects/" + sProjectID; 
+
+         
+          this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
 
         },
+
+        onDeleteProjectPress: function(oEvent){
+          var oTable = this.getView().byId("PastTable");
+          if(oTable.getSelectedItem() != undefined){
+            var oBinding = oTable.getSelectedItem().getBindingContext("ProjectModel");
+            var oContext = oBinding.getObject();
+  
+            var sPath = "/teamProjects/" + oContext.projectID; 
+            var inumber = oContext.userID_inumber
+    
+            this.onDeleteItem(sPath, inumber); 
+
+          } else MessageToast.show("Please select a Project to delete first")
+
+         
+
+        },
+
+        onDeleteItem: function (sPath, inumber) {
+        var that = this; 
+          //var sPath = oBinding.getPath(); 
+          that.getView().setBusy(true);
+          var oModel = this.getView().getModel();
+          sap.m.MessageBox.warning("Are you sure you want to delete the selected Project?", {
+              actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+              onClose: function (oAction) {
+                  if (oAction === sap.m.MessageBox.Action.YES) {
+
+                          
+                          oModel.remove(sPath, {
+                              success: function () {
+                                that.onStatusMethod(inumber);
+                                that.getView().getModel("ProjectModel").refresh();
+                                that.getView().setBusy(false);
+                                sap.m.MessageToast.show("Project deleted successfully.");
+                              },
+                              error: function () {
+                                  that.getView().setBusy(false);
+                                  sap.m.MessageToast.show("Project could not be deleted. Please try again.");
+                              }
+                          });
+                      
+                  }
+              }
+          });
+      },
+
+      onDeleteToken: function(oEvent){
+        var sPath = oEvent.getParameter("token").getBindingContext().sPath;
+
+        var that = this; 
+        that.getView().setBusy(true);
+        var oModel = this.getView().getModel();
+        sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
+            actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+            onClose: function (oAction) {
+                if (oAction === sap.m.MessageBox.Action.YES) {
+
+                        
+                        oModel.remove(sPath, {
+                            success: function () {
+                              //that.onStatusMethod(inumber);
+                              that.getView().setBusy(false);
+                              sap.m.MessageToast.show("Token deleted successfully.");
+                            },
+                            error: function () {
+                                that.getView().setBusy(false);
+                                sap.m.MessageToast.show("Token could not be deleted. Please try again.");
+                            }
+                        });
+                    
+                }
+            }
+        });
+        
+
+      },
+
+      onAddProjectSkill: function(oEvent){
+        this.onPopover("opportunity.opportunity.view.fragments.AddSkill", oEvent); 
+
+      },
+      onAddProjectTool: function(oEvent){
+        this.onPopover("opportunity.opportunity.view.fragments.AddTool", oEvent); 
+      },
+
+
+    onPopover: function(sFragment, oEvent){
+        var oButton = oEvent.getSource(),
+          oView = this.getView();
+  
+        // create popover
+        if (!this._pPopover) {
+          this._pPopover = Fragment.load({
+            id: oView.getId(),
+            name: sFragment,
+            controller: this
+          }).then(function(oPopover){
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
+        }
+  
+        this._pPopover.then(function(oPopover){
+          oPopover.openBy(oButton);
+        });
+
+      },
+
+      onSubmitSkill: function(oEvent){
+        var oInput = this.getView().byId("skillInput"); 
+        var oPayload = {
+          skill: oInput.getValue(),
+          userID_inumber: this.inumber,
+          projectID_projectID: this.sProjectID
+        }; 
+            var oModel = this.getView().getModel();
+            oModel.create("/skills", oPayload, {
+                success: function (oData, response) {
+                    MessageToast.show("New Skill added");
+                    oInput.setValue(""); 
+                },
+                error: function (oError) {
+                    sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
+                }
+            });
+      },
+
+      onSubmitTool: function(oEvent){
+        var oInput = this.getView().byId("toolInput"); 
+        var oPayload = {
+          tool: oInput.getValue(),
+          userID_inumber: this.inumber,
+          projectID_projectID: this.sProjectID
+        }; 
+            var oModel = this.getView().getModel();
+            oModel.create("/teamTools", oPayload, {
+                success: function (oData, response) {
+                    MessageToast.show("New Tool added");
+                    oInput.setValue(""); 
+                },
+                error: function (oError) {
+                    sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
+                }
+            });
+      },
+
+      onEditProject: function(oEvent){
+
+        var oNavContainer = sap.ui.getCore().byId("navContainer");
+        var oEditModel = this.getView().getModel("editModel"); 
+        var bEdit = oEditModel.getProperty("/editMode"); 
+        if(bEdit){
+          oEditModel.setProperty("/editMode", false); 
+          oNavContainer.to("dynamicPageId", "show"); 
+        }else if(!bEdit){
+          oEditModel.setProperty("/editMode", true); 
+          oNavContainer.to("dynamicPage2", "show"); 
+        }
+       
+        
+      },
+
+      onSaveProject: function(oEvent){
+        var that = this; 
+
+        var oContext = oEvent.getSource().getParent().getBindingContext().getObject(); 
+
+        var sPath = oEvent.getSource().getParent().getBindingContext().sPath; 
+
+        var goLiveDate, startDate, endDate; 
+        var sGoLive = sap.ui.getCore().byId("goLiveDate").getValue(); 
+        var sStartDate = sap.ui.getCore().byId("projectDates").getDateValue();
+        var sEndDate = sap.ui.getCore().byId("projectDates").getSecondDateValue();
+
+        if (sGoLive) goLiveDate = new Date(sGoLive).toISOString().split("T")[0];
+        if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
+        if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
+
+        var oPayload = {
+          goLive: goLiveDate,
+          projectContact: sap.ui.getCore().byId("projectContact").getValue(),
+          marketUnit: sap.ui.getCore().byId("projectMU").getValue(),
+          topic: sap.ui.getCore().byId("projectTopic").getValue(),
+          projectStartDate: sap.ui.getCore().byId("projectDates").getDateValue(),
+          projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
+          descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
+          percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
+          // lastUpdated: new Date().toISOString().split("T")[0]
+        }
+        
+
+        var oModel = this.getView().getModel();
+        oModel.update(sPath, oPayload, {
+          success: function () {
+
+            that.getView().setBusy(false);
+            MessageToast.show(oContext.account + " updated successfully.")
+            that.onEditProject(); 
+          },
+          error: function (oError) {
+            MessageToast.show(oError.message);
+            that.getView().setBusy(false);
+          }
+        });
+
+      },
+
+
+
+
+
         
 
 
