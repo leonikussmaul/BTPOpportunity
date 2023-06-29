@@ -19,8 +19,8 @@ sap.ui.define(
        
         onHomeIconPressed: function(){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          oRouter.navTo("MainReport");
-          this.getOwnerComponent().getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
+          oRouter.navTo("Overview");
+          //this.getOwnerComponent().getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
         },
 
         onOpenSAPOne: function () {

@@ -143,8 +143,13 @@
             },
             "routes": [
                 {
-                    "name": "MainReport",
+                    "name": "Overview",
                     "pattern": ":?query:",
+                    "target": "Overview"
+                },
+                {
+                    "name": "MainReport",
+                    "pattern": "MainReport",
                     "target": "MainReport"
                 },
                 {
@@ -184,6 +189,14 @@
                 }
             ],
             "targets": {
+                "Overview": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Overview",
+                    "viewName": "Overview",
+                    "viewLevel": 0
+                },
                 "MainReport": {
                     "viewType": "XML",
                     "transition": "slide",

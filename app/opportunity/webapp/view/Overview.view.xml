@@ -1,0 +1,79 @@
+<mvc:View
+    controllerName="opportunity.opportunity.controller.MainReport"
+    id="view1"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:table="sap.ui.table"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:tnt="sap.tnt"
+    xmlns:main="sap.ui.webc.main"
+    xmlns:layout="sap.ui.layout"
+>
+
+	<SlideTile id="slideTile2"
+					           tiles="Slide Tile" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" 
+					          
+					           tooltip="SlideTile 2"
+					           press="pressSlideTile"
+					           transitionTime="250" displayTime="2500"
+					           sizeBehavior="Responsive">
+						<GenericTile id="tile7" backgroundImage="./images/Sarah.jpeg" 
+						             tooltip="{tooltip}"
+						             frameType="TwoByOne"
+						             press="press"
+						             sizeBehavior="Responsive">
+							<TileContent footer="Footer">
+								<NewsContent contentText="Content"
+								             subheader="Subtitle"/>
+							</TileContent>
+						</GenericTile>
+					</SlideTile>
+
+   
+   	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" 
+    header="Opportunities" 
+    subheader="Expenses"  
+    press="press" sizeBehavior="Responsive"
+   >
+		<TileContent unit="Unit" footer="Footer Text">
+			<NumericContent value="1762" icon="sap-icon://line-charts" withMargin="false"
+							                valueColor="Critical"
+							                indicator="Down" />
+		</TileContent>
+	</GenericTile>
+
+
+
+	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Cumulative Totals" subheader="Expenses" press="press">
+		<TileContent unit="Unit" footer="Footer Text">
+			<NumericContent value="12" withMargin="false" />
+		</TileContent>
+	</GenericTile>
+
+<!-- 
+    <GenericTile header="{title}"
+					             subheader="{subtitle}"
+					             state="{=${state} || 'Loaded'}"
+					             scope="{/scope}"
+					             press="press"
+					             class="sapUiTinyMarginEnd"
+					             sizeBehavior="{/sizeBehavior}">
+						<TileContent unit="{unit}" footer="{footer}">
+							<NumericContent withMargin="false"
+							                value="{kpivalue}"
+							                valueColor="{color}"
+							                indicator="{trend}"
+							                scale="{scale}"/>
+						</TileContent>
+					</GenericTile> -->
+</mvc:View>

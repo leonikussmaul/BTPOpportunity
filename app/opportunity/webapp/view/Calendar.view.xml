@@ -3,14 +3,28 @@
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:unified="sap.ui.unified"
-	xmlns="sap.m">
-	<VBox class="sapUiSmallMargin">
-		<PlanningCalendar
+	xmlns="sap.m"
+		xmlns:l="sap.ui.layout">
+	
+		<ScrollContainer
+		height="100%"
+		width="100%"
+		vertical="true"
+		focusable="true">
+
+		<l:DynamicSideContent
+			id="DynamicSideContent"
+			class="sapUiDSCExplored sapUiContentPadding"
+			sideContentVisibility="AlwaysShow"
+			showSideContent="{path: 'CalendarModel>/legendShown'}"
+			containerQuery="true">
+	
+		<PlanningCalendar 
 			id="PC1"
-			startDate="{path: '/projectStartDate'}"
-			rows="{path: '/people'}"
+			startDate="{path: 'CalendarModel>/startDate'}"
+			rows="{path: '/teamMembers', parameters: {expand: 'projects'}}"
 			appointmentsVisualization="Filled" 
-			appointmentSelect="handleAppointmentSelect"
+			appointmentSelect="onProjectPopup"
 			showEmptyIntervalHeaders="false"
 			showWeekNumbers="true" builtInViews="Month,OneMonth,Week,Day">
 				<toolbarContent>
@@ -18,29 +32,28 @@
 				<!-- <ToggleButton icon="sap-icon://decrease-line-height"
 							  tooltip="Toggle Day Names Line"
 							  press="toggleDayNamesLine"/> -->
+							  <ToggleButton pressed="{path: 'CalendarModel>/legendShown'}" icon="sap-icon://legend"/>
 			</toolbarContent>
+			
 			<rows>
 				<PlanningCalendarRow
-					icon="{pic}"
-					title="{name}"
-					text="{role}"
-					appointments="{path : 'appointments', templateShareable: false}"
-					intervalHeaders="{path: 'headers', templateShareable: false}">
+				
+					title="{firstName}"
+					text="{role}" icon="{path:'firstName', formatter:'.formatter.formatterTeamPictures'}"
+					appointments="{path: 'projects', templateShareable: false}"
+					>
 					<customData>
-						<core:CustomData key="emp-name" value="{name}" writeToDom="true"/>
+						<core:CustomData key="emp-name" value="{firstName}" writeToDom="true"/>
 					</customData>
 					<appointments>
 						<unified:CalendarAppointment
-							startDate="{projectStartDate}"
-							endDate="{projectEndDate}"
-							icon="{pic}"
-							title="{account}"
-							text="{descriptionText}"
-							type="{type}"
-							tentative="{tentative}">
+							startDate="{path: 'projectStartDate', formatter: '.formatter.calendarDate'}"
+							endDate="{path: 'projectEndDate', formatter: '.formatter.calendarDate'}"
+							title="{account}" type="{path:'status', formatter:'.formatter.calendarStatusFormatter'}"
+							text="{descriptionText}">
 						</unified:CalendarAppointment>
 					</appointments>
-					<intervalHeaders>
+					<!-- <intervalHeaders>
 						<unified:CalendarAppointment
 							startDate="{projectStartDate}"
 							endDate="{projectEndDate}"
@@ -48,10 +61,24 @@
 							title="{account}"
 							type="{type}">
 						</unified:CalendarAppointment>
-					</intervalHeaders>
+					</intervalHeaders> -->
 				</PlanningCalendarRow>
 			</rows>
 		</PlanningCalendar>
-		
-	</VBox>
+			<l:sideContent width="200px">
+			<PlanningCalendarLegend id="PlanningCalendarLegend"
+				items="{path : 'CalendarModel>/legendItems', templateShareable: true}"
+				appointmentItems="{path : 'CalendarModel>/legendAppointmentItems', templateShareable: true}"
+				>
+				<items>
+					<unified:CalendarLegendItem text="{CalendarModel>text}" type="{CalendarModel>type}" color="{CalendarModel>color}"/>
+				</items>
+				<appointmentItems>
+					<unified:CalendarLegendItem text="{CalendarModel>text}" type="{CalendarModel>type}" />
+				</appointmentItems>
+			</PlanningCalendarLegend>
+		</l:sideContent>
+	</l:DynamicSideContent>
+	</ScrollContainer>
+	
 </mvc:View>

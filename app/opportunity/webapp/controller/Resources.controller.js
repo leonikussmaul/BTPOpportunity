@@ -86,15 +86,6 @@ sap.ui.define([
 
       },
 
-
-      onAddToDoPress: function (oEvent) {
-
-      },
-
-      onDropSentForProposal: function (oEvent) {
-
-      },
-
       onDrop: function (oEvent) {
 
         var that = this;
@@ -499,7 +490,7 @@ sap.ui.define([
           oView = this.getView();
   
         // create popover
-        if (!this._pPopover) {
+        //if (!this._pPopover) {
           this._pPopover = Fragment.load({
             id: oView.getId(),
             name: sFragment,
@@ -508,7 +499,7 @@ sap.ui.define([
             oView.addDependent(oPopover);
             return oPopover;
           });
-        }
+        //}
   
         this._pPopover.then(function(oPopover){
           oPopover.openBy(oButton);

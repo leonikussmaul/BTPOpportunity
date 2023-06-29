@@ -1,6 +1,6 @@
 
 
-sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
+sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (coreLibrary, UI5Date) {
   "use strict";
 
   return {
@@ -37,8 +37,8 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
           return "./images/Liliana.jpeg";
         case "Matt":
           return "./images/Matt.jpeg";
-          case "Nesimi":
-            return "./images/Nesimi.jpeg";
+        case "Nesimi":
+          return "./images/Nesimi.jpeg";
         case "Omar":
           return "./images/Omar.jpeg";
         case "Peter":
@@ -212,7 +212,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
 
     },
 
-    projectInvolvement: function(sValue){
+    projectInvolvement: function (sValue) {
       if (sValue < 10) {
         return 'Error';
       } else if (sValue >= 10 && sValue < 50) {
@@ -312,7 +312,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
     // },
 
 
-    processFlowFormatter: function(sStatus){
+    processFlowFormatter: function (sStatus) {
       switch (sStatus) {
         case "Paused":
           return "None";
@@ -321,7 +321,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
         case "Completed":
           return "Success";
         case "Not Started":
-            return "Warning";
+          return "Warning";
         case "Blocked":
           return "Error";
         default:
@@ -329,7 +329,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
       }
     },
 
-    processFlowBtnFormatter: function(sStatus){
+    processFlowBtnFormatter: function (sStatus) {
       switch (sStatus) {
         case "Paused":
           return "Negative";
@@ -338,7 +338,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
         case "Completed":
           return "Accept";
         case "Not Started":
-            return "Attention";
+          return "Attention";
         case "Blocked":
           return "Critical";
         default:
@@ -355,7 +355,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
         case "Not Started":
           return "sap-icon://lateness";
         case "Blocked":
-            return "sap-icon://error";
+          return "sap-icon://error";
         case "Paused":
           return "sap-icon://pause";
         default:
@@ -364,7 +364,7 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
 
     },
 
-    formatSubTaskIconColor: function(sStatus){
+    formatSubTaskIconColor: function (sStatus) {
       switch (sStatus) {
         case "Paused":
           return coreLibrary.IconColor.Neutral;
@@ -380,8 +380,8 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
           return coreLibrary.IconColor.Tile;
       }
     },
-    
-    formatAccentStatus: function(sStatus){
+
+    formatAccentStatus: function (sStatus) {
       switch (sStatus) {
         case "Paused":
           return "Accent10";
@@ -398,19 +398,41 @@ sap.ui.define([	"sap/ui/core/library"], function (coreLibrary) {
       }
     },
 
+    calendarDate: function (date) {
+      var yr = new Date(date).getFullYear();
+      var mnt = new Date(date).getMonth();
+      var day = new Date(date).getDate();
+      return new Date(yr, mnt, day, "00", "00");
+    },
 
+    calendarStatusFormatter: function (sStatus) {
+      switch (sStatus) {
+        case "Sent for Proposal":
+          return "Type10";
+        case "RFP":
+          return "Type05";
+        case "On-Going":
+          return "Type01";
+        case "Go-Live":
+          return "Type08";
+        case "Past":
+          return "Type09";
+          //blue Type06 -> vacation
+          //pink Type05
+          //Type07 Turquiose
+          //Type08 Green
+          //Type09 Grey
+          //Type10 Purple
 
-
-
+        default:
+          return "Type11";
+      }
+    },
 
     //priority
     //sap-icon://expand-group low
     //sap-icon://collapse-group high
     //sap-icon://collapse medium
-
-
-
-
 
 
 

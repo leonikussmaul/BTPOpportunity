@@ -2,470 +2,86 @@ sap.ui.define([
     'sap/ui/core/mvc/Controller',
     'sap/ui/model/json/JSONModel',
     'sap/m/MessageBox',
-    'sap/ui/core/date/UI5Date'
+    'sap/ui/core/date/UI5Date',
+    "../model/formatter",
+    "sap/ui/core/Fragment",
+    "sap/m/MessageToast",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
-function (Controller, JSONModel, MessageBox, UI5Date) {
+function (Controller, JSONModel, MessageBox, UI5Date, formatter, Fragment, MessageToast, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("opportunity.opportunity.controller.Calendar", {
-
+formatter: formatter,
         onInit: function () {
-            var oPrimarySecondaryType = this.byId("primaryCalendarTypeSelect");
+            sap.ui.core.UIComponent.getRouterFor(this).getRoute("Calendar").attachPatternMatched(this._onRoutePatternMatched, this);
             // create model
-            var oModel = new JSONModel();
-            oModel.setData({
-                startDate: UI5Date.getInstance(),
-                people: [{
-                    pic: "./images/Rajat.jpeg",
-                    name: "Rajat",
-                    role: "Manager",
-                    appointments: [
 
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "8", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "8", "09", "30"),
-                            account: "Meet Max Mustermann",
-                            type: "Type02",
-                            tentative: false
-                        },
+            var oCalendarModel = new JSONModel({});
+            this.getView().setModel(oCalendarModel, "CalendarModel");
+            oCalendarModel.setProperty("/legendShown", false);
 
+            var startDate = UI5Date.getInstance();
+            oCalendarModel.setProperty("/startDate", startDate);
 
-
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "8", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "8", "09", "30"),
-                            account: "Meet Max Mustermann",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "11", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "11", "12", "0"),
-                            account: "Team meeting",
-                            descriptionText: "room 1",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "12", "11", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "12", "13", "30"),
-                            account: "Lunch",
-                            descriptionText: "canteen",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "09", "30"),
-                            account: "Meet Max Mustermann",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "12", "0"),
-                            account: "Team meeting",
-                            descriptionText: "room 1",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "11", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "13", "30"),
-                            account: "Lunch",
-                            descriptionText: "canteen",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "13", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "17", "30"),
-                            account: "Discussion with clients",
-                            descriptionText: "online meeting",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "16", "04", "00"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "16", "22", "30"),
-                            account: "Discussion of the plan",
-                            descriptionText: "Online meeting",
-                            type: "Type04",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "18", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "18", "09", "30"),
-                            account: "Meeting with the manager",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "18", "11", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "18", "13", "30"),
-                            account: "Lunch",
-                            descriptionText: "canteen",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "18", "1", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "18", "22", "0"),
-                            account: "Team meeting",
-                            descriptionText: "regular",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "21", "00", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "21", "23", "30"),
-                            account: "New Product",
-                            descriptionText: "room 105",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "25", "11", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "25", "13", "30"),
-                            account: "Lunch",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "29", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "29", "12", "0"),
-                            account: "Team meeting",
-                            descriptionText: "room 1",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "30", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "30", "09", "30"),
-                            account: "Meet Max Mustermann",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "30", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "30", "12", "0"),
-                            account: "Team meeting",
-                            descriptionText: "room 1",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "30", "11", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "30", "13", "30"),
-                            account: "Lunch",
-                            type: "Type03",
-                            tentative: true
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "30", "13", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "30", "17", "30"),
-                            account: "Discussion with clients",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "31", "10", "00"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "31", "11", "30"),
-                            account: "Discussion of the plan",
-                            descriptionText: "Online meeting",
-                            type: "Type04",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "1", "3", "08", "30"),
-                            projectEndDate: UI5Date.getInstance("2023", "1", "13", "09", "30"),
-                            account: "Meeting with the manager",
-                            type: "Type02",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "1", "4", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "1", "4", "12", "0"),
-                            account: "Team meeting",
-                            descriptionText: "room 1",
-                            type: "Type01",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "2", "30", "10", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "4", "33", "12", "0"),
-                            account: "Working out of the building",
-                            type: "Type07",
-                            pic: "sap-icon://sap-ui5",
-                            tentative: false
-                        }
-                    ],
-                    headers: [
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "8", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "10", "0"),
-                            account: "Reminder",
-                            type: "Type06"
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "0", "15", "17", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "0", "15", "19", "0"),
-                            account: "Reminder",
-                            type: "Type06"
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2023", "8", "1", "0", "0"),
-                            projectEndDate: UI5Date.getInstance("2023", "10", "30", "23", "59"),
-                            account: "New quarter",
-                            type: "Type10",
-                            tentative: false
-                        },
-                        {
-                            projectStartDate: UI5Date.getInstance("2018", "1", "1", "0", "0"),
-                            projectEndDate: UI5Date.getInstance("2018", "3", "30", "23", "59"),
-                            account: "New quarter",
-                            type: "Type10",
-                            tentative: false
-                        }
-                    ]
-                },
-                    {
-                        pic: "./images/Sarah.jpeg",
-                        name: "Sarah",
-                        role: "Demand Generator",
-                        appointments: [
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "10", "18", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "10", "19", "10"),
-                                account: "Discussion of the plan",
-                                descriptionText: "Online meeting",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "9", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "13", "12", "0"),
-                                account: "Workshop out of the country",
-                                type: "Type07",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "08", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "09", "30"),
-                                account: "Discussion of the plan",
-                                descriptionText: "Online meeting",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "12", "0"),
-                                account: "Team meeting",
-                                descriptionText: "room 1",
-                                type: "Type01",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "18", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "19", "10"),
-                                account: "Discussion of the plan",
-                                descriptionText: "Online meeting",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "16", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "31", "12", "0"),
-                                account: "Workshop out of the country",
-                                type: "Type07",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2018", "0", "1", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2018", "2", "31", "23", "59"),
-                                account: "New quarter",
-                                type: "Type10",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "01", "11", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "02", "20", "12", "0"),
-                                account: "Team collaboration",
-                                descriptionText: "room 1",
-                                type: "Type01",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "3", "01", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "3", "31", "12", "0"),
-                                account: "Workshop out of the country",
-                                type: "Type07",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "4", "01", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "4", "31", "12", "0"),
-                                account: "Out of the office",
-                                type: "Type08",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "7", "1", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "7", "31", "23", "59"),
-                                account: "Vacation",
-                                descriptionText: "out of office",
-                                type: "Type04",
-                                tentative: false
-                            }
-                        ],
-                        headers: [
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "9", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "10", "0"),
-                                account: "Payment reminder",
-                                type: "Type06"
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "16", "30"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "18", "00"),
-                                account: "Private appointment",
-                                type: "Type06"
-                            }
-                        ]
-                    },
-                    {
-                        pic: "./images/Ravi.jpeg",
-                        name: "Ravi",
-                        role: "Manager",
-                        appointments: [
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "08", "30"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "09", "30"),
-                                account: "Meet John Miller",
-                                type: "Type02",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "12", "0"),
-                                account: "Team meeting",
-                                descriptionText: "room 1",
-                                type: "Type01",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "15", "13", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "15", "16", "00"),
-                                account: "Discussion with clients",
-                                descriptionText: "online",
-                                type: "Type02",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "16", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "16", "23", "59"),
-                                account: "Vacation",
-                                descriptionText: "out of office",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "17", "1", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "18", "22", "0"),
-                                account: "Workshop",
-                                descriptionText: "regular",
-                                type: "Type07",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "19", "08", "30"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "19", "18", "30"),
-                                account: "Meet John Doe",
-                                type: "Type02",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "19", "10", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "19", "16", "0"),
-                                account: "Team meeting",
-                                descriptionText: "room 1",
-                                type: "Type01",
-                                pic: "sap-icon://sap-ui5",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "19", "07", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "19", "17", "30"),
-                                account: "Discussion with clients",
-                                type: "Type02",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "20", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "20", "23", "59"),
-                                account: "Vacation",
-                                descriptionText: "out of office",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "22", "07", "00"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "27", "17", "30"),
-                                account: "Discussion with clients",
-                                descriptionText: "out of office",
-                                type: "Type02",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "2", "13", "9", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "2", "17", "10", "0"),
-                                account: "Payment week",
-                                type: "Type06"
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "03", "10", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "05", "16", "23", "59"),
-                                account: "Vacation",
-                                descriptionText: "out of office",
-                                type: "Type04",
-                                tentative: false
-                            },
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "07", "1", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "09", "31", "23", "59"),
-                                account: "New quarter",
-                                type: "Type10",
-                                tentative: false
-                            }
-                        ],
-                        headers: [
-                            {
-                                projectStartDate: UI5Date.getInstance("2023", "0", "16", "0", "0"),
-                                projectEndDate: UI5Date.getInstance("2023", "0", "16", "23", "59"),
-                                account: "Private",
-                                type: "Type05"
-                            }
-                        ]
-                    }
-                ]
+            var oEditModel = new JSONModel({
+                editMode: false
             });
-            this.getView().setModel(oModel);
-         //   oPrimarySecondaryType.setSelectedKey(this.byId("PC1").getPrimaryCalendarType());
+            this.getView().setModel(oEditModel, "editModel");
+
+
+            var legendItems =  [
+                // {
+                //     text: "Public holiday",
+                //     type: "Type07"
+                // },
+                // {
+                //     text: "Team building",
+                //     type: "Type08"
+                // },
+                // {
+                //     text: "Work from office 1",
+                //     type: "Type05",
+                //     color: "#ff69b4"
+                // },
+                // {
+                //     text: "Work from office 2",
+                //     type: "Type04",
+                //     color: "#add8e6"
+                // }
+            ];
+
+            var legendAppointmentItems = [
+                {
+                    text: "Sent for Proposal",
+                    type: "Type10"
+                },
+                {
+                    text: "RFP",
+                    type: "Type05"
+                },
+                {
+                    text: "On-Going",
+                    type: "Type01"
+                },
+                {
+                    text: "Go-Live",
+                    type: "Type08"
+                },
+                {
+                    text: "Past",
+                    type: "Type09"
+                }
+            ]; 
+
+            oCalendarModel.setProperty("/legendItems", legendItems); 
+            oCalendarModel.setProperty("/legendAppointmentItems", legendAppointmentItems); 
+
+
         },
 
+        
         handleAppointmentSelect: function (oEvent) {
             var oAppointment = oEvent.getParameter("appointment"),
                 sSelected;
@@ -479,23 +95,259 @@ function (Controller, JSONModel, MessageBox, UI5Date) {
             }
         },
 
-        // handleSelectionFinish: function(oEvent) {
-        //     var aSelectedKeys = oEvent.getSource().getSelectedKeys();
-        //     this.byId("PC1").setBuiltInViews(aSelectedKeys);
-        // },
 
-        onCalendarTypeSelect: function (oEvent) {
-            this.byId("PC1").setPrimaryCalendarType(oEvent.getParameters().selectedItem.getKey());
+        onProjectPopup: function(oEvent){
+
+            var oAppointment = oEvent.getParameter("appointment");
+            var sPath = oEvent.getParameter("appointment").getBindingContext().sPath; 
+            var sProjectID = oEvent.getParameter("appointment").getBindingContext().getObject().projectID; 
+
+            this.inumber = oAppointment.getBindingContext().getObject().userID_inumber; 
+            this.sProjectID = sProjectID; 
+            this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+  
+          },
+
+          onDialogOpen: function (fragmentName, sPath, sProjectID) {
+
+            var oEditModel = this.getView().getModel("editModel"); 
+              oEditModel.setProperty("/editMode", false); 
+
+            var that = this;
+            if (!this._pDialog) {
+                this._pDialog = Fragment.load({
+                    name: fragmentName,
+                    controller: this
+                }).then(function (_pDialog) {
+                    that.getView().addDependent(_pDialog);
+                    _pDialog.setEscapeHandler(function () {
+                        that.onCloseDialog();
+                    });
+                    return _pDialog;
+                });
+            }
+            this._pDialog.then(function (_pDialog) {
+              if(sPath) {
+                _pDialog.bindElement({
+                path: sPath,
+                parameters: {
+                    expand: "comments,skills,tools"
+                }
+              })
+                 that.onFilterSkills(sProjectID);
+                 that.onFilterTools(sProjectID);
+            }
+            _pDialog.open();
+
+            })
         },
 
-        onCalendarSecondaryTypeSelect: function (oEvent) {
-            var sKey = oEvent.getParameters().selectedItem.getKey();
-            if (sKey === "None"){
-                this.byId("PC1").setSecondaryCalendarType(undefined);
-            } else {
-                this.byId("PC1").setSecondaryCalendarType(sKey);
+        onFilterSkills(sProjectID) {
+          var oList = sap.ui.getCore().byId("skillTokens")
+          var oTemplate = sap.ui.getCore().byId("skillItem");
+          var oSorter = new sap.ui.model.Sorter("skill", false);
+
+          var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+          oList.bindAggregation("tokens", {
+              template: oTemplate,
+              path: "/skills",
+              sorter: oSorter,
+              filters: aFilters
+          });
+          oList.updateBindings();
+      },
+
+      onFilterTools(sProjectID) {
+        var oList = sap.ui.getCore().byId("toolTokens")
+        var oTemplate = sap.ui.getCore().byId("toolItem");
+        var oSorter = new sap.ui.model.Sorter("tool", false);
+
+        var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+        oList.bindAggregation("tokens", {
+            template: oTemplate,
+            path: "/teamTools",
+            sorter: oSorter,
+            filters: aFilters
+        });
+        oList.updateBindings();
+
+    },
+
+
+        onCancelDialogPress: function (oEvent) {
+            this._pDialog.then(function (_pDialog) {
+                _pDialog.close();
+                _pDialog.destroy();
+            });
+            this._pDialog = null;
+
+        },
+
+        onDeleteToken: function(oEvent){
+            var sPath = oEvent.getParameter("token").getBindingContext().sPath;
+    
+            var that = this; 
+            that.getView().setBusy(true);
+            var oModel = this.getView().getModel();
+            sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
+                actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                onClose: function (oAction) {
+                    if (oAction === sap.m.MessageBox.Action.YES) {
+    
+                            
+                            oModel.remove(sPath, {
+                                success: function () {
+                                  //that.onStatusMethod(inumber);
+                                  that.getView().setBusy(false);
+                                  sap.m.MessageToast.show("Token deleted successfully.");
+                                },
+                                error: function () {
+                                    that.getView().setBusy(false);
+                                    sap.m.MessageToast.show("Token could not be deleted. Please try again.");
+                                }
+                            });
+                        
+                    }
+                }
+            });
+            
+    
+          },
+    
+          onAddProjectSkill: function(oEvent){
+            this.onPopover("opportunity.opportunity.view.fragments.AddSkill", oEvent); 
+    
+          },
+          onAddProjectTool: function(oEvent){
+            this.onPopover("opportunity.opportunity.view.fragments.AddTool", oEvent); 
+          },
+    
+    
+        onPopover: function(sFragment, oEvent){
+            var oButton = oEvent.getSource(),
+              oView = this.getView();
+      
+            // create popover
+            //if (!this._pPopover) {
+              this._pPopover = Fragment.load({
+                id: oView.getId(),
+                name: sFragment,
+                controller: this
+              }).then(function(oPopover){
+                oView.addDependent(oPopover);
+                return oPopover;
+              });
+           // }
+      
+            this._pPopover.then(function(oPopover){
+              oPopover.openBy(oButton);
+            });
+    
+          },
+    
+          onSubmitSkill: function(oEvent){
+            var oInput = this.getView().byId("skillInput"); 
+            var oPayload = {
+              skill: oInput.getValue(),
+              userID_inumber: this.inumber,
+              projectID_projectID: this.sProjectID
+            }; 
+                var oModel = this.getView().getModel();
+                oModel.create("/skills", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New Skill added");
+                        oInput.setValue(""); 
+                    },
+                    error: function (oError) {
+                        sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
+                    }
+                });
+          },
+    
+          onSubmitTool: function(oEvent){
+            var oInput = this.getView().byId("toolInput"); 
+            var oPayload = {
+              tool: oInput.getValue(),
+              userID_inumber: this.inumber,
+              projectID_projectID: this.sProjectID
+            }; 
+                var oModel = this.getView().getModel();
+                oModel.create("/teamTools", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New Tool added");
+                        oInput.setValue(""); 
+                    },
+                    error: function (oError) {
+                        sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
+                    }
+                });
+          },
+    
+          onEditProject: function(oEvent){
+    
+            var oNavContainer = sap.ui.getCore().byId("navContainer");
+            var oEditModel = this.getView().getModel("editModel"); 
+            var bEdit = oEditModel.getProperty("/editMode"); 
+            if(bEdit){
+              oEditModel.setProperty("/editMode", false); 
+              oNavContainer.to("dynamicPageId", "show"); 
+            }else if(!bEdit){
+              oEditModel.setProperty("/editMode", true); 
+              oNavContainer.to("dynamicPage2", "show"); 
             }
-        }
+           
+            
+          },
+    
+          onSaveProject: function(oEvent){
+            var that = this; 
+    
+            var oContext = oEvent.getSource().getParent().getBindingContext().getObject(); 
+    
+            var sPath = oEvent.getSource().getParent().getBindingContext().sPath; 
+    
+            var goLiveDate, startDate, endDate; 
+            var sGoLive = sap.ui.getCore().byId("goLiveDate").getValue(); 
+            var sStartDate = sap.ui.getCore().byId("projectDates").getDateValue();
+            var sEndDate = sap.ui.getCore().byId("projectDates").getSecondDateValue();
+    
+            if (sGoLive) goLiveDate = new Date(sGoLive).toISOString().split("T")[0];
+            if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
+            if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
+    
+            var oPayload = {
+              goLive: goLiveDate,
+              projectContact: sap.ui.getCore().byId("projectContact").getValue(),
+              marketUnit: sap.ui.getCore().byId("projectMU").getValue(),
+              topic: sap.ui.getCore().byId("projectTopic").getValue(),
+              projectStartDate: sap.ui.getCore().byId("projectDates").getDateValue(),
+              projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
+              descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
+              percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
+              // lastUpdated: new Date().toISOString().split("T")[0]
+            }
+            
+    
+            var oModel = this.getView().getModel();
+            oModel.update(sPath, oPayload, {
+              success: function () {
+    
+                that.getView().setBusy(false);
+                MessageToast.show(oContext.account + " updated successfully.")
+                that.onEditProject(); 
+              },
+              error: function (oError) {
+                MessageToast.show(oError.message);
+                that.getView().setBusy(false);
+              }
+            });
+    
+          },
+    
+    
+    
+
+
 
     });
 
