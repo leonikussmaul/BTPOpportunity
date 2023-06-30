@@ -10,9 +10,6 @@
         homeIconPressed="onHomeIconPressed"
     >
         <additionalContent>
-            <!-- <m:Button press="onNavToTasksPage" text="{globalModel>/buttonText}" id="flipButton" tooltip="{i18n>navOtherPageTooltip}"/>
-			<m:Button press="onNavToChartPage"  icon="sap-icon://vertical-bar-chart" tooltip="Go to the Chart Overview"/> -->
-
             <m:Button
                 press="onOpenServiceCatalog"
                 icon="sap-icon://education"
@@ -36,7 +33,7 @@
             <!-- <m:Button press="onOpenFeedbackCatcher" icon="sap-icon://feedback" tooltip="{i18n>feedbackCatcher}"/> -->
         </additionalContent>
         <profile>
-            <m:Avatar initials="UI" />
+            <m:Avatar initials="{parts: [{path: 'user>/firstname'}, {path: 'user>/lastname'}], formatter: '.formatter.initialsFormatter'}"/>
         </profile>
     </ShellBar>
 </core:FragmentDefinition>

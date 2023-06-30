@@ -13,14 +13,19 @@ sap.ui.define(
   
       return BaseController.extend("opportunity.opportunity.controller.App", {
         formatter: formatter,
+
         onInit() {
+          // var userModel = this.getOwnerComponent().getModel("user");
+          // if(userModel.getData().firstname && userModel.getData().lastname ){
+          // var sInitials = userModel.getData().firstname.substring(0,1) + userModel.getData().lastname.substring(0,1);
+          // userModel.getData().initials = sInitials;
+          // }
         },
 
        
         onHomeIconPressed: function(){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
           oRouter.navTo("Overview");
-          //this.getOwnerComponent().getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
         },
 
         onOpenSAPOne: function () {
@@ -59,9 +64,6 @@ sap.ui.define(
             oBtn.setText("Go to Opportunities");
           }
            
-
-          // var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
-          // var sViewName = oGlobalModel.getProperty("/viewName");
          
 
       },

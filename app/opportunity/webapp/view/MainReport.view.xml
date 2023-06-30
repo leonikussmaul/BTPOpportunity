@@ -364,8 +364,8 @@
                 class="sapUiResponsiveContentPadding"
                 showFullScreenButton="true"
                 initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
-                requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority"
-                ignoredFields="opportunityID"
+                requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"
+              
                 ignoreFromPersonalisation="opportunityID,noteDate,noteText"
             >
                 <smartTable:customToolbar>

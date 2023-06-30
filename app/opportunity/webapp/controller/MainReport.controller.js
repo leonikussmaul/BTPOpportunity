@@ -47,10 +47,6 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
 
-                var oGlobalModel = this.getOwnerComponent().getModel("globalModel");
-                var sViewName = this.getView().getViewName().split('.')[3];
-                oGlobalModel.setProperty("/viewName", sViewName);
-                oGlobalModel.setProperty("/buttonText", "Go to Tasks");
             },
 
             _getText: function (sTextId, aArgs) {
@@ -97,7 +93,8 @@ sap.ui.define([
                 var selectedItem = oEvent.getSource().getBindingContext().getObject();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {
-                    opportunityID: selectedItem.opportunityID
+                    opportunityID: selectedItem.opportunityID,
+                    //ID : selectedItem.ID
                 });
 
                 var userModel = this.getOwnerComponent().getModel("userModel");
@@ -472,19 +469,12 @@ sap.ui.define([
             },
             onDeleteTableItem: function (oEvent) {
                 var oSmartTable = this.getView().byId("mySmartTable");
-                // var aSelectedItems = oSmartTable.getTable().getSelectedItems();
-
-                // if (aSelectedItems.length === 0) {
-                //     sap.m.MessageToast.show("Select at least one item to delete");
-                //     return;
-                // }
+                var sPath = oEvent.mParameters.listItem.getBindingContext().sPath
                 var oModel = oSmartTable.getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected items?", {
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
                     onClose: function (oAction) {
                         if (oAction === sap.m.MessageBox.Action.YES) {
-                            for (var i = aSelectedItems.length - 1; i >= 0; i--) {
-                                var sPath = aSelectedItems[i].getBindingContext().getPath();
                                 oModel.remove(sPath, {
                                     success: function () {
                                         sap.m.MessageToast.show("Item deleted successfully.");
@@ -493,7 +483,6 @@ sap.ui.define([
                                         sap.m.MessageToast.show("Failed to delete item.");
                                     }
                                 });
-                            }
                         }
                     }
                 });

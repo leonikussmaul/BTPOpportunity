@@ -8,7 +8,7 @@
 >
 	<!-- <VBox fitContainer="true"> -->
 	<smartchart:SmartChart id ="smartChartObjectPage" enableAutoBinding="true"
-                                    entitySet="opportunityHeader" beforeRebindChart="beforeRebindChart"
+                                    entitySet="opportunityHeaderCopy" beforeRebindChart="beforeRebindChart"
                                     useVariantManagement="false"
 			                        useChartPersonalisation="true"
 			                        header="Opportunities per Market Unit" showFullScreenButton="true" selectionMode="Multi"

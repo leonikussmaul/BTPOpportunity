@@ -121,28 +121,28 @@ sap.ui.define([
                 
             },
 
-            onBeforeRendering: function () {
-                var that = this;
-                sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library"],
-                    function (RTE, library) {
-                        //var EditorType = library.EditorType;
-                        that.oRichTextEditor = new RTE("myRTE", {
-                            // editorType: bIsTinyMCE5 ? EditorType.TinyMCE5 : EditorType.TinyMCE6,
-                            width: "100%",
-                            value: "{noteText}",
-                            height: "400px",
-                            showGroupFont: true,
-                            showGroupLink: true,
-                            showGroupUndo: true,
-                            editable: "{editModel>/editMode}",
-                            id: "editRTE"
+            // onBeforeRendering: function () {
+            //     var that = this;
+            //     sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library"],
+            //         function (RTE, library) {
+            //             //var EditorType = library.EditorType;
+            //             that.oRichTextEditor = new RTE("myRTE", {
+            //                 // editorType: bIsTinyMCE5 ? EditorType.TinyMCE5 : EditorType.TinyMCE6,
+            //                 width: "100%",
+            //                 value: "{noteText}",
+            //                 height: "400px",
+            //                 showGroupFont: true,
+            //                 showGroupLink: true,
+            //                 showGroupUndo: true,
+            //                 editable: "{editModel>/editMode}",
+            //                 id: "editRTE"
 
-                        });
+            //             });
 
-                        that.getView().byId("idSubSectionNotes").addBlock(that.oRichTextEditor);
-                        //that.oRichTextEditor.placeAt(that.getView().byId("idSubSectionNotes"))
-                    });
-            },
+            //             that.getView().byId("idSubSectionNotes").addBlock(that.oRichTextEditor);
+            //             //that.oRichTextEditor.placeAt(that.getView().byId("idSubSectionNotes"))
+            //         });
+            // },
 
             // destroyRichTextEditor: function () {
 
@@ -263,7 +263,7 @@ sap.ui.define([
 
             onNavBackPress: function (oEvent) {
 
-                this.oRichTextEditor.destroy();
+               // this.oRichTextEditor.destroy();
 
 
                 var oModel = this.getView().getModel();

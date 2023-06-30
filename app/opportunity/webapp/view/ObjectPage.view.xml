@@ -437,7 +437,7 @@
                                                     id="idSubSectionNotes"
                                                 >
                                                     <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
-                                                    <!-- <rte:RichTextEditor 
+                                                    <rte:RichTextEditor 
 								value="{noteText}"  
 								id="editRTE" 
 								height="400px" 
@@ -446,7 +446,7 @@
 								showGroupLink="true" 
 								showGroupUndo="true" 
 								editable="{editModel>/editMode}" 
-								/> -->
+								/>
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
                                             <u:ObjectPageSection

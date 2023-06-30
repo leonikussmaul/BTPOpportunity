@@ -1,4 +1,5 @@
 const cds = require('@sap/cds');
+const queries = require('./lib/queries');
 
 const opportunityHeaderEntity = cds.entities["sapbtp.opportunities.opportunityHeader"];
 
@@ -32,3 +33,25 @@ async function assignOpportunitySeqID(req) {
         req.data.opportunityID = opportunityID;
     }
 }
+
+
+// module.exports = async function (){
+    
+//     // this.on('READ', 'Test', (req) => {
+//     //     req.reply([
+//     //         {
+//     //             ID: 1
+//     //         }
+//     //     ])
+//     // });
+
+//     this.on('READ', 'CurrentUser', async (req) => {
+//         await queries.ReadCurrentUser(req);
+//     }); 
+
+
+//     // this.on('READ', 'CurrentUser', async (req) => {
+//     //     await queries.ReadCurrentUser(req);
+//     // }); 
+
+// }

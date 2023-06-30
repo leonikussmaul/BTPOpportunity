@@ -36,21 +36,15 @@
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
-        <!-- <f:header>
-			<f:DynamicPageHeader pinnable="true">
-			
-				</f:content>
-			</f:DynamicPageHeader>
-		</f:header> -->
         <f:content>
             <IconTabBar class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter text="Account Overview">
+                    <IconTabFilter text="Market Unit Overview">
                         <content>
                             <smartchart:SmartChart
                                 id="smartChart1"
                                 enableAutoBinding="true"
-                                entitySet="opportunityHeader"
+                                entitySet="opportunityHeaderCopy"
                                 beforeRebindChart="onBeforeRebindChart"
                                 useVariantManagement="false"
                                 useChartPersonalisation="true"
@@ -72,7 +66,7 @@
                             <smartchart:SmartChart
                                 id="smartChart2"
                                 enableAutoBinding="true"
-                                entitySet="opportunityHeader"
+                                entitySet="opportunityHeaderCopy"
                                 useVariantManagement="false"
                                 useChartPersonalisation="true"
                                 header="Value per Market Unit"
@@ -94,7 +88,7 @@
                             <smartchart:SmartChart
                                 id="smartChart3"
                                 enableAutoBinding="true"
-                                entitySet="opportunityHeader"
+                                entitySet="opportunityHeaderCopy"
                                 useVariantManagement="false"
                                 useChartPersonalisation="true"
                                 header="Value per Q. Closed"

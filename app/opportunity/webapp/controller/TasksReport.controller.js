@@ -79,11 +79,6 @@ sap.ui.define([
                 // });
                 // oModel.setDefaultBindingMode("TwoWay");
 
-                var oGlobalModel = this.getOwnerComponent().getModel("globalModel"); 
-                var sViewName = this.getView().getViewName().split('.')[3]; 
-                oGlobalModel.setProperty("/viewName", sViewName);
-                oGlobalModel.setProperty("/buttonText", "Go to Opportunities");
-
                 this.onReadTasksData(); 
                
                 

@@ -429,6 +429,14 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       }
     },
 
+    initialsFormatter: function(sFirstName, sLastName){
+      if(sFirstName && sLastName){
+        var sInitials = sFirstName.substring(0,1) + sLastName.substring(0,1);
+        return sInitials; 
+
+      }
+    } 
+  
     //priority
     //sap-icon://expand-group low
     //sap-icon://collapse-group high

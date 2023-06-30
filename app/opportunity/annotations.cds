@@ -1,6 +1,37 @@
+
+
+
 using OpportunityService as service from '../../srv/opportunities';
 
+// https://sap.github.io/odata-vocabularies/vocabularies/UI.xml
 annotate service.opportunityHeader with {
+    // @Semantics.aggregate: true
+    account                   @Common.Label        : 'Account'
+                              @Common.FieldControl : #Mandatory;
+    marketUnit                @Common.Label        : 'Market Unit'
+                              @Common.FieldControl : #Mandatory;
+    clientContactPerson       @Common.Label        : 'Client Contact';
+    opportunityClosedQuarter  @Common.Label        : 'Q. Closed';
+    opportunityCreatedQuarter @Common.Label        : 'Q. Created';
+    opportunityID             @Common.Label        : 'Opportunity ID';
+    opportunityInCRM          @Common.Label        : 'Value in CRM';
+    opportunityValue          @Common.Label        : 'Value';
+    primaryContact            @Common.Label        : 'Owner';
+    source                    @Common.Label        : 'Source';
+    ssa                       @Common.Label        : 'SSA';
+    status                    @Common.Label        : 'Status';
+    topic                     @Common.Label        : 'Topic';
+    priority                  @Common.Label        : 'Priority';
+    opportunityStartDate      @Common.Label        : 'Start Date';
+    opportunityDueDate        @Common.Label        : 'Due Date';
+    progress                  @Common.Label        : 'Progress';
+    isFavorite                @Common.Label        : 'Favorite';
+    noteDate                  @Common.Label        : 'Note Date';
+    noteText                  @Common.Label        : 'Note Text';
+
+};
+
+annotate service.opportunityHeaderCopy with {
     // @Semantics.aggregate: true
     account                   @Common.Label        : 'Account'
                               @Common.FieldControl : #Mandatory;
@@ -63,74 +94,118 @@ annotate service.opportunityDeliverables with {
     completedOn      @Common.Label : 'Completed On';
 };
 
-
-// annotate  {
-//   @Analytics.AggregatedProperty #min: {
-//     Name                : 'minPricing',
-//     AggregationMethod   : 'min',
-//     AggregatableProperty: 'opportunityValue',
-//     ![@Common.Label]    : 'Minimum Net Amount'
-//   }
-//   @Analytics.AggregatedProperty #max: {
-//     Name                : 'maxPricing',
-//     AggregationMethod   : 'max',
-//     AggregatableProperty: 'opportunityValue',
-//     ![@Common.Label]    : 'Maximum Net Amount'
-//   }
-//   @Analytics.AggregatedProperty #avg: {
-//     Name                : 'avgPricing',
-//     AggregationMethod   : 'average',
-//     AggregatableProperty: 'opportunityValue',
-//     ![@Common.Label]    : 'Average Net Amount'
-//   }
-//   @Analytics.AggregatedProperty #sum: {
-//     Name                : 'totalPricing',
-//     AggregationMethod   : 'sum',
-//     AggregatableProperty: 'opportunityValue',
-//     ![@Common.Label]    : 'Total Net Amount'
-//   }
-
-//   @Aggregation.ApplySupported       : {
-//     Transformations         : [
-//       'aggregate',
-//       'topcount',
-//       'bottomcount',
-//       'identity',
-//       'concat',
-//       'groupby',
-//       'filter',
-//       'expand',
-//       'top',
-//       'skip',
-//       'orderby',
-//       'search'
-//     ],
-//     CustomAggregationMethods: ['Custom.concat'],
-//     Rollup                  : #None,
-//     PropertyRestrictions    : true,
-//     GroupableProperties     : [
-//       opportunityValue
-//     ],
-//     AggregatableProperties  : [{Property: opportunityValue}]
-//   }
+annotate service.opportunityHeaderCopy with @(
+    // Header-level annotations
+    Aggregation.ApplySupported           : {
+        PropertyRestrictions   : true,
+        Transformations        : [
+            'aggregate',
+            'topcount',
+            'bottomcount',
+            'identity',
+            'concat',
+            'groupby',
+            'filter',
+            'expand',
+            'top',
+            'skip',
+            'orderby',
+            'search'
+        ],
+        AggregatableProperties : [{
+            $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : opportunityValue
+        },
+        {
+             $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : progress
+        }],
+        GroupableProperties    : [
+            marketUnit,
+            status,
+            topic,
+            account,
+            opportunityInCRM,
+            opportunityCreatedQuarter,
+            opportunityClosedQuarter,
+            clientContactPerson,
+            priority,
+            progress
+            
+        ]
+    },
 
 
-//   annotate service.opportunityHeader with @UI.Chart #ChartQualifier: {
-//     $Type              : 'UI.ChartDefinitionType',
-//     Title              : 'Chart Title',
-//     Description        : 'Chart Description',
-//     ChartType          : #Column,
-//     DynamicMeasures    : ['@Analytics.AggregatedProperty#sum'],
-//     Dimensions         : [account, marketUnit],
-//     MeasureAttributes  : [{
-//       $Type         : 'UI.ChartMeasureAttributeType',
-//       DynamicMeasure: '@Analytics.AggregatedProperty#sum',
-//       Role          : #Axis1
-//     }],
-//     DimensionAttributes: [{
-//       $Type    : 'UI.ChartDimensionAttributeType',
-//       Dimension: opportunityValue,
-//       Role     : #Category
-//     }]
-//   };
-// }
+    Aggregation.CustomAggregate #opportunityValue : 'Edm.Int32',
+    Aggregation.CustomAggregate #progress : 'Edm.Int32',
+
+    UI : {Chart : {
+        Title       : 'Default',
+        Description : 'Default chart',
+        ChartType  : #Column,
+        Dimensions : [marketUnit,account],
+        Measures   : [opportunityValue],
+        DimensionAttributes : [{
+            $Type     : 'UI.ChartDimensionAttributeType',
+            Dimension : marketUnit,
+            Role      : #Series
+        }]
+    }}) 
+
+{
+    // Element-level annotations
+    marketUnit    @(
+        title               : '{i18n>marketUnit}',
+        Analytics.Dimension : true,
+        Role                : #Series
+    );
+    topic     @(
+        title               : '{i18n>topic}',
+        Analytics.Dimension : true
+    );
+    account     @(
+        title               : '{i18n>account}',
+        Analytics.Dimension : true
+    );
+    status  @(
+        title               : '{i18n>status}',
+        Analytics.Dimension : true
+    );
+    priority  @(
+        title               : '{i18n>priority}',
+        Analytics.Dimension : true
+    );
+    opportunityValue         @(
+        title               : '{i18n>opportunityValue}',
+        Analytics.Measure   : true,
+        Aggregation.default : #SUM,
+    );
+      progress         @(
+        title               : '{i18n>progress}',
+        Analytics.Measure   : true,
+        Aggregation.default : #SUM,
+    );
+    clientContactPerson @(
+        title               : '{i18n>clientContactPerson}',
+        Analytics.Dimension : true
+    );
+     opportunityClosedQuarter         @(
+        title               : '{i18n>opportunityClosedQuarter}',
+        Analytics.Dimension : true
+    );
+     opportunityCreatedQuarter         @(
+        title               : '{i18n>opportunityCreatedQuarter}',
+        Analytics.Dimension : true
+    );
+    opportunityInCRM         @(
+        title               : '{i18n>opportunityInCRM}',
+        Analytics.Dimension : true
+    );
+   
+}
+
+
+// status
+// topic
+// priority
+// progress

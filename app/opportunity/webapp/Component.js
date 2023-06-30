@@ -31,9 +31,6 @@ sap.ui.define([
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
 
-                this.setModel(new JSONModel(), "globalModel");
-                this.getModel("globalModel").setProperty("/buttonText", "Go to Tasks");
-
                 this.setModel(new JSONModel(), "userModel");
                 this.getModel("userModel").setProperty("/opportunityID");
 
@@ -137,105 +134,61 @@ sap.ui.define([
                             ]
                 }
 
-                // var aTeam = {
-
-                //     "lines": [
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Ravi"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Sarah"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Vijay"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Stefan"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Gurpreet"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Sunil"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Nesimi"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Bas"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Matt"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Peter"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Elinor"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Rudolf"
-                //         },
-                //         {
-                //             "from": "Rajat",
-                //             "to": "Omar"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Amit"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Leoni"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Liliana"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Shubham"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Karthik"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Sneha"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Arpit"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Ami"
-                //         },
-                //         {
-                //             "from": "Ravi",
-                //             "to": "Abhay"
-                //         }
-                //     ]
-                // }
-
                 this.setModel(new JSONModel(), "teamModel");
                 this.getModel("teamModel").setData(aTeam);
 
+    
+                var LoggedUser = new JSONModel();
+                this.setModel(LoggedUser, "LoggedUser");
+    
+                this.getCurrentUser()
+                    .then((data)=> {
+                        if (data && data.value && data.value.length > 0) {
+                            this.saveUserModel(data.value[0]);
+    
+                        }
+    
+                        // triggers navigation to the default route (where pattern = "")
+                        this.getRouter().initialize();
+                    })
 
-            }
+
+            },
+
+            getCurrentUser: function () {
+                return new Promise((resolve, reject) => {
+                    $.get({
+                        url: "/opportunity/CurrentUser",
+                        headers: {
+                            ContentType: "application/json",
+                            Accept: "application/json",
+                            cache: false,
+                            "X-CSRF-Token": "Fetch"
+                        },
+                        success: function (data) {
+                            resolve(data)
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                });
+            },
+    
+            /**
+             * Saves the user data from the backend system to
+             * a local JSON Model called UserModel
+             * @param {object} userData
+             * @return {void} Nothing
+             */
+            saveUserModel: function(userData) {
+                userData["bAllowEdit"]=true;
+                this.getModel("UserModel").setData(userData);
+                if(userData.dataReplicated) {
+                    this.getModel().refresh();
+                }
+            },
+    
         });
     }
 );
