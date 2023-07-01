@@ -473,7 +473,6 @@
                                                             width="700px"
                                                         >
                                                             <core:Fragment
-                                                                id="idSmartChartFragment"
                                                                 fragmentName="opportunity.opportunity.view.fragments.SmartChart"
                                                                 type="XML"
                                                             />

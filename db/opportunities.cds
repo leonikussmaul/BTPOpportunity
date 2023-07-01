@@ -19,8 +19,10 @@ entity opportunityHeader {
         opportunityCreatedQuarter : String(10);
         opportunityClosedQuarter  : String(10);
         opportunityValue          : Integer;
+        valueMonth                : String(10);
+        valueYear                 : String(10);
         opportunityInCRM          : String(3);
-        noteText                  : String(800);
+        noteText                  : String(5000);
         noteDate                  : Date;
         actionItems               : Composition of many opportunityActionItems
                                         on actionItems.opptID = $self;
@@ -39,7 +41,7 @@ entity opportunityActionItems {
         actionDueDate        : Date;
         actionCustomer       : String(255);
         actionTitle          : String(255);
-        actionTask           : String(800);
+        actionTask           : String(5000);
         actionOwner          : String(20);
         actionProgress       : Integer;
         actionTopic          : String(255);
@@ -55,7 +57,7 @@ entity opportunityActionItems {
 entity opportunitySubTasks {
     key ID               : UUID;
         opptID           : Association to opportunityActionItems;
-        subTask          : String(800);
+        subTask          : String(5000);
         subTaskDueDate   : Date;
         subTaskOwner     : String(20);
         subTaskCompleted : Boolean;
@@ -65,18 +67,18 @@ entity opportunitySubTasks {
 
 @cds.autoexpose
 entity opportunityTopics {
-    key ID     : UUID;
-        opptID : Association to opportunityHeader;
-        topic  : String(255);
-        score: Integer; 
-        comment: String(800); 
+    key ID      : UUID;
+        opptID  : Association to opportunityHeader;
+        topic   : String(255);
+        score   : Integer;
+        comment : String(5000);
 };
 
 @cds.autoexpose
 entity opportunityComments {
     key ID       : UUID;
         opptID   : Association to opportunityHeader;
-        comment  : String(800);
+        comment  : String(5000);
         postedBy : String(20);
         postedOn : DateTime;
         imageSrc : String(255);
@@ -86,7 +88,7 @@ entity opportunityComments {
 entity opportunityTasksComments {
     key ID       : UUID;
         opptID   : Association to opportunityActionItems;
-        comment  : String(800);
+        comment  : String(5000);
         postedBy : String(20);
         postedOn : DateTime;
         imageSrc : String(255);
@@ -108,7 +110,7 @@ entity opportunityDeliverables {
         status           : String(20);
         completed        : Boolean;
         completedOn      : Date;
-        shortDescription : String(800);
+        shortDescription : String(5000);
         primaryContact   : String(50);
 };
 
@@ -170,13 +172,13 @@ entity teamMembers {
         initials    : String(5);
         photoSrc    : String(255);
         email       : String(255);
-        location        : String(55);
+        location    : String(55);
         role        : String(55);
         joined      : Date;
         manager     : String(55);
         mainArea    : String(55);
-        description : String(800);
-        utilization: Integer; 
+        description : String(5000);
+        utilization : Integer;
         skills      : Composition of many skills
                           on skills.userID = $self;
         tools       : Composition of many teamTools
@@ -190,33 +192,33 @@ entity teamMembers {
 
 @cds.autoexpose
 entity skills {
-    key skillID : UUID;
-        userID  : Association to teamMembers;
-        skill   : String(255);
-        level   : String(20);
-        sap     : Boolean;
-        projectID:  Association to teamProjects;
+    key skillID   : UUID;
+        userID    : Association to teamMembers;
+        skill     : String(255);
+        level     : String(20);
+        sap       : Boolean;
+        projectID : Association to teamProjects;
 };
 
 @cds.autoexpose
 entity teamForecast {
     key forecastID : UUID;
-        userID  : Association to teamMembers;
-        month   : String(20);
-        year   : Integer;
-        forecast     : Integer;
-        actual: Integer; 
-        average: Integer; 
+        userID     : Association to teamMembers;
+        month      : String(20);
+        year       : Integer;
+        forecast   : Integer;
+        actual     : Integer;
+        average    : Integer;
 };
 
 @cds.autoexpose
 entity teamTools {
-    key toolID : UUID;
-        userID : Association to teamMembers;
-        tool   : String(255);
-        level  : String(20);
-        sap    : Boolean;
-        projectID:  Association to teamProjects;
+    key toolID    : UUID;
+        userID    : Association to teamMembers;
+        tool      : String(255);
+        level     : String(20);
+        sap       : Boolean;
+        projectID : Association to teamProjects;
 };
 
 @cds.autoexpose
@@ -233,17 +235,17 @@ entity teamProjects {
         projectStartDate : Date;
         projectEndDate   : Date;
         progress         : Integer;
-        descriptionText  : String(800);
+        descriptionText  : String(5000);
         descriptionDate  : Date;
         percentage       : Integer;
         goLive           : Date;
         lastUpdated      : DateTime;
         comments         : Composition of many projectComments
                                on comments.user = $self;
-        skills      : Composition of many skills
-                                on skills.projectID = $self;
-        tools       : Composition of many teamTools
-                                on tools.projectID = $self;
+        skills           : Composition of many skills
+                               on skills.projectID = $self;
+        tools            : Composition of many teamTools
+                               on tools.projectID = $self;
 };
 
 
@@ -251,7 +253,7 @@ entity teamProjects {
 entity projectComments {
     key commentID : UUID;
         user      : Association to teamProjects;
-        comment   : String(800);
+        comment   : String(5000);
         postedBy  : String(20);
         postedOn  : DateTime;
         imageSrc  : String(255);
@@ -259,6 +261,6 @@ entity projectComments {
 
 @cds.autoexpose
 entity projectStatusVH {
-    key ID                 : UUID;
+    key ID     : UUID;
         status : String(20);
 };

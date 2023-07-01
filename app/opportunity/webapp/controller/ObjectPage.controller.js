@@ -84,7 +84,6 @@ sap.ui.define([
 
                 this.getOwnerComponent().getModel().attachRequestCompleted(function (oEvent) {
 
-
                     var oTabModel = this.getOwnerComponent().getModel("tabModel");
                     // var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
                     //var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
@@ -112,14 +111,6 @@ sap.ui.define([
 
             },
 
-            beforeRebindChart: function (oEvent) {
-                var oBindingParams = oEvent.getParameter('bindingParams');
-                //var sOpportunityID = oArguments.opportunityID;
-                var sOpportunityID = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
-                var filterCustomerID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
-                oBindingParams.filters.push(filterCustomerID);
-                
-            },
 
             // onBeforeRendering: function () {
             //     var that = this;
@@ -350,6 +341,12 @@ sap.ui.define([
 
                 var oData = this.getView().getModel("editPageModel").getData();
 
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+                              ];
+              
+                              const d = new Date();
+                             var sMonth = monthNames[d.getMonth()];
 
                 var oPayload = {
                     account: oData.account,
@@ -368,7 +365,9 @@ sap.ui.define([
                     source: oData.source,
                     status: this.getView().byId("segmentedStatusObject").getSelectedKey(),
                     ssa: oData.ssa,
-                    topic: oData.topic
+                    topic: oData.topic,
+                    valueMonth :               sMonth,
+                    valueYear   :              new Date().getFullYear().toString()
                 }
 
                 var sPath = this.getView().getBindingContext().sPath;
@@ -845,6 +844,15 @@ sap.ui.define([
                 var filterOpportunityID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
                 oBindingParams.filters.push(filterOpportunityID);
             },
+
+            // beforeRebindChart: function (oEvent) {
+            //     var oBindingParams = oEvent.getParameter('bindingParams');
+            //     //var sOpportunityID = oArguments.opportunityID;
+            //     var sOpportunityID = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
+            //     var filterCustomerID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
+            //     oBindingParams.filters.push(filterCustomerID);
+                
+            // },
 
             // onGridListItemDetailPress: function(oEvent){
             //         var selectedItem = oEvent.getSource().getBindingContext("pageModel").getObject();
@@ -1456,14 +1464,14 @@ COMMENTS
                 
                 var oBindingParams = oEvent.getParameter("bindingParams");
 
-                var fnGroupHeaderFormatter = function (oContext) {
-                    var sHeader = oContext.getProperty("deliverable");
-                    return {
-                        key: sHeader,
-                    };
-                };
-                var oGrouping = new sap.ui.model.Sorter("deliverable", true, fnGroupHeaderFormatter);
-                oBindingParams.sorter.push(oGrouping);
+                // var fnGroupHeaderFormatter = function (oContext) {
+                //     var sHeader = oContext.getProperty("deliverable");
+                //     return {
+                //         key: sHeader,
+                //     };
+                // };
+                // var oGrouping = new sap.ui.model.Sorter("deliverable", true, fnGroupHeaderFormatter);
+                // oBindingParams.sorter.push(oGrouping);
 
             },
 

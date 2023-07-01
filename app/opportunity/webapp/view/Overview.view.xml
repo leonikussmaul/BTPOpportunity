@@ -18,62 +18,66 @@
     xmlns:tnt="sap.tnt"
     xmlns:main="sap.ui.webc.main"
     xmlns:layout="sap.ui.layout"
+	xmlns:ui-integration="sap.ui.integration.widgets"
 >
 
-	<SlideTile id="slideTile2"
-					           tiles="Slide Tile" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" 
-					          
-					           tooltip="SlideTile 2"
-					           press="pressSlideTile"
-					           transitionTime="250" displayTime="2500"
-					           sizeBehavior="Responsive">
-						<GenericTile id="tile7" backgroundImage="./images/Sarah.jpeg" 
-						             tooltip="{tooltip}"
-						             frameType="TwoByOne"
-						             press="press"
-						             sizeBehavior="Responsive">
-							<TileContent footer="Footer">
-								<NewsContent contentText="Content"
-								             subheader="Subtitle"/>
-							</TileContent>
-						</GenericTile>
-					</SlideTile>
 
-   
-   	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" 
-    header="Opportunities" 
-    subheader="Expenses"  
-    press="press" sizeBehavior="Responsive"
-   >
-		<TileContent unit="Unit" footer="Footer Text">
-			<NumericContent value="1762" icon="sap-icon://line-charts" withMargin="false"
-							                valueColor="Critical"
-							                indicator="Down" />
-		</TileContent>
-	</GenericTile>
+    <f:DynamicPage
+        id="page"
+        title="{i18n>title}"
+        backgroundDesign="List"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="Hi {user>/firstname}, Welcome to Demand Genius. "
+                        id="headerTitle"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+          
+        </f:header>
+
+        <f:content>
 
 
+<ScrollContainer
+		height="100%"
+		width="100%"
+		vertical="true"
+		focusable="true">
 
-	<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Cumulative Totals" subheader="Expenses" press="press">
-		<TileContent unit="Unit" footer="Footer Text">
-			<NumericContent value="12" withMargin="false" />
-		</TileContent>
-	</GenericTile>
+		<!-- <Title text="Opportunities" /> -->
 
-<!-- 
-    <GenericTile header="{title}"
-					             subheader="{subtitle}"
-					             state="{=${state} || 'Loaded'}"
-					             scope="{/scope}"
-					             press="press"
-					             class="sapUiTinyMarginEnd"
-					             sizeBehavior="{/sizeBehavior}">
-						<TileContent unit="{unit}" footer="{footer}">
-							<NumericContent withMargin="false"
-							                value="{kpivalue}"
-							                valueColor="{color}"
-							                indicator="{trend}"
-							                scale="{scale}"/>
-						</TileContent>
-					</GenericTile> -->
+	<ui-integration:Card manifest="./cardManifests/cardManifest.json" width="300px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestDonut.json" width="290px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestTasks.json" width="500px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestQuickLinks.json" width="250px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestRFP.json" width="320px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestGoLive.json" width="320px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+
+<!-- <ui-integration:Card manifest="./cardManifests/cardManifestWebPage.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" /> -->
+
+<!-- <ui-integration:Card manifest="./cardManifests/cardManifestCalendar.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" /> -->
+
+
+
+</ScrollContainer>
+          
+        </f:content>
+    </f:DynamicPage>
+
 </mvc:View>
+
+
+

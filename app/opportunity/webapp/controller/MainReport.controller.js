@@ -203,6 +203,13 @@ sap.ui.define([
                     }
                 })
 
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+                ];
+
+                const d = new Date();
+               var sMonth = monthNames[d.getMonth()];
+
 
                 //add deliverable field to odata
                 var oNewItem = {
@@ -224,14 +231,16 @@ sap.ui.define([
                     noteDate: sTodayDate,
                     noteText: oData.noteText,
                     progress: oData.progress,
-                    // actionItems: [{
-                    //     actionDueDate: sTodayDate,
-                    //     actionOwner: oData.primaryContact,
-                    //     actionProgress: oData.progress,
-                    //     actionTopic: oData.topic,
-                    //     actionTask: oData.account
-                    // }],
-                    topics: aTopics,
+                    valueMonth :               sMonth,
+                    valueYear   :              new Date().getFullYear().toString(),
+                    // // actionItems: [{
+                    // //     actionDueDate: sTodayDate,
+                    // //     actionOwner: oData.primaryContact,
+                    // //     actionProgress: oData.progress,
+                    // //     actionTopic: oData.topic,
+                    // //     actionTask: oData.account
+                    // // }],
+                    // topics: aTopics,
                     deliverables: aDeliverables
                 };
 
