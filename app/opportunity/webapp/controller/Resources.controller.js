@@ -46,6 +46,9 @@ sap.ui.define([
 
         this.onStatusMethod(this.inumber);
 
+        var oChart = this.getView().byId("smartChartTeamForecast"); 
+        if(oChart.isInitialised()) oChart.rebindChart(); 
+
       },
 
       onStatusMethod: function (inumber) {
@@ -605,6 +608,70 @@ sap.ui.define([
         });
 
       },
+
+      beforeRebindUtilizationChart: function(oEvent){
+
+          var oBindingParams = oEvent.getParameter('bindingParams');
+          var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
+          oBindingParams.filters.push(oFilter);
+
+      },
+
+      onAddForecast: function(oEvent){
+        this.onDialogOpen("opportunity.opportunity.view.fragments.AddForecast");
+
+      },
+
+      onSubmitForecast: function(oEvent){
+
+        var that = this; 
+        that.getView().setBusy(true); 
+        var oChart = this.getView().byId("smartChartTeamForecast"); 
+
+        var that = this;
+        var oDialog = oEvent.getSource().getParent().getParent();
+        var oAddProjectModel = this.getView().getModel("AddProjectModel");
+        var oData = oAddProjectModel.getData();
+
+        var sYear =  new Date().getFullYear().toString(); 
+
+            var oPayload = {
+              userID_inumber: this.inumber, 
+              month: oData.month,
+              year: sYear,
+              forecast: oData.forecast,
+              actual: oData.actual
+
+            };
+
+            var sPath = "/teamForecast"
+
+            var oModel = this.getView().getModel();
+            oModel.create(sPath, oPayload, {
+                success: function (oData, response) {
+                    MessageToast.show("New Forecast added!");
+                    oDialog.close();
+                    that.getView().getModel("ProjectModel").refresh();
+                    
+                    oAddProjectModel.setData({});
+                    oChart.rebindChart(); 
+                    that.getView().setBusy(false); 
+                },
+                error: function (oError) {
+                    sap.m.MessageBox.error("Forecast could not be created, check your input and try again.");
+                    that.getView().setBusy(false); 
+                }
+            });
+
+      },
+
+      onEditForecast: function(oEvent){
+        var oChart = this.getView().byId("smartChartTeamForecast"); 
+
+      },
+
+      
+      
 
 
 

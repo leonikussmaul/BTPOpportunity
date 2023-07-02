@@ -15,6 +15,9 @@ entity opportunityHeader {
         opportunityStartDate      : Date;
         opportunityDueDate        : Date;
         progress                  : Integer;
+        adoption                  : Integer;
+        consumption               : Integer;
+        averageMaturity           : Integer;
         isFavorite                : Boolean;
         opportunityCreatedQuarter : String(10);
         opportunityClosedQuarter  : String(10);
@@ -32,7 +35,10 @@ entity opportunityHeader {
                                         on deliverables.opptID = $self;
         comments                  : Composition of many opportunityComments
                                         on comments.opptID = $self;
+        maturity               : Composition of many opportunityMaturity
+                                        on maturity.opptID = $self;
 };
+
 
 @cds.autoexpose
 entity opportunityActionItems {
@@ -82,6 +88,16 @@ entity opportunityComments {
         postedBy : String(20);
         postedOn : DateTime;
         imageSrc : String(255);
+};
+
+
+@cds.autoexpose
+entity opportunityMaturity {
+    key ID       : UUID;
+        opptID               : Association to opportunityHeader;
+        topic    : String(255);
+        maturity : Integer;
+        comment: String(800); 
 };
 
 @cds.autoexpose
@@ -209,6 +225,7 @@ entity teamForecast {
         forecast   : Integer;
         actual     : Integer;
         average    : Integer;
+        order:      Integer; 
 };
 
 @cds.autoexpose
@@ -234,6 +251,8 @@ entity teamProjects {
         status           : String(50);
         projectStartDate : Date;
         projectEndDate   : Date;
+        projectStartDateTime : DateTime;
+        projectEndDateTime   : DateTime;
         progress         : Integer;
         descriptionText  : String(5000);
         descriptionDate  : Date;
@@ -263,4 +282,12 @@ entity projectComments {
 entity projectStatusVH {
     key ID     : UUID;
         status : String(20);
+};
+
+
+@cds.autoexpose
+entity teamForecastMonthVH {
+    key ID    : UUID;
+        month : String(20);
+        order: Integer; 
 };

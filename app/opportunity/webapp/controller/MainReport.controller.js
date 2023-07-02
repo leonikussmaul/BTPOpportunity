@@ -210,6 +210,15 @@ sap.ui.define([
                 const d = new Date();
                var sMonth = monthNames[d.getMonth()];
 
+               var sAdoption = 0; 
+               var sConsumption = 0; 
+               var sProgress = 0;
+               if(oData.adoption) sAdoption = oData.adoption; 
+               if(oData.consumption) sConsumption = oData.consumption; 
+               if(oData.progress) sProgress = oData.progress; 
+
+
+
 
                 //add deliverable field to odata
                 var oNewItem = {
@@ -230,16 +239,32 @@ sap.ui.define([
                     priority: oData.priority,
                     noteDate: sTodayDate,
                     noteText: oData.noteText,
-                    progress: oData.progress,
+                    progress: sProgress,
+                    adoption: sAdoption,
+                    consumption: sConsumption,
                     valueMonth :               sMonth,
                     valueYear   :              new Date().getFullYear().toString(),
-                    // // actionItems: [{
-                    // //     actionDueDate: sTodayDate,
-                    // //     actionOwner: oData.primaryContact,
-                    // //     actionProgress: oData.progress,
-                    // //     actionTopic: oData.topic,
-                    // //     actionTask: oData.account
-                    // // }],
+                    maturity: [{
+                        topic: "Overall BTP Knowledge",
+                    },
+                    {
+                        topic: "Integration",
+                    }, {
+                        topic: "Governance",
+                    },{
+                        topic: "Extension",
+                    }, {
+                        topic: "Data",
+                    }, {
+                        topic: "CSD",
+                    }, {
+                        topic: "Clean Core",
+                    }, {
+                        topic: "Automation / AI",
+                    },
+                    {
+                        topic: "Analytics",
+                    }],
                     // topics: aTopics,
                     deliverables: aDeliverables
                 };

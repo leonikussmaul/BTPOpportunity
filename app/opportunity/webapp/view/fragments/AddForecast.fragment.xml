@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form">
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="40%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Add a Forecast for {firstName}"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+	
+     <MessageStrip text="Please bear in mind that the ideal utilization is at no more than 85%." showCloseButton="true"></MessageStrip>
+		<form:SimpleForm editable="true"
+						>
+			
+           
+
+            <Label text="{i18n>month}" />
+			<ComboBox selectedKey="{AddProjectModel>/month}" placeholder="Select the applicable month"
+							 items="{
+                                    path: '/teamForecastMonthVH',
+                                    sorter: {
+                                                path: 'order',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{month}" text="{month}"/>
+			</ComboBox>
+
+             <Label text="Forecast (in %)"/>
+			<Slider value="{AddProjectModel>/forecast}" width="100%" step="10"
+							min="0" max="200"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false" enableTickmarks="true">
+                            </Slider> 
+
+             <Label text="Actual (in %)"/>
+			<Slider value="{AddProjectModel>/actual}" width="100%" step="10"
+							min="0" max="200"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false" enableTickmarks="true"> 
+                            
+                            </Slider> 
+
+
+           
+
+
+		</form:SimpleForm>
+		<footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitForecast" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>

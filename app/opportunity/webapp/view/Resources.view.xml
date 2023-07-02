@@ -8,6 +8,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns:form="sap.ui.layout.form"
+    	xmlns:smartchart="sap.ui.comp.smartchart"
     xmlns:f="sap.f"
     xmlns:l="sap.ui.layout"
     xmlns:fb="sap.ui.comp.filterbar"
@@ -513,6 +514,25 @@
                     </f:GridList>
 
                 </HBox>
+
+                <VBox>
+                <smartchart:SmartChart id ="smartChartTeamForecast" enableAutoBinding="true" initialized="onInitChart"
+                                    entitySet="teamForecast" beforeRebindChart="beforeRebindUtilizationChart"
+                                    useVariantManagement="false"
+			                        useChartPersonalisation="true"
+			                        header="{firstName}'s Utilization" showFullScreenButton="true" selectionMode="Multi"
+			                        showChartTooltip="true" showDrillBreadcrumbs="false"
+			                        showDetailsButton="false" showDrillButtons="true" noData="Utilization is either not tracked or not applicable for {firstName}"
+			                        showSemanticNavigationButton="true" >
+                                    	<smartchart:toolbar>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<OverflowToolbarButton icon="sap-icon://add" type="Accept" tooltip="Register a new forecast" press="onAddForecast" />
+                    <OverflowToolbarButton icon="sap-icon://edit" type="Transparent" tooltip="Select a forecast to edit" press="onEditForecast" />
+				</OverflowToolbar>
+			</smartchart:toolbar>
+            </smartchart:SmartChart>
+                </VBox>
             </VBox>
         </f:content>
     </f:DynamicPage>

@@ -39,6 +39,16 @@
 						}}"
                 />
 
+                <core:Title text="{i18n>Contact}" />
+	<Label text="{i18n>primaryContact}" />
+				<Text text="{primaryContact}" />
+				<Label text="{i18n>clientContactPerson}" />
+				<Text text="{clientContactPerson}" />
+				<Label text="{i18n>ssa}" />
+				<Text text="{ssa}" />
+				<Label text="{i18n>source}" />
+				<Text text="{source}" />
+
 				<!-- values -->
                 <core:Title text="{i18n>groupValueLabel}" />
                 <Label text="{i18n>Value}" />
@@ -46,6 +56,17 @@
                 <Label text="{i18n>opportunityInCRM}" />
                 <!-- <Text text="{opportunityInCRM}" /> -->
 				<CheckBox id="opportunityInCRMObject" text="{opportunityInCRM}" selected="{= ${opportunityInCRM} === 'Yes' ? true : false}" select="onCRMCheckboxSelect"/>
+                
+                                                    <Label text="Progress"/>
+                                                    <ProgressIndicator
+                                                        width="80%"
+                                                        class="sapUiSmallMarginBottom"
+                                                        percentValue="{progress}"
+                                                        displayValue="{path: 'progress', formatter: '.formatter.progressPercentage'}"
+                                                        showValue="true"
+                                                        state="{path: 'progress', formatter: '.formatter.progressStatus'}"
+                                                    />
+
 
             </f:content>
         </f:SimpleForm>

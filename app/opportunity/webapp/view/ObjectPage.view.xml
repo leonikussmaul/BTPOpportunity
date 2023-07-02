@@ -16,23 +16,16 @@
     xmlns:dnd="sap.ui.core.dnd"
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:commons="sap.suite.ui.commons"
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+
+    xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 >
-    <TabContainer
-        items="{ path: 'tabModel>/tabs' }"
-        id="myTabContainer"
-        itemSelect="onTabItemSwitch"
-        showAddNewButton="true"
-        class="sapUiResponsiveContentPadding sapUiResponsivePadding--header"
-        addNewButtonPress="onWizardDialogPress"
-        itemClose="onTabItemClose"
-    >
-        <items>
-            <TabContainerItem
-                name="{tabModel>account}"
-                key="{tabModel>opportunityID}"
-                additionalText="{tabModel>marketUnit}"
-            >
-                <content>
+   
+
+
+                
                     <Page
                         id="ObjectPage"
                         showHeader="true"
@@ -151,7 +144,7 @@
                                                             <SegmentedButton
                                                                 selectionChange="onSegmentPressed"
                                                                 id="segmentedStatusObject"
-                                                                width="560px"
+                                                                width="540px"
                                                                 class="apUiTinyMarginBeginEnd"
                                                                 selectedKey="{status}"
                                                             >
@@ -178,7 +171,7 @@
                                                                     />
                                                                     <SegmentedButtonItem
                                                                         icon="sap-icon://checklist-item"
-                                                                        text="Completed"
+                                                                        text="Complete"
                                                                         key="Completed"
                                                                     />
                                                                 </items>
@@ -216,8 +209,8 @@
                                                         unit="EUR"
                                                     />
                                                 </VBox>
-                                                <VBox
-                                                    class="sapUiMediumMarginBeginEnd"
+                                                <!-- <VBox
+                                                    class="sapUiMediumMarginBegin"
                                                     width="15%"
                                                     visible="{= ${progress} !== null &amp;&amp; !${editModel>/editMode}}"
                                                 >
@@ -232,8 +225,8 @@
                                                         showValue="true"
                                                         state="{path: 'progress', formatter: '.formatter.progressStatus'}"
                                                     />
-                                                </VBox>
-                                                <VBox
+                                                </VBox> -->
+                                                <!-- <VBox
                                                     class="sapUiMediumMarginBeginEnd"
                                                     width="15%"
                                                     visible="{= ${editModel>/editMode}}"
@@ -243,6 +236,86 @@
                                                     />
                                                     <Slider
                                                         value="{editPageModel>/progress}"
+                                                        width="100%"
+                                                        step="25"
+                                                        change="onProgressSliderChange"
+                                                        min="0"
+                                                        max="100"
+                                                        showAdvancedTooltip="true"
+                                                        showHandleTooltip="false"
+                                                        class="sapUiSmallMarginTop"
+                                                        enableTickmarks="true"
+                                                    />
+                                                </VBox> -->
+
+                                                <!-- adoption -->
+
+                                                <VBox visible="{=!${editModel>/editMode}}">
+                                                    <!-- <HBox > -->
+                                                    <!-- <Label text="Adoption" class="sapUiLargeMarginTop"/> -->
+                                                    <Title
+                                                        text="{i18n>Adoption}" 
+                                                        class="sapUiSmallMarginBegin"
+                                                    />
+                                                    <micro:RadialMicroChart
+                                                        size="S"
+                                                        percentage="{adoption}"
+                                                        press="press"
+                                                        class="sapUiMediumMarginBegin"
+                                                        width="10%"
+                                                    />
+                                                </VBox>
+
+                                                 <VBox
+                                                    class="sapUiMediumMarginBeginEnd"
+                                                    width="15%"
+                                                    visible="{= ${editModel>/editMode}}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>Adoption}"
+                                                    />
+                                                    <Slider
+                                                        value="{editPageModel>/adoption}"
+                                                        width="100%"
+                                                        step="25"
+                                                        change="onProgressSliderChange"
+                                                        min="0"
+                                                        max="100"
+                                                        showAdvancedTooltip="true"
+                                                        showHandleTooltip="false"
+                                                        class="sapUiSmallMarginTop"
+                                                        enableTickmarks="true"
+                                                    />
+                                                </VBox>
+
+                                                <!-- consumption -->
+
+                                                 <VBox  visible="{=!${editModel>/editMode}}">
+                                                    <!-- <HBox > -->
+                                                    <!-- <Label text="Adoption" class="sapUiLargeMarginTop"/> -->
+                                                    <Title
+                                                        text="{i18n>Consumption}" 
+                                                        class="sapUiSmallMarginBegin"
+                                                    />
+                                                    <micro:RadialMicroChart
+                                                        size="S"
+                                                        percentage="{consumption}"
+                                                        press="press"
+                                                        class="sapUiMediumMarginBegin"
+                                                        width="10%"
+                                                    />
+                                                </VBox>
+
+                                                 <VBox
+                                                    class="sapUiMediumMarginBeginEnd"
+                                                    width="15%"
+                                                    visible="{= ${editModel>/editMode}}"
+                                                >
+                                                    <Title
+                                                        text="{i18n>Consumption}"
+                                                    />
+                                                    <Slider
+                                                        value="{editPageModel>/consumption}"
                                                         width="100%"
                                                         step="25"
                                                         change="onProgressSliderChange"
@@ -280,33 +353,6 @@
                                                 >
                                                     <core:Fragment
                                                         fragmentName="opportunity.opportunity.view.fragments.GeneralSectionEdit"
-                                                        type="XML"
-                                                    />
-                                                </u:ObjectPageSubSection>
-                                            </u:ObjectPageSection>
-
-                                            <u:ObjectPageSection
-                                                id="idSectionContact"
-                                                titleUppercase="false"
-                                                title="{i18n>Contact}"
-                                            >
-                                                <u:ObjectPageSubSection
-                                                    id="idSubSectionContact"
-                                                    visible="{= !${editModel>/editMode}}"
-                                                >
-                                                    <core:Fragment
-                                                        id="idContactFragment"
-                                                        fragmentName="opportunity.opportunity.view.fragments.ContactSection"
-                                                        type="XML"
-                                                    />
-                                                </u:ObjectPageSubSection>
-                                                <u:ObjectPageSubSection
-                                                    id="idSubSectionContactEdit"
-                                                    visible="{= ${editModel>/editMode}}"
-                                                >
-                                                    <core:Fragment
-                                                        id="idContactEditFragment"
-                                                        fragmentName="opportunity.opportunity.view.fragments.ContactSectionEdit"
                                                         type="XML"
                                                     />
                                                 </u:ObjectPageSubSection>
@@ -401,29 +447,164 @@
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
 
-                                             <u:ObjectPageSection
+                                            <u:ObjectPageSection
                                                 id="idSectionActivities"
                                                 titleUppercase="false"
                                                 title="{i18n>Activities}"
                                             >
-                                              <u:heading>
+                                                <u:heading>
                                                     <MessageStrip
                                                         showIcon="true"
                                                         text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more."
                                                         showCloseButton="true"
                                                     />
                                                 </u:heading>
-                                               
+
                                                 <u:ObjectPageSubSection
                                                     id="idSubSectionActivities"
                                                 >
-                                                 <u:actions>
-                                                        <Button icon="sap-icon://add"
-                                                            press="onAddActivityPress" type="Accept"
+                                                    <u:actions>
+                                                        <Button
+                                                            icon="sap-icon://add"
+                                                            press="onAddActivityPress"
+                                                            type="Accept"
                                                         />
                                                     </u:actions>
-                                                    <core:Fragment fragmentName="opportunity.opportunity.view.fragments.ActivitiesSection" type="XML"/>
-                                                    
+                                                    <core:Fragment
+                                                        fragmentName="opportunity.opportunity.view.fragments.ActivitiesSection"
+                                                        type="XML"
+                                                    />
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+
+                                            <u:ObjectPageSection
+                                                id="idSectionMaturity"
+                                                titleUppercase="false"
+                                                title="{i18n>Maturity}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionMaturity"
+                                                >
+                                                    <!-- <Table
+                                                        id="maturityTable"
+                                                        inset="false"
+                                                        items="{
+			path: '/opportunityMaturity',
+			sorter: {
+				path: 'topic'
+			}
+		}"
+                                                    >
+                                                        <columns>
+                                                            <Column
+                                                                width="12em"
+                                                            >
+                                                                <Text
+                                                                    text="Topic"
+                                                                />
+                                                            </Column>
+                                                            <Column
+                                                                hAlign="Center"
+                                                            >
+                                                                <Text
+                                                                    text="Maturity"
+                                                                />
+                                                            </Column>
+                                                        </columns>
+                                                        <items>
+                                                            <ColumnListItem
+                                                                vAlign="Middle"
+                                                            >
+                                                                <cells>
+                                                                    <ObjectIdentifier
+                                                                        title="{topic}"
+                                                                    />
+                                                                    <RatingIndicator
+                                                                        id="maturity"
+                                                                        maxValue="5"
+                                                                        class="sapUiSmallMarginBottom"
+                                                                        value="{maturity}"
+                                                                        tooltip="Maturity for {topic}"
+                                                                        change="onRatingChange"
+                                                                    />
+                                                                </cells>
+                                                            </ColumnListItem>
+                                                        </items>
+                                                    </Table> -->
+
+
+
+	<smartTable:SmartTable 
+  id="maturityTableID" 
+  entitySet="opportunityMaturity" 
+  beforeRebindTable="onBeforeRebindMaturityTable"
+  tableType="ResponsiveTable"  
+  enableExport="false"
+  useVariantManagement="false" 
+  useTablePersonalisation="true" 
+  showRowCount="false"
+  enableAutoBinding="true"
+  demandPopin="true" 
+  header="Account Assessment"
+  class="sapUiResponsiveContentPadding" 
+  showFullScreenButton="true" 
+  requestAtLeastFields="topic,maturity,comment" 
+  initiallyVisibleFields="topic,maturity,comment"
+  ignoreFromPersonalisation="ID,opptID_opportunityID"
+      
+   >
+   <Table
+                                                        id="maturityTable"
+                                                        inset="false" 
+                                                        
+                                                    >
+                                                        <columns>
+                                                            <Column width="20%">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "topic", "columnIndex" : "0", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topic", "type":"string"}' />
+                                        </customData>
+                                        <Label text="{i18n>Topic}" tooltip="{i18n>topic}" />
+                                    </Column>
+                                  
+
+                                    <Column width="2em">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "maturity", "columnIndex" : "1", "leadingProperty": "maturity", "sortProperty": "maturity", "filterProperty": "maturity", "type":"integer"}' />
+                                        </customData>
+                                        <Label text="{i18n>Maturity}" />
+                                    </Column>
+
+                                     <Column width="50%">
+                                        <customData>
+                                            <core:CustomData key="p13nData" value='\{"columnKey": "comment", "columnIndex" : "2", "leadingProperty": "comment", "sortProperty": "comment", "filterProperty": "comment", "type":"string"}' />
+                                        </customData>
+                                        <Label text="{i18n>Comment}" />
+                                    </Column>
+                                                        </columns>
+                                                        <items>
+                                                            <ColumnListItem
+                                                                vAlign="Middle" type="Detail" detailPress="onMaturityEdit"
+                                                            >
+                                                                <cells>
+                                                                    <ObjectIdentifier
+                                                                        title="{topic}"
+                                                                    />
+                                                                    <RatingIndicator
+                                                                        id="maturity"
+                                                                        maxValue="5"
+                                                                        class="sapUiSmallMarginBottom"
+                                                                        value="{maturity}"
+                                                                        tooltip="Maturity for {topic}"
+                                                                        change="onRatingChange"
+                                                                    />
+                                                                    <Text text="{comment}"  />
+                                                                </cells>
+                                                            </ColumnListItem>
+                                                        </items>
+                                                    </Table>
+				
+             
+			</smartTable:SmartTable>
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
 
@@ -432,21 +613,20 @@
                                                 titleUppercase="false"
                                                 title="{i18n>Notes}"
                                             >
-
                                                 <u:ObjectPageSubSection
                                                     id="idSubSectionNotes"
                                                 >
                                                     <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
-                                                    <rte:RichTextEditor 
-								value="{noteText}"  
-								id="editRTE" 
-								height="400px" 
-								width="100%" 
-								showGroupFont="true" 
-								showGroupLink="true" 
-								showGroupUndo="true" 
-								editable="{editModel>/editMode}" 
-								/>
+                                                    <rte:RichTextEditor
+                                                        value="{noteText}"
+                                                        id="editRTE"
+                                                        height="400px"
+                                                        width="100%"
+                                                        showGroupFont="true"
+                                                        showGroupLink="true"
+                                                        showGroupUndo="true"
+                                                        editable="{editModel>/editMode}"
+                                                    />
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
                                             <u:ObjectPageSection
@@ -691,14 +871,15 @@
 							 -->
 
                                             <List
-                                                items="{}"                                 id="opportunityComments"
+                                                items="{}"
+                                                id="opportunityComments"
                                                 width="100%"
                                                 noDataText="Looks like there are no comments yet."
                                                 mode="Delete"
-                                                delete="onDeleteComment" 
+                                                delete="onDeleteComment"
                                             >
                                                 <FeedListItem
-                                                id="commentItem"
+                                                    id="commentItem"
                                                     sender="{postedBy}"
                                                     timestamp="{ path: 'postedOn',
 														type: 'sap.ui.model.type.DateTime',
@@ -725,8 +906,6 @@
                                     </f:SidePanelItem>
                                 </f:items>
                             </f:SidePanel>
-
-
                         </content>
                         <footer>
                             <Toolbar>
@@ -755,8 +934,5 @@
                             </Toolbar>
                         </footer>
                     </Page>
-                </content>
-            </TabContainerItem>
-        </items>
-    </TabContainer>
+               
 </mvc:View>

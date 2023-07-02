@@ -65,6 +65,14 @@
 						"value": "{percentage} %",
                         "width": "35%"
 					}
+				],
+				"actions": [
+					{
+						"type": "Navigation",
+						"parameters": {
+							"url": "/opportunity/webapp/index.html#/Resources/{userID_inumber}" 
+						}
+					}
 				]
 			}
 		}

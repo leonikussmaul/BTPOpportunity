@@ -74,6 +74,14 @@ annotate service.opportunityActionItems with {
 
 };
 
+// maturity
+annotate service.opportunityMaturity with {
+    topic     @Common.Label        : 'Topic';
+    maturity    @Common.Label        : 'Maturity';
+    comment @Common.Label        : 'Comment';
+
+};
+
 // subtasks
 annotate service.opportunitySubTasks with {
     subTask          @Common.Label        : 'Sub-Task'
@@ -204,8 +212,81 @@ annotate service.opportunityHeaderCopy with @(
    
 }
 
+annotate service.teamForecast with @(
+    // Header-level annotations
+    Aggregation.ApplySupported           : {
+        PropertyRestrictions   : true,
+        Transformations        : [
+            'aggregate',
+            'topcount',
+            'bottomcount',
+            'identity',
+            'concat',
+            'groupby',
+            'filter',
+            'expand',
+            'top',
+            'skip',
+            'orderby',
+            'search'
+        ],
+        AggregatableProperties : [{
+            $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : forecast
+        },
+        {
+             $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : actual
+        }],
+        GroupableProperties    : [
+           forecast,
+           actual,
+           average,
+           year,
+           month,
+           userID_inumber
+            
+        ]
+    },
 
-// status
-// topic
-// priority
-// progress
+
+    Aggregation.CustomAggregate #forecast : 'Edm.Int32',
+    Aggregation.CustomAggregate #actual : 'Edm.Int32',
+
+    UI : {Chart : {
+        Title       : 'Default',
+        Description : 'Default chart',
+        ChartType  : #Combination,
+        Dimensions : [month],
+        Measures   : [actual,forecast],
+        DimensionAttributes : [{
+            $Type     : 'UI.ChartDimensionAttributeType',
+            Dimension : month,
+            Role      : #Series
+        }]
+    }}) 
+
+{
+    // Element-level annotations
+    month    @(
+        title               : '{i18n>month}',
+        Analytics.Dimension : true,
+        Role                : #Series
+    );
+    year     @(
+        title               : '{i18n>year}',
+        Analytics.Dimension : true
+    );
+    actual         @(
+        title               : '{i18n>actual}',
+        Analytics.Measure   : true,
+        Aggregation.default : #SUM,
+    );
+      forecast         @(
+        title               : '{i18n>forecast}',
+        Analytics.Measure   : true,
+        Aggregation.default : #SUM,
+    );
+   
+   
+}

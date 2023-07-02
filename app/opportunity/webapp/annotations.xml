@@ -64,6 +64,9 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
+
+			
+
 				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
 			</Annotations>
 			<Annotations Target="OpportunityService.opportunityHeaderCopy"
@@ -73,6 +76,42 @@
 			</Annotations>
 
 
+
+	
+			<Annotations Target="OpportunityService.teamForecast"
+				xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				
+					<Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant"
+					Qualifier="Name_Sort">
+					<Record>
+						<PropertyValue Property="Visualizations">
+							<Collection>
+								<AnnotationPath>@com.sap.vocabularies.UI.v1.Chart</AnnotationPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="SortOrder">
+							<Collection>
+								<Record>
+									<PropertyValue Property="Property">
+										<PropertyPath>order</PropertyPath>
+									</PropertyValue>
+									<PropertyValue Property="Descending">
+										<Bool>true</Bool>
+									</PropertyValue>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				
+			</Annotations>
+
+			<!-- <Annotations Target="OpportunityService.opportunityHeaderCopy"
+				xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject"
+					String="SemanticObjectCategory"/>
+			</Annotations> -->
 
 
 		</Schema>

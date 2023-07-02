@@ -1,0 +1,37 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:tnt="sap.tnt"
+>
+
+	<Dialog 
+          class="sapUiPopupWithPadding" contentWidth="30%"  resizable="true" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Title text="Edit Maturity for {localModel>/topic}"/>
+				</contentMiddle>
+				<contentRight>
+					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+	
+
+ <TextArea
+                width="100%" id="editMaturityComment" rows="3" value="{localModel>/comment}"
+                
+                placeholder="Add a comment"
+            />
+		
+		<footer>
+			<Toolbar design="Auto">
+				<content>
+					<ToolbarSpacer />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitMaturityComment" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>

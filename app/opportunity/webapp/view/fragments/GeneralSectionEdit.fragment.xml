@@ -111,7 +111,33 @@
 						}}"
                 />
 
-				<!-- values -->
+<!-- contact -->
+                <core:Title text="{i18n>Contact}" />
+               <Label text="{i18n>primaryContact}" />
+				
+
+                	<Select selectedKey="{editPageModel>/primaryContact}" 
+							 items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }">
+				<core:Item key="{primaryContact}" text="{primaryContact}"/>
+			</Select>
+
+                <!-- opportunityPrimaryContactVH -->
+				<Label text="{i18n>clientContactPerson}" />
+				<Input value="{editPageModel>/clientContactPerson}"/>
+				<Label text="{i18n>ssa}" />
+					<Select id="ssa" selectedKey="{editPageModel>/ssa}" items="{/opportunitySSAVH}">
+						<core:Item text="{SSA}" key="{SSA}"/>
+				</Select>
+				<Label text="{i18n>source}" />
+				<Input id="source" value="{editPageModel>/source}" />
+
+                	<!-- values -->
                 <core:Title text="{i18n>groupValueLabel}" />
                 <Label text="{i18n>Value} (in k)" />
                 <Input value="{editPageModel>/opportunityValue}" />
@@ -119,6 +145,21 @@
                 <!-- <Text text="{opportunityInCRM}" /> -->
 				<CheckBox id="opportunityInCRMEdit" text="{editPageModel>/opportunityInCRM}" selected="{= ${editPageModel>/opportunityInCRM} === 'Yes' ? true : false}" select="onCRMCheckboxSelect"/>
                
+                <Label
+                                                        text="{i18n>Progress}"
+                                                    />
+                                                    <Slider
+                                                        value="{editPageModel>/progress}"
+                                                        width="80%"
+                                                        step="25"
+                                                        change="onProgressSliderChange"
+                                                        min="0"
+                                                        max="100"
+                                                        showAdvancedTooltip="true"
+                                                        showHandleTooltip="false"
+                                                        class="sapUiSmallMarginTop"
+                                                        enableTickmarks="true"
+                                                    />
             </f:content>
         </f:SimpleForm>
     </VBox>

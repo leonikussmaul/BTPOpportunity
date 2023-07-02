@@ -203,7 +203,7 @@
                     "clearControlAggregation": false,
                     "viewId": "MainReport",
                     "viewName": "MainReport",
-                    "viewLevel": 0
+                    "viewLevel": 1
                 },
                 "ObjectPage": {
                     "viewType": "XML",
@@ -211,7 +211,7 @@
                     "clearControlAggregation": false,
                     "viewId": "ObjectPage",
                     "viewName": "ObjectPage",
-                    "viewLevel": 1
+                    "viewLevel": 2
                 },
                 "TasksReport": {
                     "viewType": "XML",
@@ -219,7 +219,7 @@
                     "clearControlAggregation": false,
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",
-                    "viewLevel": 0
+                    "viewLevel": 1
                 },
                 "TaskDetail": {
                     "viewType": "XML",
@@ -227,7 +227,7 @@
                     "clearControlAggregation": false,
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
-                    "viewLevel": 1
+                    "viewLevel": 2
                 },
                 "ChartPage": {
                     "viewType": "XML",
@@ -235,7 +235,7 @@
                     "clearControlAggregation": false,
                     "viewId": "ChartPage",
                     "viewName": "ChartPage",
-                    "viewLevel": 0
+                    "viewLevel": 1
                 },
                 "Calendar": {
                     "viewType": "XML",
@@ -243,7 +243,7 @@
                     "clearControlAggregation": false,
                     "viewId": "Calendar",
                     "viewName": "Calendar",
-                    "viewLevel": 0
+                    "viewLevel": 1
                 },
                 "Team": {
                     "viewType": "XML",
@@ -251,7 +251,7 @@
                     "clearControlAggregation": false,
                     "viewId": "Team",
                     "viewName": "Team",
-                    "viewLevel": 0
+                    "viewLevel": 1
                 },
                 "Resources": {
                     "viewType": "XML",
@@ -259,7 +259,7 @@
                     "clearControlAggregation": false,
                     "viewId": "Resources",
                     "viewName": "Resources",
-                    "viewLevel": 1
+                    "viewLevel": 2
                 }
             }
         },

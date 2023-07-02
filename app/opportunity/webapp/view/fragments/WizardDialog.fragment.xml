@@ -139,6 +139,20 @@
 							showAdvancedTooltip="true"
 							showHandleTooltip="false"
 							class="sapUiMediumMarginBottom" enableTickmarks="true" />
+
+							<Label text="{i18n>adoption}" />
+								<Slider value="{viewModel>/adoption}" width="100%" step="25"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false"
+							class="sapUiMediumMarginBottom" enableTickmarks="true" />
+
+							<Label text="{i18n>consumption}" />
+								<Slider value="{viewModel>/consumption}" width="100%" step="25"
+							min="0" max="100"
+							showAdvancedTooltip="true"
+							showHandleTooltip="false"
+							class="sapUiMediumMarginBottom" enableTickmarks="true" />
 							</form:SimpleForm>
 						</WizardStep>
 						<!-- step 3 -->

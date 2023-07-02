@@ -22,11 +22,15 @@
 		<PlanningCalendar 
 			id="PC1"
 			startDate="{path: 'CalendarModel>/startDate'}"
-			rows="{path: '/teamMembers', parameters: {expand: 'projects'}}"
+			rows="{path: '/teamMembers', parameters: {expand: 'projects'}, sorter: [
+      {
+        path: 'firstName', 
+        descending: false
+      }]}"
 			appointmentsVisualization="Filled" 
 			appointmentSelect="onProjectPopup"
 			showEmptyIntervalHeaders="false"
-			showWeekNumbers="true" builtInViews="Month,OneMonth,Week,Day">
+			showWeekNumbers="true" builtInViews="OneMonth,Month,Week,Day">
 				<toolbarContent>
 				<Title text="Team Overview" titleStyle="H4"/>
 				<!-- <ToggleButton icon="sap-icon://decrease-line-height"

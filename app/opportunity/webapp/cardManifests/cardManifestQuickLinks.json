@@ -24,38 +24,34 @@
 			"data": {
 				"json": [
 					{
-						"Name": "Career",
-						"icon": "sap-icon://leads",
-						"url": "/careers"
-					},
-					{
-						"Name": "Company Directory",
-						"icon": "sap-icon://address-book",
-						"url": "/companyDirectory"
-					},
-					{
-						"Name": "Development Plan",
-						"icon": "sap-icon://activity-items",
-						"url": "/developmentPlan"
-					},
-					{
-						"Name": "Business Goals",
+						"Name": "Opportunities",
 						"icon": "sap-icon://target-group",
-						"url": "/businessGoals"
+						"url": "/opportunity/webapp/index.html#/MainReport"
 					},
 					{
-						"Name": "Travel and Expenses",
-						"icon": "sap-icon://travel-expense",
-						"url": "/travelAndExpenses"
+						"Name": "Tasks",
+						"icon": "sap-icon://activities",
+						"url": "/opportunity/webapp/index.html#/TasksReport"
 					},
 					{
-						"Name": "Time off",
-						"icon": "sap-icon://general-leave-request",
-						"url": "/timeOff"
+						"Name": "Analytics",
+						"icon": "sap-icon://filter-analytics",
+						"url": "/opportunity/webapp/index.html#/ChartPage"
+					},
+
+					{
+						"Name": "Calendar",
+						"icon": "sap-icon://appointment-2",
+						"url": "/opportunity/webapp/index.html#/Calendar"
+					},
+					{
+						"Name": "Team",
+						"icon": "sap-icon://family-protection",
+						"url": "/opportunity/webapp/index.html#/Team"
 					}
 				]
 			},
-			"maxItems": 6,
+			"maxItems": 5,
 			"item": {
 				"icon": {
 					"src": "{icon}"

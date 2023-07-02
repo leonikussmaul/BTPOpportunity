@@ -1,13 +1,15 @@
 using {sapbtp.opportunities} from '../db/opportunities';
 
-@path : '/Opportunity'
+@path     : '/Opportunity'
 @requires : 'authenticated-user'
 service OpportunityService {
-@cds.redirection.target: true
+    @cds.redirection.target : true
     entity opportunityHeader           as projection on opportunities.opportunityHeader;
-   entity opportunityHeaderCopy          as projection on opportunities.opportunityHeader;
+
+    entity opportunityHeaderCopy       as projection on opportunities.opportunityHeader;
     entity opportunityTopics           as projection on opportunities.opportunityTopics;
     entity opportunityTopicsVH         as projection on opportunities.opportunityTopicsVH;
+    entity opportunityMaturity         as projection on opportunities.opportunityMaturity;
     entity opportunityActionItems      as projection on opportunities.opportunityActionItems;
     entity opportunityDeliverables     as projection on opportunities.opportunityDeliverables;
     entity opportunityDeliverablesVH   as projection on opportunities.opportunityDeliverablesVH;
@@ -27,9 +29,9 @@ service OpportunityService {
     entity projectComments             as projection on opportunities.projectComments;
     entity skills                      as projection on opportunities.skills;
     entity projectStatusVH             as projection on opportunities.projectStatusVH;
-    //entity CurrentUser                 as projection on opportunities.CurrentUser;
+    entity teamForecast        as projection on opportunities.teamForecast;
+    entity teamForecastMonthVH         as projection on opportunities.teamForecastMonthVH;
+//entity CurrentUser                 as projection on opportunities.CurrentUser;
 
 
 }
-
-

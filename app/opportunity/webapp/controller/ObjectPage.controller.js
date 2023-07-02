@@ -38,7 +38,7 @@ sap.ui.define([
                 this.getView().setModel(AddTaskModel, "AddTaskModel");
 
                 var oEditPageModel = new JSONModel({});
-                this.getView().setModel(AddTaskModel, "editPageModel");
+                this.getView().setModel(oEditPageModel, "editPageModel");
 
                 var oView = this.getView();
                 oView.setModel(new JSONModel({
@@ -100,16 +100,29 @@ sap.ui.define([
                         oTabModel.setProperty("/tabs", aData);
                     }
 
+                   
+
                 }, this);
 
                 oModel.setDefaultBindingMode("TwoWay");
                 //oModel read for tasks deep entity 
                 this.onReadModelData(sOpportunityID);
                 this.onSetLayout();
-                // this.initRichTextEditor(); 
+                // this.initRichTextEditor();
+                
+
+                var oMaturityTable = this.getView().byId("maturityTableID");
+                if(oMaturityTable.isInitialised())oMaturityTable.rebindTable();
+
+                var oChartObject = this.getView().byId("smartChartObjectPage");
+          if(oChartObject.isInitialised())oChartObject.rebindChart();
+
+          
+
 
 
             },
+
 
 
             // onBeforeRendering: function () {
@@ -229,7 +242,7 @@ sap.ui.define([
                 var oPageModel = this.getView().getModel("pageModel");
                 oModel.read("/opportunityHeader", {
                     urlParameters: {
-                        "$expand": "actionItems/subTasks,topics,deliverables"
+                        "$expand": "actionItems/subTasks,topics,deliverables,maturity"
                     },
                     filters: aFilters,
                     success: function (oResponse) {
@@ -367,7 +380,9 @@ sap.ui.define([
                     ssa: oData.ssa,
                     topic: oData.topic,
                     valueMonth :               sMonth,
-                    valueYear   :              new Date().getFullYear().toString()
+                    valueYear   :              new Date().getFullYear().toString(),
+                    adoption: oData.adoption,
+                    consumption: oData.consumption
                 }
 
                 var sPath = this.getView().getBindingContext().sPath;
@@ -841,8 +856,17 @@ sap.ui.define([
                 var sOpportunityID = this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
                 var oBindingParams = oEvent.getParameter('bindingParams');
 
-                var filterOpportunityID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
-                oBindingParams.filters.push(filterOpportunityID);
+                // var filterOpportunityID = new Filter("opportunityID", FilterOperator.EQ, sOpportunityID);
+                // oBindingParams.filters.push(filterOpportunityID);
+
+                if(this.getView().getBindingContext()){
+                    var sMarketUnit = this.getView().getBindingContext().getObject().marketUnit;
+                var oFilter = new Filter("marketUnit", FilterOperator.EQ, sMarketUnit);
+                oBindingParams.filters.push(oFilter);
+
+                }
+                
+
             },
 
             // beforeRebindChart: function (oEvent) {
@@ -1475,6 +1499,21 @@ COMMENTS
 
             },
 
+            onBeforeRebindMaturityTable: function (oEvent) {
+
+                  var oBindingParams = oEvent.getParameter("bindingParams");
+
+            var oFilter = new Filter("opptID_opportunityID", FilterOperator.EQ, this.sOpportunityID);
+            oBindingParams.filters.push(oFilter);
+
+            var oSorter = new sap.ui.model.Sorter("topic", true);
+                oBindingParams.sorter.push(oSorter);
+
+            // this.getView().byId("maturityTableID").setTableBindingPath("/opportunityHeader/" + this.sOpportunityID + "/maturity");
+
+            },
+
+
 
 
            
@@ -1557,8 +1596,67 @@ COMMENTS
                 });
 
 
+            },
+
+                  /* ------------------------------------------------------------------------------------------------------------
+COMMENTS
+   --------------------------------------------------------------------------------------------------------------*/
+
+
+            onRatingChange: function(oEvent){
+                var sNewRating = oEvent.getParameters().value; 
+                var sPath = oEvent.getSource().getBindingContext().sPath; 
+                var sTopic = oEvent.getSource().getBindingContext().getObject().topic; 
+                var oModel = this.getView().getModel();
+                var oPayload = {
+                    maturity: sNewRating
+                }
+                oModel.update(sPath, oPayload, {
+                    success: function () {
+                        MessageToast.show("Maturity Rating for " + sTopic + " updated");
+                       
+                    },
+                    error: function (oError) {
+                        MessageBox.error("Maturity Rating could not be updated. Please try again.");
+                    }
+                });
+
+            },
+
+            onMaturityEdit: function(oEvent){
+                var oLocalModel = this.getView().getModel("localModel"); 
+                this.maturityObject = oEvent.getSource().getBindingContext().getObject(); 
+                oLocalModel.setData(this.maturityObject);
+                this.maturityPath = oEvent.getSource().getBindingContext().sPath; 
+                this.onDialogOpen("opportunity.opportunity.view.fragments.EditMaturity");
+            },
+
+            onSubmitMaturityComment: function(oEvent){
+                var oDialog = oEvent.getSource().getParent().getParent();
+                var sPath = this.maturityPath; 
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oData = oLocalModel.getData(); 
+                var sTopic = this.maturityObject.topic; 
+
+                var oModel = this.getView().getModel();
+                var oPayload = {
+                    comment: oData.comment
+                }
+                oModel.update(sPath, oPayload, {
+                    success: function () {
+                        MessageToast.show("Maturity Rating for '" + sTopic + "' updated");
+                        oLocalModel.setData({});
+                        oDialog.close(); 
+                       
+                       
+                    },
+                    error: function (oError) {
+                        MessageBox.error("Maturity Rating could not be updated. Please try again.");
+                    }
+                });
             }
 
+            
 
 
 
