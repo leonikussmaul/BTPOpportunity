@@ -128,6 +128,8 @@ formatter: formatter,
             }
             this._pDialog.then(function (_pDialog) {
               if(sPath) {
+                _pDialog.setContentWidth("750px"); 
+                _pDialog.setContentHeight("550px");
                 _pDialog.bindElement({
                 path: sPath,
                 parameters: {

@@ -515,9 +515,9 @@
 
                 </HBox>
 
-                <VBox>
+                <VBox class="sapUiLargeMarginTop">
                 <smartchart:SmartChart id ="smartChartTeamForecast" enableAutoBinding="true" initialized="onInitChart"
-                                    entitySet="teamForecast" beforeRebindChart="beforeRebindUtilizationChart"
+                                    entitySet="teamForecastCopy" beforeRebindChart="beforeRebindUtilizationChart"
                                     useVariantManagement="false"
 			                        useChartPersonalisation="true"
 			                        header="{firstName}'s Utilization" showFullScreenButton="true" selectionMode="Multi"
@@ -527,9 +527,10 @@
                                     	<smartchart:toolbar>
 				<OverflowToolbar>
 					<ToolbarSpacer/>
-					<OverflowToolbarButton icon="sap-icon://add" type="Accept" tooltip="Register a new forecast" press="onAddForecast" />
-                    <OverflowToolbarButton icon="sap-icon://edit" type="Transparent" tooltip="Select a forecast to edit" press="onEditForecast" />
-				</OverflowToolbar>
+                     <Button text="Edit" icon="sap-icon://edit" type="Transparent" tooltip="Edit an existing forecast" press="onForecastEdit" />
+				
+					<OverflowToolbarButton icon="sap-icon://add" type="Accept" tooltip="Register a new forecast" press="onAddNewForecast" />
+                   </OverflowToolbar>
 			</smartchart:toolbar>
             </smartchart:SmartChart>
                 </VBox>

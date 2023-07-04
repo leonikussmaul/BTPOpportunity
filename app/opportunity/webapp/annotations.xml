@@ -1,32 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0"
-	xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
-	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
-	xmlns:sap="http://www.sap.com/Protocols/SAPData">
-	<edmx:Reference
-		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-		<edmx:Include Namespace="com.sap.vocabularies.Common.v1"
-			Alias="Common"/>
-	</edmx:Reference>
-	<edmx:Reference
-		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-		<edmx:Include Namespace="com.sap.vocabularies.UI.v1"
-			Alias="UI"/>
-	</edmx:Reference>
-	<edmx:DataServices m:DataServiceVersion="2.0">
-
-	
-		<Schema Namespace="EPM_REF_APPS_PROD_MAN_SRV"
-			sap:schema-version="0"
-			xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 
 
 
-
-
-			
-			
-			<Annotations Target="OpportunityService.opportunityHeaderCopy"
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Aggregation.V1.xml">
+        <edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Authorization.V1.xml">
+        <edmx:Include Alias="Auth" Namespace="Org.OData.Authorization.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2">
+        <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="$metadata">
+        <edmx:Include Namespace="OpportunityService" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sap.sai.workbench_annotations_anno_.v1">
+           
+		   <Annotations Target="OpportunityService.opportunityHeaderCopy"
 				xmlns="http://docs.oasis-open.org/odata/ns/edm">
 				
 				<Annotation Term="com.sap.vocabularies.UI.v1.Chart"
@@ -47,73 +56,26 @@
 					</Record>
 				</Annotation>
 				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
-				<Annotation Term="com.sap.vocabularies.UI.v1.Chart"
-					Qualifier="Quarter_Chart">
-					<Record>
-						<PropertyValue Property="ChartType"
-							EnumMember="com.sap.vocabularies.UI.v1.ChartType/Line" />
-						<PropertyValue Property="Dimensions">
-							<Collection>
-								<PropertyPath>opportunityClosedQuarter</PropertyPath>
-							</Collection>
-						</PropertyValue>
-						<PropertyValue Property="Measures">
-							<Collection>
-								<PropertyPath>opportunityValue</PropertyPath>
-							</Collection>
-						</PropertyValue>
-					</Record>
-				</Annotation>
-
-			
-
-				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject" String="SemanticObjectCategory"/>
-			</Annotations>
-			<Annotations Target="OpportunityService.opportunityHeaderCopy"
-				xmlns="http://docs.oasis-open.org/odata/ns/edm">
-				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject"
-					String="SemanticObjectCategory"/>
-			</Annotations>
-
-
-
-	
-			<Annotations Target="OpportunityService.teamForecast"
-				xmlns="http://docs.oasis-open.org/odata/ns/edm">
+</Annotations>
+		   
 				
-					<Annotation Term="com.sap.vocabularies.UI.v1.PresentationVariant"
-					Qualifier="Name_Sort">
-					<Record>
-						<PropertyValue Property="Visualizations">
-							<Collection>
-								<AnnotationPath>@com.sap.vocabularies.UI.v1.Chart</AnnotationPath>
-							</Collection>
-						</PropertyValue>
-						<PropertyValue Property="SortOrder">
-							<Collection>
-								<Record>
-									<PropertyValue Property="Property">
-										<PropertyPath>order</PropertyPath>
-									</PropertyValue>
-									<PropertyValue Property="Descending">
-										<Bool>true</Bool>
-									</PropertyValue>
-								</Record>
-							</Collection>
-						</PropertyValue>
-					</Record>
-				</Annotation>
-
-				
-			</Annotations>
-
-			<!-- <Annotations Target="OpportunityService.opportunityHeaderCopy"
-				xmlns="http://docs.oasis-open.org/odata/ns/edm">
-				<Annotation Term="com.sap.vocabularies.Common.v1.SemanticObject"
-					String="SemanticObjectCategory"/>
-			</Annotations> -->
-
-
-		</Schema>
-	</edmx:DataServices>
+            <!-- hide filters -->
+            <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="OpportunityService.EntityContainer/opportunityHeader">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>valueMonth</PropertyPath>
+                                <PropertyPath>valueYear</PropertyPath>
+                                <PropertyPath>noteText</PropertyPath>
+                                <PropertyPath>noteDate</PropertyPath>
+                                <PropertyPath>averageMaturity</PropertyPath>
+                                
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
 </edmx:Edmx>

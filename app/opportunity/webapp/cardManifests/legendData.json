@@ -1,0 +1,34 @@
+{
+    "legendItem": [
+    {
+    "category": "calendar",
+    "text": "Team building",
+    "type": "Type08"
+    },
+    {
+    "category": "calendar",
+    "text": "Public holiday",
+    "type": "Type13"
+    },
+    {
+    "category": "appointment",
+    "text": "Reminder",
+    "type": "Type06"
+    },
+    {
+    "category": "appointment",
+    "text": "Private appointment",
+    "type": "Type07"
+    },
+    {
+    "category": "appointment",
+    "text": "Out of office",
+    "type": "Type03"
+    },
+    {
+    "category": "appointment",
+    "text": "Collaboration with other team members",
+    "type": "Type07"
+    }
+  ]
+}

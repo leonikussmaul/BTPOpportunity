@@ -10,7 +10,7 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Edit Maturity for {localModel>/topic}"/>
+					<Title text="Add a comment for '{localModel>/topic}'"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />

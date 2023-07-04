@@ -75,7 +75,7 @@ annotate service.opportunityActionItems with {
 };
 
 // maturity
-annotate service.opportunityMaturity with {
+annotate service.opportunityMaturityCopy with {
     topic     @Common.Label        : 'Topic';
     maturity    @Common.Label        : 'Maturity';
     comment @Common.Label        : 'Comment';
@@ -127,6 +127,14 @@ annotate service.opportunityHeaderCopy with @(
         {
              $Type    : 'Aggregation.AggregatablePropertyType',
             Property : progress
+        },
+        {
+             $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : adoption
+        },
+        {
+             $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : consumption
         }],
         GroupableProperties    : [
             marketUnit,
@@ -138,7 +146,9 @@ annotate service.opportunityHeaderCopy with @(
             opportunityClosedQuarter,
             clientContactPerson,
             priority,
-            progress
+            progress,
+            adoption,
+            consumption
             
         ]
     },
@@ -146,6 +156,8 @@ annotate service.opportunityHeaderCopy with @(
 
     Aggregation.CustomAggregate #opportunityValue : 'Edm.Int32',
     Aggregation.CustomAggregate #progress : 'Edm.Int32',
+     Aggregation.CustomAggregate #adoption : 'Edm.Int32',
+      Aggregation.CustomAggregate #consumption : 'Edm.Int32',
 
     UI : {Chart : {
         Title       : 'Default',
@@ -188,6 +200,16 @@ annotate service.opportunityHeaderCopy with @(
         Analytics.Measure   : true,
         Aggregation.default : #SUM,
     );
+     adoption         @(
+        title               : '{i18n>adoption}',
+        Analytics.Measure   : true,
+        Aggregation.default : #AVG,
+    );
+     consumption         @(
+        title               : '{i18n>consumption}',
+        Analytics.Measure   : true,
+        Aggregation.default : #AVG,
+    );
       progress         @(
         title               : '{i18n>progress}',
         Analytics.Measure   : true,
@@ -212,7 +234,7 @@ annotate service.opportunityHeaderCopy with @(
    
 }
 
-annotate service.teamForecast with @(
+annotate service.teamForecastCopy with @(
     // Header-level annotations
     Aggregation.ApplySupported           : {
         PropertyRestrictions   : true,
@@ -244,7 +266,8 @@ annotate service.teamForecast with @(
            average,
            year,
            month,
-           userID_inumber
+           userID_inumber,
+           order
             
         ]
     },
@@ -257,12 +280,17 @@ annotate service.teamForecast with @(
         Title       : 'Default',
         Description : 'Default chart',
         ChartType  : #Combination,
-        Dimensions : [month],
+        Dimensions : [order,month],
         Measures   : [actual,forecast],
         DimensionAttributes : [{
             $Type     : 'UI.ChartDimensionAttributeType',
+            Dimension : order,
+            Role      : #Category
+        },
+        {
+            $Type     : 'UI.ChartDimensionAttributeType',
             Dimension : month,
-            Role      : #Series
+            Role      : #Category
         }]
     }}) 
 
@@ -271,22 +299,94 @@ annotate service.teamForecast with @(
     month    @(
         title               : '{i18n>month}',
         Analytics.Dimension : true,
-        Role                : #Series
+        Role                : #Category
     );
     year     @(
         title               : '{i18n>year}',
         Analytics.Dimension : true
     );
+     order     @(
+        title               : '{i18n>order}',
+        Analytics.Dimension : true,
+         Role                : #Category
+    );
     actual         @(
         title               : '{i18n>actual}',
         Analytics.Measure   : true,
-        Aggregation.default : #SUM,
+        Aggregation.default : #AVG,
     );
       forecast         @(
         title               : '{i18n>forecast}',
         Analytics.Measure   : true,
-        Aggregation.default : #SUM,
+        Aggregation.default : #AVG,
     );
    
+   
+}
+
+//maturity 
+
+annotate service.opportunityMaturityCopy with @(
+    // Header-level annotations
+    Aggregation.ApplySupported           : {
+        PropertyRestrictions   : true,
+        Transformations        : [
+            'aggregate',
+            'topcount',
+            'bottomcount',
+            'identity',
+            'concat',
+            'groupby',
+            'filter',
+            'expand',
+            'top',
+            'skip',
+            'orderby',
+            'search'
+        ],
+        AggregatableProperties : [{
+            $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : maturity
+        },
+        {
+            $Type    : 'Aggregation.AggregatablePropertyType',
+            Property : topic
+        }],
+        GroupableProperties    : [
+           maturity,
+           topic
+            
+        ]
+    },
+
+
+    Aggregation.CustomAggregate #maturity : 'Edm.Int32',
+
+    UI : {Chart : {
+        Title       : 'Default',
+        Description : 'Default chart',
+        ChartType  : #Combination,
+        Dimensions : [topic],
+        Measures   : [maturity],
+        DimensionAttributes : [{
+            $Type     : 'UI.ChartDimensionAttributeType',
+            Dimension : topic,
+            Role      : #Series
+        }]
+    }}) 
+
+{
+    // Element-level annotations
+    topic    @(
+        title               : '{i18n>topic}',
+        Analytics.Dimension : true,
+        Role                : #Series
+    );
+   
+    maturity         @(
+        title               : '{i18n>maturity}',
+        Analytics.Measure   : true,
+        Aggregation.default : #AVG
+    );
    
 }

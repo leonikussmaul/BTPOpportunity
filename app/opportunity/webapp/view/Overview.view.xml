@@ -60,17 +60,30 @@
 
 
 
+<ui-integration:Card manifest="./cardManifests/cardManifestBubble.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestMaturity.json" width="400px" height="450px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestQuickLinks.json" width="250px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
 
 <ui-integration:Card manifest="./cardManifests/cardManifestRFP.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
 
 <ui-integration:Card manifest="./cardManifests/cardManifestGoLive.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
 
-<ui-integration:Card manifest="./cardManifests/cardManifestQuickLinks.json" width="250px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestForecast.json" width="600px" height="470px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
 <!-- <ui-integration:Card manifest="./cardManifests/cardManifestWebPage.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" /> -->
+
+
+
 
 <ui-integration:Card manifest="./cardManifests/cardManifestCalendar.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
 
-<ui-integration:Card manifest="./cardManifests/cardManifestBubble.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+
+<ui-integration:Card manifest="./cardManifests/cardManifestAdoption.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
 
 
 

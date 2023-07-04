@@ -10,6 +10,8 @@ service OpportunityService {
     entity opportunityTopics           as projection on opportunities.opportunityTopics;
     entity opportunityTopicsVH         as projection on opportunities.opportunityTopicsVH;
     entity opportunityMaturity         as projection on opportunities.opportunityMaturity;
+     @cds.redirection.target : true
+    entity opportunityMaturityCopy     as projection on opportunities.opportunityMaturity;
     entity opportunityActionItems      as projection on opportunities.opportunityActionItems;
     entity opportunityDeliverables     as projection on opportunities.opportunityDeliverables;
     entity opportunityDeliverablesVH   as projection on opportunities.opportunityDeliverablesVH;
@@ -25,11 +27,14 @@ service OpportunityService {
     entity opportunityTasksComments    as projection on opportunities.opportunityTasksComments;
     entity teamMembers                 as projection on opportunities.teamMembers;
     entity teamProjects                as projection on opportunities.teamProjects;
+    entity teamVacations               as projection on opportunities.teamVacations;
     entity teamTools                   as projection on opportunities.teamTools;
     entity projectComments             as projection on opportunities.projectComments;
     entity skills                      as projection on opportunities.skills;
     entity projectStatusVH             as projection on opportunities.projectStatusVH;
     entity teamForecast        as projection on opportunities.teamForecast;
+     @cds.redirection.target : true
+    entity teamForecastCopy       as projection on opportunities.teamForecast;
     entity teamForecastMonthVH         as projection on opportunities.teamForecastMonthVH;
 //entity CurrentUser                 as projection on opportunities.CurrentUser;
 

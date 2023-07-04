@@ -159,7 +159,7 @@ entity opportunityStatusVH {
 @cds.autoexpose
 entity opportunityMarketUnitVH {
     key ID         : UUID;
-        marketUnit : String(15);
+        marketUnit : String(25);
 };
 
 @cds.autoexpose
@@ -201,6 +201,8 @@ entity teamMembers {
                           on tools.userID = $self;
         projects    : Composition of many teamProjects
                           on projects.userID = $self;
+        vacations    : Composition of many teamVacations
+                          on vacations.userID = $self;
         forecast    : Composition of many teamForecast
                           on forecast.userID = $self;
 
@@ -259,6 +261,9 @@ entity teamProjects {
         percentage       : Integer;
         goLive           : Date;
         lastUpdated      : DateTime;
+        type: String(10);
+        appointmentCategory: String(30);
+        appointmentIcon: String(50);
         comments         : Composition of many projectComments
                                on comments.user = $self;
         skills           : Composition of many skills
@@ -266,7 +271,16 @@ entity teamProjects {
         tools            : Composition of many teamTools
                                on tools.projectID = $self;
 };
-
+@cds.autoexpose
+entity teamVacations {
+    key vacationID        : UUID;
+        userID           : Association to teamMembers;
+        primaryContact   : String(50);
+        vacationStartDate : Date;
+        vacationEndDate   : Date;
+        approved : String(10);
+        vacationComment  : String(1000);
+};
 
 @cds.autoexpose
 entity projectComments {

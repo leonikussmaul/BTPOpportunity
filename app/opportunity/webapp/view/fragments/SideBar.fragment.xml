@@ -47,7 +47,7 @@
                 />
 
              <tnt:NavigationListItem
-                    text="Team"
+                    text="Engagement"
                     select="onOpenResources"
                     icon="sap-icon://work-history"
                 />

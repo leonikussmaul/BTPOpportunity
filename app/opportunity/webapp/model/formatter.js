@@ -404,6 +404,12 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       var day = new Date(date).getDate();
       return new Date(yr, mnt, day, "00", "00");
     },
+    calendarEndDate: function (date) {
+      var yr = new Date(date).getFullYear();
+      var mnt = new Date(date).getMonth();
+      var day = new Date(date).getDate();
+      return new Date(yr, mnt, day, "23", "59");
+    },
 
     calendarStatusFormatter: function (sStatus) {
       switch (sStatus) {

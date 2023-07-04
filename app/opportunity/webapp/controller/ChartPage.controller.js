@@ -18,17 +18,31 @@ sap.ui.define(
           var oChart1 = this.getView().byId("smartChart1");
           if(oChart1.isInitialised())oChart1.rebindChart();
 
-          var oChart1 = this.getView().byId("smartChart2");
-          if(oChart1.isInitialised())oChart1.rebindChart();
+          var oChart2 = this.getView().byId("smartChart2");
+          if(oChart2.isInitialised())oChart2.rebindChart();
+          //oChart2.attachBeforeRebindChart(this.onRebindUtilizationChart, this);
 
-          var oChart1 = this.getView().byId("smartChart3");
-          if(oChart1.isInitialised())oChart1.rebindChart();
+          var oChart3 = this.getView().byId("smartChart3");
+          if(oChart3.isInitialised())oChart3.rebindChart();
+
+     },
+
+     onRebindUtilizationChart: function(oEvent){
+
+      var oBindingParams = oEvent.getParameter('bindingParams');
+      var oSorter = new sap.ui.model.Sorter("order", false);
+      oBindingParams.sorter.push(oSorter);
 
      },
 
      onBeforeRebindChart: function(oEvent){
-      
-     }
+
+      var oBindingParams = oEvent.getParameter('bindingParams');
+      var oSorter = new sap.ui.model.Sorter("marketUnit", false);
+      oBindingParams.sorter.push(oSorter);
+
+     },
+
 
 
         

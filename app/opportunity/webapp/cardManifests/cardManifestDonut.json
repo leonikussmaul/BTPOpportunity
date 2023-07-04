@@ -53,15 +53,16 @@
 			},
             "data": {
                 "request": {
-                    "url": "/Opportunity/opportunityHeaderCopy",
+                    "url": "/v2/Opportunity/opportunityHeaderCopy",
                     "method": "GET",
                     "parameters": {
                         "$format": "json"
                     }
                 },
                 "updateInterval": 300,
-                "path": "/value"
+                "path": "/d/results"
             },
+			
 			"dimensions": [
 				{
 					"name": "Market Unit",

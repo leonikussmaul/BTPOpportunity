@@ -4,11 +4,11 @@
 	xmlns:core="sap.ui.core"
 	xmlns:form="sap.ui.layout.form">
 	<Dialog 
-          class="sapUiPopupWithPadding" contentWidth="40%"  resizable="true" draggable="true">
+          class="sapUiPopupWithPadding" contentWidth="40%"  resizable="true" draggable="true" >
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add a Forecast for {firstName}"/>
+					<Title text="Edit an existing Forecast Record for {firstName}"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
@@ -16,23 +16,29 @@
 			</Bar>
 		</customHeader>
 	
-     <MessageStrip text="Please bear in mind that the ideal utilization is at no more than 85%." showCloseButton="true"></MessageStrip>
+    <MessageStrip 
+              text="{= ${AddProjectModel>/forecast} > 100 || ${AddProjectModel>/actual} > 100 ? ${messageModel>/highUtilizationMessage/text} : ${messageModel>/message/text} }"
+              type="{= ${AddProjectModel>/forecast} > 100 || ${AddProjectModel>/actual} > 100 ? ${messageModel>/highUtilizationMessage/state} : ${messageModel>/message/state} }"
+              showIcon="false"
+              showCloseButton="true"/>
+
+
 		<form:SimpleForm editable="true"
 						>
-			
-           
+
 
             <Label text="{i18n>month}" />
-			<ComboBox selectedKey="{AddProjectModel>/month}" placeholder="Select the applicable month"
-							 items="{
-                                    path: '/teamForecastMonthVH',
-                                    sorter: {
-                                                path: 'order',
-                                                descending: false
-                                            }
-                                    }">
-				<core:Item key="{month}" text="{month}"/>
+
+			<ComboBox id="monthComboBox"  placeholder="Select the month to edit" items="{}" selectionChange="onSelectionChange" 	showSecondaryValues= "true">
+				<core:ListItem id="monthItem" key="{month}" text="{month}" additionalText="{year}" />
 			</ComboBox>
+
+			   <Text 
+                                text="{AddProjectModel>/year}"
+                                width="10rem"
+                                class="sapUiSmallMarginBottom textBold"
+                            />
+
 
              <Label text="Forecast (in %)"/>
 			<Slider value="{AddProjectModel>/forecast}" width="100%" step="10"
@@ -40,6 +46,8 @@
 							showAdvancedTooltip="true"
 							showHandleTooltip="false" enableTickmarks="true">
                             </Slider> 
+
+							
 
              <Label text="Actual (in %)"/>
 			<Slider value="{AddProjectModel>/actual}" width="100%" step="10"
@@ -58,7 +66,7 @@
 			<Toolbar design="Auto">
 				<content>
 					<ToolbarSpacer />
-					<Button type="Accept" text="{i18n>Submit}" press="onSubmitForecast" />
+					<Button type="Accept" text="{i18n>Submit}" press="onEditForecastSubmit" />
 				</content>
 			</Toolbar>
 		</footer>

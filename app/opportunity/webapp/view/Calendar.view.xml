@@ -28,7 +28,7 @@
         descending: false
       }]}"
 			appointmentsVisualization="Filled" 
-			appointmentSelect="onProjectPopup"
+			appointmentSelect="onProjectPopup" intervalSelect="onGoLiveSelect"
 			showEmptyIntervalHeaders="false"
 			showWeekNumbers="true" builtInViews="OneMonth,Month,Week,Day">
 				<toolbarContent>
@@ -36,7 +36,12 @@
 				<!-- <ToggleButton icon="sap-icon://decrease-line-height"
 							  tooltip="Toggle Day Names Line"
 							  press="toggleDayNamesLine"/> -->
+
+							   <Button press="onAddVacation" icon="sap-icon://general-leave-request"/>
+
 							  <ToggleButton pressed="{path: 'CalendarModel>/legendShown'}" icon="sap-icon://legend"/>
+
+							  
 			</toolbarContent>
 			
 			<rows>
@@ -45,6 +50,7 @@
 					title="{firstName}"
 					text="{role}" icon="{path:'firstName', formatter:'.formatter.formatterTeamPictures'}"
 					appointments="{path: 'projects', templateShareable: false}"
+					intervalHeaders="{path: 'projects', templateShareable: false}"
 					>
 					<customData>
 						<core:CustomData key="emp-name" value="{firstName}" writeToDom="true"/>
@@ -52,20 +58,19 @@
 					<appointments>
 						<unified:CalendarAppointment
 							startDate="{path: 'projectStartDate', formatter: '.formatter.calendarDate'}"
-							endDate="{path: 'projectEndDate', formatter: '.formatter.calendarDate'}"
-							title="{account}" type="{path:'status', formatter:'.formatter.calendarStatusFormatter'}"
+							endDate="{path: 'projectEndDate', formatter: '.formatter.calendarEndDate'}"
+							title="{account}" type="{type}" icon="{appointmentIcon}"
 							text="{descriptionText}">
 						</unified:CalendarAppointment>
 					</appointments>
-					<!-- <intervalHeaders>
+					<intervalHeaders>
 						<unified:CalendarAppointment
-							startDate="{projectStartDate}"
-							endDate="{projectEndDate}"
-							icon="{pic}"
-							title="{account}"
-							type="{type}">
+							startDate="{path: 'goLive', formatter: '.formatter.calendarDate'}"
+							endDate="{path: 'goLive', formatter: '.formatter.calendarEndDate'}"
+							title="Go-Live"
+							type="Type08">
 						</unified:CalendarAppointment>
-					</intervalHeaders> -->
+					</intervalHeaders>
 				</PlanningCalendarRow>
 			</rows>
 		</PlanningCalendar>

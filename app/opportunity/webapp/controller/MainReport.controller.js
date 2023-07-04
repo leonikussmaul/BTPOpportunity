@@ -217,9 +217,6 @@ sap.ui.define([
                if(oData.consumption) sConsumption = oData.consumption; 
                if(oData.progress) sProgress = oData.progress; 
 
-
-
-
                 //add deliverable field to odata
                 var oNewItem = {
                     account: oData.account,
@@ -502,10 +499,11 @@ sap.ui.define([
 
             },
             onDeleteTableItem: function (oEvent) {
+                var sAccount = oEvent.mParameters.listItem.getBindingContext().getObject().account;
                 var oSmartTable = this.getView().byId("mySmartTable");
                 var sPath = oEvent.mParameters.listItem.getBindingContext().sPath
                 var oModel = oSmartTable.getModel();
-                sap.m.MessageBox.warning("Are you sure you want to delete the selected items?", {
+                sap.m.MessageBox.warning("Are you sure you want to delete the opportunity '" + sAccount + "'?", {
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
                     onClose: function (oAction) {
                         if (oAction === sap.m.MessageBox.Action.YES) {

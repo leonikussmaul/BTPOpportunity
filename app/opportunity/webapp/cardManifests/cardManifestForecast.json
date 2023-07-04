@@ -1,0 +1,121 @@
+{
+	"_version": "1.14.0",
+	"sap.app": {
+		"id": "card.explorer.line.card",
+		"type": "card",
+		"title": "Sample of a Line Chart",
+		"subTitle": "Sample of a Line Chart",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"shortTitle": "A short title for this Card",
+		"info": "Additional information about this Card",
+		"description": "A long description for this Card",
+		"tags": {
+			"keywords": [
+				"Analytical",
+				"Card",
+				"Line",
+				"Sample"
+			]
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://line-chart"
+		}
+	},
+	"sap.card": {
+		"type": "Analytical",
+		"header": {
+			"type": "Numeric",
+			
+			"title": "Team Utilization",
+			"subTitle": "Team Average over the Year",
+			"unitOfMeasurement": "%"
+		},
+		"content": {
+			"chartType": "Line",
+			"chartProperties": {
+				"title": {
+					"text": "Line chart",
+					"visible": true,
+					"alignment": "left"
+				},
+				"legend": {
+					"visible": "true"
+				},
+				
+				"plotArea": {
+					"dataLabel": {
+						"visible": true
+					}
+				},
+				"categoryAxis": {
+					"title": {
+						"visible": false
+					}
+				},
+				"valueAxis": {
+					"title": {
+						"visible": false
+					}
+				}
+			},
+            "data": {
+                "request": {
+                    "url": "/v2/Opportunity/teamForecast",
+                    "method": "GET",
+                    "parameters": {
+                        "$format": "json",
+                        "$orderby": "order asc"	}
+                },
+                "updateInterval": 300,
+                "path": "/d/results"
+            },
+            "popover": {
+				"active": true
+			},
+			"dimensions": [
+				{
+					"name": "month",
+					"value": "{month}"
+				},
+                {
+					"name": "year",
+					"value": "{year}"
+				}
+			],
+			"measures": [
+				{
+					"name": "actual",
+					"value": "{actual}"
+				},
+				{
+					"name": "forecast",
+					"value": "{forecast}"
+				}
+			],
+			"feeds": [
+				{
+					"uid": "valueAxis",
+					"type": "Measure",
+					"Aggregation.default" : "#AVG",
+					"values": [
+						"actual",
+						"forecast"
+					]
+				},
+				{
+					"uid": "categoryAxis",
+					"type": "Dimension",
+					"values": [
+						"month",
+                        "year"
+					]
+				}
+			]
+		}
+	}
+}

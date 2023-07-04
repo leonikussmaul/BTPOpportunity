@@ -45,15 +45,6 @@
                         text="Hi {user>/firstname}, here is today's Demand Generation at a Glance. "
                         class="sapUiSmallMarginBottom"
                     />
-
-                    <!-- <Button
-                        text="POST"
-                        icon="sap-icon://add"
-                        type="Accept"
-                        id="postBtn"
-                        press="onPostNewItem"
-                        tooltip="Create a New Opportunity in the System"
-                    /> -->
                     <Button
                         text="New Opp"
                         icon="sap-icon://add"
@@ -73,7 +64,7 @@
                         showGoOnFB="false"
                         showMessages="true"
                         useDateRangeType="true"
-                        clear="onClearSmartFilterBar"
+                        clear="onClearSmartFilterBar" 
                     >
                         <smartFilterBar:controlConfiguration>
                             <smartFilterBar:ControlConfiguration
@@ -366,7 +357,7 @@
                 initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
                 requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"
               
-                ignoreFromPersonalisation="opportunityID,noteDate,noteText"
+                ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
             >
                 <smartTable:customToolbar>
                     <OverflowToolbar design="Transparent">

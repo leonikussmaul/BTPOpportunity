@@ -39,7 +39,7 @@
         <f:content>
             <IconTabBar class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter text="Market Unit Overview">
+                    <IconTabFilter text="EMEA N Overview">
                         <content>
                             <smartchart:SmartChart
                                 id="smartChart1"
@@ -61,9 +61,9 @@
                         </content>
                     </IconTabFilter>
 
-                     <IconTabFilter text="Market Unit Overview">
+                     <IconTabFilter text="Team Utilization">
                         <content>
-                            <smartchart:SmartChart
+                            <!-- <smartchart:SmartChart
                                 id="smartChart2"
                                 enableAutoBinding="true"
                                 entitySet="opportunityHeaderCopy"
@@ -79,7 +79,19 @@
                                 showDownloadButton="true"
                                 data:chartQualifier="Pie_Chart"
 
-                            />
+                            /> -->
+
+                             <smartchart:SmartChart id ="smartChart2" enableAutoBinding="true" initialized="onInitChart"
+                                    entitySet="teamForecastCopy" 
+                                    useVariantManagement="false"
+			                        useChartPersonalisation="true" beforeRebindChart="onRebindUtilizationChart"
+			                        header="Team Average over the Year" showFullScreenButton="true" selectionMode="Multi"
+			                        showChartTooltip="true" showDrillBreadcrumbs="false"
+			                        showDetailsButton="false" showDrillButtons="true" 
+			                        showSemanticNavigationButton="true"  
+                                    showDownloadButton="true" data:presentationVariantQualifier="Name_Sort">
+                                    	
+            </smartchart:SmartChart>
                         </content>
                     </IconTabFilter>
 
