@@ -10,13 +10,14 @@ sap.ui.define([
     "sap/ui/model/FilterType",
     "sap/ui/core/routing/History",
     "sap/ui/core/date/UI5Date",
-    "sap/ui/core/format/DateFormat"
+    "sap/ui/core/format/DateFormat",
+    'sap/m/library',
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat, library) {
         "use strict";
         var _this = this;
 
@@ -62,12 +63,14 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: "/opportunityHeader/" + sOpportunityID,
                     parameters: {
-                        expand: "actionItems,comments,deliverables"
+                        expand: "actionItems,comments,deliverables,links"
                     }
                 });
 
                 this.sOpportunityID = sOpportunityID;
                 this.onFilterComments(sOpportunityID);
+
+                this.onFilterLinkList(sOpportunityID);
 
                // this.getView().byId("myTabContainer").setSelectedItem(0);
                 // var oList = this.getView().byId("opportunityComments")
@@ -100,8 +103,6 @@ sap.ui.define([
                 //         oTabModel.setProperty("/tabs", aData);
                 //     }
 
-                   
-
                 // }, this);
 
                 oModel.setDefaultBindingMode("TwoWay");
@@ -113,8 +114,92 @@ sap.ui.define([
                 var oMaturityTable = this.getView().byId("maturityTableID");
                 if(oMaturityTable.isInitialised())oMaturityTable.rebindTable();
 
+
+                var oActivitiesTable = this.getView().byId("activitiesTableID");
+                if(oActivitiesTable.isInitialised())oActivitiesTable.rebindTable();
+
                 var oChartObject = this.getView().byId("smartChartObjectPage");
           if(oChartObject.isInitialised())oChartObject.rebindChart();
+
+            },
+
+            onFilterLinkList: function(sOpportunityID){
+
+                var oTemplate = this.getView().byId("linkListItem");
+                var oSorter = new sap.ui.model.Sorter("linkName", true);
+                var oFilter = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                this.getView().byId("linkList").bindAggregation("items", {
+                    template: oTemplate,
+                    path: "/opportunityLinks",
+                    sorter: oSorter,
+                    filters: oFilter
+                });
+
+            },
+
+            onDeleteLink: function(oEvent){
+
+                var that = this;
+                var oBindingContext = oEvent.mParameters.listItem.getBindingContext();
+                var sPath = oBindingContext.getPath();
+                var sLinkName= oBindingContext.getObject("linkName");
+
+                MessageBox.confirm("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
+                    if (oAction === MessageBox.Action.OK) {
+                        that.getView().setBusy(true);
+                        var oModel = that.getView().getModel();
+                        oModel.remove(sPath, {
+                            success: function () {
+                                sap.m.MessageToast.show("Link deleted successfully.");
+                                that.getView().setBusy(false);
+                            },
+                            error: function () {
+                                sap.m.MessageToast.show("Link could not be deleted. Please try again.");
+                                that.getView().setBusy(false);
+                            }
+                        });
+                    }
+                });
+
+            },
+
+
+            onAddNewLink: function (oEvent) {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddLink");
+
+               
+            },
+
+            onSubmitNewLink: function(oEvent){
+                var that = this;
+                var oDialog = oEvent.getSource().getParent(); 
+                this.customerID = this.getView().getBindingContext().getObject().opportunityID;
+               var sOpportunityID = this.customerID; 
+
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oData = oLocalModel.getData(); 
+
+                var oPayload = {
+                    linkName: oData.linkName,
+                    linkDescription: oData.linkDescription,
+                    link: oData.link,
+                    opptID_opportunityID: this.customerID
+                }
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunityLinks", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New Link added!");
+                        that.getView().setBusy(false);
+                        oDialog.close(); 
+                        oLocalModel.setData({});
+                        that.onFilterLinkList(sOpportunityID);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        MessageBox.error("Link could not be posted. Please try again.");
+                    }
+                });
 
             },
 
@@ -1408,9 +1493,9 @@ COMMENTS
                 //  var mBindingParams = oEvent.getParameter("bindingParams");
                 // mBindingParams.parameters["expand"] = "deliverables"; 
 
-                oEvent.getSource().setTableBindingPath("/opportunityHeader(" + this.sOpportunityID + ")/deliverables");
+                // oEvent.getSource().setTableBindingPath("/opportunityHeader(" + this.sOpportunityID + ")/deliverables");
                 
-                var oBindingParams = oEvent.getParameter("bindingParams");
+                // var oBindingParams = oEvent.getParameter("bindingParams");
 
                 // var fnGroupHeaderFormatter = function (oContext) {
                 //     var sHeader = oContext.getProperty("deliverable");
@@ -1420,6 +1505,39 @@ COMMENTS
                 // };
                 // var oGrouping = new sap.ui.model.Sorter("deliverable", true, fnGroupHeaderFormatter);
                 // oBindingParams.sorter.push(oGrouping);
+
+                var oBindingParams = oEvent.getParameter("bindingParams");
+
+                var oFilter = new Filter("opptID_opportunityID", FilterOperator.EQ, this.sOpportunityID);
+                oBindingParams.filters.push(oFilter);
+    
+                var oSorter = new sap.ui.model.Sorter("completed", true);
+                    oBindingParams.sorter.push(oSorter);
+
+            },
+
+            onActivityCompletedCheck: function(oEvent){
+               var bSelect = oEvent.mParameters.selected;
+               var sPath = oEvent.getSource().getBindingContext().sPath;
+
+               var sDeliverable = oEvent.getSource().getBindingContext().getObject().deliverable; 
+               var oModel = this.getView().getModel();
+               var oPayload = {
+                   completed: bSelect,
+                   completedOn: new Date()
+               }
+               oModel.update(sPath, oPayload, {
+                   success: function () {
+                    if(bSelect == true) MessageToast.show("'" + sDeliverable + "' is completed");
+                    if(bSelect !== true) MessageToast.show("'" + sDeliverable + "' is uncompleted");
+                      
+                   },
+                   error: function (oError) {
+                       if(bSelect == true)  MessageBox.error("'" + sDeliverable + "' could not be completed. Please try again.");
+                       if(bSelect !== true)  MessageBox.error("'" + sDeliverable + "' could not be marked as uncompleted. Please try again.");
+                   }
+               });
+
 
             },
 
@@ -1570,8 +1688,52 @@ COMMENTS
                         MessageBox.error("Maturity Rating could not be updated. Please try again.");
                     }
                 });
-            }
+            },
 
+            onSelectLink: function(oEvent){
+                var sLink = oEvent.getSource().getBindingContext().getObject().link;
+                library.URLHelper.redirect(sLink, true);
+              },
+
+
+              onEditActivityPress: function(oEvent){
+                var oLocalModel = this.getView().getModel("localModel"); 
+                this.deliverableObject = oEvent.getSource().getBindingContext().getObject(); 
+                oLocalModel.setData(this.deliverableObject);
+                this.deliverablePath = oEvent.getSource().getBindingContext().sPath; 
+                this.onDialogOpen("opportunity.opportunity.view.fragments.EditActivity");
+            },
+
+            onSubmitEditedActivityt: function(oEvent){
+                var oDialog = oEvent.getSource().getParent().getParent();
+                var sPath = this.deliverablePath; 
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oData = oLocalModel.getData(); 
+                var sDeliverable = this.deliverableObject.deliverable; 
+
+                var oModel = this.getView().getModel();
+                var oPayload = {
+                    deliverable: oData.deliverable,
+                    deliverableDate: oData.deliverableDate,
+                    status: oData.status,
+                    completed: oData.completed,
+                    completedOn: oData.completedOn,
+                    shortDescription: oData.shortDescription,
+                    primaryContact: oData.primaryContact
+                }
+                oModel.update(sPath, oPayload, {
+                    success: function () {
+                        MessageToast.show("Activity '" + sDeliverable + "' updated");
+                        oLocalModel.setData({});
+                        oDialog.close(); 
+                       
+                    },
+                    error: function (oError) {
+                        MessageBox.error("Activity could not be updated. Please try again.");
+                    }
+                });
+            },
+      
             
 
 

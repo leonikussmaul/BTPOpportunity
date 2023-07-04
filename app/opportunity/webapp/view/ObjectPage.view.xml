@@ -463,13 +463,13 @@
                                                 <u:ObjectPageSubSection
                                                     id="idSubSectionActivities"
                                                 >
-                                                    <u:actions>
+                                                    <!-- <u:actions>
                                                         <Button
                                                             icon="sap-icon://add"
                                                             press="onAddActivityPress"
                                                             type="Accept"
                                                         />
-                                                    </u:actions>
+                                                    </u:actions> -->
                                                     <core:Fragment
                                                         fragmentName="opportunity.opportunity.view.fragments.ActivitiesSection"
                                                         type="XML"
@@ -485,54 +485,6 @@
                                                 <u:ObjectPageSubSection
                                                     id="idSubSectionMaturity"
                                                 >
-                                                    <!-- <Table
-                                                        id="maturityTable"
-                                                        inset="false"
-                                                        items="{
-			path: '/opportunityMaturity',
-			sorter: {
-				path: 'topic'
-			}
-		}"
-                                                    >
-                                                        <columns>
-                                                            <Column
-                                                                width="12em"
-                                                            >
-                                                                <Text
-                                                                    text="Topic"
-                                                                />
-                                                            </Column>
-                                                            <Column
-                                                                hAlign="Center"
-                                                            >
-                                                                <Text
-                                                                    text="Maturity"
-                                                                />
-                                                            </Column>
-                                                        </columns>
-                                                        <items>
-                                                            <ColumnListItem
-                                                                vAlign="Middle"
-                                                            >
-                                                                <cells>
-                                                                    <ObjectIdentifier
-                                                                        title="{topic}"
-                                                                    />
-                                                                    <RatingIndicator
-                                                                        id="maturity"
-                                                                        maxValue="5"
-                                                                        class="sapUiSmallMarginBottom"
-                                                                        value="{maturity}"
-                                                                        tooltip="Maturity for {topic}"
-                                                                        change="onRatingChange"
-                                                                    />
-                                                                </cells>
-                                                            </ColumnListItem>
-                                                        </items>
-                                                    </Table> -->
-
-
 
 	<smartTable:SmartTable 
   id="maturityTableID" 
@@ -553,13 +505,14 @@
   ignoreFromPersonalisation="ID,opptID_opportunityID"
       
    >
+   
    <Table
                                                         id="maturityTable"
                                                         inset="false" 
                                                         
                                                     >
                                                         <columns>
-                                                            <Column width="20%">
+                                                            <Column width="15%">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "topic", "columnIndex" : "0", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topic", "type":"string"}' />
                                         </customData>
@@ -574,7 +527,7 @@
                                         <Label text="{i18n>Maturity}" />
                                     </Column>
 
-                                     <Column width="50%">
+                                     <Column width="60%">
                                         <customData>
                                             <core:CustomData key="p13nData" value='\{"columnKey": "comment", "columnIndex" : "2", "leadingProperty": "comment", "sortProperty": "comment", "filterProperty": "comment", "type":"string"}' />
                                         </customData>
@@ -629,6 +582,46 @@
                                                     />
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
+
+                                            <!-- links -->
+
+                                                
+
+                                            <u:ObjectPageSection
+                                                id="idSectionLinks"
+                                                titleUppercase="false"
+                                                title="{i18n>Links}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionLinks"
+                                                >
+
+            		<List
+		id="linkList"
+		items="{}"
+		mode="Delete"
+		includeItemInSelection="true" selectionChange="onSelectLink"  delete="onDeleteLink"> 
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Respository" level="H1" />
+					<ToolbarSpacer />
+                    <Button type="Accept" icon="sap-icon://add" press="onAddNewLink"/>
+					
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<StandardListItem press="onSelectLink" type="Active" id="linkListItem"
+			title="{linkName}" 
+			description="{linkDescription}"
+			icon="sap-icon://chain-link" 
+			iconDensityAware="true"
+			iconInset="true" />
+	</List>
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+
+
                                             <u:ObjectPageSection
                                                 id="idSmartChartSection"
                                                 titleUppercase="false"

@@ -30,12 +30,22 @@
                 tooltip="Go to the Tasks and Sub-Tasks List"
             />
 
+
+            <tnt:NavigationListItem
+                text="Project Overview"
+                icon="sap-icon://meeting-room"
+                select="onNavToProjectOverview"
+                tooltip="Project Overview"
+            />
+
             <tnt:NavigationListItem
                 text="Analytics"
                 icon="sap-icon://filter-analytics"
                 select="onNavToChartPage"
                 tooltip="Go to the Chart Overview"
             />
+
+
         </tnt:NavigationList>
         <tnt:fixedItem>
             <tnt:NavigationList>

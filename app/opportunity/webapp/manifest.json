@@ -183,6 +183,11 @@
                     "target": "Resources"
                 },
                 {
+                    "name": "ProjectOverview",
+                    "pattern": "ProjectOverview",
+                    "target": "ProjectOverview"
+                },
+                {
                     "name": "Calendar",
                     "pattern": "Calendar",
                     "target": "Calendar"
@@ -260,6 +265,14 @@
                     "viewId": "Resources",
                     "viewName": "Resources",
                     "viewLevel": 2
+                },
+                "ProjectOverview": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ProjectOverview",
+                    "viewName": "ProjectOverview",
+                    "viewLevel": 1
                 }
             }
         },

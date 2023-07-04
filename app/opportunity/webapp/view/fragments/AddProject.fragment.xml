@@ -18,6 +18,23 @@
 
 		<form:SimpleForm editable="true"
 						>
+
+			 <Label text="Team Member" required="true"/>
+
+                   <ComboBox selectedKey="{AddProjectModel>/userID_inumber}" placeholder="Who is it for?" showSecondaryValues="true" selectionChange="onMemberChange"
+							 items="{
+                                    path: '/teamMembers',
+                                    sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }">
+				<core:ListItem key="{inumber}" text="{firstName}" additionalText="{inumber}"/>
+
+			</ComboBox>
+
+
+
 			<Label text="Project" required="true"/>
 			<Input value="{AddProjectModel>/account}" id="projectName" placeholder="What's the project name?" />
 

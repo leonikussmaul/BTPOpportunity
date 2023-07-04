@@ -8,7 +8,7 @@
 		<customHeader>
 			<Bar>
 				<contentMiddle>
-					<Title text="Add Activity for {account}"/>
+					<Title text="Edit Activity for {localModel>/deliverable}"/>
 				</contentMiddle>
 				<contentRight>
 					<Button icon="sap-icon://decline" press="onCancelDialogPress" />
@@ -19,11 +19,11 @@
 		<form:SimpleForm editable="true"
 						>
 			<Label text="{i18n>deliverable}" required="true"/>
-			<Input value="{AddTaskModel>/deliverable}" id="acitivtyTitleInput" placeholder="What's the activity?" />
+			<Input value="{localModel>/deliverable}" id="acitivtyTitleInput" placeholder="What's the activity?" />
 
             <Label text="{i18n>status}" />
-            <!-- change to hardcoded values? -->
-			<ComboBox selectedKey="{AddTaskModel>/status}" placeholder="What's the current status?"
+
+			<ComboBox selectedKey="{localModel>/status}" placeholder="What's the current status?"
 							 items="{
                                     path: '/opportunityStatusVH',
                                     sorter: {
@@ -35,7 +35,7 @@
 			</ComboBox>
 
             <Label text="{i18n>actionOwner}" />
-			<ComboBox selectedKey="{AddTaskModel>/primaryContact}" placeholder="{i18n>OwnerPlaceholder}"
+			<ComboBox selectedKey="{localModel>/primaryContact}" placeholder="{i18n>OwnerPlaceholder}"
 							 items="{
                                     path: '/opportunityPrimaryContactVH',
                                     sorter: {
@@ -47,13 +47,13 @@
 			</ComboBox>
 
 			<Label text="{i18n>shortDescription}" />
-			<TextArea value="{AddTaskModel>/shortDescription}" maxLength="800" id="statusInput" placeholder="{i18n>shortDescPlaceholder}"/>
+			<TextArea value="{localModel>/shortDescription}" maxLength="800" id="statusInput" placeholder="{i18n>shortDescPlaceholder}"/>
 
 			<Label text="{i18n>deliverableDate}"/>
-			<DatePicker value="{AddTaskModel>/deliverableDate}" id="deliverableDate"  />
+			<DatePicker dateValue="{localModel>/deliverableDate}" id="deliverableDate"  />
 
             <Label text="{i18n>completedOn}"/>
-			<DatePicker value="{AddTaskModel>/completedOn}" id="completedOn"  />
+			<DatePicker dateValue="{localModel>/completedOn}" id="completedOn"  />
 
 
 		</form:SimpleForm>
@@ -61,7 +61,7 @@
 			<Toolbar design="Auto">
 				<content>
 					<ToolbarSpacer />
-					<Button type="Accept" text="{i18n>Submit}" press="onSubmitActivity" />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitEditedActivityt" />
 				</content>
 			</Toolbar>
 		</footer>

@@ -73,6 +73,11 @@ sap.ui.define(
           oRouter.navTo("MainReport");
         },
 
+        onNavToProjectOverview: function(oEvent){
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("ProjectOverview");
+          },
+
         onNavToTasks: function(oEvent){
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("TasksReport");

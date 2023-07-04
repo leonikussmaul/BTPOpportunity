@@ -19,6 +19,7 @@
     xmlns:main="sap.ui.webc.main"
     xmlns:layout="sap.ui.layout"
 	xmlns:ui-integration="sap.ui.integration.widgets"
+    	xmlns:w="sap.ui.integration.widgets"
 >
 
 
@@ -44,50 +45,122 @@
         <f:content>
 
 
-<ScrollContainer
+<!-- <ScrollContainer
 		height="100%"
 		width="100%"
 		vertical="true"
-		focusable="true">
+		focusable="true"> -->
 
 		<!-- <Title text="Opportunities" /> -->
 
-	<ui-integration:Card manifest="./cardManifests/cardManifest.json" width="300px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+       	<f:GridContainer>
+        		<f:layout>
+				<f:GridContainerSettings gap="1rem" />
+			</f:layout>
 
-<ui-integration:Card manifest="./cardManifests/cardManifestDonut.json" width="290px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+            
+					<f:layoutS>
+						<f:GridContainerSettings  gap="1rem" />
+					</f:layoutS>
 
-<ui-integration:Card manifest="./cardManifests/cardManifestTasks.json" width="500px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+	<ui-integration:Card manifest="./cardManifests/cardManifest.json" width="300px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" 
+    >
+    	
+                        <w:layoutData>
+        <f:GridContainerItemLayoutData columns="4"/>
+    </w:layoutData>
 
+    </ui-integration:Card>
 
+<ui-integration:Card manifest="./cardManifests/cardManifestDonut.json" width="290px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="4" />
+    </w:layoutData>
 
-<ui-integration:Card manifest="./cardManifests/cardManifestBubble.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+    </ui-integration:Card>
 
-<ui-integration:Card manifest="./cardManifests/cardManifestMaturity.json" width="400px" height="450px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+<ui-integration:Card manifest="./cardManifests/cardManifestTasks.json" width="500px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="6" />
+    </w:layoutData>
 
-
-<ui-integration:Card manifest="./cardManifests/cardManifestQuickLinks.json" width="250px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
-
-
-<ui-integration:Card manifest="./cardManifests/cardManifestRFP.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
-
-<ui-integration:Card manifest="./cardManifests/cardManifestGoLive.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
-
-
-<ui-integration:Card manifest="./cardManifests/cardManifestForecast.json" width="600px" height="470px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
-
-<!-- <ui-integration:Card manifest="./cardManifests/cardManifestWebPage.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" /> -->
-
-
-
-
-<ui-integration:Card manifest="./cardManifests/cardManifestCalendar.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
-
-
-<ui-integration:Card manifest="./cardManifests/cardManifestAdoption.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" />
+    </ui-integration:Card>
 
 
 
-</ScrollContainer>
+<ui-integration:Card manifest="./cardManifests/cardManifestBubble.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="5" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+<ui-integration:Card manifest="./cardManifests/cardManifestMaturity.json" width="400px" height="450px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="5" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestQuickLinks.json" width="250px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="3" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestRFP.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="4" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+<ui-integration:Card manifest="./cardManifests/cardManifestGoLive.json" width="330px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+<w:layoutData>
+        <f:GridContainerItemLayoutData columns="4" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestForecast.json" width="600px" height="470px" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout">
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="7" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+<!-- <ui-integration:Card manifest="./cardManifests/cardManifestWebPage.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+<w:layoutData>
+							<f:GridContainerItemLayoutData minRows="4" columns="4" />
+						</w:layoutData>
+
+    </ui-integration:Card> -->
+
+
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestCalendar.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="5" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+
+<ui-integration:Card manifest="./cardManifests/cardManifestAdoption.json" width="400px" height="auto" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" >
+ <w:layoutData>
+        <f:GridContainerItemLayoutData columns="4" />
+    </w:layoutData>
+
+    </ui-integration:Card>
+
+        	</f:GridContainer>
+
+<!-- </ScrollContainer> -->
           
         </f:content>
     </f:DynamicPage>

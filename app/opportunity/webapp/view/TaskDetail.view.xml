@@ -545,6 +545,46 @@
                             </VBox>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
+
+                       <!-- links -->
+
+                                                
+
+                                            <u:ObjectPageSection
+                                                id="idSectionLinks"
+                                                titleUppercase="false"
+                                                title="{i18n>Links}"
+                                            >
+                                                <u:ObjectPageSubSection
+                                                    id="idSubSectionLinks"
+                                                >
+
+            		<List
+		id="linkList"
+		items="{}"
+		mode="Delete" noDataText="There are no links added to this task yet."
+		includeItemInSelection="true" selectionChange="onSelectLink"  delete="onDeleteLink"> 
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Respository" level="H1" />
+					<ToolbarSpacer />
+                    <Button type="Accept" icon="sap-icon://add" press="onAddNewLink"/>
+					
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<StandardListItem press="onSelectLink" type="Active" id="linkListItem"
+			title="{linkName}" 
+			description="{linkDescription}"
+			icon="sap-icon://chain-link" 
+			iconDensityAware="true"
+			iconInset="true" />
+	</List>
+                                                </u:ObjectPageSubSection>
+                                            </u:ObjectPageSection>
+
+
                 </u:sections>
             </u:ObjectPageLayout>
         </content>

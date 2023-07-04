@@ -101,7 +101,6 @@
 				{
 					"uid": "valueAxis",
 					"type": "Measure",
-					"Aggregation.default" : "#AVG",
 					"values": [
 						"actual",
 						"forecast"

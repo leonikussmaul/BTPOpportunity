@@ -37,6 +37,8 @@ entity opportunityHeader {
                                         on comments.opptID = $self;
         maturity               : Composition of many opportunityMaturity
                                         on maturity.opptID = $self;
+        links               : Composition of many opportunityLinks
+                                        on links.opptID = $self;
 };
 
 
@@ -57,6 +59,8 @@ entity opportunityActionItems {
                                    on subTasks.opptID = $self;
         comments             : Composition of many opportunityTasksComments
                                    on comments.opptID = $self;
+        links             : Composition of many opportunityTasksLinks
+                                   on links.opptID = $self;
 };
 
 @cds.autoexpose
@@ -99,6 +103,25 @@ entity opportunityMaturity {
         maturity : Integer;
         comment: String(800); 
 };
+
+@cds.autoexpose
+entity opportunityLinks {
+    key ID       : UUID;
+        opptID               : Association to opportunityHeader;
+        link    : String(1000);
+        linkDescription: String(5000);
+        linkName: String(200);
+};
+
+@cds.autoexpose
+entity opportunityTasksLinks {
+    key ID       : UUID;
+        opptID               : Association to opportunityActionItems;
+        link    : String(1000);
+        linkDescription: String(5000);
+        linkName: String(200);
+};
+
 
 @cds.autoexpose
 entity opportunityTasksComments {
@@ -253,8 +276,6 @@ entity teamProjects {
         status           : String(50);
         projectStartDate : Date;
         projectEndDate   : Date;
-        projectStartDateTime : DateTime;
-        projectEndDateTime   : DateTime;
         progress         : Integer;
         descriptionText  : String(5000);
         descriptionDate  : Date;

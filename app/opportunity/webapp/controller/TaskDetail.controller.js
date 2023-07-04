@@ -15,12 +15,13 @@ sap.ui.define([
     "sap/ui/model/FilterType",
     "../model/formatter",
     "sap/ui/core/routing/History",
-    "sap/ui/core/date/UI5Date"
+    "sap/ui/core/date/UI5Date",
+    'sap/m/library',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter, History, UI5Date) {
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, Token, Spreadsheet, jQuery, FilterType, formatter, History, UI5Date, library) {
         "use strict";
 
 
@@ -44,6 +45,9 @@ sap.ui.define([
                 var oEditPageModel = new JSONModel({});
                 this.getView().setModel(AddSubTaskModel, "editPageModel");
 
+                var oLocalModel = new JSONModel({});
+                this.getView().setModel(oLocalModel, "localModel");
+
 
             },
 
@@ -61,6 +65,7 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("TwoWay");
 
                 this.onReadSubTasksData(this._sID);
+                this.onFilterLinkList(this._sID);
 
             },
 
@@ -702,6 +707,99 @@ COMMENTS
                 });
 
             },
+
+
+
+                   /* ------------------------------------------------------------------------------------------------------------
+LINK
+--------------------------------------------------------------------------------------------------------------*/
+
+
+
+            onAddNewLink: function (oEvent) {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.AddLink");
+
+               
+            },
+
+            onSubmitNewLink: function(oEvent){
+                var that = this;
+                var oDialog = oEvent.getSource().getParent(); 
+                //this.customerID = this.getView().getBindingContext().getObject().ID;
+               var sID = this.getView().getBindingContext().getObject().ID;
+
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oData = oLocalModel.getData(); 
+
+                var oPayload = {
+                    linkName: oData.linkName,
+                    linkDescription: oData.linkDescription,
+                    link: oData.link,
+                    opptID_ID: sID
+                }
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                oModel.create("/opportunityTasksLinks", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New Link added!");
+                        that.getView().setBusy(false);
+                        oDialog.close(); 
+                        oLocalModel.setData({});
+                        that.onFilterLinkList(sID);
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        MessageBox.error("Link could not be posted. Please try again.");
+                    }
+                });
+
+            },
+
+            onFilterLinkList: function(sID){
+
+                var oTemplate = this.getView().byId("linkListItem");
+                var oSorter = new sap.ui.model.Sorter("linkName", true);
+                var oFilter = new Filter("opptID_ID", FilterOperator.EQ, sID);
+                this.getView().byId("linkList").bindAggregation("items", {
+                    template: oTemplate,
+                    path: "/opportunityTasksLinks",
+                    sorter: oSorter,
+                    filters: oFilter
+                });
+
+            },
+
+            onDeleteLink: function(oEvent){
+
+                var that = this;
+                var oBindingContext = oEvent.mParameters.listItem.getBindingContext();
+                var sPath = oBindingContext.getPath();
+                var sLinkName= oBindingContext.getObject("linkName");
+
+                MessageBox.confirm("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
+                    if (oAction === MessageBox.Action.OK) {
+                        that.getView().setBusy(true);
+                        var oModel = that.getView().getModel();
+                        oModel.remove(sPath, {
+                            success: function () {
+                                sap.m.MessageToast.show("Link deleted successfully.");
+                                that.getView().setBusy(false);
+                            },
+                            error: function () {
+                                sap.m.MessageToast.show("Link could not be deleted. Please try again.");
+                                that.getView().setBusy(false);
+                            }
+                        });
+                    }
+                });
+
+            },
+
+            onSelectLink: function(oEvent){
+                var sLink = oEvent.getSource().getBindingContext().getObject().link;
+                library.URLHelper.redirect(sLink, true);
+              },
+
 
 
 
