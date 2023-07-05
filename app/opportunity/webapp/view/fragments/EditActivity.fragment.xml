@@ -61,7 +61,7 @@
 			<Toolbar design="Auto">
 				<content>
 					<ToolbarSpacer />
-					<Button type="Accept" text="{i18n>Submit}" press="onSubmitEditedActivityt" />
+					<Button type="Accept" text="{i18n>Submit}" press="onSubmitEditedActivity" />
 				</content>
 			</Toolbar>
 		</footer>

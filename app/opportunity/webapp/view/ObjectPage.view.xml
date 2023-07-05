@@ -604,7 +604,7 @@
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
-					<Title text="Respository" level="H1" />
+					<Title text="Respository" level="H5" />
 					<ToolbarSpacer />
                     <Button type="Accept" icon="sap-icon://add" press="onAddNewLink"/>
 					
@@ -653,6 +653,95 @@
                                                     </VBox>
                                                 </u:ObjectPageSubSection>
                                             </u:ObjectPageSection>
+
+                                            <!-- timeline -->
+
+                                              <u:ObjectPageSection 
+                        id="idNextStepSection"
+                        titleUppercase="false"
+                        title="Next Steps"
+                    >
+                        <u:ObjectPageSubSection id="idNextStepSubSection" >
+                            <VBox height="100%">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+
+<Toolbar>
+<ToolbarSpacer/>
+
+<Button icon="sap-icon://add" type="Accept" press="onAddNextStep"/>
+			
+			<Switch change=".onHorizontalSwitchChange" />
+            <Label text="Horizontal"/>
+		</Toolbar>
+                                <commons:Timeline axisOrientation="Horizontal"
+                                noDataText="There are no next steps for this opportunity."
+                                    width="100%"
+                                    id="idTimeline"
+                                    content="{/opportunityNextSteps}"
+                                    filterList="{/opportunityNextSteps}"
+                                    enableScroll="false"
+                                    forceGrowing="false" enableSocial="true"
+                                    growingThreshold="6"
+                                    showHeaderBar="false" 
+                                    sortOldestFirst="true"
+                                    enableModelFilter="true"
+                                    showIcons="false"
+                                    filterTitle="Next Step"
+                                    enableDoubleSided="true"
+                                    lazyLoading="false"
+                                    textHeight="automatic"
+                                    showTimeFilter="false" 
+                                >
+                                    <commons:content>
+                                        <commons:TimelineItem
+                                            id="timelineTasks"
+                                            userNameClicked="onUserNameClick"
+                                            select="onPressItems"
+                                            text="{nextStepDescription}"
+                                            userName="{nextStep}"
+                                            filterValue="{completed}"
+                                            maxCharacters="500"
+                                            dateTime="{postedOn}"
+                                            
+                                        >
+                                        
+                                            <commons:embeddedControl>
+                                             <VBox  >
+                                             <Text class="sapUiSmallMarginBegin" text="{nextStepDescription}" width="90%" ></Text >
+                                                   
+                                               
+                                                <HBox  justifyContent="End">
+                                                <tnt:InfoLabel visible="{= ${completed} === true }"
+ text="Completed" class="sapUiTinyMarginTop sapUiTinyMarginEnd" colorScheme="8"></tnt:InfoLabel>
+                                                    <Button
+                                                        icon="sap-icon://edit" type="Transparent"
+                                                        press="onEditNextStep"
+                                                    />
+
+                                                   
+                                               
+                                                    
+                                                </HBox>
+
+                                                 </VBox>
+                                            </commons:embeddedControl>
+                                        </commons:TimelineItem>
+                                    </commons:content>
+
+                                     <commons:filterList>
+                                        <commons:TimelineFilterListItem
+                                            id="idTimelineFilterListItem"
+                                            key="{nextStep}"
+                                            text="{nextStep}"
+                                        />
+                                    </commons:filterList> 
+                                </commons:Timeline>
+                               
+                            </VBox>
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
                                         </u:sections>
                                     </u:ObjectPageLayout>
                                 </f:mainContent>

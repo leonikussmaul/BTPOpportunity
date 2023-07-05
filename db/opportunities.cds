@@ -39,6 +39,8 @@ entity opportunityHeader {
                                         on maturity.opptID = $self;
         links               : Composition of many opportunityLinks
                                         on links.opptID = $self;
+        nextSteps               : Composition of many opportunityNextSteps
+                                        on nextSteps.opptID = $self;
 };
 
 
@@ -121,6 +123,18 @@ entity opportunityTasksLinks {
         linkDescription: String(5000);
         linkName: String(200);
 };
+
+@cds.autoexpose
+entity opportunityNextSteps {
+    key ID       : UUID;
+        opptID               : Association to opportunityHeader;
+        nextStep    : String(1000);
+        nextStepDescription: String(5000);
+        completed: Boolean;
+        postedOn: DateTime;
+};
+
+
 
 
 @cds.autoexpose

@@ -470,14 +470,14 @@
                                 </layoutData>
 
                                 <commons:Timeline
-                                    width="100%"
+                                    width="100%" noDataText="There are no comments for this task yet."
                                     id="idTimeline"
                                     enableDoubleSided="true"
                                     content="{/opportunityTasksComments}"
                                     filterList="{/opportunityTasksComments}"
                                     enableScroll="false"
                                     forceGrowing="false"
-                                    growingThreshold="1"
+                                    growingThreshold="3"
                                     showHeaderBar="true"
                                     sortOldestFirst="false"
                                     enableModelFilter="true"

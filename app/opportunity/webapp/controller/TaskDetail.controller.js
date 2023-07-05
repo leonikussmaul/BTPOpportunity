@@ -66,6 +66,7 @@ sap.ui.define([
 
                 this.onReadSubTasksData(this._sID);
                 this.onFilterLinkList(this._sID);
+                this.onFilterComments(this._sID);
 
             },
 
@@ -646,15 +647,15 @@ COMMENTS
 
 
             onFilterComments(sOpportunityID) {
-                var oList = this.getView().byId("opportunityComments")
-                var commentTemp = this.getView().byId("commentItem");
-                var oSorter = new sap.ui.model.Sorter("postedOn", true);
+                var oList = this.getView().byId("idTimeline")
+                var commentTemp = this.getView().byId("timelineTasks");
+                // var oSorter = new sap.ui.model.Sorter("postedOn", true);
 
-                var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                oList.bindAggregation("items", {
+                var aCommentFilters = new Filter("opptID_ID", FilterOperator.EQ, sOpportunityID);
+                oList.bindAggregation("content", {
                     template: commentTemp,
-                    path: "/opportunityComments",
-                    sorter: oSorter,
+                    path: "/opportunityTasksComments",
+                    //sorter: oSorter,
                     filters: aCommentFilters
                 });
             },

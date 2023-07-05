@@ -11,6 +11,7 @@ service OpportunityService {
     entity opportunityTopicsVH         as projection on opportunities.opportunityTopicsVH;
     entity opportunityLinks             as projection on opportunities.opportunityLinks;
     entity opportunityTasksLinks             as projection on opportunities.opportunityTasksLinks;
+    entity opportunityNextSteps            as projection on opportunities.opportunityNextSteps;
     entity opportunityMaturity         as projection on opportunities.opportunityMaturity;
      @cds.redirection.target : true
     entity opportunityMaturityCopy     as projection on opportunities.opportunityMaturity;
