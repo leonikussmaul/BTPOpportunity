@@ -139,7 +139,10 @@
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false,
-                "path": "opportunity.opportunity.view"
+                "path": "opportunity.opportunity.view",
+                "bypassed": {
+                    "target": "NotFound"
+                 }
             },
             "routes": [
                 {
@@ -260,7 +263,13 @@
                     "viewId": "ProjectOverview",
                     "viewName": "ProjectOverview",
                     "viewLevel": 1
-                }
+            },
+            "NotFound": {
+                "id": "NotFound",
+                "name": "NotFound",
+                "viewType": "XML",
+                "transition": "show"
+             }
             }
         },
         "rootView": {

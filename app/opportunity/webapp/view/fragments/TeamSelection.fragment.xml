@@ -7,7 +7,7 @@
     <Popover
         id="myPopover"
         placement="Right"
-        title="Engagement Snapshot for:"
+        title="Engagement Snapshot"
         ariaLabelledBy="master-title"
         contentHeight="500px"
     >

@@ -50,7 +50,11 @@
                     <f:GridList
                         id="sentForProposalTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/sentForProposal'}"
+                        items="{path: 'ProjectModel>/sentForProposal',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
@@ -145,7 +149,11 @@
                     <f:GridList
                         id="RFPTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/RFP'}"
+                        items="{path: 'ProjectModel>/RFP',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
@@ -200,6 +208,7 @@
                                             class="sapUiTinyMarginBottom"
                                         />
                                     </HBox>
+                                      <Text text="{= ${ProjectModel>status} === 'RFP' ? ${ProjectModel>projectValue} + '€' : '' }" visible="{= ${ProjectModel>status} === 'RFP' &amp;&amp; ${ProjectModel>projectValue} !== null }" />
                                 </VBox>
                                 <OverflowToolbar height="45px">
                                     <HBox>
@@ -240,7 +249,11 @@
                     <f:GridList
                         id="OnGoingTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/On-Going'}"
+                        items="{path: 'ProjectModel>/On-Going',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
@@ -336,7 +349,11 @@
                     <f:GridList
                         id="GoLiveTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/Go-Live'}"
+                        items="{path: 'ProjectModel>/Go-Live',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
@@ -430,7 +447,11 @@
                     <f:GridList
                         id="PastTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/Past'}"
+                        items="{path: 'ProjectModel>/Past',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
                         selectionChange="onSelectionChange"
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"

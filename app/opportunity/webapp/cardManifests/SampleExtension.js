@@ -31,7 +31,32 @@ sap.ui.define(["sap/ui/integration/Extension"], function (Extension) {
 
            
         
-        }
+        },
+
+        projectValueFormatter: function (sValue) {
+       
+           if(sValue){
+            return sValue + " €"
+           }else return ""; 
+    
+    },
+
+    engagementFormatter: function (sPercentage) {
+       
+        if(sPercentage){
+         return sPercentage + " %"
+        }else return ""; 
+ 
+ },
+
+ actionDueDateFormatter: function(sDate){
+    var sDueDate = new Date(sDate);
+    var sTodayDate = new Date();
+    if (sDueDate < sTodayDate) return "Error";
+    else if (sDueDate === sTodayDate) return "Warning";
+
+ },
+
 		});
 	};
 

@@ -111,6 +111,10 @@
                                 text="{path: 'projectEndDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
                             />
 
+                            <Label  text="RFP Value"/>
+                            <Text text="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }"  visible="{= ${status} === 'RFP' }" />
+
+
                             <core:Title text="Involvement" />
 
                             <ProgressIndicator
@@ -121,6 +125,7 @@
                                 width="80%"
                                 state="{path: 'percentage', formatter: '.formatter.projectInvolvement'}"
                             />
+
 
                             <core:Title text="Skills" />
 
@@ -301,6 +306,13 @@
 				]
 			}"
                             />
+
+                              
+                            <Label  text="RFP Value"/>
+                            <Input value="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }" id="projectValue" visible="{= ${status} === 'RFP' }" />
+
+
+
                             <core:Title text="Involvement (in %)" />
 
                             <VBox>

@@ -50,6 +50,11 @@
                         titleStyle="H4"
                         class="sapUiSmallMarginBottom sapUiLargeMarginTop"
                     />
+
+                    	<!-- <Panel headerText="Opportunities &amp; Tasks" height="100%">
+				<layoutData>
+					<FlexItemData baseSize="50%" />
+				</layoutData> -->
                     <f:GridContainer
                         id="group1"
                         columnsChange=".onColumnsChange"
@@ -94,12 +99,12 @@
                         <ui-integration:Card
                             id="taskCard"
                             manifest="./cardManifests/cardManifestTasks.json"
-                            width="520px"
+                            width="560px"
                             class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
                         >
                             <w:layoutData>
                                 <f:GridContainerItemLayoutData
-                                    columns="7"
+                                    columns="6"
                                     minRows="6"
                                 />
                             </w:layoutData>
@@ -113,6 +118,22 @@
     </w:layoutData>
 
     </ui-integration:Card> -->
+
+
+</f:GridContainer>
+<!-- </Panel>
+
+	<Panel headerText="Explore" height="100%">
+				<layoutData>
+					<FlexItemData baseSize="50%" />
+				</layoutData> -->
+<f:GridContainer>
+                        <f:layout>
+                            <f:GridContainerSettings
+                                rowSize="4rem"
+                                columnSize="4rem"
+                            />
+                        </f:layout>
 
                         <f:Card
                             class="sapUiTinyMarginTop"
@@ -234,7 +255,7 @@
 
                         <GenericTile
                             header="Opportunities"
-                            press="onNavToOpportunities"
+                            press="onNavToOpportunities" class="sapUiTinyMarginBegin"
                         >
                             <layoutData>
                                 <f:GridContainerItemLayoutData columns="3" />
@@ -249,10 +270,10 @@
 
                         <GenericTile
                             press="onNavToTasks"
-                            header="Tasks Summary"
+                            header="Tasks Summary"  class="sapUiTinyMarginBegin"
                         >
                             <layoutData>
-                                <f:GridContainerItemLayoutData columns="3" />
+                                <f:GridContainerItemLayoutData columns="3rem" />
                             </layoutData>
                             <TileContent footer="Open Tasks">
                                 <NumericContent
@@ -335,6 +356,8 @@
                             </f:content>
                         </f:Card>
                     </f:GridContainer>
+
+                    <!-- </Panel> -->
                 </VBox>
 
                 <!-- TEAM SECTION -->
@@ -385,7 +408,7 @@
                             <f:layoutData>
                                 <f:GridContainerItemLayoutData
                                     columns="9"
-                                    minRows="8"
+                                    minRows="7"
                                 />
                             </f:layoutData>
 

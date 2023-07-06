@@ -231,6 +231,7 @@ entity teamProjects {
         projectStartDate    : Date;
         projectEndDate      : Date;
         progress            : Integer;
+        projectValue        : Integer;
         descriptionText     : String(5000);
         descriptionDate     : Date;
         percentage          : Integer;
@@ -350,4 +351,3 @@ entity opportunitySubTaskStatus {
     key ID            : UUID;
         subTaskStatus : String(50);
 };
-

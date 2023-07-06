@@ -330,7 +330,8 @@ sap.ui.define([
           projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
           descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
           percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-          lastUpdated: new Date()
+          lastUpdated: new Date(),
+          projectValue: sap.ui.getCore().byId("projectValue").getValue(),
         }
 
 

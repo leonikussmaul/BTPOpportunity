@@ -11,19 +11,12 @@ sap.ui.define([
         "use strict";
 
 
-        return Controller.extend("opportunity.opportunity.controller.MasterTeam", {
+        return Controller.extend("opportunity.opportunity.controller.NotFound", {
             formatter: formatter,
 
             onInit() {
                 this.oRouter = this.getOwnerComponent().getRouter();
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
-                // this.oRouter.attachBeforeRouteMatched(this.onBeforeRouteMatched, this);
-              },
-      
-              onRouteMatched: function (oEvent) {
-                var oModel = this.getOwnerComponent().getModel('FlexColLayoutModel');
-                oModel.setProperty("/layout", "TwoColumnsMidExpanded");
-           
               }
 
         });

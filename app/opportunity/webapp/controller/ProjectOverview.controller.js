@@ -65,7 +65,7 @@ sap.ui.define([
 
             },
 
-            onStatusMethod: function (aFilterBar) {
+            onStatusMethod: function (aFilterbar) {
                 var that = this;
                 var aStatus = [
                     { status: "Sent for Proposal", name: "/sentForProposal" },
@@ -75,21 +75,21 @@ sap.ui.define([
                     { status: "Past", name: "/Past" },
                 ];
                 aStatus.forEach(oStatus => {
-                    that.onReadProjectData(oStatus.status, oStatus.name, aFilterBar)
+                    that.onReadProjectData(oStatus.status, oStatus.name, aFilterbar)
                 });
 
             },
 
-            onReadProjectData: function (oStatus, sName, aFilterBar) {
+            onReadProjectData: function (oStatus, sName, aFilterbar) {
                 var aFilters = [];
 
                 aFilters.push(new sap.ui.model.Filter("status", "EQ", oStatus));
-                if (aFilterBar) {
-                    aFilterBar.forEach(oItem => {
+                if (aFilterbar) {
+                    aFilterbar.forEach(oItem => {
                         aFilters.push(oItem);
                     })
                 }
-                //aFilters.push(aFilterBar);
+                //aFilters.push(aFilterbar);
 
                 var oModel = this.getOwnerComponent().getModel();
                 var oProjectModel = this.getView().getModel("ProjectModel");
@@ -112,7 +112,7 @@ sap.ui.define([
             onDrop: function (oEvent) {
 
                 var that = this;
-
+                var aFilterbar = this.aFilterbar; 
                 var oDropTarget = oEvent.getSource().getDropTarget();
                 // i.e. = "/RFP"
                 //var sPath = oEvent.getSource().getDropTarget().mBindingInfos.items.path;
@@ -145,7 +145,7 @@ sap.ui.define([
 
                         MessageToast.show(oContext.account + "' has been moved to '" + sNewStatus + "'");
 
-                        that.onStatusMethod();
+                        that.onStatusMethod(aFilterbar);
                         that.getView().getModel("ProjectModel").refresh();
                         that.getView().setBusy(false);
                     },
@@ -233,6 +233,7 @@ sap.ui.define([
 
 
             onUpdateWithArrow: function (oContext, sNewStatus) {
+                var aFilterbar = this.aFilterbar; 
                 var that = this;
                 var oPayload = {
                     status: sNewStatus
@@ -247,7 +248,7 @@ sap.ui.define([
 
                         MessageToast.show(oContext.account + "' has been moved to '" + sNewStatus + "'");
 
-                        that.onStatusMethod();
+                        that.onStatusMethod(aFilterbar);
                         that.getView().getModel("ProjectModel").refresh();
                         that.getView().setBusy(false);
                     },
@@ -278,7 +279,7 @@ sap.ui.define([
             },
 
             onSubmitNewProject: function (oEvent) {
-
+                var aFilterbar = this.aFilterbar; 
                 var that = this;
                 //var oDialog = oEvent.getSource().getParent().getParent();
                 var oAddProjectModel = this.getView().getModel("AddProjectModel");
@@ -311,7 +312,8 @@ sap.ui.define([
                     addedOn: new Date(),
                     type: sType,
                     appointmentCategory: "Customer Project",
-                    appointmentIcon: "sap-icon://business-card"
+                    appointmentIcon: "sap-icon://business-card",
+                    projectValue: oData.projectValue
                 };
 
                 var sPath = "/teamProjects"
@@ -322,7 +324,7 @@ sap.ui.define([
                         MessageToast.show("New Project created!");
                         //oDialog.close();
                         that.onCancelDialogPress();
-                        that.onStatusMethod();
+                        that.onStatusMethod(aFilterbar);
                         that.getView().getModel("ProjectModel").refresh();
                         //oAddProjectModel.setData({});
                     },
@@ -480,6 +482,7 @@ sap.ui.define([
             },
 
             onDeleteItem: function (sPath, inumber) {
+                var aFilterbar = this.aFilterbar; 
                 var that = this;
                 //var sPath = oBinding.getPath(); 
                 that.getView().setBusy(true);
@@ -492,7 +495,7 @@ sap.ui.define([
 
                             oModel.remove(sPath, {
                                 success: function () {
-                                    that.onStatusMethod();
+                                    that.onStatusMethod(aFilterbar);
                                     that.getView().getModel("ProjectModel").refresh();
                                     that.getView().setBusy(false);
                                     sap.m.MessageToast.show("Project deleted successfully.");
@@ -625,6 +628,7 @@ sap.ui.define([
             },
 
             onSaveProject: function (oEvent) {
+                var aFilterbar = this.aFilterbar; 
                 var that = this;
 
                 var oContext = oEvent.getSource().getParent().getBindingContext().getObject();
@@ -649,7 +653,8 @@ sap.ui.define([
                     projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
                     descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
                     percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-                    lastUpdated: new Date()
+                    lastUpdated: new Date(),
+                    projectValue: sap.ui.getCore().byId("projectValue").getValue(),
                 }
 
 
@@ -660,6 +665,8 @@ sap.ui.define([
                         that.getView().setBusy(false);
                         MessageToast.show(oContext.account + " updated successfully.")
                         that.onEditProject();
+                        that.onStatusMethod(aFilterbar); 
+                        that.onCancelDialogPress(); 
                     },
                     error: function (oError) {
                         MessageToast.show(oError.message);
@@ -827,23 +834,23 @@ sap.ui.define([
             },
 
             onSearch: function (oEvent) {
-                var aFilterBar = [];
+                var aFilterbar = [];
                 var oFilter1 = this.getView().byId("multiComboBox1");
                 oFilter1.getSelectedItems().forEach(oItem => {
                     var oFilter1 = new sap.ui.model.Filter("primaryContact", sap.ui.model.FilterOperator.EQ, oItem.getKey());
-                    aFilterBar.push(oFilter1)
+                    aFilterbar.push(oFilter1)
                 });
 
                 var oFilter2 = this.getView().byId("multiComboBox2");
                 oFilter2.getSelectedItems().forEach(oItem => {
                     var oFilter2 = new sap.ui.model.Filter("topic", sap.ui.model.FilterOperator.EQ, oItem.getKey());
-                    aFilterBar.push(oFilter2)
+                    aFilterbar.push(oFilter2)
                 });
 
                 var oFilter3 = this.getView().byId("multiComboBox3");
                 oFilter3.getSelectedItems().forEach(oItem => {
                     var oFilter3 = new sap.ui.model.Filter("marketUnit", sap.ui.model.FilterOperator.EQ, oItem.getKey());
-                    aFilterBar.push(oFilter3)
+                    aFilterbar.push(oFilter3)
                 });
 
 
@@ -863,7 +870,7 @@ sap.ui.define([
                             0
                         ));
                     var oFilter3 = new sap.ui.model.Filter("projectStartDate", sap.ui.model.FilterOperator.GT, sStartDateFilter);
-                    aFilterBar.push(oFilter3)
+                    aFilterbar.push(oFilter3)
                 };
 
                 var sEndDate = this.getView().byId("endDate");
@@ -881,11 +888,12 @@ sap.ui.define([
                             0
                         ));
                     var oFilter3 = new sap.ui.model.Filter("projectEndDate", sap.ui.model.FilterOperator.LT, sEndDateFilter);
-                    aFilterBar.push(oFilter3)
+                    aFilterbar.push(oFilter3)
 
                 };
 
-                this.onStatusMethod(aFilterBar)
+                this.aFilterbar = aFilterbar; 
+                this.onStatusMethod(aFilterbar)
 
             }
 

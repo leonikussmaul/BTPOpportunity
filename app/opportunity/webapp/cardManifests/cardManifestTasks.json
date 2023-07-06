@@ -27,13 +27,15 @@
 	},
 	"sap.card": {
 		"type": "Table",
+		"extension": "./SampleExtension",
         "data": {
             "request": {
                 "url": "/Opportunity/opportunityActionItems",
                 "method": "GET",
                 "parameters": {
                     "$format": "json",
-                    "$orderby": "actionDueDate desc"
+                    "$orderby": "actionDueDate asc",
+					"$filter": "actionDueDate ne null"
                 }
             },
             "updateInterval": 300,
@@ -64,7 +66,8 @@
 					{
 						"title": "Due",
 						"value": "{actionDueDate}",
-                        "state": "Warning",
+                        "state":  "{= extension.formatters.actionDueDateFormatter(${actionDueDate}) }",
+						"showStateIcon": true,
                         "width": "20%"
 
 					},
@@ -83,7 +86,7 @@
 					{
 						"type": "Navigation",
 						"parameters": {
-							"url": "/opportunity/webapp/index.html#/TaskReport/{ID}" 
+							"url": "/app/opportunity/webapp/index.html#/TaskReport/{ID}" 
 						}
 					}
 				]

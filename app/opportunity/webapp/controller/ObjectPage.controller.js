@@ -118,8 +118,8 @@ sap.ui.define([
                 var oActivitiesTable = this.getView().byId("activitiesTableID");
                 if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
 
-                var oChartObject = this.getView().byId("smartChartObjectPage");
-                if (oChartObject.isInitialised()) oChartObject.rebindChart();
+                // var oChartObject = this.getView().byId("smartChartObjectPage");
+                // if (oChartObject.isInitialised()) oChartObject.rebindChart();
 
             },
 

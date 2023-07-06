@@ -1,11 +1,25 @@
+
+
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
-  "sap/ui/core/routing/History",
-  "sap/ui/core/UIComponent"
-], function (Controller, History, UIComponent) {
+  "sap/ui/core/UIComponent",
+	"sap/base/Log"
+], function (Controller, UIComponent, Log) {
+	"use strict";
 
-  "use strict";
-  return Controller.extend("opportunity.opportunity.controller.App", {
+	return Controller.extend("opportunity.opportunity.controller.App", {
+
+		onInit: function () {
+			Log.setLevel(Log.Level.INFO);
+
+			var oRouter = this.getRouter();
+
+			oRouter.attachBypassed(function (oEvent) {
+				var sHash = oEvent.getParameter("hash");
+				Log.info("Sorry, but the hash '" + sHash + "' is invalid.", "The resource was not found.");
+			});
+		},
+
 
     getRouter: function () {
       return UIComponent.getRouterFor(this);
@@ -22,5 +36,6 @@ sap.ui.define([
       }
     }
 
-  });
+	});
+
 });

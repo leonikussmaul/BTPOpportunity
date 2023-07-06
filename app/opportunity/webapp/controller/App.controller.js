@@ -7,14 +7,37 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/FilterType",
+    "sap/base/Log",
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageToast",
+    'sap/m/MessageBox',
   ],
-  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType) {
+  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType, Log, UIComponent, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("opportunity.opportunity.controller.App", {
       formatter: formatter,
 
       onInit() {
+
+        var oLocalModel = new JSONModel({});
+        this.getView().setModel(oLocalModel, "localModel");
+
+        // Log.setLevel(Log.Level.INFO);
+
+        // var oRouter = this.getRouter();
+
+        // oRouter.attachBypassed(function (oEvent) {
+        //   var sHash = oEvent.getParameter("hash");
+        //   Log.info("Sorry, but the hash '" + sHash + "' is invalid.", "The resource was not found.");
+        // });
+
+      },
+
+
+      getRouter: function () {
+        return UIComponent.getRouterFor(this);
       },
 
       onHomeIconPressed: function () {
@@ -83,7 +106,9 @@ sap.ui.define(
       },
 
       onOpenAbout: function (oEvent) {
-        sap.m.MessageToast.show("Details will come soon! Stay tuned.")
+        //sap.m.MessageToast.show("Details will come soon! Stay tuned.");
+        this.onDialogOpen("opportunity.opportunity.view.fragments.InfoPopup");
+
       },
 
       onOpenTeam: function (oEvent) {
@@ -92,6 +117,10 @@ sap.ui.define(
       },
 
       onOpenResources: function (oEvent) {
+        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.TeamSelection");
+      },
+
+      onOpenPopover: function (oEvent, sFragment) {
         var oButton = oEvent.getSource(),
           oView = this.getView();
 
@@ -99,7 +128,7 @@ sap.ui.define(
         if (!this._pPopover) {
           this._pPopover = Fragment.load({
             id: oView.getId(),
-            name: "opportunity.opportunity.view.fragments.TeamSelection",
+            name: sFragment,
             controller: this
           }).then(function (oPopover) {
             oView.addDependent(oPopover);
@@ -113,6 +142,43 @@ sap.ui.define(
 
       },
 
+
+      onCancelDialogPress: function (oEvent) {
+
+        this.editDialog = false;
+        this._pDialog.then(function (_pDialog) {
+          _pDialog.close();
+          _pDialog.destroy();
+        });
+        this._pDialog = null;
+        this.getView().getModel("localModel").setData({});
+
+      },
+
+
+      onDialogOpen: function (fragmentName) {
+
+        var that = this;
+        if (!this._pDialog) {
+          this._pDialog = Fragment.load({
+            name: fragmentName,
+            controller: this
+          }).then(function (_pDialog) {
+            that.getView().addDependent(_pDialog);
+            _pDialog.setEscapeHandler(function () {
+              that.onCloseDialog();
+            });
+            return _pDialog;
+          });
+        }
+        this._pDialog.then(function (_pDialog) {
+          //_pDialog.getContent()[0].scrollToElement(sap.ui.getCore().byId("hiThere"));
+          _pDialog.open();
+         //_pDialog.getContent()[0].scrollTo(0);
+         
+
+        })
+      },
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Calendar");
@@ -148,7 +214,55 @@ sap.ui.define(
         var oList = this.byId("teamMemberList").getBinding("items");
         oList.filter(aFilters, FilterType.Application);
 
-      }
+      },
+
+      onSubmitFeedback: function (oEvent) {
+        var that = this;
+        var oLocalModel = this.getView().getModel("localModel");
+
+        var oData = oLocalModel.getData();
+        var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
+
+
+        var bPositive;
+
+        if (oData.positive === true) bPositive = true;
+        else if (oData.negative === true) bPositive = false;
+
+        var oPayload = {
+          feedback: oData.feedback,
+          positive: bPositive,
+          postedBy: sPostedBy,
+          postedOn: new Date()
+        }
+
+        that.getView().setBusy(true);
+        var oModel = that.getView().getModel();
+        oModel.create("/userFeedback", oPayload, {
+          success: function (oData, response) {
+            MessageToast.show("Your Feedback has been registered. Thank you!");
+            that.getView().setBusy(false);
+          },
+          error: function (oError) {
+            that.getView().setBusy(false);
+            MessageBox.error("Your feedback could not be submitted at this time. Please refresh and try again.");
+          }
+        });
+
+
+      },
+      onTogglePositiveFeedback: function () {
+        var oLocalModel = this.getView().getModel("localModel");
+        oLocalModel.setProperty("/positive", true);
+        oLocalModel.setProperty("/negative", false);
+      },
+
+      onToggleNegativeFeedback: function () {
+        var oLocalModel = this.getView().getModel("localModel");
+        oLocalModel.setProperty("/positive", false);
+        oLocalModel.setProperty("/negative", true);
+      },
+
 
 
 

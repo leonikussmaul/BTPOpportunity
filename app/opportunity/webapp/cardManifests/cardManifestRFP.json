@@ -18,6 +18,7 @@
 	},
 	"sap.card": {
 		"type": "Table",
+		"extension": "./SampleExtension",
 		"header": {
 			"title": "RFP's",
 			"subTitle": "Incoming RFP's",
@@ -57,8 +58,8 @@
 						}
 					},
 					{
-						"title": "Engagement",
-						"value": "{percentage} %",
+						"title": "Value",
+						"value": "{= extension.formatters.projectValueFormatter(${projectValue}) }",
                         "width": "35%"
 					}
 				],
@@ -66,7 +67,7 @@
 					{
 						"type": "Navigation",
 						"parameters": {
-							"url": "/opportunity/webapp/index.html#/Resources/{userID_inumber}" 
+							"url": "/app/opportunity/webapp/index.html#/Resources/{userID_inumber}" 
 						}
 					}
 				]

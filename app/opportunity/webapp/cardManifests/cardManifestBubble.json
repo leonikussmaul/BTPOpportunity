@@ -35,7 +35,8 @@
                     "method": "GET",
                     "parameters": {
                         "$format": "json",
-                        "$orderby": "account asc"
+                        "$orderby": "account asc",
+						"$filter": "consumption ne null and adoption ne null"
                     }
                 },
                 "updateInterval": 300,

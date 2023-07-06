@@ -27,18 +27,18 @@
 					{
 						"Name": "Projects",
 						"icon": "sap-icon://meeting-room",
-						"url": "/opportunity/webapp/index.html#/ProjectOverview"
+						"url": "/app/opportunity/webapp/index.html#/ProjectOverview"
 					},
 
 					{
 						"Name": "Calendar",
 						"icon": "sap-icon://appointment-2",
-						"url": "/opportunity/webapp/index.html#/Calendar"
+						"url": "/app/opportunity/webapp/index.html#/Calendar"
 					},
 					{
 						"Name": "Team",
 						"icon": "sap-icon://employee-lookup",
-						"url": "/opportunity/webapp/index.html#/Team"
+						"url": "/app/opportunity/webapp/index.html#/Team"
 					},
 					{
 						"Name": "Services Catalog",

@@ -80,6 +80,9 @@
                 />
             </ComboBox>
 
+           <Label text="RFP Value (in EUR)" visible="{= ${AddProjectModel>/status} === 'RFP' }" />
+<Input visible="{= ${AddProjectModel>/status} === 'RFP' }" value="{AddProjectModel>/projectValue}" placeholder="Enter the value of the RFP"   type="Number"/>
+
             <Label text="Market Unit" />
             <ComboBox
                 selectedKey="{AddProjectModel>/marketUnit}"

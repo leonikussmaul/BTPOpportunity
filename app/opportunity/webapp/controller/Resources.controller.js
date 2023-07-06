@@ -305,7 +305,8 @@ sap.ui.define([
           lastUpdated: new Date(),
           type: sType,
           appointmentCategory: "Customer Project",
-          appointmentIcon: "sap-icon://business-card"
+          appointmentIcon: "sap-icon://business-card",
+          projectValue: oData.projectValue
         };
 
         var sPath = "/teamProjects"
@@ -634,6 +635,7 @@ sap.ui.define([
         if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
         if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
 
+        var sOwner = this.inumber; 
         var oPayload = {
           goLive: goLiveDate,
           projectContact: sap.ui.getCore().byId("projectContact").getValue(),
@@ -643,7 +645,8 @@ sap.ui.define([
           projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
           descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
           percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-          // lastUpdated: new Date().toISOString().split("T")[0]
+          lastUpdated: new Date(),
+          projectValue: sap.ui.getCore().byId("projectValue").getValue(),
         }
 
 
@@ -654,6 +657,8 @@ sap.ui.define([
             that.getView().setBusy(false);
             MessageToast.show(oContext.account + " updated successfully.")
             that.onEditProject();
+            that.onStatusMethod(sOwner); 
+            that.onCancelDialogPress(); 
           },
           error: function (oError) {
             MessageToast.show(oError.message);
