@@ -1,61 +1,73 @@
 <core:FragmentDefinition
-		xmlns="sap.m"
-		xmlns:l="sap.ui.layout"
-		xmlns:f="sap.ui.layout.form"
-		xmlns:core="sap.ui.core">
-	<Dialog contentWidth="40%">
-	<customHeader>
-			<Bar>
-				<contentMiddle>
-					<Title text="Edit Next Step '{localModel>/nextStep}'"/>
-				</contentMiddle>
-				<contentRight>
-					<Button icon="sap-icon://delete" press="onDeleteNextStep" />
-				</contentRight>
-			</Bar>
-		</customHeader>
-		<l:VerticalLayout
-				class="sapUiContentPadding"
-				width="100%">
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog  contentWidth="600px">
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title text="Edit Next Step '{localModel>/nextStep}'" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://delete"
+                        press="onDeleteNextStep"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <l:VerticalLayout
+            class="sapUiContentPadding"
+            width="100%"
+        >
+            <f:SimpleForm
+                id="vacationForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+            >
+                <Label text="Next Step" />
+                <Input
+                    placeholder="Enter a title for the next step"
+                    value="{localModel>/nextStep}"
+                />
 
-              	<f:SimpleForm
-					id="vacationForm"
-					editable="true"
-					layout="ResponsiveGridLayout"
-					singleContainerFullSize="false">
+                <Label text="Descr." />
+                <TextArea
+                    id="linkDescr"
+                    placeholder="Give a description for the next step"
+                    value="{localModel>/nextStepDescription}"
+                />
 
-
-                    <Label text="Next Step" />
-                    <Input placeholder="Enter a title for the next step" value="{localModel>/nextStep}"/>
-
-
-				<Label text="Descr." />
-				<TextArea
-						id="linkDescr"  placeholder="Give a description for the next step" value="{localModel>/nextStepDescription}" />
-
-
-<HBox justifyContent="End">
-				<CheckBox
-						id="completedID" text="Completed" selected="{localModel>/completed}" />
-</HBox>
-			</f:SimpleForm>
-		</l:VerticalLayout>
+                <HBox justifyContent="End">
+                    <CheckBox
+                        id="completedID"
+                        text="Completed"
+                        selected="{localModel>/completed}"
+                    />
+                </HBox>
+            </f:SimpleForm>
+        </l:VerticalLayout>
 
         <footer>
-			<Toolbar design="Auto">
-				<content>
-                <!-- <Button type="Emphasized" text="{i18n>Delete}" press="onDeleteNextStep" /> -->
-					<ToolbarSpacer />
-					
+            <Toolbar design="Auto">
+                <content>
+                    <ToolbarSpacer />
 
-  
-			<Button text="Save" type="Accept" press="onSubmitEditedNextStep"/>
-		
-			<Button text="Cancel" press="onCancelDialogPress"/>
+                    <Button
+                        text="Save"
+                        type="Accept"
+                        press="onSubmitEditedNextStep"
+                    />
 
-				</content>
-			</Toolbar>
-		</footer>
-
-	</Dialog>
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
 </core:FragmentDefinition>

@@ -1,0 +1,112 @@
+{
+	"_version": "1.14.0",
+	"sap.app": {
+		"id": "card.explorer.analytical.bubble.card",
+		"type": "card",
+		"title": "Sample of a Bubble Chart",
+		"subTitle": "Sample of a Bubble Chart",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"shortTitle": "A short title for this Card",
+		"info": "Additional information about this Card",
+		"description": "A long description for this Card",
+		"tags": {
+			"keywords": [
+				"Analytical",
+				"Card",
+				"Bubble",
+				"Sample"
+			]
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5"
+	},
+	"sap.card": {
+		"type": "Analytical",
+		"header": {
+			"title": "Adoption & Consumption"
+		},
+		"content": {
+			"data": {
+                "request": {
+                    "url": "/Opportunity/opportunityHeaderCopy",
+                    "method": "GET",
+                    "parameters": {
+                        "$format": "json",
+                        "$orderby": "account asc"
+                    }
+                },
+                "updateInterval": 300,
+                "path": "/value"
+            },
+			"chartType": "bubble",
+			"chartProperties": {
+				"title": {
+					"visible": false
+				},
+				"legendGroup": {
+					"layout": {
+						"position": "right",
+						"alignment": "topLeft"
+					}
+				}
+			},
+			"minHeight": "20rem",
+			"dimensions": [
+				{
+					"name": "Account",
+					"value": "{account}"
+				}
+			],
+			"measures": [
+				{
+					"name": "Value",
+					"value": "{opportunityValue}"
+				},
+				{
+					"name": "Adoption",
+					"value": "{adoption}"
+				},
+				{
+					"name": "Consumption",
+					"value": "{consumption}"
+				}
+			],
+			"feeds": [
+				{
+					"uid": "valueAxis",
+					"type": "Measure",
+					"values": [
+						"Value"
+					]
+				},
+				{
+					"uid": "valueAxis2",
+					"type": "Measure",
+					"values": [
+						"Adoption"
+					]
+				},
+				{
+					"uid": "bubbleWidth",
+					"type": "Measure",
+					"values": [
+						"Consumption"
+					]
+				},
+				{
+					"uid": "color",
+					"type": "Dimension",
+					"values": [
+						"Account"
+					]
+				}
+			],
+			"popover": {
+				"active": true
+			}
+		}
+	}
+}

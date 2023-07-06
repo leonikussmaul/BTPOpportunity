@@ -168,11 +168,6 @@
                     "target": "TaskDetail"
                 },
                 {
-                    "name": "ChartPage",
-                    "pattern": "ChartPage",
-                    "target": "ChartPage"
-                },
-                {
                     "name": "Team",
                     "pattern": "Team",
                     "target": "Team"
@@ -233,14 +228,6 @@
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
                     "viewLevel": 2
-                },
-                "ChartPage": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "ChartPage",
-                    "viewName": "ChartPage",
-                    "viewLevel": 1
                 },
                 "Calendar": {
                     "viewType": "XML",
