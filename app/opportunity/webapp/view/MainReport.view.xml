@@ -64,7 +64,7 @@
                         showGoOnFB="false"
                         showMessages="true"
                         useDateRangeType="true"
-                        clear="onClearSmartFilterBar"
+                        clear="onClearSmartFilterBar" 
                     >
                         <smartFilterBar:controlConfiguration>
                             <smartFilterBar:ControlConfiguration
@@ -390,7 +390,7 @@
                     mode="None"
                     sticky="ColumnHeaders,HeaderToolbar"
                     noDataText="Nothing here. Please adjust your search critera."
-                    delete="onDeleteTableItem"
+                    delete="onDeleteTableItem" 
                 >
                     <columns>
                         <Column>

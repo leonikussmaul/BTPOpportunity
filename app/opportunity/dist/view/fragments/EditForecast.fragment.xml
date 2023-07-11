@@ -1,0 +1,96 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        class="sapUiPopupWithPadding"
+        contentWidth="40%"
+        resizable="true"
+        draggable="true"
+    >
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title
+                        text="Edit an existing Forecast Record for {firstName}"
+                    />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onCancelDialogPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <MessageStrip
+            text="{= ${AddProjectModel>/forecast} > 100 || ${AddProjectModel>/actual} > 100 ? ${messageModel>/highUtilizationMessage/text} : ${messageModel>/message/text} }"
+            type="{= ${AddProjectModel>/forecast} > 100 || ${AddProjectModel>/actual} > 100 ? ${messageModel>/highUtilizationMessage/state} : ${messageModel>/message/state} }"
+            showIcon="false"
+            showCloseButton="true"
+        />
+
+        <form:SimpleForm editable="true">
+            <Label text="{i18n>month}" />
+
+            <ComboBox
+                id="monthComboBox"
+                placeholder="Select the month to edit"
+                items="{}"
+                selectionChange="onSelectionChange"
+                showSecondaryValues="true"
+            >
+                <core:ListItem
+                    id="monthItem"
+                    key="{month}"
+                    text="{month}"
+                    additionalText="{year}"
+                />
+            </ComboBox>
+
+            <Text
+                text="{AddProjectModel>/year}"
+                width="10rem"
+                class="sapUiSmallMarginBottom textBold"
+            />
+
+            <Label text="Forecast (in %)" />
+            <Slider
+                value="{AddProjectModel>/forecast}"
+                width="100%"
+                step="10"
+                min="0"
+                max="200"
+                showAdvancedTooltip="true"
+                showHandleTooltip="false"
+                enableTickmarks="true"
+            />
+
+            <Label text="Actual (in %)" />
+            <Slider
+                value="{AddProjectModel>/actual}"
+                width="100%"
+                step="10"
+                min="0"
+                max="200"
+                showAdvancedTooltip="true"
+                showHandleTooltip="false"
+                enableTickmarks="true"
+            />
+        </form:SimpleForm>
+        <footer>
+            <Toolbar design="Auto">
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="{i18n>Submit}"
+                        press="onEditForecastSubmit"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

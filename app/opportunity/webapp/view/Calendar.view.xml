@@ -38,7 +38,7 @@
             >
                 <toolbarContent>
                     <Title
-                        text="Team Overview"
+                        text="Team Project Calendar"
                         titleStyle="H4"
                     />
 

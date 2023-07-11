@@ -1,0 +1,502 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.comp"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:rte="sap.ui.richtexteditor"
+>
+    <Dialog
+        id="myWizardDialog"
+        resizable="true"
+        draggable="true"
+        verticalScrolling="false"
+        contentHeight="700px"
+        contentWidth="1000px"
+    >
+        <customHeader>
+            <Bar>
+                <contentRight>
+                    <ToggleButton
+                        icon="sap-icon://full-screen"
+                        press="onFullScreenButtonPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <f:DynamicPage
+            stickySubheaderProvider="CreateWizard"
+            toggleHeaderOnTitleClick="false"
+            class="sapUiNoContentPadding"
+            showFooter="true"
+        >
+            <f:title>
+                <f:DynamicPageTitle>
+                    <f:heading>
+                        <Title text="{i18n>wizardTitle}" />
+                    </f:heading>
+                </f:DynamicPageTitle>
+            </f:title>
+            <f:content>
+                <Wizard
+                    complete="onCreateNewItem"
+                    id="WizardDialog"
+                    renderMode="Page"
+                >
+                    <steps>
+                        <!-- step 1 -->
+                        <WizardStep
+                            id="WizardStep1"
+                            title="{i18n>step1Title}"
+                            validated="true"
+                        >
+                            <Title
+                                titleStyle="H5"
+                                text="{i18n>step1SubTitle}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <form:SimpleForm editable="true">
+                                <Label
+                                    text="{i18n>account}"
+                                    required="true"
+                                />
+                                <Input
+                                    value="{viewModel>/account}"
+                                    id="accountCreate"
+                                    placeholder="{i18n>accountPlaceholder}"
+                                />
+                                <Label
+                                    text="{i18n>marketUnit}"
+                                    required="true"
+                                />
+                                <ComboBox
+                                    selectedKey="{viewModel>/marketUnit}"
+                                    placeholder="{i18n>marketUnitPlaceholder}"
+                                    items="{
+                                    path: '/opportunityMarketUnitVH',
+                                    sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{marketUnit}"
+                                        text="{marketUnit}"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>mainTopic}" />
+                                <ComboBox
+                                    selectedKey="{viewModel>/topic}"
+                                    placeholder="{i18n>topicInterestPlaceholder}"
+                                    items="{
+                                    path: '/opportunityTopicsVH', 
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{topic}"
+                                        text="{topic}"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>valueInK}" />
+                                <Input
+                                    value="{viewModel>/opportunityValue}"
+                                    id="valueCreate"
+                                    placeholder="{i18n>valueInKPlaceholder}"
+                                />
+                                <Label text="{i18n>priority}" />
+                                <ComboBox
+                                    selectedKey="{viewModel>/priority}"
+                                    placeholder="{i18n>priorityPlaceholder}"
+                                >
+                                    <core:Item
+                                        key="High"
+                                        text="High"
+                                    />
+                                    <core:Item
+                                        key="Medium"
+                                        text="Medium"
+                                    />
+                                    <core:Item
+                                        key="Low"
+                                        text="Low"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>opportunityInCRM}" />
+                                <CheckBox
+                                    text="No"
+                                    selected="{viewModel>/opportunityInCRM}"
+                                    id="opportunityInCRMCreate"
+                                    select=".onCRMCheckboxSelect"
+                                />
+                            </form:SimpleForm>
+                            <HBox
+                                alignItems="Center"
+                                justifyContent="Center"
+                                width="100%"
+                            >
+                                <SegmentedButton
+                                    id="segmentedStatus"
+                                    width="560px"
+                                >
+                                    <items>
+                                        <SegmentedButtonItem
+                                            icon="sap-icon://flag-2"
+                                            text="Lead"
+                                            key="Lead"
+                                        />
+                                        <SegmentedButtonItem
+                                            icon="sap-icon://overlay"
+                                            text="Opp"
+                                            key="Opportunity"
+                                        />
+                                        <SegmentedButtonItem
+                                            icon="sap-icon://pause"
+                                            text="Paused"
+                                            key="Paused"
+                                        />
+                                        <SegmentedButtonItem
+                                            icon="sap-icon://activate"
+                                            text="Delivery"
+                                            key="Delivery"
+                                        />
+                                        <SegmentedButtonItem
+                                            icon="sap-icon://checklist-item"
+                                            text="Completed"
+                                            key="Completed"
+                                        />
+                                    </items>
+                                </SegmentedButton>
+                            </HBox>
+                        </WizardStep>
+                        <!-- step 2 -->
+                        <WizardStep
+                            id="WizardStep2"
+                            title="{i18n>step2Title}"
+                        >
+                            <Title
+                                titleStyle="H5"
+                                text="{i18n>step2SubTitle}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <form:SimpleForm editable="true">
+                                <Label
+                                    text="{i18n>opportunityCreatedQuarter}"
+                                />
+                                <ComboBox
+                                    selectedKey="{viewModel>/opportunityCreatedQuarter}"
+                                    placeholder="{i18n>createdPlaceholder}"
+                                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{opportunityQuarter}"
+                                        text="{opportunityQuarter}"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>opportunityClosedQuarter}" />
+                                <ComboBox
+                                    selectedKey="{viewModel>/opportunityClosedQuarter}"
+                                    placeholder="{i18n>closedPlaceholder}"
+                                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true,
+                                                group: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{opportunityQuarter}"
+                                        text="{opportunityQuarter}"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>opportunityStartDate}" />
+                                <DatePicker
+                                    value="{path: 'viewModel>/opportunityStartDate' , type:'sap.ui.model.type.Date', formatOptions : { style:'medium', UTC: true }}"
+                                    id="dateCreate"
+                                />
+                                <Label text="{i18n>opportunityDueDate}" />
+                                <DatePicker
+                                    value="{viewModel>/opportunityDueDate}"
+                                    id="dueDateCreate"
+                                />
+                                <Label text="{i18n>progress}" />
+                                <Slider
+                                    value="{viewModel>/progress}"
+                                    width="100%"
+                                    step="25"
+                                    min="0"
+                                    max="100"
+                                    showAdvancedTooltip="true"
+                                    showHandleTooltip="false"
+                                    class="sapUiMediumMarginBottom"
+                                    enableTickmarks="true"
+                                />
+
+                                <Label text="{i18n>adoption}" />
+                                <Slider
+                                    value="{viewModel>/adoption}"
+                                    width="100%"
+                                    step="25"
+                                    min="0"
+                                    max="100"
+                                    showAdvancedTooltip="true"
+                                    showHandleTooltip="false"
+                                    class="sapUiMediumMarginBottom"
+                                    enableTickmarks="true"
+                                />
+
+                                <Label text="{i18n>consumption}" />
+                                <Slider
+                                    value="{viewModel>/consumption}"
+                                    width="100%"
+                                    step="25"
+                                    min="0"
+                                    max="100"
+                                    showAdvancedTooltip="true"
+                                    showHandleTooltip="false"
+                                    class="sapUiMediumMarginBottom"
+                                    enableTickmarks="true"
+                                />
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <!-- step 3 -->
+                        <WizardStep
+                            id="WizardStep3"
+                            title="{i18n>step3Title}"
+                        >
+                            <Title
+                                titleStyle="H5"
+                                text="{i18n>step3SubTitle}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <form:SimpleForm editable="true">
+                                <Label text="{i18n>primaryContact}" />
+                                <ComboBox
+                                    placeholder="{i18n>primaryContactPlaceholder}"
+                                    id="primaryContact"
+                                    value="{viewModel>/primaryContact}"
+                                    items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{primaryContact}"
+                                        text="{primaryContact}"
+                                    />
+                                </ComboBox>
+                                <Label text="{i18n>clientContactPerson}" />
+                                <Input
+                                    placeholder="{i18n>clientContactPlaceholder}"
+                                    type="Text"
+                                    value="{viewModel>/clientContactPerson}"
+                                    id="clientContactPerson"
+                                />
+                                <Label text="{i18n>ssa}" />
+                                <!-- <Input id="ssa" placeholder="{i18n>ssaPlaceholder}" value="{viewModel>/ssa}" /> -->
+                                <ComboBox
+                                    placeholder="{i18n>ssaPlaceholder}"
+                                    id="ssa"
+                                    value="{viewModel>/ssa}"
+                                    items="{
+                                    path: '/opportunitySSAVH',
+                                    sorter: {
+                                                path: 'SSA',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        key="{SSA}"
+                                        text="{SSA}"
+                                    />
+                                </ComboBox>
+
+                                <Label text="{i18n>source}" />
+                                <Input
+                                    placeholder="{i18n>sourcePlaceholder}"
+                                    id="source"
+                                    value="{viewModel>/source}"
+                                />
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <!-- step 4 -->
+                        <WizardStep
+                            id="WizardStep4"
+                            title="{i18n>step4Title}"
+                        >
+                            <Title
+                                titleStyle="H5"
+                                text="{i18n>step4SubTitle}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <VBox
+                                justifyContent="Center"
+                                alignContent="Center"
+                            >
+                                <Toolbar class="sapUiResponsiveMargin">
+                                    <Label
+                                        text="{i18n>topicsHeader}"
+                                        class="myTitle"
+                                    />
+                                    <ToolbarSpacer />
+                                    <ToggleButton
+                                        text="{i18n>selectAll}"
+                                        press="onSelectAllTopicsPress"
+                                    />
+                                    <Button
+                                        tooltip="{i18n>addTopic}"
+                                        icon="sap-icon://add"
+                                        press="onAddTopicPress"
+                                    />
+                                </Toolbar>
+                                <HBox
+                                    justifyContent="Center"
+                                    alignContent="Center"
+                                >
+                                    <l:HorizontalLayout
+                                        id="TopicFilters"
+                                        allowWrapping="true"
+                                        class="sapUiResponsiveMargin "
+                                        content="{}"
+                                    >
+                                        <ToggleButton
+                                            text="{topic}"
+                                            press="onPressToggle1"
+                                            class="sapUiSmallMarginEnd"
+                                        >
+                                            <customData>
+                                                <core:CustomData
+                                                    key="ID"
+                                                    value="{topic}"
+                                                    class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                />
+                                            </customData>
+                                        </ToggleButton>
+                                    </l:HorizontalLayout>
+                                </HBox>
+                            </VBox>
+                            <VBox
+                                justifyContent="Center"
+                                alignContent="Center"
+                            >
+                                <Toolbar class="sapUiResponsiveMargin">
+                                    <Label
+                                        text="{i18n>deliverablesHeader}"
+                                        class="myTitle"
+                                    />
+                                    <ToolbarSpacer />
+                                    <ToggleButton
+                                        text="{i18n>selectAll}"
+                                        press="onSelectAllDeliverablesPress"
+                                    />
+                                    <Button
+                                        tooltip="{i18n>addDeliverable}"
+                                        icon="sap-icon://add"
+                                        press="onAddDeliverablePress"
+                                    />
+                                </Toolbar>
+                                <HBox
+                                    justifyContent="Center"
+                                    alignContent="Center"
+                                >
+                                    <l:HorizontalLayout
+                                        id="DeliverablesFilters"
+                                        allowWrapping="true"
+                                        class="sapUiResponsiveMargin "
+                                        content="{}"
+                                    >
+                                        <ToggleButton
+                                            text="{deliverable}"
+                                            press="onPressToggle1"
+                                            class="sapUiSmallMarginEnd"
+                                        >
+                                            <customData>
+                                                <core:CustomData
+                                                    key="ID"
+                                                    value="{deliverable}"
+                                                    class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                />
+                                            </customData>
+                                        </ToggleButton>
+                                    </l:HorizontalLayout>
+                                </HBox>
+                            </VBox>
+                        </WizardStep>
+                        <!-- step 5 -->
+                        <WizardStep
+                            id="WizardStep5"
+                            title="{i18n>step5Title}"
+                            validated="false"
+                        >
+                            <Title
+                                titleStyle="H5"
+                                text="{i18n>step5SubTitle}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <rte:RichTextEditor
+                                id="wizardRTE"
+                                value="{viewModel>/noteText}"
+                                width="100%"
+                                height="350px"
+                                showGroupFont="true"
+                                showGroupLink="true"
+                                showGroupUndo="true"
+                            />
+                        </WizardStep>
+                    </steps>
+                </Wizard>
+            </f:content>
+            <f:footer>
+                <Toolbar>
+                    <content>
+                        <ToolbarSpacer />
+                        <!-- <Button text="{i18n>delete}" press="onDeleteTopic" /> -->
+                        <!-- <Button text="Previous Step" press="onPreviousStep" /> -->
+                        <Button
+                            type="Reject"
+                            text="{i18n>cancel}"
+                            press="onCloseWizardPress"
+                        />
+                        <Button
+                            type="Accept"
+                            text="{i18n>save}"
+                            press="onSaveWizardPress"
+                        />
+                    </content>
+                </Toolbar>
+            </f:footer>
+        </f:DynamicPage>
+    </Dialog>
+</core:FragmentDefinition>

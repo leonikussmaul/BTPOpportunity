@@ -1,0 +1,50 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        class="sapUiPopupWithPadding"
+        id="deliverableDialog"
+    >
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title text="{i18n>addDeliverableHeader}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onCancelDialogPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <Label text="{i18n>addNew}" />
+        <Input
+            type="Text"
+            value=""
+            id="deliverableInput"
+            liveChange=".onDeliverableInputChange"
+        />
+
+        <MessageStrip
+            text="Please only submit relevant &amp; unique deliverables to the DB."
+            type="Warning"
+            showIcon="true"
+            class="sapUiTinyMarginTop"
+        />
+
+        <footer>
+            <Toolbar design="Auto">
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="{i18n>Submit}"
+                        press="onSubmitDeliverable"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

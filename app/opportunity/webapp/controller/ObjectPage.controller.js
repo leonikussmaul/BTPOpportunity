@@ -1560,13 +1560,18 @@ COMMENTS
 
                 this.sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
                 var sDate, sCompletedOn;
+                var sCompleted = false; 
                 if (oData.deliverableDate) sDate = new Date(oData.deliverableDate).toISOString().split("T")[0];
-                if (oData.completedOn) sCompletedOn = new Date(oData.completedOn).toISOString().split("T")[0];
+                if (oData.completedOn){
+                    sCompletedOn = new Date(oData.completedOn).toISOString().split("T")[0];
+                    sCompleted = true; 
+                } 
+            
 
                 var oPayload = {
                     deliverable: oData.deliverable,
                     deliverableDate: sDate,
-                    completed: oData.completed,
+                    completed: sCompleted,
                     completedOn: sCompletedOn,
                     primaryContact: oData.primaryContact,
                     shortDescription: oData.shortDescription,
@@ -1763,13 +1768,13 @@ COMMENTS
                 var oModel = that.getView().getModel();
                 oModel.create("/opportunityNextSteps", oPayload, {
                     success: function (oData, response) {
-                        MessageToast.show("Next Step added to Roadmap!");
+                        MessageToast.show("Item added to Roadmap!");
                         that.getView().setBusy(false);
                         that.onCancelDialogPress();
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Next Step could not be added to Roadmap. Please check your input.");
+                        MessageBox.error("Item could not be added to Roadmap. Please check your input.");
                     }
                 });
 
@@ -1799,11 +1804,11 @@ COMMENTS
                 }
                 oModel.update(sPath, oPayload, {
                     success: function () {
-                        MessageToast.show("Next Step '" + sNextStep + "' updated");
+                        MessageToast.show("Item '" + sNextStep + "' updated");
                         that.onCancelDialogPress();
                     },
                     error: function (oError) {
-                        MessageBox.error("Next Step could not be updated. Please try again.");
+                        MessageBox.error("Item could not be updated. Please try again.");
                     }
                 });
             },
@@ -1812,7 +1817,7 @@ COMMENTS
                 var that = this;
                 var sPath = this.nextStepPath;
 
-                MessageBox.warning("Are you sure you want to delete this next step?", {
+                MessageBox.warning("Are you sure you want to delete this item?", {
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {
@@ -1822,12 +1827,12 @@ COMMENTS
                             var oModel = that.getView().getModel();
                             oModel.remove(sPath, {
                                 success: function () {
-                                    sap.m.MessageToast.show("Next step has been deleted from the roadmap");
+                                    sap.m.MessageToast.show("Item has been deleted from the roadmap");
                                     that.getView().setBusy(false);
                                     that.onCancelDialogPress();
                                 },
                                 error: function () {
-                                    sap.m.MessageToast.show("Next step could not be deleted from the roadmap. Please try again.");
+                                    sap.m.MessageToast.show("Item could not be deleted from the roadmap. Please try again.");
                                     that.getView().setBusy(false);
                                 }
                             });
