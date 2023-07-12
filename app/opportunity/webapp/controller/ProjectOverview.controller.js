@@ -5,15 +5,20 @@ sap.ui.define([
     "../model/formatter",
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/library"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator) {
+    function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary) {
         "use strict";
-
-
+        var ValueState = CoreLibrary.ValueState,
+        oValueState = {
+            valueState: ValueState.None,
+            valueStateText: ""
+        };
+    
 
         return Controller.extend("opportunity.opportunity.controller.ProjectOverview", {
             formatter: formatter,
@@ -45,8 +50,7 @@ sap.ui.define([
                 this.getView().setModel(oMessageModel, "messageModel");
 
 
-
-
+                this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
             },
 
             _onRoutePatternMatched: function (oEvent) {
@@ -275,7 +279,7 @@ sap.ui.define([
 
                 oAddProjectModel.setProperty("/status", sStatus);
                 oAddProjectModel.setProperty("/allProjects", true); 
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddProject");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
 
             },
 
@@ -287,6 +291,8 @@ sap.ui.define([
                 var oData = oAddProjectModel.getData();
 
                 //var inumber = this.getView().getBindingContext().getObject().inumber;
+                if( oData.firstName && oData.account && oData.status){
+                    this.resetValueState(); 
 
                 var sStartDate, sEndDate, sGoLiveDate;
                 if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toISOString().split("T")[0];
@@ -333,6 +339,7 @@ sap.ui.define([
                         sap.m.MessageBox.error("Project could not be created, check your input and try again.");
                     }
                 });
+            } else this.ValueStateMethod(); 
 
             },
             getApptType: function (sStatus) {
@@ -362,7 +369,7 @@ sap.ui.define([
 
 
             onDialogOpen: function (fragmentName, sPath, sProjectID) {
-
+                this.resetValueState(); 
                 var bEdit = this.editDialog;
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", false);
@@ -544,11 +551,11 @@ sap.ui.define([
             },
 
             onAddProjectSkill: function (oEvent) {
-                this.onPopover("opportunity.opportunity.view.fragments.AddSkill", oEvent);
+                this.onPopover("opportunity.opportunity.view.fragments.addFragments.AddSkill", oEvent);
 
             },
             onAddProjectTool: function (oEvent) {
-                this.onPopover("opportunity.opportunity.view.fragments.AddTool", oEvent);
+                this.onPopover("opportunity.opportunity.view.fragments.addFragments.AddTool", oEvent);
             },
 
 
@@ -691,13 +698,13 @@ sap.ui.define([
 
             onAddNewForecast: function (oEvent) {
                 this.editDialog = false;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddNewForecast");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
 
             },
 
             onForecastEdit: function (oEvent) {
                 this.editDialog = true;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.EditForecast");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
 
             },
             onBindMonth: function (oEvent) {
@@ -723,13 +730,19 @@ sap.ui.define([
 
                 this.editDialog = false;
                 var that = this;
-                that.getView().setBusy(true);
+               
                 var oChart = this.getView().byId("smartChartTeamForecast");
 
                 var that = this;
                 // var oDialog = oEvent.getSource().getParent().getParent();
                 var oAddProjectModel = this.getView().getModel("AddProjectModel");
                 var oPayload = oAddProjectModel.getData();
+
+                if(oData.month){
+                   
+                    this.resetValueState(); 
+                    that.getView().setBusy(true);
+             
 
                 var sPath = this.forecastPath.sPath;
 
@@ -746,6 +759,7 @@ sap.ui.define([
                         that.getView().setBusy(false);
                     }
                 });
+            }else this.ValueStateMethod(); 
 
             },
 
@@ -831,6 +845,7 @@ sap.ui.define([
 
             onMemberChange: function (oEvent) {
                 oEvent;
+                this.resetValueState(); 
                 var oAddProjectModel = this.getView().getModel("AddProjectModel");
                 var sName = oEvent.mParameters.selectedItem.getText();
                 var inumber = oEvent.mParameters.selectedItem.getKey();
@@ -902,6 +917,31 @@ sap.ui.define([
                 this.aFilterbar = aFilterbar; 
                 this.onStatusMethod(aFilterbar)
 
+            },
+
+
+             /* ------------------------------------------------------------------------------------------------------------
+            VALUE STATE
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            ValueStateMethod: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                MessageToast.show("Please fill all mandatory fields");
+                oValueStateModel.setProperty("/valueState", ValueState.Error);
+                oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+
+            },
+
+            resetValueState: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                oValueStateModel.setProperty("/valueState", ValueState.None);
+                oValueStateModel.setProperty("/valueStateText", "");
+            },
+
+            onChangeValueState: function(oEvent){
+                var sValue = oEvent.mParameters.newValue; 
+                if(sValue) this.resetValueState(); 
             }
 
 

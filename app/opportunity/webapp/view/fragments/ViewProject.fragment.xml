@@ -99,7 +99,7 @@
                             <Text text="{marketUnit}" />
 
                             <Label text="Topic" />
-                            <Text text="CSD" />
+                            <Text text="{topic}" />
 
                             <Label text="Start Date" />
                             <Text

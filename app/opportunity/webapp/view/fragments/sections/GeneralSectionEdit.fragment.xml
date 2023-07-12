@@ -1,0 +1,223 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <VBox class="sapUiSmallMargin">
+        <f:SimpleForm
+            id="GeneralSectionEdit"
+            editable="true"
+            layout="ColumnLayout"
+            columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+        >
+            <f:content>
+                <!-- values -->
+                <core:Title text="{i18n>groupHeaderLabel}" />
+                <Label
+                    text="{i18n>account}"
+                    required="true"
+                />
+                <Input value="{editPageModel>/account}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                liveChange="onChangeValueState" />
+                <Label
+                    text="{i18n>marketUnit}"
+                    required="true"
+                />
+                <Select
+                    id="marketUnitEdit"
+                    selectedKey="{editPageModel>/marketUnit}"
+                    items="{
+                                    path: '/opportunityMarketUnitVH',
+                                   sorter: 
+                                            {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        text="{marketUnit}"
+                        key="{marketUnit}"
+                    />
+                </Select>
+                <Label text="{i18n>topic}" />
+                <Select
+                    id="topicsEdit"
+                    selectedKey="{editPageModel>/topic}"
+                    items="{
+                                    path: '/opportunityTopicsVH',
+                                   sorter: 
+                                            {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        text="{topic}"
+                        key="{topic}"
+                    />
+                </Select>
+
+                <Label text="{i18n>priority}" />
+                <Select
+                    id="priorityEdit"
+                    selectedKey="{editPageModel>/priority}"
+                    items="{
+                                    path: '/opportunityPriorityVH',
+                                   sorter: 
+                                            {
+                                                path: 'priority',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        text="{priority}"
+                        key="{priority}"
+                    />
+                </Select>
+
+                <!-- dates -->
+                <core:Title text="{i18n>groupDatesLabel}" />
+
+                <Label text="{i18n>opportunityCreatedQuarter}" />
+                <Select
+                    id="opportunityCreatedQuarter"
+                    selectedKey="{editPageModel>/opportunityCreatedQuarter}"
+                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }"
+                >
+                    <items>
+                        <core:Item
+                            text="{opportunityQuarter}"
+                            key="{opportunityQuarter}"
+                        />
+                    </items>
+                </Select>
+
+                <Label text="{i18n>opportunityClosedQuarter}" />
+                <Select
+                    id="opportunityClosedQuarter"
+                    selectedKey="{editPageModel>/opportunityClosedQuarter}"
+                    items="{
+                                    path: '/opportunityQuartersVH',
+                                   sorter: [
+                                            {
+                                                path: 'opportunityYear',
+                                                descending: true
+                                            },
+                                            {
+                                                path: 'opportunityQuarter',
+                                                descending: true
+                                            }
+                                        ]
+                                    }"
+                >
+                    <items>
+                        <core:Item
+                            text="{opportunityQuarter}"
+                            key="{opportunityQuarter}"
+                        />
+                    </items>
+                </Select>
+
+                <Label text="{i18n>opportunityStartDate}" />
+                <DatePicker
+                    value="{ path: 'editPageModel>/opportunityStartDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+                <Label text="{i18n>opportunityDueDate}" />
+                <DatePicker
+                    value="{ path: 'editPageModel>/opportunityDueDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+
+                <!-- contact -->
+                <core:Title text="{i18n>Contact}" />
+                <Label text="{i18n>primaryContact}" />
+
+                <Select
+                    selectedKey="{editPageModel>/primaryContact}"
+                    items="{
+                                    path: '/opportunityPrimaryContactVH',
+                                    sorter: {
+                                                path: 'primaryContact',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{primaryContact}"
+                        text="{primaryContact}"
+                    />
+                </Select>
+
+                <!-- opportunityPrimaryContactVH -->
+                <Label text="{i18n>clientContactPerson}" />
+                <Input value="{editPageModel>/clientContactPerson}" />
+                <Label text="{i18n>ssa}" />
+                <Select
+                    id="ssa"
+                    selectedKey="{editPageModel>/ssa}"
+                    items="{/opportunitySSAVH}"
+                >
+                    <core:Item
+                        text="{SSA}"
+                        key="{SSA}"
+                    />
+                </Select>
+                <Label text="{i18n>source}" />
+                <Input
+                    id="source"
+                    value="{editPageModel>/source}"
+                />
+
+                <!-- values -->
+                <core:Title text="{i18n>groupValueLabel}" />
+                <Label text="{i18n>Value} (in k)" />
+                <Input value="{editPageModel>/opportunityValue}" />
+                <Label text="{i18n>opportunityInCRM}" />
+                <CheckBox
+                    id="opportunityInCRMEdit"
+                    text="{editPageModel>/opportunityInCRM}"
+                    selected="{= ${editPageModel>/opportunityInCRM} === 'Yes' ? true : false}"
+                    select="onCRMCheckboxSelect"
+                />
+
+                <Label text="{i18n>Progress}" />
+                <Slider
+                    value="{editPageModel>/progress}"
+                    width="80%"
+                    step="25"
+                    change="onProgressSliderChange"
+                    min="0"
+                    max="100"
+                    showAdvancedTooltip="true"
+                    showHandleTooltip="false"
+                    class="sapUiSmallMarginTop"
+                    enableTickmarks="true"
+                />
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

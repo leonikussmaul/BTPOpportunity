@@ -7,13 +7,19 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/ui/model/FilterType",
-    "../model/formatter"
+    "../model/formatter",
+    "sap/ui/core/library"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, FilterType, formatter) {
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, FilterType, formatter, CoreLibrary) {
         "use strict";
+        var ValueState = CoreLibrary.ValueState,
+                oValueState = {
+                    valueState: ValueState.None,
+                    valueStateText: ""
+                };
 
 
         return Controller.extend("opportunity.opportunity.controller.MainReport", {
@@ -31,6 +37,9 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
+
+                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
+                
 
             },
 
@@ -107,6 +116,7 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onWizardDialogPress: function (oEvent) {
+                this.resetValueState(); 
                 var oController = this;
                 oController.getView().setBusy(true);
                 if (!this._oDialog) {
@@ -142,9 +152,12 @@ sap.ui.define([
             onSaveWizardPress: function (oEvent) {
 
                 var that = this;
-                that.getView().setBusy(true);
                 var oViewModel = this.getView().getModel("viewModel");
                 var oData = oViewModel.getData();
+                
+                if(oData.account && oData.marketUnit){
+                this.resetValueState(); 
+                that.getView().setBusy(true);
 
                 var sDate, sDueDate, bCRM, sTodayDate;
 
@@ -228,8 +241,6 @@ sap.ui.define([
                     }, {
                         topic: "Data",
                     }, {
-                        topic: "CSD",
-                    }, {
                         topic: "Clean Core",
                     }, {
                         topic: "Automation / AI",
@@ -255,6 +266,8 @@ sap.ui.define([
                     }
                 });
 
+            } else this.ValueStateMethod(); 
+
             },
 
             /* ------------------------------------------------------------------------------------------------------------
@@ -269,6 +282,7 @@ sap.ui.define([
                 var aTopics = this.getView().getModel("localModel").getData().topics;
 
                 if (oValue != "" && oInput != null) {
+                    this.resetValueState(); 
                     MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -302,7 +316,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else MessageToast.show("Enter a new topic first");
+                } else this.ValueStateMethod(); 
             },
 
             onPostNewItem: function () {
@@ -333,6 +347,7 @@ sap.ui.define([
                 var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
 
                 if (oValue != "" && oInput != null) {
+                    this.resetValueState(); 
                     MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -364,7 +379,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else MessageToast.show("Enter a new deliverable first");
+                } else this.ValueStateMethod(); 
             },
 
             onSelectAllTopicsPress: function (oEvent) {
@@ -540,7 +555,7 @@ sap.ui.define([
 
 
             onDialogOpen: function (fragmentName) {
-
+                this.resetValueState(); 
                 var that = this;
                 if (!this._pDialog) {
                     this._pDialog = Fragment.load({
@@ -572,10 +587,10 @@ sap.ui.define([
             },
 
             onAddTopicPress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddTopic");
             },
             onAddDeliverablePress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddDeliverable");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddDeliverable");
             },
 
 
@@ -755,6 +770,30 @@ sap.ui.define([
                 oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" })
 
 
+            },
+
+             /* ------------------------------------------------------------------------------------------------------------
+            VALUE STATE
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            ValueStateMethod: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                MessageToast.show("Please fill all mandatory fields");
+                oValueStateModel.setProperty("/valueState", ValueState.Error);
+                oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+
+            },
+
+            resetValueState: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                oValueStateModel.setProperty("/valueState", ValueState.None);
+                oValueStateModel.setProperty("/valueStateText", "");
+            },
+
+            onChangeValueState: function(oEvent){
+                var sValue = oEvent.mParameters.newValue; 
+                if(sValue) this.resetValueState(); 
             }
 
         });

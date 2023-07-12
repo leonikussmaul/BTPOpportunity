@@ -12,14 +12,20 @@ sap.ui.define([
     "sap/ui/core/date/UI5Date",
     "sap/ui/core/format/DateFormat",
     'sap/m/library',
+    "sap/ui/core/library"
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat, library) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat, library, CoreLibrary) {
         "use strict";
         var _this = this;
+        var ValueState = CoreLibrary.ValueState,
+        oValueState = {
+            valueState: ValueState.None,
+            valueStateText: ""
+        };
 
         return Controller.extend("opportunity.opportunity.controller.ObjectPage", {
             formatter: formatter,
@@ -47,6 +53,8 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
+
+                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
 
             },
@@ -164,7 +172,7 @@ sap.ui.define([
 
 
             onAddNewLink: function (oEvent) {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddLink");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
 
 
             },
@@ -177,6 +185,9 @@ sap.ui.define([
 
                 var oLocalModel = this.getView().getModel("localModel");
                 var oData = oLocalModel.getData();
+
+                if(oData.linkName && oData.link){
+                           this.resetValueState(); 
 
                 var oPayload = {
                     linkName: oData.linkName,
@@ -200,6 +211,8 @@ sap.ui.define([
                         MessageBox.error("Link could not be posted. Please try again.");
                     }
                 });
+
+            }else this.ValueStateMethod(); 
 
             },
 
@@ -427,6 +440,9 @@ sap.ui.define([
                 var oEditPageModel = this.getView().getModel("editPageModel");
 
                 var oData = this.getView().getModel("editPageModel").getData();
+                if(oData.account && oData.marketUnit){
+
+                    this.resetValueState(); 
 
                 const monthNames = ["January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
@@ -471,6 +487,8 @@ sap.ui.define([
                         sap.m.MessageBox.error("Changes could not be saved. Details: " + oError.message);
                     }
                 });
+
+            } else this.ValueStateMethod(); 
 
             },
 
@@ -591,7 +609,6 @@ sap.ui.define([
 
 
             onCancelObjectPress: function (oEvent) {
-                var oCancelBtn = oEvent.getSource();
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", false);
                 var oModel = this.getView().getModel();
@@ -601,10 +618,10 @@ sap.ui.define([
             },
 
             onEditObjectPress: function (oEvent) {
-                var oCancelBtn = oEvent.getSource();
                 var oEditModel = this.getView().getModel("editModel");
                 oEditModel.setProperty("/editMode", true);
                 this.onSetEditPageModel();
+                this.resetValueState(); 
             },
 
             onSetEditPageModel: function (oEvent) {
@@ -633,6 +650,9 @@ sap.ui.define([
                 // var oDialog = oEvent.getSource().getParent().getParent();
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
+
+                if(oData.actionTask && oData.actionTitle){
+                    this.resetValueState(); 
 
                 if (this._bEdit) {
                     this._bEdit = false;
@@ -679,23 +699,25 @@ sap.ui.define([
                     });
                     this._bEdit = false;
                 }
+            } else this.ValueStateMethod(); 
 
             },
 
             onAddTopicPress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddTopic");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddTopic");
             },
             onAddDeliverablePress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddDeliverable");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddDeliverable");
             },
             onAddToDoPress: function () {
                 var that = this;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDo");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDo");
 
             },
 
             onDialogOpen: function (fragmentName) {
 
+                this.resetValueState(); 
                 var that = this;
                 if (!this._pDialog) {
                     this._pDialog = Fragment.load({
@@ -765,114 +787,114 @@ sap.ui.define([
      --------------------------------------------------------------------------------------------------------------*/
 
 
-            onSubmitTopic: function (oEvent) {
-                var that = this;
-                //var oDialog = sap.ui.getCore().byId("topicDialog");
-                var oInput = sap.ui.getCore().byId("topicInput");
-                var oValue = oInput.getValue();
-                var aTopics = this.getView().getModel("pageModel").getData().topics;
+    //         onSubmitTopic: function (oEvent) {
+    //             var that = this;
+    //             //var oDialog = sap.ui.getCore().byId("topicDialog");
+    //             var oInput = sap.ui.getCore().byId("topicInput");
+    //             var oValue = oInput.getValue();
+    //             var aTopics = this.getView().getModel("pageModel").getData().topics;
 
-                if (oValue != "" && oInput != null) {
-                    MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
-                        actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                        emphasizedAction: MessageBox.Action.OK,
-                        onClose: function (sAction) {
-                            if (sAction === MessageBox.Action.OK) {
-                                var isMatch = aTopics.some(oItem => {
-                                    return oItem.topic.toUpperCase() === oValue.toUpperCase();
-                                });
-                                if (isMatch) {
-                                    //prevent POST call 
-                                    MessageBox.error("This topic already exists!");
-                                    oInput.setValue("");
-                                    that.onCancelDialogPress();
-                                    //oDialog.close();
-                                } else {
-                                    // POST call 
-                                    var oNewTopic = {
-                                        topic: oValue
-                                    }
-                                    that.getView().setBusy(true);
-                                    var oModel = that.getView().getModel();
-                                    oModel.create("/opportunityTopicsVH", oNewTopic, {
-                                        success: function (oData, response) {
-                                            MessageToast.show("New topic posted!");
-                                            //oDialog.close();
-                                            that.onCancelDialogPress();
-                                            oInput.setValue("");
-                                            that.getView().setBusy(false);
-                                        },
-                                        error: function (oError) {
-                                            that.getView().setBusy(false);
-                                            MessageBox.error("Topic could not be posted. Please check your input.");
-                                        }
-                                    });
-                                }
-                            } else {
-                                oInput.setValue("");
-                                that.getView().setBusy(false);
-                            }
-                        }
-                    });
-                } else MessageToast.show("Enter a new topic first");
-            },
+    //             if (oValue != "" && oInput != null) {
+    //                 MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
+    //                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+    //                     emphasizedAction: MessageBox.Action.OK,
+    //                     onClose: function (sAction) {
+    //                         if (sAction === MessageBox.Action.OK) {
+    //                             var isMatch = aTopics.some(oItem => {
+    //                                 return oItem.topic.toUpperCase() === oValue.toUpperCase();
+    //                             });
+    //                             if (isMatch) {
+    //                                 //prevent POST call 
+    //                                 MessageBox.error("This topic already exists!");
+    //                                 oInput.setValue("");
+    //                                 that.onCancelDialogPress();
+    //                                 //oDialog.close();
+    //                             } else {
+    //                                 // POST call 
+    //                                 var oNewTopic = {
+    //                                     topic: oValue
+    //                                 }
+    //                                 that.getView().setBusy(true);
+    //                                 var oModel = that.getView().getModel();
+    //                                 oModel.create("/opportunityTopicsVH", oNewTopic, {
+    //                                     success: function (oData, response) {
+    //                                         MessageToast.show("New topic posted!");
+    //                                         //oDialog.close();
+    //                                         that.onCancelDialogPress();
+    //                                         oInput.setValue("");
+    //                                         that.getView().setBusy(false);
+    //                                     },
+    //                                     error: function (oError) {
+    //                                         that.getView().setBusy(false);
+    //                                         MessageBox.error("Topic could not be posted. Please check your input.");
+    //                                     }
+    //                                 });
+    //                             }
+    //                         } else {
+    //                             oInput.setValue("");
+    //                             that.getView().setBusy(false);
+    //                         }
+    //                     }
+    //                 });
+    //             } else MessageToast.show("Enter a new topic first");
+    //         },
 
-            /* ------------------------------------------------------------------------------------------------------------
-          ADD DELIVERABLE
-     --------------------------------------------------------------------------------------------------------------*/
+    //         /* ------------------------------------------------------------------------------------------------------------
+    //       ADD DELIVERABLE
+    //  --------------------------------------------------------------------------------------------------------------*/
 
-            onSubmitDeliverable: function (oEvent) {
-                var that = this;
-                //var oDialog = sap.ui.getCore().byId("deliverableDialog");
-                var oInput = sap.ui.getCore().byId("deliverableInput");
+    //         onSubmitDeliverable: function (oEvent) {
+    //             var that = this;
+    //             //var oDialog = sap.ui.getCore().byId("deliverableDialog");
+    //             var oInput = sap.ui.getCore().byId("deliverableInput");
 
-                var oValue = oInput.getValue();
-                var aDeliverables = this.getView().getModel("pageModel").getData().deliverables;
+    //             var oValue = oInput.getValue();
+    //             var aDeliverables = this.getView().getModel("pageModel").getData().deliverables;
 
-                if (oValue != "" && oInput != null) {
-                    MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
-                        actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                        emphasizedAction: MessageBox.Action.OK,
-                        onClose: function (sAction) {
-                            if (sAction === MessageBox.Action.OK) {
-                                var isMatch = aDeliverables.some(oItem => {
-                                    return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
-                                });
-                                if (isMatch) {
-                                    //prevent POST call 
-                                    MessageBox.error("This deliverable already exists!");
-                                    oInput.setValue("");
-                                    // oDialog.close();
-                                    that.onCancelDialogPress();
-                                } else {
-                                    // POST call 
-                                    var oNewDeliverable = {
-                                        deliverable: oValue
-                                    }
-                                    that.getView().setBusy(true);
-                                    var oModel = that.getView().getModel();
-                                    oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
-                                        success: function (oData, response) {
-                                            MessageToast.show("New deliverable posted!");
-                                            //oDialog.close();
-                                            oInput.setValue("");
-                                            that.onCancelDialogPress();
-                                            that.getView().setBusy(false);
-                                        },
-                                        error: function (oError) {
-                                            that.getView().setBusy(false);
-                                            MessageBox.error("Deliverable could not be posted. Please check your input.");
-                                        }
-                                    });
-                                }
-                            } else {
-                                oInput.setValue("");
-                                that.getView().setBusy(false);
-                            }
-                        }
-                    });
-                } else MessageToast.show("Enter a new deliverable first");
-            },
+    //             if (oValue != "" && oInput != null) {
+    //                 MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
+    //                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+    //                     emphasizedAction: MessageBox.Action.OK,
+    //                     onClose: function (sAction) {
+    //                         if (sAction === MessageBox.Action.OK) {
+    //                             var isMatch = aDeliverables.some(oItem => {
+    //                                 return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
+    //                             });
+    //                             if (isMatch) {
+    //                                 //prevent POST call 
+    //                                 MessageBox.error("This deliverable already exists!");
+    //                                 oInput.setValue("");
+    //                                 // oDialog.close();
+    //                                 that.onCancelDialogPress();
+    //                             } else {
+    //                                 // POST call 
+    //                                 var oNewDeliverable = {
+    //                                     deliverable: oValue
+    //                                 }
+    //                                 that.getView().setBusy(true);
+    //                                 var oModel = that.getView().getModel();
+    //                                 oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
+    //                                     success: function (oData, response) {
+    //                                         MessageToast.show("New deliverable posted!");
+    //                                         //oDialog.close();
+    //                                         oInput.setValue("");
+    //                                         that.onCancelDialogPress();
+    //                                         that.getView().setBusy(false);
+    //                                     },
+    //                                     error: function (oError) {
+    //                                         that.getView().setBusy(false);
+    //                                         MessageBox.error("Deliverable could not be posted. Please check your input.");
+    //                                     }
+    //                                 });
+    //                             }
+    //                         } else {
+    //                             oInput.setValue("");
+    //                             that.getView().setBusy(false);
+    //                         }
+    //                     }
+    //                 });
+    //             } else MessageToast.show("Enter a new deliverable first");
+    //         },
 
             /* ------------------------------------------------------------------------------------------------------------
                  FAVORITE
@@ -966,7 +988,7 @@ sap.ui.define([
 
                 this._pPopover = Fragment.load({
                     id: oView.getId(),
-                    name: "opportunity.opportunity.view.fragments.TaskPopover3",
+                    name: "opportunity.opportunity.view.fragments.taskPopover.TaskPopover3",
                     controller: this
                 }).then(function (oPopover) {
                     oView.addDependent(oPopover);
@@ -1020,7 +1042,7 @@ sap.ui.define([
 
             onGridListItemEdit: function (oEvent) {
                 this._bEdit = true;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDo");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDo");
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oEvent.getSource().getBindingContext("pageModel").getObject();
                 oData.actionDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
@@ -1034,6 +1056,7 @@ sap.ui.define([
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
                 var sGuid = oData.ID;
+                var sDueDate; 
 
                 var oPageModel = this.getView().getModel("pageModel");
 
@@ -1042,8 +1065,10 @@ sap.ui.define([
                 else if (oData.actionPriority === 'Medium') sPriorityNumber = 2;
                 else if (oData.actionPriority === 'Low') sPriorityNumber = 3;
 
+                if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+
                 var sUpdatedTask = {
-                    actionDueDate: new Date(oData.actionDueDate).toISOString().split("T")[0],
+                    actionDueDate: sDueDate,
                     actionOwner: oData.actionOwner,
                     actionPriority: oData.actionPriority,
                     actionPriorityNumber: sPriorityNumber,
@@ -1250,6 +1275,7 @@ sap.ui.define([
                 var aTopics = this.getView().getModel("localModel").getData().topics;
 
                 if (oValue != "" && oInput != null) {
+                    this.resetValueState(); 
                     MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -1284,7 +1310,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else MessageToast.show("Enter a new topic first");
+                } else this.ValueStateMethod(); 
             },
 
             /* ------------------------------------------------------------------------------------------------------------
@@ -1299,6 +1325,7 @@ sap.ui.define([
                 var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
 
                 if (oValue != "" && oInput != null) {
+                    this.resetValueState(); 
                     MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -1330,7 +1357,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else MessageToast.show("Enter a new deliverable first");
+                } this.ValueStateMethod(); 
             },
 
             onSelectAllTopicsPress: function (oEvent) {
@@ -1549,7 +1576,7 @@ COMMENTS
             },
 
             onAddActivityPress: function () {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddActivity");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddActivity");
             },
 
             onSubmitActivity: function (oEvent) {
@@ -1557,6 +1584,9 @@ COMMENTS
                 var that = this;
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
+
+                if(oData.deliverable){
+                    this.resetValueState(); 
 
                 this.sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
                 var sDate, sCompletedOn;
@@ -1566,8 +1596,6 @@ COMMENTS
                     sCompletedOn = new Date(oData.completedOn).toISOString().split("T")[0];
                     sCompleted = true; 
                 } 
-            
-
                 var oPayload = {
                     deliverable: oData.deliverable,
                     deliverableDate: sDate,
@@ -1593,6 +1621,7 @@ COMMENTS
                     }
                 });
 
+            }else this.ValueStateMethod(); 
 
             },
 
@@ -1658,7 +1687,7 @@ COMMENTS
                 this.maturityObject = oEvent.getSource().getBindingContext().getObject();
                 oLocalModel.setData(this.maturityObject);
                 this.maturityPath = oEvent.getSource().getBindingContext().sPath;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.EditMaturity");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditMaturity");
             },
 
             onSubmitMaturityComment: function (oEvent) {
@@ -1696,7 +1725,7 @@ COMMENTS
                 this.deliverableObject = oEvent.getSource().getBindingContext().getObject();
                 oLocalModel.setData(this.deliverableObject);
                 this.deliverablePath = oEvent.getSource().getBindingContext().sPath;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.EditActivity");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditActivity");
             },
 
             onSubmitEditedActivity: function (oEvent) {
@@ -1745,7 +1774,7 @@ COMMENTS
             },
 
             onAddNextStep: function (oEvent) {
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddNextStep");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNextStep");
 
             },
 
@@ -1755,7 +1784,9 @@ COMMENTS
                 var oData = oLocalModel.getData();
 
                 this.sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
-
+                if(oData.nextStep){
+                    this.resetValueState(); 
+               
                 var oPayload = {
                     nextStep: oData.nextStep,
                     nextStepDescription: oData.nextStepDescription,
@@ -1777,6 +1808,7 @@ COMMENTS
                         MessageBox.error("Item could not be added to Roadmap. Please check your input.");
                     }
                 });
+            }else this.ValueStateMethod(); 
 
             },
 
@@ -1785,7 +1817,7 @@ COMMENTS
                 this.nextStepObject = oEvent.getSource().getBindingContext().getObject();
                 oLocalModel.setData(this.nextStepObject);
                 this.nextStepPath = oEvent.getSource().getBindingContext().sPath;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.EditNextStep");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditNextStep");
             },
 
             onSubmitEditedNextStep: function (oEvent) {
@@ -1794,7 +1826,8 @@ COMMENTS
                 var oLocalModel = this.getView().getModel("localModel");
                 var oData = oLocalModel.getData();
                 var sNextStep = this.nextStepObject.nextStep;
-
+                if(oData.nextStep){
+                    this.resetValueState(); 
                 var oModel = this.getView().getModel();
                 var oPayload = {
                     nextStep: oData.nextStep,
@@ -1811,6 +1844,7 @@ COMMENTS
                         MessageBox.error("Item could not be updated. Please try again.");
                     }
                 });
+            }else this.ValueStateMethod(); 
             },
 
             onDeleteNextStep: function (oEvent) {
@@ -1845,7 +1879,6 @@ COMMENTS
             },
 
             onHorizontalSwitch: function (oEvent) {
-
                 var bState = oEvent.getParameters().state;
                 if (bState == true) {
                     this.getView().byId("idTimeline").setAxisOrientation("Horizontal");
@@ -1853,6 +1886,30 @@ COMMENTS
                     this.getView().byId("idTimeline").setAxisOrientation("Vertical")
                 }
 
+            },
+
+             /* ------------------------------------------------------------------------------------------------------------
+            VALUE STATE
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            ValueStateMethod: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                MessageToast.show("Please fill all mandatory fields");
+                oValueStateModel.setProperty("/valueState", ValueState.Error);
+                oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+
+            },
+
+            resetValueState: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                oValueStateModel.setProperty("/valueState", ValueState.None);
+                oValueStateModel.setProperty("/valueStateText", "");
+            },
+
+            onChangeValueState: function(oEvent){
+                var sValue = oEvent.mParameters.newValue; 
+                if(sValue) this.resetValueState(); 
             }
 
 

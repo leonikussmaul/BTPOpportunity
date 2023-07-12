@@ -1,0 +1,202 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+>
+    <Dialog
+        class="sapUiPopupWithPadding"
+        contentWidth="40%"
+        resizable="true"
+        draggable="true"
+    >
+        <customHeader>
+            <Bar>
+                <contentMiddle>
+                    <Title text="Add a New Project for {firstName}" />
+                </contentMiddle>
+                <contentRight>
+                    <Button
+                        icon="sap-icon://decline"
+                        press="onCancelDialogPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <form:SimpleForm editable="true">
+            <Label
+                text="Team Member"
+                required="true"
+            />
+
+            <ComboBox
+            visible="{= ${AddProjectModel>/allProjects} }"
+
+                selectedKey="{AddProjectModel>/userID_inumber}"
+                placeholder="Who is it for?"
+                showSecondaryValues="true"
+                selectionChange="onMemberChange"
+                items="{
+                                    path: '/teamMembers',
+                                    sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+            valueState="{valueState>/valueState}" 
+                valueStateText="{valueState>/valueStateText}"
+            >
+                <core:ListItem
+                    key="{inumber}"
+                    text="{firstName}"
+                    additionalText="{inumber}"
+                />
+            </ComboBox>
+
+            <Label
+                text="Project"
+                required="true"
+            />
+            <Input
+                value="{AddProjectModel>/account}"
+                id="projectName"
+                placeholder="What's the project name?"
+                valueState="{valueState>/valueState}" 
+                valueStateText="{valueState>/valueStateText}"
+                liveChange="onChangeValueState"
+            />
+
+            <Label
+                text="Project Status"
+                required="true"
+            />
+            <ComboBox
+                selectedKey="{AddProjectModel>/status}"
+                placeholder="What's the status of the project?"
+                items="{
+                                    path: '/projectStatusVH',
+                                    sorter: {
+                                                path: 'status',
+                                                descending: true
+                                            }
+                                    }"
+            >
+                <core:Item
+                    key="{status}"
+                    text="{status}"
+                />
+            </ComboBox>
+
+           <Label text="RFP Value (in EUR)" visible="{= ${AddProjectModel>/status} === 'RFP' }" />
+<Input visible="{= ${AddProjectModel>/status} === 'RFP' }" value="{AddProjectModel>/projectValue}" placeholder="Enter the value of the RFP"   type="Number"/>
+
+            <Label text="Market Unit" />
+            <ComboBox
+                selectedKey="{AddProjectModel>/marketUnit}"
+                placeholder="Which market unit?"
+                items="{
+                                    path: '/opportunityMarketUnitVH',
+                                    sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            }
+                                    }"
+            >
+                <core:Item
+                    key="{marketUnit}"
+                    text="{marketUnit}"
+                />
+            </ComboBox>
+
+            <Label text="Project Contact" />
+            <Input
+                value="{AddProjectModel>/projectContact}"
+                id="projectContact"
+                placeholder="Who can be contacted?"
+            />
+
+            <Label text="Short Descr." />
+            <TextArea
+                value="{AddProjectModel>/descriptionText}"
+                rows="3"
+                id="projectDescr"
+                maxLength="5000"
+                placeholder="Add a short project description"
+            />
+
+            <Label text="{i18n>topic}" />
+            <ComboBox
+                selectedKey="{AddProjectModel>/topic}"
+                placeholder="Is there a main topic?"
+                items="{
+                                    path: '/opportunityTopicsVH',
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }"
+            >
+                <core:Item
+                    key="{topic}"
+                    text="{topic}"
+                />
+            </ComboBox>
+
+            <Label text="Dates" />
+
+            <DateRangeSelection
+                placeholder="Start Date - End Date"
+                id="DRS1"
+                class="DRS1"
+                value="{
+				'type': 'sap.ui.model.type.DateInterval',
+				'formatOptions': {
+					'pattern': 'yyyy/MM/dd'
+				},
+				'parts': [
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': 'AddProjectModel>/projectStartDate'
+					},
+					{
+						'type': 'sap.ui.model.type.Date',
+						'path': 'AddProjectModel>/projectEndDate'
+					}
+				]
+			}"
+                change="handleChange"
+            />
+
+            <Label text="Go-Live" />
+            <DatePicker
+                value="{AddProjectModel>/goLive}"
+                id="goLiveDate"
+                placeholder="When is the Project Go-Live?"
+            />
+
+            <Label text="Involvement (in %)" />
+            <Slider
+                value="{AddProjectModel>/percentage}"
+                width="100%"
+                step="25"
+                min="0"
+                max="100"
+                showAdvancedTooltip="true"
+                showHandleTooltip="false"
+                enableTickmarks="true"
+            />
+        </form:SimpleForm>
+        <footer>
+            <Toolbar design="Auto">
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="Add Project"
+                        press="onSubmitNewProject"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

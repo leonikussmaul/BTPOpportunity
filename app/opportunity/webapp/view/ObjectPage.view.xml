@@ -278,7 +278,7 @@
                                 >
                                     <core:Fragment
                                         id="idGeneralFragment"
-                                        fragmentName="opportunity.opportunity.view.fragments.GeneralSection"
+                                        fragmentName="opportunity.opportunity.view.fragments.sections.GeneralSection"
                                         type="XML"
                                     />
                                 </u:ObjectPageSubSection>
@@ -288,7 +288,7 @@
                                     visible="{= ${editModel>/editMode}}"
                                 >
                                     <core:Fragment
-                                        fragmentName="opportunity.opportunity.view.fragments.GeneralSectionEdit"
+                                        fragmentName="opportunity.opportunity.view.fragments.sections.GeneralSectionEdit"
                                         type="XML"
                                     />
                                 </u:ObjectPageSubSection>
@@ -396,7 +396,7 @@
                                     id="idSubSectionActivities"
                                 >
                                     <core:Fragment
-                                        fragmentName="opportunity.opportunity.view.fragments.ActivitiesSection"
+                                        fragmentName="opportunity.opportunity.view.fragments.sections.ActivitiesSection"
                                         type="XML"
                                     />
                                 </u:ObjectPageSubSection>
@@ -505,7 +505,7 @@
                                 title="{i18n>Notes}"
                             >
                                 <u:ObjectPageSubSection id="idSubSectionNotes">
-                                    <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.NotesSection" type="XML"/> -->
+                                    <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
                                     <rte:RichTextEditor
                                         value="{noteText}"
                                         id="editRTE"
@@ -589,7 +589,7 @@
                                                             width="700px"
                                                         >
                                                             <core:Fragment
-                                                                fragmentName="opportunity.opportunity.view.fragments.SmartChart"
+                                                                fragmentName="opportunity.opportunity.view.fragments.sections.SmartChart"
                                                                 type="XML"
                                                             />
                                                         </VBox>

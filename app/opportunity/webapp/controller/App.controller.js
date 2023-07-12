@@ -221,6 +221,8 @@ sap.ui.define(
         var oLocalModel = this.getView().getModel("localModel");
 
         var oData = oLocalModel.getData();
+        if(oData.feedback){
+
         var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
 
 
@@ -248,6 +250,7 @@ sap.ui.define(
             MessageBox.error("Your feedback could not be submitted at this time. Please refresh and try again.");
           }
         });
+      }else MessageToast.show("Please enter your feedback first");
 
 
       },

@@ -64,7 +64,8 @@
                                     required="true"
                                 />
                                 <Input
-                                    value="{viewModel>/account}"
+                                    value="{viewModel>/account}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                                    liveChange="onChangeValueState"
                                     id="accountCreate"
                                     placeholder="{i18n>accountPlaceholder}"
                                 />
@@ -73,8 +74,8 @@
                                     required="true"
                                 />
                                 <ComboBox
-                                    selectedKey="{viewModel>/marketUnit}"
-                                    placeholder="{i18n>marketUnitPlaceholder}"
+                                    selectedKey="{viewModel>/marketUnit}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                                    placeholder="{i18n>marketUnitPlaceholder}" selectionChange="resetValueState"
                                     items="{
                                     path: '/opportunityMarketUnitVH',
                                     sorter: {

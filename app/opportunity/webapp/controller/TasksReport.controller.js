@@ -10,13 +10,19 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/core/ValueState",
     "sap/ui/model/FilterType",
-    "../model/formatter"
+    "../model/formatter",
+    "sap/ui/core/library"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, FilterType, formatter) {
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, FilterType, formatter, CoreLibrary) {
         "use strict";
+        var ValueState = CoreLibrary.ValueState,
+        oValueState = {
+            valueState: ValueState.None,
+            valueStateText: ""
+        };
 
 
         return Controller.extend("opportunity.opportunity.controller.TasksReport", {
@@ -32,6 +38,10 @@ sap.ui.define([
 
                 var oPageModel = new JSONModel({});
                 this.getView().setModel(oPageModel, "actionItemModel");
+
+                this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
+
+                
                
 
             },
@@ -120,7 +130,7 @@ sap.ui.define([
 
             onAddToDoTablePress: function () {
                 var that = this;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.AddToDoTask");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.addFragments.AddToDoTask");
                 
             },
             onSubmitNewTask: function(oEvent) {
@@ -128,9 +138,13 @@ sap.ui.define([
                 //var oDialog = oEvent.getSource().getParent().getParent(); 
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
-
+              
                 var oSelected = sap.ui.getCore().byId("accountComboBox").getSelectedItem(); 
-                var sCustomer = oSelected.getText();
+                if(oSelected){
+
+                if(oData.actionTask && oData.actionTitle){
+                    var sCustomer = oSelected.getText();
+                    this.resetValueState(); 
 
                 var sDueDate;
                 if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
@@ -166,13 +180,15 @@ sap.ui.define([
                     sap.m.MessageBox.error("Task could not be created, check your input and try again.");
                   }
                 });
+            } else this.ValueStateMethod(); 
+        } else MessageToast.show("You have to select an account to link the task to first")
               },
               
 
              
 
               onDialogOpen: function (fragmentName) {
-
+                this.resetValueState(); 
                 var that = this;
                 if(!this._pDialog){
                     this._pDialog = Fragment.load({
@@ -248,7 +264,7 @@ sap.ui.define([
             
                     this._pPopover = Fragment.load({
                         id: oView.getId(),
-                        name: "opportunity.opportunity.view.fragments.TaskPopover",
+                        name: "opportunity.opportunity.view.fragments.taskPopover.TaskPopover",
                         controller: this
                     }).then(function(oPopover) {
                         oView.addDependent(oPopover);
@@ -295,10 +311,32 @@ sap.ui.define([
             // oWorkbook.columns[0].width = "40%";
             // oWorkbook.columns[1].width = "50%";
 
+            },
+
+
+             /* ------------------------------------------------------------------------------------------------------------
+            VALUE STATE
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            ValueStateMethod: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                MessageToast.show("Please fill all mandatory fields");
+                oValueStateModel.setProperty("/valueState", ValueState.Error);
+                oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+
+            },
+
+            resetValueState: function(oEvent){
+                var oValueStateModel = this.getView().getModel("valueState"); 
+                oValueStateModel.setProperty("/valueState", ValueState.None);
+                oValueStateModel.setProperty("/valueStateText", "");
+            },
+
+            onChangeValueState: function(oEvent){
+                var sValue = oEvent.mParameters.newValue; 
+                if(sValue) this.resetValueState(); 
             }
-            
-
-
            
            
 

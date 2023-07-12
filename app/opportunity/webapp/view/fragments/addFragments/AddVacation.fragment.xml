@@ -1,0 +1,99 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog title="Add a new Vacation">
+        <beginButton>
+            <Button
+                text="Add"
+                type="Accept"
+                press="onSubmitVacation"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Cancel"
+                press="onCancelDialogPress"
+            />
+        </endButton>
+        <l:VerticalLayout
+            class="sapUiContentPadding"
+            width="100%"
+        >
+            <MessageStrip
+                text="You still need to enter your vacation in the official tool provided by SAP."
+                type="Warning"
+                showIcon="true"
+            />
+            <f:SimpleForm
+                id="vacationForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+            >
+                <Label
+                    text="Team Member"
+                    required="true"
+                />
+
+                <ComboBox
+                    selectedKey="{localModel>/userID_inumber}"
+                    placeholder="Who is it for?"
+                    showSecondaryValues="true"
+                    selectionChange="onMemberChange"
+                    items="{
+                                    path: '/teamMembers',
+                                    sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                >
+                    <core:ListItem
+                        key="{inumber}"
+                        text="{firstName}"
+                        additionalText="{inumber}"
+                    />
+                </ComboBox>
+
+                <Label text="From - To" />
+                <DateRangeSelection
+                    id="vacationDates"
+                    required="true"
+                    change="onDateChange"
+                    placeholder="From when until when?"
+                    dateValue="{localModel>/vacationStartDate}"
+                    secondDateValue="{localModel>/vacationEndDate}"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                />
+
+                <Text
+                    text="Total Days: {localModel>/totalDays}"
+                    visible="{= ${localModel>/totalDays} !== undefined}"
+                />
+
+                <Label
+                    text="Comment"
+                    labelFor="appType"
+                />
+                <TextArea
+                    id="vacationComment"
+                    value="{localModel>/vacationComment}"
+                />
+
+                <Label text="Approved?" />
+                <CheckBox
+                    id="approvedId"
+                    text="Yes"
+                    selected="{localModel>/approved}"
+                    select="handleApprovedSelect"
+                />
+            </f:SimpleForm>
+        </l:VerticalLayout>
+    </Dialog>
+</core:FragmentDefinition>

@@ -219,7 +219,7 @@
                         <u:ObjectPageSubSection id="idTaskDetailSubSection">
                             <core:Fragment
                                 id="idTaskDetailFragment"
-                                fragmentName="opportunity.opportunity.view.fragments.TaskDetailHeader"
+                                fragmentName="opportunity.opportunity.view.fragments.sections.TaskDetailHeader"
                                 type="XML"
                             />
                         </u:ObjectPageSubSection>
