@@ -84,7 +84,7 @@
                                     <tnt:InfoLabel
                                         text="{topic}"
                                         colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                        visible="{= ${topic} !== null}"
+                                         visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
                                         class="sapUiSmallMarginEnd"
                                     />
 
@@ -836,7 +836,7 @@
                                         <tnt:InfoLabel
                                             text="{pageModel>actionTopic}"
                                             colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${pageModel>actionTopic} !== null}"
+                                             visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </OverflowToolbar>

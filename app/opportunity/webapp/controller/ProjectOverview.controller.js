@@ -51,6 +51,9 @@ sap.ui.define([
 
 
                 this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
+
+                var oLocalModel = new JSONModel({});
+        this.getView().setModel(oLocalModel, "localModel");
             },
 
             _onRoutePatternMatched: function (oEvent) {
@@ -493,23 +496,19 @@ sap.ui.define([
                 var aFilterbar = this.aFilterbar; 
                 var that = this;
                 //var sPath = oBinding.getPath(); 
-                that.getView().setBusy(true);
                 var oModel = this.getView().getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected Project?", {
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
                     onClose: function (oAction) {
                         if (oAction === sap.m.MessageBox.Action.YES) {
 
-
                             oModel.remove(sPath, {
                                 success: function () {
                                     that.onStatusMethod(aFilterbar);
                                     that.getView().getModel("ProjectModel").refresh();
-                                    that.getView().setBusy(false);
                                     sap.m.MessageToast.show("Project deleted successfully.");
                                 },
                                 error: function () {
-                                    that.getView().setBusy(false);
                                     sap.m.MessageToast.show("Project could not be deleted. Please try again.");
                                 }
                             });
@@ -523,7 +522,6 @@ sap.ui.define([
                 var sPath = oEvent.getParameter("token").getBindingContext().sPath;
 
                 var that = this;
-                that.getView().setBusy(true);
                 var oModel = this.getView().getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
                     actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
@@ -534,11 +532,9 @@ sap.ui.define([
                             oModel.remove(sPath, {
                                 success: function () {
                                     //that.onStatusMethod(inumber);
-                                    that.getView().setBusy(false);
                                     sap.m.MessageToast.show("Token deleted successfully.");
                                 },
                                 error: function () {
-                                    that.getView().setBusy(false);
                                     sap.m.MessageToast.show("Token could not be deleted. Please try again.");
                                 }
                             });
@@ -555,7 +551,7 @@ sap.ui.define([
 
             },
             onAddProjectTool: function (oEvent) {
-                this.onPopover("opportunity.opportunity.view.fragments.addFragments.AddTool", oEvent);
+                this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddTool", oEvent);
             },
 
 
@@ -564,16 +560,16 @@ sap.ui.define([
                     oView = this.getView();
 
                 // create popover
-                //if (!this._pPopover) {
+                if (!this._pPopover) {
                 this._pPopover = Fragment.load({
-                    id: oView.getId(),
+                    //id: oView.getId(),
                     name: sFragment,
                     controller: this
                 }).then(function (oPopover) {
                     oView.addDependent(oPopover);
                     return oPopover;
                 });
-                //}
+                }
 
                 this._pPopover.then(function (oPopover) {
                     oPopover.openBy(oButton);
@@ -581,10 +577,33 @@ sap.ui.define([
 
             },
 
+            onToolsPopover: function (sFragment, oEvent) {
+                var oButton = oEvent.getSource(),
+                    oView = this.getView();
+
+                // create popover
+                if (!this._tPopover) {
+                this._tPopover = Fragment.load({
+                    //id: oView.getId(),
+                    name: sFragment,
+                    controller: this
+                }).then(function (oPopover) {
+                    oView.addDependent(oPopover);
+                    return oPopover;
+                });
+                }
+
+                this._tPopover.then(function (oPopover) {
+                    oPopover.openBy(oButton);
+                });
+
+            },
+
             onSubmitSkill: function (oEvent) {
-                var oInput = this.getView().byId("skillInput");
+                var oLocalModel = this.getView().getModel("localModel"); 
+        var oItem = oLocalModel.getProperty("/skill");
                 var oPayload = {
-                    skill: oInput.getValue(),
+                    skill: oItem,
                     userID_inumber: this.inumber,
                     projectID_projectID: this.sProjectID
                 };
@@ -592,7 +611,7 @@ sap.ui.define([
                 oModel.create("/skills", oPayload, {
                     success: function (oData, response) {
                         MessageToast.show("New Skill added");
-                        oInput.setValue("");
+                       oLocalModel.setData({}); 
                     },
                     error: function (oError) {
                         sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
@@ -601,9 +620,10 @@ sap.ui.define([
             },
 
             onSubmitTool: function (oEvent) {
-                var oInput = this.getView().byId("toolInput");
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oItem = oLocalModel.getProperty("/tool");
                 var oPayload = {
-                    tool: oInput.getValue(),
+                    tool: oItem,
                     userID_inumber: this.inumber,
                     projectID_projectID: this.sProjectID
                 };
@@ -611,7 +631,7 @@ sap.ui.define([
                 oModel.create("/teamTools", oPayload, {
                     success: function (oData, response) {
                         MessageToast.show("New Tool added");
-                        oInput.setValue("");
+                       oLocalModel.setData({}); 
                     },
                     error: function (oError) {
                         sap.m.MessageBox.error("Tool could not be added, check your input and try again.");

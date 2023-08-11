@@ -30,6 +30,24 @@
                 icon="sap-icon://Chart-Tree-Map"
                 tooltip="{i18n>sapOneTooltip}"
             />
+
+            <m:MenuButton
+                icon="sap-icon://palette"
+                tooltip="Theme Picker"
+            >
+                <m:menu>
+                    <m:Menu itemSelected="onThemePicker" >
+                        <m:MenuItem
+                            text="Morning Horizon (Light)"
+                            key="MorningHorizon"
+                        />
+                        <m:MenuItem
+                            text="Evening Horizon (Dark)"
+                            key="EveningHorizon"
+                        />
+                    </m:Menu>
+                </m:menu>
+            </m:MenuButton>
             <!-- <m:Button press="onOpenFeedbackCatcher" icon="sap-icon://feedback" tooltip="{i18n>feedbackCatcher}"/> -->
         </additionalContent>
         <profile>

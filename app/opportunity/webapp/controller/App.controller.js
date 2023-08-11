@@ -43,6 +43,7 @@ sap.ui.define(
       onHomeIconPressed: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Overview");
+        this.getView().byId("sideNavigation").setSelectedItem(null); 
       },
 
       onOpenSAPOne: function () {
@@ -264,6 +265,18 @@ sap.ui.define(
         var oLocalModel = this.getView().getModel("localModel");
         oLocalModel.setProperty("/positive", false);
         oLocalModel.setProperty("/negative", true);
+      },
+
+      onThemePicker: function(oEvent){
+        var sTheme = oEvent.getParameters().item.getKey(); 
+        if(sTheme === "MorningHorizon"){
+          sap.ui.getCore().applyTheme("sap_horizon"); 
+
+        } else if(sTheme === "EveningHorizon"){
+          sap.ui.getCore().applyTheme("sap_horizon_dark"); 
+
+        }
+
       },
 
 

@@ -77,7 +77,7 @@
                             <tnt:InfoLabel
                                 text="{actionTopic}"
                                 colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                visible="{= ${actionTopic} !== null}"
+                                 visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
                                 class="sapUiSmallMarginEnd"
                             />
                             <u:ObjectPageHeaderActionButton

@@ -116,7 +116,7 @@
                                         <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null}"
+                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </HBox>
@@ -215,7 +215,7 @@
                                         <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </HBox>
@@ -315,7 +315,7 @@
                                         <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </HBox>
@@ -414,7 +414,7 @@
                                         <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </HBox>
@@ -517,7 +517,7 @@
                                         <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </HBox>

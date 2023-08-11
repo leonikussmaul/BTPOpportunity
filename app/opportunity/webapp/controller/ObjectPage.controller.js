@@ -80,38 +80,6 @@ sap.ui.define([
                 this.onFilterLinkList(sOpportunityID);
                 this.onFilterNextSteps(sOpportunityID);
 
-                // this.getView().byId("myTabContainer").setSelectedItem(0);
-                // var oList = this.getView().byId("opportunityComments")
-                //   var commentTemp = this.getView().byId("commentItem");
-                //   var oSorter = new sap.ui.model.Sorter("postedOn", true);
-
-                //   var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                //   oList.bindAggregation("items", {
-                //       template: commentTemp,
-                //       path: "/opportunityComments",
-                //       sorter: oSorter,
-                //       filters: aCommentFilters
-                //   });
-
-                // this.getOwnerComponent().getModel().attachRequestCompleted(function (oEvent) {
-
-                //     var oTabModel = this.getOwnerComponent().getModel("tabModel");
-                //     // var sOpportunityID = window.location.href.split('#')[1].split('/')[2]; 
-                //     //var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
-
-                //     var oContext = this.getView().getModel().getProperty("/opportunityHeader(" + sOpportunityID + ")");
-                //     var aData = oTabModel.getData().tabs;
-
-                //     var isExisting = aData.some(function (item) {
-                //         return item.opportunityID.toString() === sOpportunityID;
-                //     });
-
-                //     if (!isExisting && oContext != undefined) {
-                //         aData.push(oContext);
-                //         oTabModel.setProperty("/tabs", aData);
-                //     }
-
-                // }, this);
 
                 oModel.setDefaultBindingMode("TwoWay");
                 //oModel read for tasks deep entity 
@@ -125,10 +93,6 @@ sap.ui.define([
 
                 var oActivitiesTable = this.getView().byId("activitiesTableID");
                 if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
-                // var oChartObject = this.getView().byId("smartChartObjectPage");
-                // if (oChartObject.isInitialised()) oChartObject.rebindChart();
-
             },
 
             onFilterLinkList: function (sOpportunityID) {
@@ -261,34 +225,6 @@ sap.ui.define([
                 sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
 
             },
-
-
-            // onTabItemClose: function (oEvent) {
-            //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //     var selectedItemKey = oEvent.getParameter('item').getKey();
-
-            //     var oTabModel = this.getOwnerComponent().getModel("tabModel");
-            //     var aData = oTabModel.getProperty("/tabs");
-
-            //     // Remove the item from the array based on the specified value
-            //     aData.forEach((oItem, index) => {
-            //         if (oItem.opportunityID.toString() === selectedItemKey) {
-            //             aData.splice(index, 1);
-            //         }
-            //     });
-            //     oTabModel.setProperty("/tabs", aData);
-
-            //     if (oTabModel.getData().tabs.length < 1) {
-            //         oRouter.navTo("MainReport");
-            //     } else {
-            //         var sOpportunityID = this.getView().byId("myTabContainer").getItems()[0].getKey();
-            //         oRouter.navTo("ObjectPage", {
-            //             opportunityID: sOpportunityID
-            //         });
-
-            //     }
-
-            // },
 
 
             onPress: function (oEvent) {
@@ -783,120 +719,6 @@ sap.ui.define([
 
 
             /* ------------------------------------------------------------------------------------------------------------
-          ADD TOPIC
-     --------------------------------------------------------------------------------------------------------------*/
-
-
-    //         onSubmitTopic: function (oEvent) {
-    //             var that = this;
-    //             //var oDialog = sap.ui.getCore().byId("topicDialog");
-    //             var oInput = sap.ui.getCore().byId("topicInput");
-    //             var oValue = oInput.getValue();
-    //             var aTopics = this.getView().getModel("pageModel").getData().topics;
-
-    //             if (oValue != "" && oInput != null) {
-    //                 MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
-    //                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-    //                     emphasizedAction: MessageBox.Action.OK,
-    //                     onClose: function (sAction) {
-    //                         if (sAction === MessageBox.Action.OK) {
-    //                             var isMatch = aTopics.some(oItem => {
-    //                                 return oItem.topic.toUpperCase() === oValue.toUpperCase();
-    //                             });
-    //                             if (isMatch) {
-    //                                 //prevent POST call 
-    //                                 MessageBox.error("This topic already exists!");
-    //                                 oInput.setValue("");
-    //                                 that.onCancelDialogPress();
-    //                                 //oDialog.close();
-    //                             } else {
-    //                                 // POST call 
-    //                                 var oNewTopic = {
-    //                                     topic: oValue
-    //                                 }
-    //                                 that.getView().setBusy(true);
-    //                                 var oModel = that.getView().getModel();
-    //                                 oModel.create("/opportunityTopicsVH", oNewTopic, {
-    //                                     success: function (oData, response) {
-    //                                         MessageToast.show("New topic posted!");
-    //                                         //oDialog.close();
-    //                                         that.onCancelDialogPress();
-    //                                         oInput.setValue("");
-    //                                         that.getView().setBusy(false);
-    //                                     },
-    //                                     error: function (oError) {
-    //                                         that.getView().setBusy(false);
-    //                                         MessageBox.error("Topic could not be posted. Please check your input.");
-    //                                     }
-    //                                 });
-    //                             }
-    //                         } else {
-    //                             oInput.setValue("");
-    //                             that.getView().setBusy(false);
-    //                         }
-    //                     }
-    //                 });
-    //             } else MessageToast.show("Enter a new topic first");
-    //         },
-
-    //         /* ------------------------------------------------------------------------------------------------------------
-    //       ADD DELIVERABLE
-    //  --------------------------------------------------------------------------------------------------------------*/
-
-    //         onSubmitDeliverable: function (oEvent) {
-    //             var that = this;
-    //             //var oDialog = sap.ui.getCore().byId("deliverableDialog");
-    //             var oInput = sap.ui.getCore().byId("deliverableInput");
-
-    //             var oValue = oInput.getValue();
-    //             var aDeliverables = this.getView().getModel("pageModel").getData().deliverables;
-
-    //             if (oValue != "" && oInput != null) {
-    //                 MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
-    //                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-    //                     emphasizedAction: MessageBox.Action.OK,
-    //                     onClose: function (sAction) {
-    //                         if (sAction === MessageBox.Action.OK) {
-    //                             var isMatch = aDeliverables.some(oItem => {
-    //                                 return oItem.deliverable.toUpperCase() === oValue.toUpperCase();
-    //                             });
-    //                             if (isMatch) {
-    //                                 //prevent POST call 
-    //                                 MessageBox.error("This deliverable already exists!");
-    //                                 oInput.setValue("");
-    //                                 // oDialog.close();
-    //                                 that.onCancelDialogPress();
-    //                             } else {
-    //                                 // POST call 
-    //                                 var oNewDeliverable = {
-    //                                     deliverable: oValue
-    //                                 }
-    //                                 that.getView().setBusy(true);
-    //                                 var oModel = that.getView().getModel();
-    //                                 oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
-    //                                     success: function (oData, response) {
-    //                                         MessageToast.show("New deliverable posted!");
-    //                                         //oDialog.close();
-    //                                         oInput.setValue("");
-    //                                         that.onCancelDialogPress();
-    //                                         that.getView().setBusy(false);
-    //                                     },
-    //                                     error: function (oError) {
-    //                                         that.getView().setBusy(false);
-    //                                         MessageBox.error("Deliverable could not be posted. Please check your input.");
-    //                                     }
-    //                                 });
-    //                             }
-    //                         } else {
-    //                             oInput.setValue("");
-    //                             that.getView().setBusy(false);
-    //                         }
-    //                     }
-    //                 });
-    //             } else MessageToast.show("Enter a new deliverable first");
-    //         },
-
-            /* ------------------------------------------------------------------------------------------------------------
                  FAVORITE
                  --------------------------------------------------------------------------------------------------------------*/
 
@@ -1045,7 +867,7 @@ sap.ui.define([
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDo");
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oEvent.getSource().getBindingContext("pageModel").getObject();
-                oData.actionDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+                if(oData.actionDueDate) oData.actionDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
                 oAddTaskModel.setData(oData);
 
             },
@@ -1911,9 +1733,6 @@ COMMENTS
                 var sValue = oEvent.mParameters.newValue; 
                 if(sValue) this.resetValueState(); 
             }
-
-
-
 
 
         });

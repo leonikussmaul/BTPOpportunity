@@ -42,6 +42,8 @@
                 select="onOpenCalendar"
                 icon="sap-icon://appointment-2"
             />
+
+            
         </tnt:NavigationList>
         <tnt:fixedItem>
             <tnt:NavigationList>

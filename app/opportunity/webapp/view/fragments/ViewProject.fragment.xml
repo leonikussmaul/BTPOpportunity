@@ -41,6 +41,7 @@
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                     class="sapUiSmallMarginEnd"
+                                     visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
                                 />
 
                                 <ToolbarSpacer />
@@ -183,6 +184,7 @@
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                     class="sapUiSmallMarginEnd"
+                                     visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
                                 />
 
                                 <ToolbarSpacer />
