@@ -25,7 +25,7 @@
                     text="{i18n>marketUnit}"
                     required="true"
                 />
-                <Select
+                <ComboBox
                     id="marketUnitEdit"
                     selectedKey="{editPageModel>/marketUnit}"
                     items="{
@@ -41,9 +41,9 @@
                         text="{marketUnit}"
                         key="{marketUnit}"
                     />
-                </Select>
+                </ComboBox>
                 <Label text="{i18n>topic}" />
-                <Select
+                <ComboBox
                     id="topicsEdit"
                     selectedKey="{editPageModel>/topic}"
                     items="{
@@ -59,10 +59,10 @@
                         text="{topic}"
                         key="{topic}"
                     />
-                </Select>
+                </ComboBox>
 
                 <Label text="{i18n>priority}" />
-                <Select
+                <ComboBox
                     id="priorityEdit"
                     selectedKey="{editPageModel>/priority}"
                     items="{
@@ -78,13 +78,13 @@
                         text="{priority}"
                         key="{priority}"
                     />
-                </Select>
+                </ComboBox>
 
                 <!-- dates -->
                 <core:Title text="{i18n>groupDatesLabel}" />
 
                 <Label text="{i18n>opportunityCreatedQuarter}" />
-                <Select
+                <ComboBox
                     id="opportunityCreatedQuarter"
                     selectedKey="{editPageModel>/opportunityCreatedQuarter}"
                     items="{
@@ -107,10 +107,10 @@
                             key="{opportunityQuarter}"
                         />
                     </items>
-                </Select>
+                </ComboBox>
 
                 <Label text="{i18n>opportunityClosedQuarter}" />
-                <Select
+                <ComboBox
                     id="opportunityClosedQuarter"
                     selectedKey="{editPageModel>/opportunityClosedQuarter}"
                     items="{
@@ -133,7 +133,7 @@
                             key="{opportunityQuarter}"
                         />
                     </items>
-                </Select>
+                </ComboBox>
 
                 <Label text="{i18n>opportunityStartDate}" />
                 <DatePicker
@@ -156,7 +156,7 @@
                 <core:Title text="{i18n>Contact}" />
                 <Label text="{i18n>primaryContact}" />
 
-                <Select
+                <ComboBox
                     selectedKey="{editPageModel>/primaryContact}"
                     items="{
                                     path: '/opportunityPrimaryContactVH',
@@ -170,13 +170,13 @@
                         key="{primaryContact}"
                         text="{primaryContact}"
                     />
-                </Select>
+                </ComboBox>
 
                 <!-- opportunityPrimaryContactVH -->
                 <Label text="{i18n>clientContactPerson}" />
                 <Input value="{editPageModel>/clientContactPerson}" />
                 <Label text="{i18n>ssa}" />
-                <Select
+                <ComboBox
                     id="ssa"
                     selectedKey="{editPageModel>/ssa}"
                     items="{/opportunitySSAVH}"
@@ -185,7 +185,7 @@
                         text="{SSA}"
                         key="{SSA}"
                     />
-                </Select>
+                </ComboBox>
                 <Label text="{i18n>source}" />
                 <Input
                     id="source"

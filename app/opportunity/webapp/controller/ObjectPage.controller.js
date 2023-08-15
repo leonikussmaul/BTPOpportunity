@@ -93,6 +93,9 @@ sap.ui.define([
 
                 var oActivitiesTable = this.getView().byId("activitiesTableID");
                 if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+
+                this.onReadTopics();
+                this.onReadDeliverables();
             },
 
             onFilterLinkList: function (sOpportunityID) {
