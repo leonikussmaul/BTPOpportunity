@@ -634,7 +634,7 @@
                                             id="idTimeline"
                                             content="{/opportunityNextSteps}"
                                             filterList="{/opportunityNextSteps}"
-                                            enableScroll="false"
+                                            enableScroll="true"
                                             forceGrowing="false"
                                             growingThreshold="6"
                                             showHeaderBar="false"
@@ -656,11 +656,11 @@
                                                     userName="{nextStep}"
                                                     filterValue="{completed}"
                                                     maxCharacters="500"
-                                                    dateTime="{postedOn}"
+                                                    dateTime="{postedOn}" 
                                                 >
                                                     <commons:embeddedControl>
                                                         <VBox>
-                                                            <Text
+                                                            <Text  visible="{= ${nextStepDescription} === true }"
                                                                 class="sapUiSmallMarginBegin"
                                                                 text="{nextStepDescription}"
                                                                 width="90%"

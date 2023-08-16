@@ -130,7 +130,7 @@ sap.ui.define([
 
             onAddToDoTablePress: function () {
                 var that = this;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.addFragments.AddToDoTask");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDoTask");
                 
             },
             onSubmitNewTask: function(oEvent) {

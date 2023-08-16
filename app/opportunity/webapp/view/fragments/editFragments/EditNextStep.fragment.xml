@@ -35,7 +35,7 @@
                     value="{localModel>/nextStep}"
                 />
 
-                <Label text="Descr." />
+                <Label text="Optional Descr." />
                 <TextArea
                     id="linkDescr"
                     placeholder="Give a description for the Roadmap Item"
