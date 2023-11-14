@@ -1,0 +1,287 @@
+{
+    "_version": "1.49.0",
+    "sap.app": {
+        "id": "opportunity.opportunity",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.9.4",
+            "toolsId": "7edde770-382b-473c-b00f-b677e246fb50"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "v2/Opportunity/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotations"
+                    ],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0",
+                    "defaultBindingMode": "TwoWay"
+                }
+            },
+            "userapi": {
+                "uri": "user-api/attributes",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "2.0"
+                }
+            },
+            "V4Service": {
+                "uri": "Opportunity/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata2.xml",
+                    "odataVersion": "4.0"
+                }
+            },
+            "annotations": {
+                "type": "ODataAnnotation",
+                "uri": "./annotations.xml",
+                "settings": {
+                    "localUri": "./annotations.xml"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.112.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "opportunity.opportunity.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": false,
+                "settings": {
+                    "disableHeadRequestForToken": true,
+                    "autoExpandSelect": true
+                }
+            },
+            "V4Service": {
+                "dataSource": "V4Service",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "userapi": {
+                "dataSource": "userapi",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "opportunity.opportunity.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false,
+                "path": "opportunity.opportunity.view",
+                "bypassed": {
+                    "target": "NotFound"
+                }
+            },
+            "routes": [
+                {
+                    "name": "Overview",
+                    "pattern": ":?query:",
+                    "target": "Overview"
+                },
+                {
+                    "name": "MainReport",
+                    "pattern": "MainReport",
+                    "target": "MainReport"
+                },
+                {
+                    "name": "ObjectPage",
+                    "pattern": "ObjectPage/{opportunityID}",
+                    "target": "ObjectPage"
+                },
+                {
+                    "name": "TasksReport",
+                    "pattern": "TasksReport",
+                    "target": "TasksReport"
+                },
+                {
+                    "name": "TaskDetail",
+                    "pattern": "TaskReport/{ID}",
+                    "target": "TaskDetail"
+                },
+                {
+                    "name": "Team",
+                    "pattern": "Team",
+                    "target": "Team"
+                },
+                {
+                    "name": "Resources",
+                    "pattern": "Resources/{inumber}",
+                    "target": "Resources"
+                },
+                {
+                    "name": "ProjectOverview",
+                    "pattern": "ProjectOverview",
+                    "target": "ProjectOverview"
+                },
+                {
+                    "name": "Calendar",
+                    "pattern": "Calendar",
+                    "target": "Calendar"
+                }
+            ],
+            "targets": {
+                "Overview": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Overview",
+                    "viewName": "Overview",
+                    "viewLevel": 0
+                },
+                "MainReport": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "MainReport",
+                    "viewName": "MainReport",
+                    "viewLevel": 1
+                },
+                "ObjectPage": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ObjectPage",
+                    "viewName": "ObjectPage",
+                    "viewLevel": 2
+                },
+                "TasksReport": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "TasksReport",
+                    "viewName": "TasksReport",
+                    "viewLevel": 1
+                },
+                "TaskDetail": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "TaskDetail",
+                    "viewName": "TaskDetail",
+                    "viewLevel": 2
+                },
+                "Calendar": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Calendar",
+                    "viewName": "Calendar",
+                    "viewLevel": 1
+                },
+                "Team": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Team",
+                    "viewName": "Team",
+                    "viewLevel": 1
+                },
+                "Resources": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Resources",
+                    "viewName": "Resources",
+                    "viewLevel": 2
+                },
+                "ProjectOverview": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ProjectOverview",
+                    "viewName": "ProjectOverview",
+                    "viewLevel": 1
+                },
+                "NotFound": {
+                    "id": "NotFound",
+                    "name": "NotFound",
+                    "viewType": "XML",
+                    "transition": "show"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "opportunity.opportunity.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {}
+            }
+        }
+    }
+}

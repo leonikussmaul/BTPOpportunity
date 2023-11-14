@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:sl="sap.ui.comp.navpopover"
+    xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m"
+>
+    <smartchart:SmartChart
+        id="smartChartObjectPage"
+        enableAutoBinding="true"
+        initialized="onInitChart"
+        entitySet="opportunityHeaderCopy"
+        beforeRebindChart="beforeRebindChart"
+        useVariantManagement="false"
+        useChartPersonalisation="true"
+        header="Market Unit Comparison"
+        showFullScreenButton="true"
+        selectionMode="Multi"
+        showChartTooltip="true"
+        showDrillBreadcrumbs="false"
+        showDetailsButton="false"
+        showDrillButtons="true"
+        showSemanticNavigationButton="true"
+    />
+</core:FragmentDefinition>

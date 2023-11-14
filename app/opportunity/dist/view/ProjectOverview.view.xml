@@ -1,0 +1,688 @@
+<mvc:View
+    controllerName="opportunity.opportunity.controller.ProjectOverview"
+    id="Team"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:smartchart="sap.ui.comp.smartchart"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.suite.ui.commons.networkgraph.layout"
+    height="100%"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:t="sap.ui.table"
+    xmlns:suite="sap.suite.ui.commons"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:tnt="sap.tnt"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <f:DynamicPage
+        id="TeamPage"
+        title="Engagement"
+        backgroundDesign="List"
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="Team Engagement Snapshot"
+                        id="headerTitle"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar
+                        id="filterbar"
+                        persistencyKey="myPersKey"
+                        useToolbar="false"
+                        search=".onSearch"
+                        filterChange=".onFilterChange"
+                        showFilterConfiguration="false"
+                    >
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                id="filter1"
+                                name="primaryContact"
+                                label="Team Member"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        id="multiComboBox1"
+                                        name="primaryContact"
+                                        selectionChange=".onFilter1Change"
+                                        items="{
+												path: '/teamMembers',
+                                                sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            },
+												templateShareable: true
+											}"
+                                    >
+                                        <core:Item
+                                            key="{firstName}"
+                                            text="{firstName}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="filter2"
+                                name="Topic"
+                                label="Topic"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        name="Topic"
+                                        id="multiComboBox2"
+                                        selectionChange=".onSelectionChange"
+                                        items="{
+												path: '/opportunityTopicsVH',
+                                                  sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            },
+												templateShareable: true
+											}"
+                                    >
+                                        <core:Item
+                                            key="{topic}"
+                                            text="{topic}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                id="filter3"
+                                name="MarketUnit"
+                                label="Market Unit"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        name="MarketUnit"
+                                        selectionChange=".onSelectionChange"
+                                        id="multiComboBox3"
+                                        items="{
+												path: '/opportunityMarketUnitVH',
+                                                   sorter: {
+                                                path: 'marketUnit',
+                                                descending: false
+                                            },
+												templateShareable: true
+											}"
+                                    >
+                                        <core:Item
+                                            key="{marketUnit}"
+                                            text="{marketUnit}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                name="ProjectStartDate"
+                                label="Start Date (on or after)"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <DatePicker
+                                        id="startDate"
+                                        name="ProjectStartDate"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem
+                                name="ProjectEndDate"
+                                label="End Date (on or before)"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <DatePicker
+                                        id="endDate"
+                                        name="ProjectEndDate"
+                                    />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <!-- 1. Sent for Proposal Table -->
+            <VBox>
+                <HBox renderType="Bare">
+                    <f:GridList
+                        id="sentForProposalTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/sentForProposal',
+                          sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="Hmm.. time to send new Proposals?"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Title text="SENT FOR PROPOSAL" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add New Project to 'Sent for Proposal'"
+                                    press="onAddProjectPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{ProjectModel>account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{ProjectModel>primaryContact}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                            text="{ProjectModel>topic}"
+                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                            renderMode="Narrow"
+                                        />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://full-screen"
+                                        press="onProjectPopup"
+                                    />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox justifyContent="Center">
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="onRightSentForProposal"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="onLeftRFP"
+                        />
+                    </VBox>
+
+                    <!-- 2. RFP Table -->
+                    <f:GridList
+                        id="RFPTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/RFP', sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No RFP's"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Title text="RFP" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add New Project to 'RFP'"
+                                    press="onAddProjectPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{ProjectModel>account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{ProjectModel>primaryContact}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+
+                              <Text text="{= ${ProjectModel>status} === 'RFP' ? ${ProjectModel>projectValue} + '€' : '' }" visible="{= ${ProjectModel>status} === 'RFP' &amp;&amp; ${ProjectModel>projectValue} !== null }" />
+
+                                </VBox>
+                                <OverflowToolbar height="45px">
+
+                               
+                                    <HBox>
+
+                                 
+                                        <tnt:InfoLabel
+                                            text="{ProjectModel>topic}"
+                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                            renderMode="Narrow"
+                                        />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://full-screen"
+                                        press="onProjectPopup"
+                                    />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox justifyContent="Center">
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="onRightRFP"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="onLeftOnGoing"
+                        />
+                    </VBox>
+
+                    <!-- 3. on going table -->
+
+                    <f:GridList
+                        id="OnGoingTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/On-Going',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No On-Going Projects"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Title text="ON-GOING" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add New Project to 'On-Going'"
+                                    press="onAddProjectPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{ProjectModel>account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{ProjectModel>primaryContact}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                            text="{ProjectModel>topic}"
+                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                            renderMode="Narrow"
+                                        />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://full-screen"
+                                        press="onProjectPopup"
+                                    />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox justifyContent="Center">
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="onRightOnGoing"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="onLeftGoLive"
+                        />
+                    </VBox>
+
+                    <!-- 4. Go Live Table -->
+
+                    <f:GridList
+                        id="GoLiveTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/Go-Live',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Go-Lives"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Title text="GO-LIVE" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add New Project to 'Go-Live'"
+                                    press="onAddProjectPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{ProjectModel>account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{ProjectModel>primaryContact}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                            text="{ProjectModel>topic}"
+                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                            renderMode="Narrow"
+                                        />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://full-screen"
+                                        press="onProjectPopup"
+                                    />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+
+                    <VBox justifyContent="Center">
+                        <Button
+                            class="sapUiTinyMarginBottom"
+                            icon="sap-icon://navigation-right-arrow"
+                            tooltip="Move to selected"
+                            press="onRightGoLive"
+                        />
+                        <Button
+                            icon="sap-icon://navigation-left-arrow"
+                            tooltip="Move to available"
+                            press="onLeftPast"
+                        />
+                    </VBox>
+
+                    <!-- 5. Archive Table -->
+                    <f:GridList
+                        id="PastTable"
+                        mode="SingleSelectMaster"
+                        items="{path: 'ProjectModel>/Past',
+                         sorter: {
+                                                path: 'account',
+                                                descending: false
+                                            }}"
+                        selectionChange="onSelectionChange"
+                        class="sapUiResponsiveContentPadding"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Past Projects"
+                    >
+                        <f:dragDropConfig>
+                            <dnd:DragInfo sourceAggregation="items" />
+                            <dnd-grid:GridDropInfo
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                dropLayout="Horizontal"
+                                drop="onDrop"
+                            />
+                        </f:dragDropConfig>
+                        <f:headerToolbar>
+                            <Toolbar width="100%">
+                                <Title text="ARCHIVE" />
+                                <ToolbarSpacer />
+                                <Button
+                                    icon="sap-icon://add"
+                                    tooltip="Add New Project to 'Past'"
+                                    press="onAddProjectPress"
+                                />
+                                <Button
+                                    icon="sap-icon://delete"
+                                    tooltip="Select a Project to Delete"
+                                    press="onDeleteProjectPress"
+                                />
+                            </Toolbar>
+                        </f:headerToolbar>
+
+                        <f:GridListItem
+                            press="onGridListItemPress"
+                            detailPress="onGridListItemEdit"
+                            type="Active"
+                        >
+                            <VBox
+                                height="100%"
+                                justifyContent="SpaceBetween"
+                            >
+                                <layoutData>
+                                    <FlexItemData
+                                        growFactor="1"
+                                        shrinkFactor="0"
+                                    />
+                                </layoutData>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween">
+                                        <Title
+                                            text="{ProjectModel>account}"
+                                            wrapping="true"
+                                        />
+
+                                        <ObjectStatus
+                                            text="{ProjectModel>primaryContact}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <OverflowToolbar height="45px">
+                                    <HBox>
+                                        <tnt:InfoLabel
+                                            text="{ProjectModel>topic}"
+                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                             visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                            renderMode="Narrow"
+                                        />
+                                    </HBox>
+
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://full-screen"
+                                        press="onProjectPopup"
+                                    />
+                                </OverflowToolbar>
+                            </VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+                </HBox>
+                <!-- 
+                <VBox class="sapUiLargeMarginTop">
+                <smartchart:SmartChart id ="smartChartTeamForecast" enableAutoBinding="true" initialized="onInitChart"
+                                    entitySet="teamForecastCopy" 
+                                    useVariantManagement="false"
+			                        useChartPersonalisation="true"
+			                        header="{firstName}'s Utilization" showFullScreenButton="true" selectionMode="Multi"
+			                        showChartTooltip="true" showDrillBreadcrumbs="false"
+			                        showDetailsButton="false" showDrillButtons="true" noData="Utilization is either not tracked or not applicable for {firstName}"
+			                        showSemanticNavigationButton="true" >
+                                    	<smartchart:toolbar>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+                     <Button text="Edit" icon="sap-icon://edit" type="Transparent" tooltip="Edit an existing forecast" press="onForecastEdit" />
+				
+					<OverflowToolbarButton icon="sap-icon://add" type="Accept" tooltip="Register a new forecast" press="onAddNewForecast" />
+                   </OverflowToolbar>
+			</smartchart:toolbar>
+            </smartchart:SmartChart>
+                </VBox>  -->
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
