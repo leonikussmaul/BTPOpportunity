@@ -1,0 +1,204 @@
+<mvc:View controllerName="opportunity.opportunity.controller.CreatePage"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:suite="sap.suite.ui.commons"
+>
+    <Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress" >
+        <content >
+
+        	<f:SidePanel id="mySidePanel" toggle="onToggle" sidePanelResizable="true"  sidePanelMinWidth="30rem" sidePanelWidth="20rem">
+				<f:mainContent>
+                     <u:ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showEditHeaderButton="true" editHeaderButtonPress="handleEditBtnPress" upperCaseAnchorBar="false">
+                <u:headerTitle>
+                    <u:ObjectPageDynamicHeaderTitle>
+                        <u:heading>
+                            <Title text="{account}" />
+                        </u:heading>
+                        <u:snappedTitleOnMobile>
+                            <Title text="{account}" />
+                        </u:snappedTitleOnMobile>
+
+                        <u:expandedContent>
+                            <Text text="{marketUnit}" />
+                        </u:expandedContent>
+                        <u:snappedContent>
+                            <Text text="{marketUnit}" />
+                        </u:snappedContent>
+                    </u:ObjectPageDynamicHeaderTitle>
+                </u:headerTitle>
+
+                <u:sections>
+
+                <u:ObjectPageSection titleUppercase="false" title="{i18n>Header}">
+                        <u:subSections>
+                            <u:ObjectPageSubSection titleUppercase="false">
+                                <u:blocks>
+                                    <form:SimpleForm id="HeaderSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                        <form:content>
+                                            <Label text="{i18n>account}" />
+                                            <Input type="Text" value="{account}" id="account" />
+
+                                            <Label text="{i18n>marketUnit}" />
+                                            <ComboBox
+                                            selectedKey="{marketUnit}"
+                                            items="{
+                                                path: '/opportunityHeader'
+                                            }" id="marketUnit">
+                                            <core:Item key="{marketUnit}" text="{marketUnit}" />
+                                        </ComboBox> 
+
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+
+                    <u:ObjectPageSection titleUppercase="false" title="{i18n>Status}">
+                        <u:subSections>
+                            <u:ObjectPageSubSection titleUppercase="false">
+                                <u:blocks>
+                                    <form:SimpleForm id="statusSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                        <form:content>
+                                            <Label text="{i18n>status}" />
+                                            <ComboBox
+                                            selectedKey="{status}"
+                                            items="{
+                                                path: '/opportunityHeader'
+                                            }" id="status">
+                                            <core:Item key="{status}" text="{status}" />
+                                        </ComboBox> 
+
+                                            <Label text="{i18n>opportunityDate}" />
+                                            <DatePicker id="dateCreated" change="handleChange" />
+
+                                            <Label text="{i18n>opportunityValue}" />
+                                            <Input value="{
+                                                parts: ['opportunityValue', 'i18n>EUR'], 
+                                                type:'sap.ui.model.type.Currency',
+                                                formatOptions: {showMeasure: false}
+                                            }" id="opportunityValue"/>
+                                            	<Input value="{
+                                                parts: ['opportunityValue', 'i18n>€'], 
+                                                type:'sap.ui.model.type.Currency',
+                                                formatOptions: {showNumber: false}
+                                            }" editable="false"/>
+
+                                            <Label text="{i18n>opportunityCreatedQuarter}" />
+                                           <ComboBox
+                                            selectedKey="{opportunityCreatedQuarter}"
+                                            items="{
+                                                path: '/opportunityHeader'
+                                            }" id="opportunityCreatedQuarter">
+                                            <core:Item key="{opportunityCreatedQuarter}" text="{opportunityCreatedQuarter}" />
+                                        </ComboBox> 
+
+                                            <Label text="{i18n>opportunityClosedQuarter}" />
+                                            <ComboBox
+                                            selectedKey="{opportunityClosedQuarter}"
+                                            items="{
+                                                path: '/opportunityHeader'
+                                            }" id="opportunityClosedQuarter">
+                                            <core:Item key="{opportunityClosedQuarter}" text="{opportunityClosedQuarter}" />
+                                        </ComboBox> 
+
+                                            <Label text="{i18n>opportunityInCRM}" />
+                                            <CheckBox id="opportunityInCRM" selected="false" editable="true" text="{i18n>Yes}" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+
+                    <u:ObjectPageSection titleUppercase="false" title="{i18n>Contact}">
+                        <u:subSections>
+                            <u:ObjectPageSubSection titleUppercase="false">
+                                <u:blocks>
+                                    <form:SimpleForm id="contactSection" minWidth="1024" editable="true" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2">
+                                        <form:content>
+                                            <Label text="{i18n>clientContactPerson}" />
+                                            <Input type="Text" value="{clientContactPerson}" id="clientContactPerson" />
+
+                                            <Label text="{i18n>ssa}" />
+                                            <Input id="ssa" value="{ssa}" />
+
+                                            <Label text="{i18n>primaryContact}" />
+                                            <Input id="primaryContact" value="{primaryContact}" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+
+                    <u:ObjectPageSection titleUppercase="false" title="{i18n>Topics}" >
+                        <u:subSections >
+                            
+                            <u:ObjectPageSubSection titleUppercase="false" title="{i18n>Topics}" showTitle="false" >
+                                <u:blocks>
+                                    <HBox>
+                                       <CheckBox id="extensions" selected="false" editable="true" text="{i18n>Extension}" />
+                                        <CheckBox id="appdev" selected="false" editable="true" text="{i18n>AppDevelopment}" />
+                                        <CheckBox id="cleanCore" selected="false" editable="true" text="{i18n>CleanCore}" />
+                                        <CheckBox id="integration" selected="false" editable="true" text="{i18n>Integration}" />
+                                        <CheckBox id="data" selected="false" editable="true" text="{i18n>Data}" />
+                                        <CheckBox id="analytics" selected="false" editable="true" text="{i18n>Analytics}" />
+                                    </HBox>
+                                    
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+
+                            <u:ObjectPageSubSection titleUppercase="false" title="{i18n>Deliverables}" >
+                                <u:blocks>
+                                    <HBox >
+                                        <CheckBox id="BTPMasterclass" selected="false" editable="true" text="{i18n>BTPMasterclass}" />
+                                        <CheckBox id="BTPAdoptionClass" selected="false" editable="true" text="{i18n>BTPAdoptionClass}" />
+                                        <CheckBox id="BTPADA" selected="false" editable="true" text="{i18n>ADA}" />
+                                    </HBox>
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+
+                </u:sections>
+            </u:ObjectPageLayout>
+
+					</f:mainContent>
+				<f:items>
+					<f:SidePanelItem icon="sap-icon://paper-plane" text="{i18n>Notes}">
+                        <suite:Timeline id="time" enableDoubleSided="true" groupBy="dateTime" lazyLoading="true" content="{/opportunityNotes}" textHeight="automatic" showHeaderBar="false">
+                                        <suite:TimelineItem dateTime="{
+					                        path: 'date'
+				                            }" title="title" text="text">
+                                            <suite:embeddedControl>
+                                                <VBox>
+                                                    <Text text="{date}" class="sapUiTinyMargin" />
+                                                    <TextArea value="{text}" growing="true" height="150px" width="100%" placeholder="{i18n>text}" valueLiveUpdate="true" />
+                                                    <Button text="{i18n>save}" press=".addNote" />
+                                                </VBox>
+                                            </suite:embeddedControl>
+                                        </suite:TimelineItem>
+                                    </suite:Timeline>
+					</f:SidePanelItem>
+				</f:items>
+			</f:SidePanel>
+
+        </content>
+
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button id="Save" text="{i18n>save}" press="handleCreateOppPress" type="Success" />
+                <Button id="Cancel" text="{i18n>cancel}" press="onNavBackPress" type="Reject" />
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

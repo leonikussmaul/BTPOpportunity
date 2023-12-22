@@ -323,7 +323,7 @@
                                     value="{percentage}"
                                     class="sapUiMediumMarginBottom"
                                     id="projectPercentage"
-                                    step="25"
+                                    step="10"
                                     min="0"
                                     max="100"
                                     showAdvancedTooltip="true"

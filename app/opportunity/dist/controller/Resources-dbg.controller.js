@@ -79,7 +79,7 @@ sap.ui.define([
       onStatusMethod: function (inumber) {
         var that = this;
         var aStatus = [
-          { status: "Sent for Proposal", name: "/sentForProposal" },
+          { status: "New Requests", name: "/newRequests" },
           { status: "RFP", name: "/RFP" },
           { status: "On-Going", name: "/On-Going" },
           { status: "Go-Live", name: "/Go-Live" },
@@ -124,7 +124,7 @@ sap.ui.define([
         var sDropPath = oEvent.getSource().getDropTarget().mBindingInfos.items.path;
         var sNewStatus = sDropPath.substr(1);
 
-        if (sNewStatus === "sentForProposal") sNewStatus = "Sent for Proposal";
+        if (sNewStatus === "newRequests") sNewStatus = "New Requests";
 
         // binding of dragged
         // i.e. "/onGoing/0"
@@ -162,8 +162,8 @@ sap.ui.define([
       },
 
       //right
-      onRightSentForProposal: function () {
-        var oTable = this.getView().byId("sentForProposalTable");
+      onRightNewRequests: function () {
+        var oTable = this.getView().byId("newRequestsTable");
         this.onMoveSelectedRight(oTable);
       },
 
@@ -206,7 +206,7 @@ sap.ui.define([
         var oContext = oBinding.getObject();
 
         var sNewStatus;
-        if (oContext.status === "Sent for Proposal") {
+        if (oContext.status === "New Requests") {
           //update to RFP
           sNewStatus = "RFP";
         } else if (oContext.status === "RFP") {
@@ -225,7 +225,7 @@ sap.ui.define([
 
         var sNewStatus;
         if (oContext.status === "RFP") {
-          sNewStatus = "Sent for Proposal";
+          sNewStatus = "New Requests";
         } else if (oContext.status === "On-Going") {
           sNewStatus = "RFP"
         } else if (oContext.status === "Go-Live") {
@@ -265,13 +265,13 @@ sap.ui.define([
       },
 
       onAddProjectPress: function (oEvent) {
-        //status: "Sent for Proposal"
+        //status: "New Requests"
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
 
         var sPath = oEvent.getSource().getParent().getParent().mBindingInfos.items.path.substr(1);
 
         var sStatus;
-        if (sPath === "sentForProposal") sStatus = "Sent for Proposal";
+        if (sPath === "newRequests") sStatus = "New Requests";
         else if (sPath === "RFP") sStatus = "RFP";
         else if (sPath === "On-Going") sStatus = "On-Going";
         else if (sPath === "Go-Live") sStatus = "Go-Live"
@@ -344,7 +344,7 @@ sap.ui.define([
       },
       getApptType: function(sStatus){
         switch (sStatus) {
-          case "Sent for Proposal":
+          case "New Requests":
             return "Type10";
           case "RFP":
             return "Type05";

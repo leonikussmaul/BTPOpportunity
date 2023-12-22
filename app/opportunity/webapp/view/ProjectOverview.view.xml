@@ -169,13 +169,13 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <!-- 1. Sent for Proposal Table -->
+            <!-- 1. New Requests Table -->
             <VBox>
                 <HBox renderType="Bare">
                     <f:GridList
-                        id="sentForProposalTable"
+                        id="newRequestsTable"
                         mode="SingleSelectMaster"
-                        items="{path: 'ProjectModel>/sentForProposal',
+                        items="{path: 'ProjectModel>/newRequests',
                           sorter: {
                                                 path: 'account',
                                                 descending: false
@@ -184,7 +184,7 @@
                         class="sapUiResponsiveContentPadding"
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
-                        noDataText="Hmm.. time to send new Proposals?"
+                        noDataText="Hmm.. time to look for New Requests?"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
@@ -197,11 +197,11 @@
                         </f:dragDropConfig>
                         <f:headerToolbar>
                             <Toolbar width="100%">
-                                <Title text="SENT FOR PROPOSAL" />
+                                <Title text="NEW REQUESTS" />
                                 <ToolbarSpacer />
                                 <Button
                                     icon="sap-icon://add"
-                                    tooltip="Add New Project to 'Sent for Proposal'"
+                                    tooltip="Add New Project to 'New Requests'"
                                     press="onAddProjectPress"
                                 />
                             </Toolbar>
@@ -261,7 +261,7 @@
                             class="sapUiTinyMarginBottom"
                             icon="sap-icon://navigation-right-arrow"
                             tooltip="Move to selected"
-                            press="onRightSentForProposal"
+                            press="onRightNewRequests"
                         />
                         <Button
                             icon="sap-icon://navigation-left-arrow"

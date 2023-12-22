@@ -19,7 +19,7 @@
     "passport": "^0"
   },
   "devDependencies": {
-    "@sap/hdi-deploy": "4.4.1",
+    "@sap/hdi-deploy": "^4.9.1",
     "@sap/ux-specification": "^1.108.3",
     "rimraf": "^3.0.2",
     "sqlite3": "^5.0.4"

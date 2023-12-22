@@ -17,6 +17,7 @@ modules:
       url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
+    stack: cflinuxfs4
   build-parameters:
     builder: npm-ci
 - name: BTPOpportunities-db-deployer
@@ -26,6 +27,7 @@ modules:
   - name: BTPOpportunities-db
   parameters:
     buildpack: nodejs_buildpack
+    stack: cflinuxfs4
 - name: BTPOpportunities-approuter
   type: approuter.nodejs
   path: app/

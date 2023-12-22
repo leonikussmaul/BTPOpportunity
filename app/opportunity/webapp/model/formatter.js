@@ -25,8 +25,12 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Arpit.jpeg";
         case "Bas":
           return "./images/Bas.jpeg";
+        case "Biswajit":
+          return "./images/Biswajit.jpeg";
         case "Elinor":
           return "./images/Elinor.jpeg";
+        case "Eswara":
+          return "./images/Eswara.jpeg";
         case "Gurpreet":
           return "./images/Gurpreet.jpeg";
         case "Karthik":
@@ -164,10 +168,10 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
         return 'Accent7';
       } else if (sMarketUnit === 'UKI') {
         return 'Accent9';
-      }else if (sMarketUnit === 'Global') {
-          return 'Accent5';
-      }else if (sMarketUnit === 'Internal / Others') {
-            return 'Accent1';
+      } else if (sMarketUnit === 'Global') {
+        return 'Accent5';
+      } else if (sMarketUnit === 'Internal / Others') {
+        return 'Accent1';
       } else return 'Accent2';
     },
 
@@ -182,10 +186,10 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
         return 'NOR';
       } else if (sMarketUnit === 'UKI') {
         return 'UKI';
-      }else if (sMarketUnit === 'Global') {
+      } else if (sMarketUnit === 'Global') {
         return 'GLO';
-    }else if (sMarketUnit === 'Internal / Others') {
-          return 'INT';
+      } else if (sMarketUnit === 'Internal / Others') {
+        return 'INT';
       } else return 'NA';
     },
 
@@ -421,25 +425,25 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "Type08";
         case "Past":
           return "Type09";
-          //blue Type06 -> vacation
-          //pink Type05
-          //Type07 Turquiose
-          //Type08 Green
-          //Type09 Grey
-          //Type10 Purple
+        //blue Type06 -> vacation
+        //pink Type05
+        //Type07 Turquiose
+        //Type08 Green
+        //Type09 Grey
+        //Type10 Purple
 
         default:
           return "Type11";
       }
     },
 
-    initialsFormatter: function(sFirstName, sLastName){
-      if(sFirstName && sLastName){
-        var sInitials = sFirstName.substring(0,1) + sLastName.substring(0,1);
-        return sInitials; 
+    initialsFormatter: function (sFirstName, sLastName) {
+      if (sFirstName && sLastName) {
+        var sInitials = sFirstName.substring(0, 1) + sLastName.substring(0, 1);
+        return sInitials;
 
       }
-    } 
+    }
 
 
   };

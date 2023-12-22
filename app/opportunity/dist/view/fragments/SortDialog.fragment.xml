@@ -1,0 +1,14 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm">
+		<sortItems>
+			<ViewSettingsItem text="Market Unit" key="marketUnit" selected="true" />
+			<ViewSettingsItem text="Opportunity Value" key="opportunityValue"/>
+			<ViewSettingsItem text="Date" key="opportunityDate" />
+            <ViewSettingsItem text="Account" key="account" />
+            <ViewSettingsItem text="Status" key="status" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>
