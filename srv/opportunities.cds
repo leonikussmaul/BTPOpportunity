@@ -36,6 +36,7 @@ service OpportunityService {
     entity teamTools                   as projection on opportunities.teamTools;
     entity projectComments             as projection on opportunities.projectComments;
     entity skills                      as projection on opportunities.skills;
+    entity topics                      as projection on opportunities.topics;
     entity projectStatusVH             as projection on opportunities.projectStatusVH;
     entity teamForecast                as projection on opportunities.teamForecast;
 

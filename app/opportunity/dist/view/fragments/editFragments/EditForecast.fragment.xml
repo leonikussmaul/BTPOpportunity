@@ -39,6 +39,7 @@
                 id="monthComboBox"
                 placeholder="Select the month to edit"
                 items="{}"
+                selectedKey="{AddProjectModel>/month}"
                 selectionChange="onSelectionChange"
                 showSecondaryValues="true"
                 valueState="{valueState>/valueState}"

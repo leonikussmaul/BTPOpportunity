@@ -9,7 +9,6 @@
 >
     <Dialog
         class="sapUiPopupWithPadding"
-        contentWidth="50%"
         resizable="true"
         draggable="true"
     >
@@ -99,7 +98,7 @@
                             <Label text="Market Unit" />
                             <Text text="{marketUnit}" />
 
-                            <Label text="Topic" />
+                            <Label text="Key Topic" />
                             <Text text="{topic}" />
 
                             <Label text="Start Date" />
@@ -126,6 +125,25 @@
                                 width="80%"
                                 state="{path: 'percentage', formatter: '.formatter.projectInvolvement'}"
                             />
+
+                             <core:Title text="Topics" />
+                            <VBox>
+                                <Tokenizer
+                                    id="topicTokens"
+                                    tokens="{}"
+                                >
+                                    <Token
+                                        id="topicItem"
+                                        text="{topic}"
+                                        delete="onDeleteToken"
+                                    />
+                                </Tokenizer>
+                                <Link
+                                    text="Add Topic"
+                                    press="onAddProjectTopic"
+                                    class="sapUiTinyMarginTop"
+                                />
+                            </VBox>
 
 
                             <core:Title text="Skills" />
@@ -166,6 +184,9 @@
                                     class="sapUiTinyMarginTop"
                                 />
                             </VBox>
+
+
+                              
                         </form:content>
                     </form:SimpleForm>
                 </f:content>
@@ -267,7 +288,7 @@
                                 />
                             </ComboBox>
 
-                            <Label text="Topic" />
+                            <Label text="Key Topic" />
                             <ComboBox
                                 selectedKey="{topic}"
                                 id="projectTopic"

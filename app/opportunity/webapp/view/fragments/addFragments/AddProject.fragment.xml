@@ -118,7 +118,7 @@
             <Label text="Short Descr." />
             <TextArea
                 value="{AddProjectModel>/descriptionText}"
-                rows="3"
+                growing="true" height="100%"
                 id="projectDescr"
                 maxLength="5000"
                 placeholder="Add a short project description"
@@ -170,7 +170,7 @@
             <Label text="Go-Live" />
             <DatePicker
                 value="{AddProjectModel>/goLive}"
-                id="goLiveDate"
+                id="goLiveDate" width="400px"
                 placeholder="When is the Project Go-Live?"
             />
 

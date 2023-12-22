@@ -227,6 +227,7 @@ entity teamProjects {
         account             : String(255);
         marketUnit          : String(255);
         topic               : String(255);
+        assignmentType      : String(255);
         status              : String(50);
         projectStartDate    : Date;
         projectEndDate      : Date;
@@ -247,6 +248,15 @@ entity teamProjects {
                                   on skills.projectID = $self;
         tools               : Composition of many teamTools
                                   on tools.projectID = $self;
+        topics              : Composition of many topics
+                                  on topics.projectID = $self;
+};
+
+@cds.autoexpose
+entity topics {
+    key topicID   : UUID;
+        projectID : Association to teamProjects;
+        topic     : String(255);
 };
 
 @cds.autoexpose

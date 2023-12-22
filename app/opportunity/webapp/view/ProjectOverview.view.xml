@@ -185,6 +185,8 @@
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
                         noDataText="Hmm.. time to look for New Requests?"
+                        growingThreshold="5"
+                        growing="true"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
@@ -283,6 +285,8 @@
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
                         noDataText="No RFP's"
+                        growingThreshold="5"
+                        growing="true"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
@@ -389,6 +393,8 @@
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
                         noDataText="No On-Going Projects"
+                        growingThreshold="5"
+                        growing="true"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
@@ -489,6 +495,8 @@
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
                         noDataText="No Go-Lives"
+                        growingThreshold="5"
+                        growing="true"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />
@@ -587,6 +595,8 @@
                         sticky="ColumnHeaders,HeaderToolbar"
                         delete="onGridListItemDelete"
                         noDataText="No Past Projects"
+                        growingThreshold="5"
+                        growing="true"
                     >
                         <f:dragDropConfig>
                             <dnd:DragInfo sourceAggregation="items" />

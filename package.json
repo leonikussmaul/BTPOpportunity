@@ -5,6 +5,10 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
+  "engines": {
+    "node": "^14.0.0 || ^16.0.0 || ^18.0.0 || ^20.0.0",
+    "npm": ">=8.3.0"
+  },
   "dependencies": {
     "@sap/approuter": "^14.1.2",
     "@sap/audit-logging": "^5.0.0",

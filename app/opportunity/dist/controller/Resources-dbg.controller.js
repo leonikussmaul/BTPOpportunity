@@ -13,11 +13,11 @@ sap.ui.define([
    */
   function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary) {
     "use strict";
-          var ValueState = CoreLibrary.ValueState,
-          oValueState = {
-              valueState: ValueState.None,
-              valueStateText: ""
-          };
+    var ValueState = CoreLibrary.ValueState,
+      oValueState = {
+        valueState: ValueState.None,
+        valueStateText: ""
+      };
 
 
 
@@ -30,6 +30,11 @@ sap.ui.define([
 
         var AddProjectModel = new JSONModel({});
         this.getView().setModel(AddProjectModel, "AddProjectModel");
+
+        // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // let sMonth = month[new Date().getMonth()];
+        // AddProjectModel.setProperty("/month", sMonth);
+        // AddProjectModel.setProperty("/year", new Date().getUTCFullYear());
 
         var oEditModel = new JSONModel({
           editMode: false
@@ -51,7 +56,7 @@ sap.ui.define([
         this.getView().setModel(oMessageModel, "messageModel");
 
         this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
-       
+
         var oLocalModel = new JSONModel({});
         this.getView().setModel(oLocalModel, "localModel");
 
@@ -278,7 +283,7 @@ sap.ui.define([
         else if (sPath === "Past") sStatus = "Past"
 
         oAddProjectModel.setProperty("/status", sStatus);
-        oAddProjectModel.setProperty("/allProjects", false); 
+        oAddProjectModel.setProperty("/allProjects", false);
         this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
 
       },
@@ -289,60 +294,60 @@ sap.ui.define([
         //var oDialog = oEvent.getSource().getParent().getParent();
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
         var oData = oAddProjectModel.getData();
-          if(oData.account && oData.status){
-              this.resetValueState(); 
+        if (oData.account && oData.status) {
+          this.resetValueState();
 
-        var inumber = this.getView().getBindingContext().getObject().inumber;
+          var inumber = this.getView().getBindingContext().getObject().inumber;
 
-        var sStartDate, sEndDate, sGoLiveDate;
-        if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toISOString().split("T")[0];
-        if (oData.projectEndDate) sEndDate = new Date(oData.projectEndDate).toISOString().split("T")[0];
-        if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0];
+          var sStartDate, sEndDate, sGoLiveDate;
+          if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toISOString().split("T")[0];
+          if (oData.projectEndDate) sEndDate = new Date(oData.projectEndDate).toISOString().split("T")[0];
+          if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0];
 
-        var sType = this.getApptType(oData.status); 
+          var sType = this.getApptType(oData.status);
 
-        var oPayload = {
-          userID_inumber: inumber,
-          primaryContact: this.getView().getBindingContext().getObject().firstName,
-          projectContact: oData.projectContact,
-          account: oData.account,
-          priority: oData.priority,
-          marketUnit: oData.marketUnit,
-          topic: oData.topic,
-          status: oData.status,
-          projectStartDate: sStartDate,
-          projectEndDate: sEndDate,
-          descriptionText: oData.descriptionText,
-          percentage: oData.percentage,
-          goLive: sGoLiveDate,
-          lastUpdated: new Date(),
-          type: sType,
-          appointmentCategory: "Customer Project",
-          appointmentIcon: "sap-icon://business-card",
-          projectValue: oData.projectValue
-        };
+          var oPayload = {
+            userID_inumber: inumber,
+            primaryContact: this.getView().getBindingContext().getObject().firstName,
+            projectContact: oData.projectContact,
+            account: oData.account,
+            priority: oData.priority,
+            marketUnit: oData.marketUnit,
+            topic: oData.topic,
+            status: oData.status,
+            projectStartDate: sStartDate,
+            projectEndDate: sEndDate,
+            descriptionText: oData.descriptionText,
+            percentage: oData.percentage,
+            goLive: sGoLiveDate,
+            lastUpdated: new Date(),
+            type: sType,
+            appointmentCategory: "Customer Project",
+            appointmentIcon: "sap-icon://business-card",
+            projectValue: oData.projectValue
+          };
 
-        var sPath = "/teamProjects"
+          var sPath = "/teamProjects"
 
-        var oModel = this.getView().getModel();
-        oModel.create(sPath, oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("New Project created!");
-           // oDialog.close();
-           that.onCancelDialogPress(); 
-            that.onStatusMethod(inumber);
-            that.getView().getModel("ProjectModel").refresh();
+          var oModel = this.getView().getModel();
+          oModel.create(sPath, oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("New Project created!");
+              // oDialog.close();
+              that.onCancelDialogPress();
+              that.onStatusMethod(inumber);
+              that.getView().getModel("ProjectModel").refresh();
 
-            //oAddProjectModel.setData({});
-          },
-          error: function (oError) {
-            sap.m.MessageBox.error("Project could not be created, check your input and try again.");
-          }
-        });
-      } else this.ValueStateMethod(); 
+              //oAddProjectModel.setData({});
+            },
+            error: function (oError) {
+              sap.m.MessageBox.error("Project could not be created, check your input and try again.");
+            }
+          });
+        } else this.ValueStateMethod();
 
       },
-      getApptType: function(sStatus){
+      getApptType: function (sStatus) {
         switch (sStatus) {
           case "New Requests":
             return "Type10";
@@ -360,7 +365,7 @@ sap.ui.define([
 
       },
 
-      
+
 
 
       /* ------------------------------------------------------------------------------------------------------------
@@ -369,8 +374,8 @@ sap.ui.define([
 
 
       onDialogOpen: function (fragmentName, sPath, sProjectID) {
-        this.resetValueState(); 
-        var bEdit = this.editDialog; 
+        this.resetValueState();
+        var bEdit = this.editDialog;
         var oEditModel = this.getView().getModel("editModel");
         oEditModel.setProperty("/editMode", false);
 
@@ -390,7 +395,7 @@ sap.ui.define([
         this._pDialog.then(function (_pDialog) {
           if (sPath) {
             //change this bit
-             _pDialog.setContentWidth("750px"); 
+            _pDialog.setContentWidth("750px");
             _pDialog.setContentHeight("550px");
             _pDialog.bindElement({
               path: sPath,
@@ -400,14 +405,15 @@ sap.ui.define([
             })
             that.onFilterSkills(sProjectID);
             that.onFilterTools(sProjectID);
+            that.onFilterTopics(sProjectID); 
 
-           
+
           }
-          if(bEdit){
+          if (bEdit) {
             that.onBindMonth();
 
           }
-          
+
           _pDialog.open();
 
         })
@@ -444,10 +450,27 @@ sap.ui.define([
 
       },
 
+      onFilterTopics(sProjectID) {
+        var oList = sap.ui.getCore().byId("topicTokens")
+        var oTemplate = sap.ui.getCore().byId("topicItem");
+        var oSorter = new sap.ui.model.Sorter("topic", false);
+
+        var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+        oList.bindAggregation("tokens", {
+            template: oTemplate,
+            path: "/topics",
+            sorter: oSorter,
+            filters: aFilters
+        });
+        oList.updateBindings();
+
+    },
+
+
 
       onCancelDialogPress: function (oEvent) {
-       
-        this.editDialog = false; 
+
+        this.editDialog = false;
         this._pDialog.then(function (_pDialog) {
           _pDialog.close();
           _pDialog.destroy();
@@ -550,6 +573,10 @@ sap.ui.define([
         this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddTool", oEvent);
       },
 
+      onAddProjectTopic: function (oEvent) {
+        this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddProjectTopic", oEvent);
+    },
+
 
       onPopover: function (sFragment, oEvent) {
         var oButton = oEvent.getSource(),
@@ -557,14 +584,14 @@ sap.ui.define([
 
         // create popover
         if (!this._pPopover) {
-        this._pPopover = Fragment.load({
-          //id: oView.getId(),
-          name: sFragment,
-          controller: this
-        }).then(function (oPopover) {
-          oView.addDependent(oPopover);
-          return oPopover;
-        });
+          this._pPopover = Fragment.load({
+            //id: oView.getId(),
+            name: sFragment,
+            controller: this
+          }).then(function (oPopover) {
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
         }
 
         this._pPopover.then(function (oPopover) {
@@ -574,28 +601,28 @@ sap.ui.define([
       },
       onToolsPopover: function (sFragment, oEvent) {
         var oButton = oEvent.getSource(),
-            oView = this.getView();
+          oView = this.getView();
 
         // create popover
         if (!this._tPopover) {
-        this._tPopover = Fragment.load({
+          this._tPopover = Fragment.load({
             //id: oView.getId(),
             name: sFragment,
             controller: this
-        }).then(function (oPopover) {
+          }).then(function (oPopover) {
             oView.addDependent(oPopover);
             return oPopover;
-        });
+          });
         }
 
         this._tPopover.then(function (oPopover) {
-            oPopover.openBy(oButton);
+          oPopover.openBy(oButton);
         });
 
-    },
+      },
 
       onSubmitSkill: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/skill");
         var oPayload = {
           skill: oItem,
@@ -606,7 +633,7 @@ sap.ui.define([
         oModel.create("/skills", oPayload, {
           success: function (oData, response) {
             MessageToast.show("New Skill added");
-           oLocalModel.setData({}); 
+            oLocalModel.setData({});
           },
           error: function (oError) {
             sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
@@ -615,7 +642,7 @@ sap.ui.define([
       },
 
       onSubmitTool: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/tool");
         var oPayload = {
           tool: oItem,
@@ -626,13 +653,32 @@ sap.ui.define([
         oModel.create("/teamTools", oPayload, {
           success: function (oData, response) {
             MessageToast.show("New Tool added");
-            oLocalModel.setData({}); 
+            oLocalModel.setData({});
           },
           error: function (oError) {
             sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
           }
         });
       },
+
+      onSubmitTopic: function (oEvent) {
+        var oLocalModel = this.getView().getModel("localModel"); 
+        var oItem = oLocalModel.getProperty("/topic");
+        var oPayload = {
+            topic: oItem,
+            projectID_projectID: this.sProjectID
+        };
+        var oModel = this.getView().getModel();
+        oModel.create("/topics", oPayload, {
+            success: function (oData, response) {
+                MessageToast.show("New Topic added");
+               oLocalModel.setData({}); 
+            },
+            error: function (oError) {
+                sap.m.MessageBox.error("Topic could not be added, check your input and try again.");
+            }
+        });
+    },
 
       onEditProject: function (oEvent) {
 
@@ -666,7 +712,7 @@ sap.ui.define([
         if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
         if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
 
-        var sOwner = this.inumber; 
+        var sOwner = this.inumber;
         var oPayload = {
           goLive: goLiveDate,
           projectContact: sap.ui.getCore().byId("projectContact").getValue(),
@@ -688,8 +734,8 @@ sap.ui.define([
             that.getView().setBusy(false);
             MessageToast.show(oContext.account + " updated successfully.")
             that.onEditProject();
-            that.onStatusMethod(sOwner); 
-            that.onCancelDialogPress(); 
+            that.onStatusMethod(sOwner);
+            that.onCancelDialogPress();
           },
           error: function (oError) {
             MessageToast.show(oError.message);
@@ -705,48 +751,66 @@ sap.ui.define([
         var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
         oBindingParams.filters.push(oFilter);
 
-          var oSorter = new sap.ui.model.Sorter("order", false);
-          oBindingParams.sorter.push(oSorter);
-    
-
-      },
-
-     onAddNewForecast: function(oEvent){
-      this.editDialog = false; 
-      this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
-
-     },
-
-     onForecastEdit: function(oEvent){
-      this.editDialog = true; 
-      this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
-
-     },
-      onBindMonth: function(oEvent){
-
-            var oTemplate = sap.ui.getCore().byId("monthItem");
-            var oSorter = new sap.ui.model.Sorter("order", false);
-            var ComboBox = sap.ui.getCore().byId("monthComboBox");
-          
-            var aFilters = [];
-            var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
-            aFilters.push(oFilter); 
-            ComboBox.bindAggregation("items", {
-                template: oTemplate,
-                path: "/teamForecast",
-                sorter: oSorter,
-                filters: aFilters
-            });
+        var oSorter = new sap.ui.model.Sorter("order", false);
+        oBindingParams.sorter.push(oSorter);
 
 
       },
 
-      onSelectionChange: function(oEvent){
-        this.resetValueState(); 
+      onAddNewForecast: function (oEvent) {
+        this.editDialog = false;
+
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
 
-        this.forecastPath = oEvent.mParameters.selectedItem.getBindingContext(); 
-        var oData = oEvent.mParameters.selectedItem.getBindingContext().getObject(); 
+        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let sMonth = month[new Date().getMonth()];
+        oAddProjectModel.setProperty("/month", sMonth);
+        oAddProjectModel.setProperty("/year", new Date().getUTCFullYear());
+        oAddProjectModel.setProperty("/forecast", 100);
+        oAddProjectModel.setProperty("/actual", 100);
+
+
+        this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
+
+      },
+
+      onForecastEdit: function (oEvent) {
+        this.editDialog = true;
+
+        var oAddProjectModel = this.getView().getModel("AddProjectModel");
+
+        // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // let sMonth = month[new Date().getMonth()];
+        // oAddProjectModel.setProperty("/month", sMonth);
+
+        this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
+
+      },
+      onBindMonth: function (oEvent) {
+
+        var oTemplate = sap.ui.getCore().byId("monthItem");
+        var oSorter = new sap.ui.model.Sorter("order", false);
+        var ComboBox = sap.ui.getCore().byId("monthComboBox");
+
+        var aFilters = [];
+        var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
+        aFilters.push(oFilter);
+        ComboBox.bindAggregation("items", {
+          template: oTemplate,
+          path: "/teamForecast",
+          sorter: oSorter,
+          filters: aFilters
+        });
+
+
+      },
+
+      onSelectionChange: function (oEvent) {
+        this.resetValueState();
+        var oAddProjectModel = this.getView().getModel("AddProjectModel");
+
+        this.forecastPath = oEvent.mParameters.selectedItem.getBindingContext();
+        var oData = oEvent.mParameters.selectedItem.getBindingContext().getObject();
 
         var oSelect = {
           userID_inumber: this.inumber,
@@ -764,34 +828,34 @@ sap.ui.define([
 
       onEditForecastSubmit: function (oEvent) {
 
-        this.editDialog = false; 
+        this.editDialog = false;
         var that = this;
-       
+
         var oChart = this.getView().byId("smartChartTeamForecast");
 
         var that = this;
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
         var oPayload = oAddProjectModel.getData();
 
-        if(this.forecastPath){
-        this.resetValueState(); 
-        that.getView().setBusy(true);
-        var sPath = this.forecastPath.sPath; 
+        if (this.forecastPath) {
+          this.resetValueState();
+          that.getView().setBusy(true);
+          var sPath = this.forecastPath.sPath;
 
-        var oModel = this.getView().getModel();
-        oModel.update(sPath, oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("Forecast has been updated!");
-            that.onCancelDialogPress(); 
-            oChart.rebindChart();
-            that.getView().setBusy(false);
-          },
-          error: function (oError) {
-            sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
-            that.getView().setBusy(false);
-          }
-        });
-      }else this.ValueStateMethod(); 
+          var oModel = this.getView().getModel();
+          oModel.update(sPath, oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("Forecast has been updated!");
+              that.onCancelDialogPress();
+              oChart.rebindChart();
+              that.getView().setBusy(false);
+            },
+            error: function (oError) {
+              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
+              that.getView().setBusy(false);
+            }
+          });
+        } else this.ValueStateMethod();
 
       },
 
@@ -809,7 +873,7 @@ sap.ui.define([
         var sYear = this.getView().getModel("AddProjectModel").getProperty("/year");
 
 
-       var sOrder = this.onMonthOrder(oData.month);
+        var sOrder = this.onMonthOrder(oData.month);
 
         var oPayload = {
           userID_inumber: this.inumber,
@@ -823,26 +887,26 @@ sap.ui.define([
 
         var sPath = "/teamForecast"
 
-        if(sYear && oData.month){
-          this.resetValueState(); 
+        if (sYear && oData.month) {
+          this.resetValueState();
 
-        var oModel = this.getView().getModel();
-        oModel.create(sPath, oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("New Forecast has been added!");
-            that.onCancelDialogPress(); 
-            oChart.rebindChart();
-            that.getView().setBusy(false);
-          },
-          error: function (oError) {
-            sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
-            that.getView().setBusy(false);
-          }
-        });
-      } else  {
-        this.ValueStateMethod(); 
-      that.getView().setBusy(false);
-      }
+          var oModel = this.getView().getModel();
+          oModel.create(sPath, oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("New Forecast has been added!");
+              that.onCancelDialogPress();
+              oChart.rebindChart();
+              that.getView().setBusy(false);
+            },
+            error: function (oError) {
+              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
+              that.getView().setBusy(false);
+            }
+          });
+        } else {
+          this.ValueStateMethod();
+          that.getView().setBusy(false);
+        }
 
       },
 
@@ -878,29 +942,29 @@ sap.ui.define([
 
       },
 
-         /* ------------------------------------------------------------------------------------------------------------
-            VALUE STATE
-            --------------------------------------------------------------------------------------------------------------*/
+      /* ------------------------------------------------------------------------------------------------------------
+         VALUE STATE
+         --------------------------------------------------------------------------------------------------------------*/
 
 
-            ValueStateMethod: function(oEvent){
-              var oValueStateModel = this.getView().getModel("valueState"); 
-              MessageToast.show("Please fill all mandatory fields");
-              oValueStateModel.setProperty("/valueState", ValueState.Error);
-              oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+      ValueStateMethod: function (oEvent) {
+        var oValueStateModel = this.getView().getModel("valueState");
+        MessageToast.show("Please fill all mandatory fields");
+        oValueStateModel.setProperty("/valueState", ValueState.Error);
+        oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
 
-          },
+      },
 
-          resetValueState: function(oEvent){
-              var oValueStateModel = this.getView().getModel("valueState"); 
-              oValueStateModel.setProperty("/valueState", ValueState.None);
-              oValueStateModel.setProperty("/valueStateText", "");
-          },
+      resetValueState: function (oEvent) {
+        var oValueStateModel = this.getView().getModel("valueState");
+        oValueStateModel.setProperty("/valueState", ValueState.None);
+        oValueStateModel.setProperty("/valueStateText", "");
+      },
 
-          onChangeValueState: function(oEvent){
-              var sValue = oEvent.mParameters.newValue; 
-              if(sValue) this.resetValueState(); 
-          }
+      onChangeValueState: function (oEvent) {
+        var sValue = oEvent.mParameters.newValue;
+        if (sValue) this.resetValueState();
+      }
 
 
 

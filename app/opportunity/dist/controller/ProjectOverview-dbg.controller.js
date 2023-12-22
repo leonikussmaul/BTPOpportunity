@@ -403,6 +403,7 @@ sap.ui.define([
                         })
                         that.onFilterSkills(sProjectID);
                         that.onFilterTools(sProjectID);
+                        that.onFilterTopics(sProjectID); 
 
 
                     }
@@ -446,6 +447,23 @@ sap.ui.define([
                 oList.updateBindings();
 
             },
+
+            onFilterTopics(sProjectID) {
+                var oList = sap.ui.getCore().byId("topicTokens")
+                var oTemplate = sap.ui.getCore().byId("topicItem");
+                var oSorter = new sap.ui.model.Sorter("topic", false);
+
+                var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
+                oList.bindAggregation("tokens", {
+                    template: oTemplate,
+                    path: "/topics",
+                    sorter: oSorter,
+                    filters: aFilters
+                });
+                oList.updateBindings();
+
+            },
+
 
 
             onCancelDialogPress: function (oEvent) {
@@ -554,6 +572,11 @@ sap.ui.define([
                 this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddTool", oEvent);
             },
 
+            onAddProjectTopic: function (oEvent) {
+                this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddProjectTopic", oEvent);
+            },
+
+
 
             onPopover: function (sFragment, oEvent) {
                 var oButton = oEvent.getSource(),
@@ -635,6 +658,26 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
+                    }
+                });
+            },
+
+
+            onSubmitTopic: function (oEvent) {
+                var oLocalModel = this.getView().getModel("localModel"); 
+                var oItem = oLocalModel.getProperty("/topic");
+                var oPayload = {
+                    topic: oItem,
+                    projectID_projectID: this.sProjectID
+                };
+                var oModel = this.getView().getModel();
+                oModel.create("/topics", oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("New Topic added");
+                       oLocalModel.setData({}); 
+                    },
+                    error: function (oError) {
+                        sap.m.MessageBox.error("Topic could not be added, check your input and try again.");
                     }
                 });
             },
