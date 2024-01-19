@@ -47,7 +47,8 @@
 					{
 						"title": "Project",
 						"value": "{account}",
-                        "identifier": true
+                        "identifier": true,
+						"width": "40%"
 					},
                     {
 						"title": "Owner",
@@ -55,12 +56,13 @@
 						"icon": {
 							"src": "{Icon}",
 							"shape": "Circle"
-						}
+						},
+						"width": "35%"
 					},
 					{
 						"title": "Value",
 						"value": "{= extension.formatters.projectValueFormatter(${projectValue}) }",
-                        "width": "35%"
+                        "width": "25%"
 					}
 				],
 				"actions": [

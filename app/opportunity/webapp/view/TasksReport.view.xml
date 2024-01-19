@@ -61,6 +61,11 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
+
+
+          <HBox renderType="Bare">
+           <f:Card height="100%" class="sapUiMediumMarginBottom">
+                    <f:content>
             <smartTable:SmartTable
                 id="myTaskTable"
                 persistencyKey="persistencyKey"
@@ -246,6 +251,19 @@
                     </items>
                 </Table>
             </smartTable:SmartTable>
+
+              </f:content>
+                    <f:layoutData>
+                        <f:GridContainerItemLayoutData
+                            columns="2"
+                            minRows="2"
+                        />
+                    </f:layoutData>
+                </f:Card>
+
+                 </HBox>
+
+
         </f:content>
     </f:DynamicPage>
 </mvc:View>

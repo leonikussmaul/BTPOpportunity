@@ -9,11 +9,13 @@
         selectedKey="{/selectedKey}"
         itemSelect=".onItemSelect"
     >
+
+    
         <tnt:NavigationList>
             <tnt:NavigationListItem
                 icon="sap-icon://menu2"
                 hasExpander="false"
-                select="onToggleSideMenu"
+                select="onToggleSideMenu" 
             />
 
             <tnt:NavigationListItem

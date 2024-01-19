@@ -499,16 +499,29 @@ sap.ui.define([
             onBeforeRebindTable: function (oEvent) {
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
-
+            
                 var fnGroupHeaderFormatter = function (oContext) {
                     var sHeader = oContext.getProperty("marketUnit");
                     return {
                         key: sHeader,
                     };
                 };
-                var oGrouping = new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter);
-                oBindingParams.sorter.push(oGrouping);
 
+              
+                // Check if there are existing sorters in the SmartTable
+                var aExistingSorters = oBindingParams.sorter || [];
+            
+                // Add grouping sorter and priority sorter to the array
+                var aSorters = [
+                    new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter)
+                ];
+            
+                // Combine existing sorters with custom sorters
+                aSorters = aExistingSorters.concat(aSorters);
+            
+                // Apply combined sorters to the binding parameters
+                oBindingParams.sorter = aSorters;
+            
                 this.addFiltersForSelectedItems(oEvent, "marketUnit");
                 this.addFiltersForSelectedItems(oEvent, "topic");
                 this.addFiltersForSelectedItems(oEvent, "primaryContact");
@@ -517,13 +530,16 @@ sap.ui.define([
                 this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
                 this.addFiltersForSelectedItems(oEvent, "priority");
                 this.addFiltersForSelectedItems(oEvent, "ssa");
-
+            
                 var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 var bSwitch = oSwitch ? "Yes" : "No";
                 if (bSwitch === "Yes") {
                     oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
                 }
             },
+            
+            
+            
 
             addFiltersForSelectedItems: function (oEvent, filterKey) {
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");

@@ -45,7 +45,19 @@
 		</f:header> -->
         <f:content>
             <!-- 1. New Requests Table -->
-            <VBox>
+
+
+          
+           <VBox height="100%">
+
+           	<Carousel class="sapUiContentPadding" loop="true">
+		
+
+           <f:Card height="100%" class="sapUiMediumMarginBottom">
+                    <f:content>
+
+
+            <VBox width="100%">
                 <HBox renderType="Bare">
                     <f:GridList
                         id="newRequestsTable"
@@ -542,9 +554,28 @@
                         </f:GridListItem>
                     </f:GridList>
                 </HBox>
+                </VBox>
+        
+                    </f:content>
+                      <f:layoutData>
+                        <f:GridContainerItemLayoutData
+                            columns="2"
+                            minRows="2"
+                        />
+                    </f:layoutData>
 
-                <VBox class="sapUiLargeMarginTop">
-                    <smartchart:SmartChart
+                    </f:Card>
+               
+
+                   
+           <f:Card height="100%" class="sapUiMediumMarginBottom">
+                    <f:content> 
+
+                      <!-- <VBox width="100%" height="100%"> -->
+                <HBox renderType="Bare" width="100%" height="100%">
+
+              
+                    <smartchart:SmartChart class="sapUiLargeMargin sapUiLargeMarginTop" 
                         id="smartChartTeamForecast"
                         enableAutoBinding="true"
                         initialized="onInitChart"
@@ -585,8 +616,23 @@
                             </OverflowToolbar>
                         </smartchart:toolbar>
                     </smartchart:SmartChart>
-                </VBox>
-            </VBox>
+                    </HBox>
+                <!-- </VBox> -->
+
+                 </f:content>
+                   <f:layoutData>
+                        <f:GridContainerItemLayoutData
+                            columns="2"
+                            minRows="2"
+                        />
+                    </f:layoutData>
+                    </f:Card>
+                	</Carousel>
+
+                
+                    </VBox>
+                 
+
         </f:content>
     </f:DynamicPage>
 </mvc:View>

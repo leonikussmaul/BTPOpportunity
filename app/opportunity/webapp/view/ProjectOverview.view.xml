@@ -170,7 +170,13 @@
         </f:header>
         <f:content>
             <!-- 1. New Requests Table -->
-            <VBox>
+
+               <HBox renderType="Bare">
+           <f:Card height="100%" class="sapUiMediumMarginBottom">
+                    <f:content >
+
+
+            <VBox width="100%">
                 <HBox renderType="Bare">
                     <f:GridList
                         id="newRequestsTable"
@@ -693,6 +699,19 @@
             </smartchart:SmartChart>
                 </VBox>  -->
             </VBox>
+
+               </f:content>
+                    <f:layoutData>
+                        <f:GridContainerItemLayoutData
+                            columns="2"
+                            minRows="2"
+                        />
+                    </f:layoutData>
+                </f:Card>
+
+                 </HBox>
+
+
         </f:content>
     </f:DynamicPage>
 </mvc:View>

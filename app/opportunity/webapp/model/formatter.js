@@ -47,6 +47,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Omar.jpeg";
         case "Peter":
           return "./images/Peter.jpeg";
+        case "Philip":
+          return "./images/Philip.jpeg";
         case "Rajat":
           return "./images/Rajat.jpeg";
         case "Ravi":
@@ -102,7 +104,9 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
         return 1;
       } else if (topic === 'iCCM') {
         return 2;
-      } else return;
+      } else if (topic === 'Enablement') {
+        return 10;
+      }else return;
 
     },
 
@@ -297,6 +301,7 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       var sTodayDate = new Date();
       if (sDueDate < sTodayDate) return "Error";
       else if (sDueDate === sTodayDate) return "Warning";
+      else return;
 
     },
 

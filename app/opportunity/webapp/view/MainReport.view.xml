@@ -58,7 +58,6 @@
                     <smartFilterBar:SmartFilterBar
                         id="smartFilterBar"
                         entitySet="opportunityHeader"
-                        persistencyKey="persistencyKey"
                         liveMode="true"
                         showClearOnFB="true"
                         showGoOnFB="false"
@@ -338,6 +337,15 @@
         </f:header>
 
         <f:content>
+
+
+
+ <!-- <VBox class="sapUiTinyMargin"> -->
+    
+
+            <HBox renderType="Bare">
+         <f:Card height="100%" class="sapUiMediumMarginBottom">
+                    <f:content>
             <smartTable:SmartTable
                 id="mySmartTable"
                 persistencyKey="persistencyKey"
@@ -354,7 +362,7 @@
                 demandPopin="true"
                 class="sapUiResponsiveContentPadding"
                 showFullScreenButton="true"
-                initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
+                initiallyVisibleFields="account,topic,status,primaryContact,opportunityClosedQuarter,opportunityValue,isFavorite"
                 requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"
                 ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
             >
@@ -393,6 +401,20 @@
                     delete="onDeleteTableItem" 
                 >
                     <columns>
+
+                     <Column
+                            width="3rem"
+                            hAlign="Center"
+                        >
+                            <customData>
+                                <core:CustomData
+                                    key="p13nData"
+                                    value='\{"columnKey": "isFavorite", "columnIndex" : "0", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
+                                />
+                            </customData>
+                            <Label visible="false" text="{i18n>Favourite}" />
+                        </Column>
+
                         <Column>
                             <customData>
                                 <core:CustomData
@@ -406,8 +428,7 @@
                             />
                         </Column>
                         <Column
-                            hAlign="Center"
-                            width="15%"
+                            width="40%"
                         >
                             <customData>
                                 <core:CustomData
@@ -429,7 +450,7 @@
                                 tooltip="{i18n>primaryContact}"
                             />
                         </Column>
-                        <Column>
+                        <!-- <Column>
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
@@ -438,7 +459,7 @@
                             </customData>
                             <Label text="{i18n>ssa}" />
                         </Column>
-                      
+                       -->
                           <Column hAlign="Center">
                             <customData>
                                 <core:CustomData
@@ -469,18 +490,7 @@
                             </customData>
                             <Label text="{i18n>status}" />
                         </Column>
-                        <Column
-                            width="6%"
-                            hAlign="Center"
-                        >
-                            <customData>
-                                <core:CustomData
-                                    key="p13nData"
-                                    value='\{"columnKey": "isFavorite", "columnIndex" : "8", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
-                                />
-                            </customData>
-                            <Label text="{i18n>Favourite}" />
-                        </Column>
+                       
                     </columns>
                     <items>
                         <ColumnListItem
@@ -490,19 +500,47 @@
                             highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                         >
                             <cells>
+
+                              <core:Icon
+                                    press="onFavoritePress"
+                                    src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                    size="1.2rem"
+                                    color="#427cac"
+                                />
+
                                 <ObjectIdentifier
                                     title="{account}"
                                     text="{priority}"
                                 />
                                
-                                <tnt:InfoLabel
-                                    text="{topic}"
+                               
+
+                                  <CustomListItem
+                                        content="{ path: 'topics', sorter: { path: 'topic' }}"
+                                    >
+
+                                     <tnt:InfoLabel
+                                    text="{topic}"  class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                    visible="{= ${topic} !== null}"
-                                    renderMode="Narrow"
+    
                                 />
+
+<!-- 
+                                        <tnt:InfoLabel
+                                            text="{ path: 'roleID_roleID' }"
+                                            class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
+                                            colorScheme="{
+							parts: [
+								{path: 'roleID_roleID'}
+							],
+							formatter: '.formatter.roleInfoLabel'
+						}"
+                                        /> -->
+                                    </CustomListItem>
+
+
                                 <Text text="{primaryContact}" />
-                                <Text text="{ssa}" />
+                                <!-- <Text text="{ssa}" /> -->
                                 <Text text="{opportunityClosedQuarter}" />
                                 <ObjectNumber
                                     number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
@@ -516,17 +554,26 @@
                                     icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}"
                                     iconDensityAware="true"
                                 />
-                                <core:Icon
-                                    press="onFavoritePress"
-                                    src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
-                                    size="1.2rem"
-                                    color="#427cac"
-                                />
+                              
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
             </smartTable:SmartTable>
+
+              </f:content>
+                    <f:layoutData>
+                        <f:GridContainerItemLayoutData
+                            columns="2"
+                            minRows="2"
+                        />
+                    </f:layoutData>
+                </f:Card>
+
+                 </HBox>
+        <!-- </VBox> -->
+
+
         </f:content>
     </f:DynamicPage>
 </mvc:View>
