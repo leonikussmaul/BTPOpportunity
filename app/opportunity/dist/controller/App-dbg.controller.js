@@ -24,15 +24,6 @@ sap.ui.define(
         var oLocalModel = new JSONModel({});
         this.getView().setModel(oLocalModel, "localModel");
 
-        // Log.setLevel(Log.Level.INFO);
-
-        // var oRouter = this.getRouter();
-
-        // oRouter.attachBypassed(function (oEvent) {
-        //   var sHash = oEvent.getParameter("hash");
-        //   Log.info("Sorry, but the hash '" + sHash + "' is invalid.", "The resource was not found.");
-        // });
-
       },
 
 
