@@ -27,8 +27,6 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Bas.jpeg";
         case "Biswajit":
           return "./images/Biswajit.jpeg";
-        case "Elinor":
-          return "./images/Elinor.jpeg";
         case "Eswara":
           return "./images/Eswara.jpeg";
         case "Gurpreet":
@@ -43,10 +41,14 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Matt.jpeg";
         case "Nesimi":
           return "./images/Nesimi.jpeg";
+          case "Ollie":
+            return "./images/Ollie.jpeg";
         case "Omar":
           return "./images/Omar.jpeg";
         case "Peter":
           return "./images/Peter.jpeg";
+          case "Philip":
+            return "./images/Philip.jpeg";
         case "Rajat":
           return "./images/Rajat.jpeg";
         case "Ravi":
@@ -59,6 +61,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Shubham.jpeg";
         case "Sneha":
           return "./images/Sneha.jpeg";
+          case "Sravanthi":
+            return "./images/Sravanthi.jpeg";
         case "Stefan":
           return "./images/Stefan.jpeg";
         case "Sunil":

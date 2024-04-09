@@ -1,1 +1,0 @@
-sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/model/json/JSONModel","../model/formatter","sap/m/library"],function(t,o,e,r){"use strict";return t.extend("opportunity.opportunity.controller.NotFound",{formatter:e,onInit(){this.oRouter=this.getOwnerComponent().getRouter();this.oRouter.attachRouteMatched(this.onRouteMatched,this)}})});
