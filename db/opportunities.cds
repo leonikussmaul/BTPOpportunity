@@ -44,6 +44,21 @@ entity opportunityHeader {
 };
 
 
+
+entity Cards {
+  key cardID    : UUID;
+      name      : String;
+      desc      : String(5000);
+      manifest  : String;
+      width     : String;
+      height    : String;
+      columns   : String;
+      rows      : String;
+      sortOrder : Integer;
+      section   : String;
+      visible: Boolean; 
+}
+
 @cds.autoexpose
 entity opportunityActionItems {
     key ID                   : UUID;
