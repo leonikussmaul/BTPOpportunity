@@ -35,7 +35,9 @@
                 "parameters": {
                     "$format": "json",
                     "$orderby": "actionDueDate asc",
-					"$filter": "actionDueDate ne null"
+					"$filter": "actionDueDate ne null",
+					"$top": "6",
+					"$count": true
                 }
             },
             "updateInterval": 300,
@@ -43,7 +45,18 @@
         },
 		"header": {
 			"title": "Open Tasks",
-			"subTitle":  "Sorted by Due Date | Total: {localModel>/opportunityActionItemsLength}"
+			"subTitle":  "Sorted by Due Date",
+			"status": {
+				"text": {
+					"format": {
+						"translationKey": "i18n>CARD.COUNT_X_OF_Y",
+						"parts": [
+							"parameters>/visibleItems",
+							"localModel>/opportunityActionItemsLength"
+						]
+					}
+				}
+			}
 		},
 		"content": {
 			"maxItems": 6,
