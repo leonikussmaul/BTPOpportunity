@@ -137,6 +137,7 @@
                 "async": true,
                 "viewPath": "opportunity.opportunity.view",
                 "controlAggregation": "pages",
+                "transition": "slide",
                 "controlId": "app",
                 "clearControlAggregation": false,
                 "path": "opportunity.opportunity.view",
@@ -157,8 +158,12 @@
                 },
                 {
                     "name": "ObjectPage",
-                    "pattern": "ObjectPage/{opportunityID}",
-                    "target": "ObjectPage"
+                    "pattern": "ObjectPage/{opportunityID}/{layout}",
+                    "target": [
+                        "ObjectPage",
+                        "MainReport"
+
+                    ]
                 },
                 {
                     "name": "TasksReport",

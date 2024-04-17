@@ -12,13 +12,14 @@ sap.ui.define([
     "sap/ui/core/date/UI5Date",
     "sap/ui/core/format/DateFormat",
     'sap/m/library',
-    "sap/ui/core/library"
+    "sap/ui/core/library",
+    "sap/ui/core/UIComponent"
 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat, library, CoreLibrary) {
+    function (Controller, MessageBox, MessageToast, formatter, JSONModel, Filter, FilterOperator, Fragment, FilterType, History, UI5Date, DateFormat, library, CoreLibrary, UIComponent) {
         "use strict";
         var _this = this;
         var ValueState = CoreLibrary.ValueState,
@@ -58,11 +59,15 @@ sap.ui.define([
 
 
             },
+           
+
+          
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
             --------------------------------------------------------------------------------------------------------------*/
 
             _onRoutePatternMatched: function (oEvent) {
+                this._ID = oEvent.getParameter("arguments").opportunityID;
                 var oModel = this.getView().getModel();
                 var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
                 if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID")

@@ -1,0 +1,16 @@
+<mvc:View
+    controllerName="opportunity.opportunity.controller.FCL"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+    
+>
+
+ <f:FlexibleColumnLayout id="fcl"
+		  stateChange="onStateChanged"
+		  layout="{global>/layout}"
+		  backgroundDesign="Transparent">
+
+    </f:FlexibleColumnLayout >
+</mvc:View>

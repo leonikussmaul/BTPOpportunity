@@ -6,6 +6,7 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:tnt="sap.tnt"
+   xmlns:f="sap.f"
 >
 
     <tnt:ToolPage
@@ -29,11 +30,16 @@
                 id="pageContainerId"
                 width="100%"
             >
-                <App
-                    id="app"
-                    width="100%"
-                />
+                <App id="app">
+    <!-- <f:FlexibleColumnLayout id="fcl"
+		  stateChange="onStateChanged"
+		  layout="{global>/layout}"
+		  backgroundDesign="Transparent"/> -->
+              </App>
             </NavContainer>
         </tnt:mainContents>
     </tnt:ToolPage>
 </mvc:View>
+
+
+
