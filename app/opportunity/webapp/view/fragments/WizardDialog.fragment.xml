@@ -78,10 +78,11 @@
                                     placeholder="{i18n>marketUnitPlaceholder}" selectionChange="resetValueState"
                                     items="{
                                     path: '/opportunityMarketUnitVH',
-                                    sorter: {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
+                                   	sorter: {
+						path: 'region',
+						descending: false,
+						group: true
+					}
                                     }"
                                 >
                                     <core:Item
@@ -89,6 +90,8 @@
                                         text="{marketUnit}"
                                     />
                                 </ComboBox>
+
+                                
                                 <Label text="{i18n>mainTopic}" />
                                 <ComboBox
                                     selectedKey="{viewModel>/topic}"
