@@ -498,7 +498,9 @@
                                 <tnt:InfoLabel
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                    visible="{= ${topic} !== null}"
+                                  visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
+
+
                                     renderMode="Narrow"
                                 />
                                 <Text text="{primaryContact}" />
