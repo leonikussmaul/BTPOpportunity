@@ -30,11 +30,11 @@
                     selectedKey="{editPageModel>/marketUnit}"
                     items="{
                                     path: '/opportunityMarketUnitVH',
-                                   sorter: 
-                                            {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
+                                    	sorter: {
+						path: 'region',
+						descending: false,
+						group: true
+					}
                                     }"
                 >
                     <core:Item

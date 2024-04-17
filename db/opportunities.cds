@@ -342,6 +342,7 @@ entity opportunityStatusVH {
 entity opportunityMarketUnitVH {
     key ID         : UUID;
         marketUnit : String(25);
+        region : String;
 };
 
 @cds.autoexpose

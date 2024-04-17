@@ -78,13 +78,15 @@
                                         customData:hasValue="false"
                                         selectionChange="customFieldChange"
                                         showSelectAll="true"
-                                        items="{
-                                    path: '/opportunityMarketUnitVH',
-                                    sorter: {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
-                                    }"
+                                       	items="{
+				path: '/opportunityMarketUnitVH',
+				sorter: {
+					path: 'region',
+					descending: false,
+					group: true
+				},
+				groupHeaderFactory: '.getGroupHeader'
+			}"
                                     >
                                         <core:Item
                                             key="marketUnit"

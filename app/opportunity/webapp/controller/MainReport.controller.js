@@ -8,12 +8,13 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/FilterType",
     "../model/formatter",
-    "sap/ui/core/library"
+    "sap/ui/core/library",
+    'sap/ui/core/SeparatorItem',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, FilterType, formatter, CoreLibrary) {
+    function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, FilterType, formatter, CoreLibrary, SeparatorItem) {
         "use strict";
         var ValueState = CoreLibrary.ValueState,
                 oValueState = {
@@ -48,6 +49,12 @@ sap.ui.define([
 
             },
 
+
+            getGroupHeader: function (oGroup) {
+                return new SeparatorItem( {
+                    text: oGroup.key
+                });
+            },
 
 
 
