@@ -58,7 +58,6 @@
                     <smartFilterBar:SmartFilterBar
                         id="smartFilterBar"
                         entitySet="opportunityHeader"
-                        persistencyKey="persistencyKey"
                         liveMode="true"
                         showClearOnFB="true"
                         showGoOnFB="false"
