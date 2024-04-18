@@ -151,7 +151,7 @@
                 value="{
 				'type': 'sap.ui.model.type.DateInterval',
 				'formatOptions': {
-					'pattern': 'yyyy/MM/dd'
+					'pattern': 'MM-dd-yyyy'
 				},
 				'parts': [
 					{
@@ -169,7 +169,13 @@
 
             <Label text="Go-Live" />
             <DatePicker
-                value="{AddProjectModel>/goLive}"
+                value="{
+                    path: 'AddProjectModel>/goLive',
+                    type: 'sap.ui.model.type.Date',
+                    'formatOptions': {
+                        'pattern': 'MM-dd-yyyy'
+                    }
+                }"
                 id="goLiveDate" width="400px"
                 placeholder="When is the Project Go-Live?"
             />

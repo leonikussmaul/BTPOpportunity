@@ -59,7 +59,8 @@
                     value="{ path: 'editPageModel>/actionDueDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
-									style: 'medium'
+									style: 'medium',
+                                    pattern: 'MM-dd-yyyy'
 						}}"
                 />
 

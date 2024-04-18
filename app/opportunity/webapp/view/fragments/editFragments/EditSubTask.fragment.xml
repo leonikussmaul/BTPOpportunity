@@ -54,7 +54,13 @@
 
             <Label text="{i18n>dueDate}" />
             <DatePicker
-                value="{AddSubTaskModel>/subTaskDueDate}"
+                value="{
+                    path: 'AddSubTaskModel>/subTaskDueDate',
+                    type: 'sap.ui.model.type.Date',
+                    'formatOptions': {
+                        'pattern': 'MM-dd-yyyy'
+                    }
+                }"
                 id="subTaskDueDateID"
             />
 
