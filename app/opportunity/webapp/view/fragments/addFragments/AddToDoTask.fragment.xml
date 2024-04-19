@@ -111,8 +111,14 @@
             </ComboBox>
             <Label text="{i18n>actionDueDate}" />
             <DatePicker
-                value="{AddTaskModel>/actionDueDate}"
                 id="actionDueDateTask"
+                value="{
+					'path':'AddTaskModel>/actionDueDate',
+					'type':'sap.ui.model.type.Date',
+					'formatOptions': {
+						'pattern': 'MM-dd-yyyy'
+					}
+                }"
             />
             <Label text="{i18n>actionPriority}" />
             <ComboBox

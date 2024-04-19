@@ -82,13 +82,25 @@
 
             <Label text="{i18n>deliverableDate}" />
             <DatePicker
-                dateValue="{localModel>/deliverableDate}"
+                dateValue="{
+                    path: 'localModel>/deliverableDate',
+                    type: 'sap.ui.model.type.Date',
+                    'formatOptions': {
+                        'pattern': 'MM-dd-yyyy'
+                    }
+                }"
                 id="deliverableDate"
             />
 
             <Label text="{i18n>completedOn}" />
             <DatePicker
-                dateValue="{localModel>/completedOn}"
+                dateValue="{
+                    path: 'localModel>/completedOn',
+                    type: 'sap.ui.model.type.Date',
+                    'formatOptions': {
+                        'pattern': 'MM-dd-yyyy'
+                    }
+                }"
                 id="completedOn"
             />
         </form:SimpleForm>

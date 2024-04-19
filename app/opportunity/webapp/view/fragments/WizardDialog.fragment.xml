@@ -243,12 +243,18 @@
                                 </ComboBox>
                                 <Label text="{i18n>opportunityStartDate}" />
                                 <DatePicker
-                                    value="{path: 'viewModel>/opportunityStartDate' , type:'sap.ui.model.type.Date', formatOptions : { style:'medium', UTC: true }}"
+                                    value="{path: 'viewModel>/opportunityStartDate' , type:'sap.ui.model.type.Date', formatOptions : { style:'medium', 'pattern': 'MM-dd-yyyy', UTC: true }}"
                                     id="dateCreate"
                                 />
                                 <Label text="{i18n>opportunityDueDate}" />
                                 <DatePicker
-                                    value="{viewModel>/opportunityDueDate}"
+                                    value="{
+                                        path: 'viewModel>/opportunityDueDate',
+                                        type: 'sap.ui.model.type.Date',
+                                        'formatOptions': {
+                                                'pattern': 'MM-dd-yyyy'
+                                        }
+                                    }"
                                     id="dueDateCreate"
                                 />
                                 <Label text="{i18n>progress}" />

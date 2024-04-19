@@ -211,11 +211,14 @@
                                 <ToolbarSpacer />
                                 <Label text="Go Live:" />
                                 <DatePicker
-                                    value="{ path: 'goLive',
-							type: 'sap.ui.model.type.Date',
-							formatOptions: {
-									style: 'medium'
-						}}"
+                                    value="{ 
+                                        path: 'goLive',
+                                        type: 'sap.ui.model.type.Date',
+                                        formatOptions: {
+                                            style: 'medium',
+                                            'pattern': 'MM-dd-yyyy'
+                                        }
+                                    }"
                                     placeholder="When is go-live?"
                                     width="45%"
                                     id="goLiveDate"
@@ -313,23 +316,22 @@
                                 placeholder="Start Date - End Date"
                                 id="projectDates"
                                 value="{
-				'type': 'sap.ui.model.type.DateInterval',
-				'formatOptions': {
-					'pattern': 'yyyy/MM/dd'
-				},
-				'parts': [
-					{
-						'type': 'sap.ui.model.type.Date',
-						'path': 'projectStartDate'
-					},
-					{
-						'type': 'sap.ui.model.type.Date',
-						'path': 'projectEndDate'
-					}
-				]
-			}"
+                                    'type': 'sap.ui.model.type.DateInterval',
+                                    'formatOptions': {
+                                        'pattern': 'MM-dd-yyyy'
+                                    },
+                                    'parts': [
+                                        {
+                                            'type': 'sap.ui.model.type.Date',
+                                            'path': 'projectStartDate'
+                                        },
+                                        {
+                                            'type': 'sap.ui.model.type.Date',
+                                            'path': 'projectEndDate'
+                                        }
+                                    ]
+                                }"
                             />
-
                               
                             <Label  text="RFP Value"/>
                             <Input value="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }" id="projectValue" visible="{= ${status} === 'RFP' }" />
