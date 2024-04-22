@@ -870,7 +870,7 @@ sap.ui.define([
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDo");
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oEvent.getSource().getBindingContext("pageModel").getObject();
-                if(oData.actionDueDate) oData.actionDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+                if(oData.actionDueDate) oData.actionDueDate = new Date(oData.actionDueDate);
                 oAddTaskModel.setData(oData);
 
             },
