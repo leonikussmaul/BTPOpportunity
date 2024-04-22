@@ -41,6 +41,8 @@ sap.ui.define([
                 this.onReadDataOpportunities();
                 this.onReadDataTasks();
 
+                //refresh tasks 
+                this.getView().byId("taskCard").refreshData();
             },
 
             onRebindUtilizationChart: function (oEvent) {
