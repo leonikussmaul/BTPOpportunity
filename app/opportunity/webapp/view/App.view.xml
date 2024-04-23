@@ -7,7 +7,6 @@
     xmlns:core="sap.ui.core"
     xmlns:tnt="sap.tnt"
 >
-<!-- testing something -->
     <tnt:ToolPage
         id="toolPage"
         sideExpanded="false"
