@@ -96,7 +96,14 @@
 			<dnd:DropInfo
 				groupName="selected2available"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                	<dnd:DragDropInfo
+				sourceAggregation="items"
+				targetAggregation="items"
+				dropPosition="Between"
+				drop="onDropSelectedProductsTable"/>
 		</dragDropConfig>
+
+        
 
 		<items>
 			<ColumnListItem>
@@ -184,7 +191,12 @@
 			<dnd:DropInfo
 				groupName="selected2available"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-		</dragDropConfig>
+			<dnd:DragDropInfo
+				sourceAggregation="items"
+				targetAggregation="items"
+				dropPosition="Between"
+				drop="onDropSelectedProductsTable"/>
+        </dragDropConfig>
 
 		<items>
 			<ColumnListItem>
@@ -272,7 +284,12 @@
 			<dnd:DropInfo
 				groupName="selected2available"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-		</dragDropConfig>
+			<dnd:DragDropInfo
+				sourceAggregation="items"
+				targetAggregation="items"
+				dropPosition="Between"
+				drop="onDropSelectedProductsTable"/>
+        </dragDropConfig>
 
 		<items>
 			<ColumnListItem>
@@ -361,6 +378,11 @@
 			<dnd:DropInfo
 				groupName="selected2available"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                	<dnd:DragDropInfo
+				sourceAggregation="items"
+				targetAggregation="items"
+				dropPosition="Between"
+				drop="onDropSelectedProductsTable"/>
 		</dragDropConfig>
 
 		<items>
@@ -449,6 +471,11 @@
 			<dnd:DropInfo
 				groupName="selected2available"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                	<dnd:DragDropInfo
+				sourceAggregation="items"
+				targetAggregation="items"
+				dropPosition="Between"
+				drop="onDropSelectedProductsTable"/>
 		</dragDropConfig>
 
 		<items>
