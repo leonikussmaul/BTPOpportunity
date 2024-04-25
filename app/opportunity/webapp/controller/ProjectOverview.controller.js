@@ -462,6 +462,12 @@ sap.ui.define([
                 this._pDialog = null;
                 this.getView().getModel("AddProjectModel").setData({});
 
+                this.getView().byId("newRequestsTable").removeSelections(true);
+                this.getView().byId("RFPTable").removeSelections(true);
+                this.getView().byId("OnGoingTable").removeSelections(true);
+                this.getView().byId("GoLiveTable").removeSelections(true);
+                this.getView().byId("PastTable").removeSelections(true);
+
             },
 
             onProjectPopup: function (oEvent) {
