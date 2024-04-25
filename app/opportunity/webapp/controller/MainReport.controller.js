@@ -269,7 +269,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        sap.m.MessageBox.error("Opportunity could not be created. Double check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -313,7 +315,9 @@ sap.ui.define([
                                     },
                                     error: function (oError) {
                                         that.getView().setBusy(false);
-                                        MessageBox.error("Topic could not be posted. Please check your input.");
+                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                        sap.m.MessageBox.error(sMessage);
+                                        
                                     }
                                 });
                                 //}
@@ -337,7 +341,9 @@ sap.ui.define([
                         MessageToast.show("New topic posted!");
                     },
                     error: function (oError) {
-                        MessageBox.error("Topic could not be posted. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -376,7 +382,9 @@ sap.ui.define([
                                     },
                                     error: function (oError) {
                                         that.getView().setBusy(false);
-                                        MessageBox.error("Deliverable could not be posted. Please check your input.");
+                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                        sap.m.MessageBox.error(sMessage);
+                                        
                                     }
                                 });
                                 //}
@@ -491,9 +499,10 @@ sap.ui.define([
                                 success: function () {
                                     sap.m.MessageToast.show("Item deleted successfully.");
                                 },
-                                error: function () {
-                                    sap.m.MessageToast.show("Failed to delete item.");
-                                }
+                                error: function (oError) {
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                  }
                             });
                         }
                     }
@@ -672,8 +681,9 @@ sap.ui.define([
                         MessageToast.show(sMessage);
                     },
                     error: function (oError) {
-                        MessageToast.show(oError.message);
-                    }
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                      }
                 });
 
             },
@@ -694,7 +704,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Topic could not be posted. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },

@@ -117,9 +117,10 @@ sap.ui.define([
                                     success: function () {
                                         sap.m.MessageToast.show("Task deleted successfully.");
                                     },
-                                    error: function () {
-                                        sap.m.MessageToast.show("Failed to delete task.");
-                                    }
+                                    error: function (oError) {
+                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                        sap.m.MessageToast.show(sMessage);
+                                      }
                                 });
                             }
                         }
@@ -176,9 +177,11 @@ sap.ui.define([
                    // oDialog.close(); 
                     that.onCancelDialogPress(); 
                   },
-                  error: function(oError) {
-                    sap.m.MessageBox.error("Task could not be created, check your input and try again.");
-                  }
+                  error: function (oError) {
+                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                    sap.m.MessageBox.error(sMessage);
+                    
+                }
                 });
             } else this.ValueStateMethod(); 
         } else MessageToast.show("You have to select an account to link the task to first")

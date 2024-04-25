@@ -231,8 +231,9 @@ sap.ui.define([
                   //that.onStatusMethod(inumber);
                   sap.m.MessageToast.show("Token deleted successfully.");
                 },
-                error: function () {
-                  sap.m.MessageToast.show("Token could not be deleted. Please try again.");
+                error: function (oError) {
+                  var sMessage = JSON.parse(oError.responseText).error.message.value;
+                  sap.m.MessageToast.show(sMessage);
                 }
               });
 
@@ -316,8 +317,10 @@ sap.ui.define([
             oLocalModel.setData({}); 
           },
           error: function (oError) {
-            sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
         });
       },
 
@@ -336,8 +339,10 @@ sap.ui.define([
             oLocalModel.setData({});
           },
           error: function (oError) {
-            sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
         });
       },
 
@@ -355,8 +360,10 @@ sap.ui.define([
                oLocalModel.setData({}); 
             },
             error: function (oError) {
-                sap.m.MessageBox.error("Topic could not be added, check your input and try again.");
-            }
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+              
+          }
         });
     },
 
@@ -415,8 +422,10 @@ sap.ui.define([
             that.onEditProject();
           },
           error: function (oError) {
-            MessageToast.show(oError.message);
             that.getView().setBusy(false);
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageToast.show(sMessage);
+
           }
         });
 
@@ -466,8 +475,10 @@ sap.ui.define([
           },
           error: function (oError) {
             that.getView().setBusy(false);
-            MessageBox.error("Vacation could not be added. Please refresh and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
         });
         //}
       } else this.ValueStateMethod(); 
