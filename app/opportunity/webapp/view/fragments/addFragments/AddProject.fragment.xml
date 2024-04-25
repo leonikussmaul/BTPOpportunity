@@ -30,6 +30,7 @@
             />
 
             <ComboBox
+            id="userComboBox"
             visible="{= ${AddProjectModel>/allProjects} }"
 
                 selectedKey="{AddProjectModel>/userID_inumber}"

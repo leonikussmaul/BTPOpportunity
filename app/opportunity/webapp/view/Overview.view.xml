@@ -69,6 +69,7 @@
 
                         <!-- top 5 opportunities -->
                         <ui-integration:Card
+                            id="opportunityCard"
                             manifest="./cardManifests/cardManifest.json"
                             width="280px"
                             class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
@@ -83,6 +84,7 @@
 
                         <!-- adoption and consumption -->
                         <ui-integration:Card
+                            id="adoptionCard"
                             manifest="./cardManifests/cardManifestBubble.json"
                             width="440px"
                             height="450px"
@@ -284,7 +286,9 @@
                             </TileContent>
                         </GenericTile>
 
+                        <!-- quick links -->
                         <ui-integration:Card
+                            id="linksCard"
                             manifest="./cardManifests/cardManifestQuickLinks.json"
                             width="200px"
                             height="auto"
@@ -390,7 +394,9 @@
 
     </ui-integration:Card> -->
 
+                        <!-- team calendar -->
                         <ui-integration:Card
+                            id="calendarCard"
                             manifest="./cardManifests/cardManifestCalendar.json"
                             width="430px"
                             height="auto"
@@ -448,7 +454,9 @@
                             </f:content>
                         </f:Card>
 
+                        <!-- RFP list -->
                         <ui-integration:Card
+                            id="RFPCard"
                             manifest="./cardManifests/cardManifestRFP.json"
                             width="290px"
                             height="auto"
@@ -458,8 +466,10 @@
                                 <f:GridContainerItemLayoutData columns="4" />
                             </w:layoutData>
                         </ui-integration:Card>
-
+                        
+                        <!-- go-live list -->
                         <ui-integration:Card
+                            id="goLiveCard"
                             manifest="./cardManifests/cardManifestGoLive.json"
                             width="290px"
                             height="auto"

@@ -15,11 +15,9 @@ sap.ui.define([
     function (Controller, MessageBox, Fragment, JSONModel, Sorter, Message, MessageToast, FilterType, formatter) {
         "use strict";
 
-
         return Controller.extend("opportunity.opportunity.controller.Overview", {
             formatter: formatter,
             onInit() {
-
                 sap.ui.core.UIComponent.getRouterFor(this).getRoute("Overview").attachPatternMatched(this._onRoutePatternMatched, this);
 
                 var oLocalModel = new JSONModel({});
@@ -27,8 +25,6 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
-
-
                 var oChart1 = this.getView().byId("smartChart1");
                 if (oChart1.isInitialised()) oChart1.rebindChart();
 
@@ -43,24 +39,24 @@ sap.ui.define([
 
                 //refresh tasks 
                 this.getView().byId("taskCard").refreshData();
+                this.getView().byId("opportunityCard").refreshData();
+                this.getView().byId("adoptionCard").refreshData();
+                this.getView().byId("linksCard").refreshData();
+                this.getView().byId("calendarCard").refreshData();
+                this.getView().byId("RFPCard").refreshData();
+                this.getView().byId("goLiveCard").refreshData();
             },
 
             onRebindUtilizationChart: function (oEvent) {
-
                 var oBindingParams = oEvent.getParameter('bindingParams');
                 var oSorter = new sap.ui.model.Sorter("order", false);
                 oBindingParams.sorter.push(oSorter);
-
             },
 
-
-
             onBeforeRebindMUChart: function (oEvent) {
-
                 var oBindingParams = oEvent.getParameter('bindingParams');
                 var oSorter = new sap.ui.model.Sorter("marketUnit", false);
                 oBindingParams.sorter.push(oSorter);
-
             },
 
             onSubmitFeedback: function (oEvent) {
@@ -71,8 +67,6 @@ sap.ui.define([
                 if(oData.feedback){
 
                 var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
-
-
                 var bPositive;
 
                 if (oData.positive === true) bPositive = true;
@@ -99,7 +93,6 @@ sap.ui.define([
                 });
             }else MessageToast.show("Please enter your feedback first")
 
-
             },
             onTogglePositiveFeedback: function () {
                 var oLocalModel = this.getView().getModel("localModel");
@@ -112,7 +105,6 @@ sap.ui.define([
                 oLocalModel.setProperty("/positive", false);
                 oLocalModel.setProperty("/negative", true);
             },
-
 
             onReadDataOpportunities: function () {
                 var that = this;
@@ -146,7 +138,6 @@ sap.ui.define([
                 });
             },
 
-
             onNavToOpportunities: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("MainReport");
@@ -156,7 +147,6 @@ sap.ui.define([
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("TasksReport");
             },
-
 
         });
     });

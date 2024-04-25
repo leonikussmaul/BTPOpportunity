@@ -36,7 +36,7 @@
                     "parameters": {
                         "$format": "json",
                         "$orderby": "account asc",
-						"$filter": "consumption ne null and adoption ne null"
+						"$filter": "opportunityValue ne null"
                     }
                 },
                 "updateInterval": 300,
