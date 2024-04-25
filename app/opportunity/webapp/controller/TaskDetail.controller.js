@@ -205,7 +205,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Sub-task could not be added. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             }else this.ValueStateMethod(); 
@@ -287,9 +289,10 @@ sap.ui.define([
                                 that.getView().setBusy(false);
                             },
                             error: function (oError) {
-                                MessageToast.show(oError.message);
-                                that.getView().setBusy(false);
-                            }
+                                that.getView().setBusy(false); 
+                                var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                sap.m.MessageToast.show(sMessage);
+                              }
                         });
                     }
                 });
@@ -404,7 +407,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Sub-task could not be updated. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },
@@ -433,10 +438,11 @@ sap.ui.define([
                                     sap.m.MessageToast.show("Task deleted successfully.");
                                     that.getView().setBusy(false);
                                 },
-                                error: function () {
-                                    sap.m.MessageToast.show("Task could not be deleted. Please try again.");
+                                error: function (oError) {
                                     that.getView().setBusy(false);
-                                }
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                  }
                             });
                         } else {
                             that.getView().setBusy(false);
@@ -481,7 +487,9 @@ sap.ui.define([
                         oEditModel.setProperty("/editMode", false);
                     },
                     error: function (oError) {
-                        MessageBox.error("Your changes could not be saved. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },
@@ -570,8 +578,9 @@ sap.ui.define([
                                     that.getView().getModel("subTaskModel").refresh();
                                 },
                                 error: function (oError) {
-                                    MessageToast.show(oError.message);
-                                }
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                  }
                             });
                         } else {
                             // Skip creating a new item
@@ -639,8 +648,9 @@ sap.ui.define([
                         that.getView().getModel("subTaskModel").refresh();
                     },
                     error: function (oError) {
-                        MessageToast.show(oError.message);
-                    }
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                      }
                 });
             },
 
@@ -663,8 +673,9 @@ sap.ui.define([
 
                         },
                         error: function (oError) {
-                            MessageToast.show(oError.message);
-                        }
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageToast.show(sMessage);
+                          }
                     });
 
                 }
@@ -752,7 +763,9 @@ COMMENTS
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Comment could not be posted. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -770,10 +783,11 @@ COMMENTS
                         sap.m.MessageToast.show("Comment has been deleted");
                         that.getView().setBusy(false);
                     },
-                    error: function () {
-                        sap.m.MessageToast.show("Comment could not be deleted. Please try again.");
+                    error: function (oError) {
                         that.getView().setBusy(false);
-                    }
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                      }
                 });
 
             },
@@ -821,7 +835,9 @@ LINK
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Link could not be posted. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -864,10 +880,11 @@ LINK
                                 sap.m.MessageToast.show("Link deleted successfully.");
                                 that.getView().setBusy(false);
                             },
-                            error: function () {
-                                sap.m.MessageToast.show("Link could not be deleted. Please try again.");
+                            error: function (oError) {
                                 that.getView().setBusy(false);
-                            }
+                                var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                sap.m.MessageToast.show(sMessage);
+                              }
                         });
                     }
                 });

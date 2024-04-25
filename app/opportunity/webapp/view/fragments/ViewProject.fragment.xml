@@ -386,6 +386,13 @@
                         text="Edit"
                         press="onEditProject"
                     />
+
+                     <Button
+                        visible="{= !${editModel>/editMode}}"
+                        type="Reject"
+                        text="Delete"
+                        press="onDeleteProjectPress"
+                    />
                 </content>
             </Toolbar>
         </footer>
