@@ -159,9 +159,10 @@ sap.ui.define([
             that.getView().getModel("ProjectModel").refresh();
             that.getView().setBusy(false);
           },
-          error: function (oError) {
-            MessageToast.show(oError.message);
-            that.getView().setBusy(false);
+           function (oError) {
+            that.getView().setBusy(false); 
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageToast.show(sMessage);
           }
         });
       },
@@ -262,8 +263,9 @@ sap.ui.define([
             that.getView().setBusy(false);
           },
           error: function (oError) {
-            MessageToast.show(oError.message);
-            that.getView().setBusy(false);
+            that.getView().setBusy(false); 
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageToast.show(sMessage);
           }
         });
 
@@ -331,8 +333,10 @@ sap.ui.define([
               //oAddProjectModel.setData({});
             },
             error: function (oError) {
-              sap.m.MessageBox.error("Project could not be created, check your input and try again.");
-            }
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+              
+          }
           });
         } else this.ValueStateMethod();
 
@@ -522,9 +526,11 @@ sap.ui.define([
                   sap.m.MessageToast.show("Project deleted successfully");
                   that.onCancelDialogPress(); 
                 },
-                error: function () {
-                  sap.m.MessageToast.show("Project could not be deleted. Please try again.");
+                error: function (oError) {
+                  var sMessage = JSON.parse(oError.responseText).error.message.value;
+                  sap.m.MessageToast.show(sMessage);
                 }
+
               });
 
             }
@@ -548,8 +554,9 @@ sap.ui.define([
                   //that.onStatusMethod(inumber);
                   sap.m.MessageToast.show("Token deleted successfully.");
                 },
-                error: function () {
-                  sap.m.MessageToast.show("Token could not be deleted. Please try again.");
+                error: function (oError) {
+                  var sMessage = JSON.parse(oError.responseText).error.message.value;
+                  sap.m.MessageToast.show(sMessage);
                 }
               });
 
@@ -631,8 +638,11 @@ sap.ui.define([
             oLocalModel.setData({});
           },
           error: function (oError) {
-            sap.m.MessageBox.error("Skill could not be added, check your input and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
+
         });
       },
 
@@ -651,8 +661,11 @@ sap.ui.define([
             oLocalModel.setData({});
           },
           error: function (oError) {
-            sap.m.MessageBox.error("Tool could not be added, check your input and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
+
         });
       },
 
@@ -670,8 +683,11 @@ sap.ui.define([
                oLocalModel.setData({}); 
             },
             error: function (oError) {
-                sap.m.MessageBox.error("Topic could not be added, check your input and try again.");
-            }
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+              
+          }
+
         });
     },
 
@@ -733,9 +749,11 @@ sap.ui.define([
             that.onCancelDialogPress();
           },
           error: function (oError) {
-            MessageToast.show(oError.message);
-            that.getView().setBusy(false);
+            that.getView().setBusy(false); 
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageToast.show(sMessage);
           }
+
         });
 
       },
@@ -850,9 +868,11 @@ sap.ui.define([
               that.getView().setBusy(false);
             },
             error: function (oError) {
-              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
               that.getView().setBusy(false);
-            }
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+              
+          }
           });
         } else this.ValueStateMethod();
 
@@ -898,9 +918,11 @@ sap.ui.define([
               that.getView().setBusy(false);
             },
             error: function (oError) {
-              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
               that.getView().setBusy(false);
-            }
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+              
+          }
           });
         } else {
           this.ValueStateMethod();

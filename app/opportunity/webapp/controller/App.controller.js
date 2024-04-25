@@ -239,8 +239,10 @@ sap.ui.define(
           },
           error: function (oError) {
             that.getView().setBusy(false);
-            MessageBox.error("Your feedback could not be submitted at this time. Please refresh and try again.");
-          }
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+            
+        }
         });
       }else MessageToast.show("Please enter your feedback first");
 

@@ -127,10 +127,11 @@ sap.ui.define([
                                 sap.m.MessageToast.show("Link deleted successfully.");
                                 that.getView().setBusy(false);
                             },
-                            error: function () {
-                                sap.m.MessageToast.show("Link could not be deleted. Please try again.");
+                            error: function (oError) {
                                 that.getView().setBusy(false);
-                            }
+                                var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                sap.m.MessageToast.show(sMessage);
+                              }
                         });
                     }
                 });
@@ -175,7 +176,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Link could not be posted. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -357,10 +360,11 @@ sap.ui.define([
                                 sap.m.MessageToast.show("Item deleted successfully.");
                                 that.getView().setBusy(false);
                             },
-                            error: function () {
-                                sap.m.MessageToast.show("Item could not be deleted. Please try again.");
-                                that.getView().setBusy(false);
-                            }
+                            error: function (oError) {
+                                that.getView().setBusy(false); 
+                                var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                sap.m.MessageToast.show(sMessage);
+                              }
                         });
                     }
                 });
@@ -423,7 +427,9 @@ sap.ui.define([
                         that.onReadModelData();
                     },
                     error: function (oError) {
-                        sap.m.MessageBox.error("Changes could not be saved. Details: " + oError.message);
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -458,7 +464,9 @@ sap.ui.define([
                             MessageToast.show("'" + sTopic + "' added!");
                         },
                         error: function (oError) {
-                            sap.m.MessageBox.error("Topic could not be added, try again.");
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            
                         }
                     });
                 } else {
@@ -481,7 +489,9 @@ sap.ui.define([
 
                         },
                         error: function (oError) {
-                            sap.m.MessageBox.error("Topic '" + sSource + "' could not be removed, try again.");
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            
                         }
                     });
                 }
@@ -508,7 +518,9 @@ sap.ui.define([
                             MessageToast.show("'" + sDeliverable + "' added!");
                         },
                         error: function (oError) {
-                            sap.m.MessageBox.error("Deliverable could not be added, try again.");
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            
                         }
                     });
                 } else {
@@ -529,7 +541,9 @@ sap.ui.define([
 
                         },
                         error: function (oError) {
-                            sap.m.MessageBox.error("Deliverable '" + sSource + "' could not be removed, try again.");
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            
                         }
                     });
 
@@ -633,7 +647,9 @@ sap.ui.define([
                             //oAddTaskModel.setData({});
                         },
                         error: function (oError) {
-                            sap.m.MessageBox.error("Task could not be created, check your input and try again.");
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            
                         }
                     });
                     this._bEdit = false;
@@ -768,8 +784,9 @@ sap.ui.define([
                         MessageToast.show(sMessage);
                     },
                     error: function (oError) {
-                        MessageToast.show(oError.message);
-                    }
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                      }
                 });
 
             },
@@ -912,8 +929,9 @@ sap.ui.define([
                         oPageModel.updateBindings();
                     },
                     error: function (oError) {
-                        MessageBox.error("The task could not be updated: " + oError.message);
-                        //
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },
@@ -1080,7 +1098,9 @@ sap.ui.define([
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        sap.m.MessageBox.error("Opportunity could not be created. Double check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -1125,7 +1145,9 @@ sap.ui.define([
                                     },
                                     error: function (oError) {
                                         that.getView().setBusy(false);
-                                        MessageBox.error("Topic could not be posted. Please check your input.");
+                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                        sap.m.MessageBox.error(sMessage);
+                                        
                                     }
                                 });
                                 //}
@@ -1172,7 +1194,9 @@ sap.ui.define([
                                     },
                                     error: function (oError) {
                                         that.getView().setBusy(false);
-                                        MessageBox.error("Deliverable could not be posted. Please check your input.");
+                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                        sap.m.MessageBox.error(sMessage);
+                                        
                                     }
                                 });
                                 //}
@@ -1327,7 +1351,9 @@ COMMENTS
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Comment could not be posted. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -1345,10 +1371,11 @@ COMMENTS
                         sap.m.MessageToast.show("Comment has been deleted");
                         that.getView().setBusy(false);
                     },
-                    error: function () {
-                        sap.m.MessageToast.show("Comment could not be deleted. Please try again.");
-                        that.getView().setBusy(false);
-                    }
+                    error: function (oError) {
+                        that.getView().setBusy(false); 
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                      }
                 });
 
             },
@@ -1383,8 +1410,9 @@ COMMENTS
 
                     },
                     error: function (oError) {
-                        if (bSelect == true) MessageBox.error("'" + sDeliverable + "' could not be completed. Please try again.");
-                        if (bSelect !== true) MessageBox.error("'" + sDeliverable + "' could not be marked as uncompleted. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        if (bSelect == true) MessageBox.error("'" + sDeliverable + "' could not be completed. Please try again. " + sMessage);
+                        if (bSelect !== true) MessageBox.error("'" + sDeliverable + "' could not be marked as uncompleted. Please try again. " + sMessage);
                     }
                 });
 
@@ -1442,7 +1470,9 @@ COMMENTS
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Activity could not be posted. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -1469,10 +1499,12 @@ COMMENTS
                                     sap.m.MessageToast.show("Activity has been deleted");
                                     that.getView().setBusy(false);
                                 },
-                                error: function () {
-                                    sap.m.MessageToast.show("Activity could not be deleted. Please try again.");
-                                    that.getView().setBusy(false);
-                                }
+                                error: function (oError) {
+                                    that.getView().setBusy(false); 
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                  }
+                  
                             });
 
                         }
@@ -1501,7 +1533,9 @@ COMMENTS
 
                     },
                     error: function (oError) {
-                        MessageBox.error("Maturity Rating could not be updated for '" + sTopic + "'. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
 
@@ -1534,7 +1568,9 @@ COMMENTS
 
                     },
                     error: function (oError) {
-                        MessageBox.error("Maturity Rating could not be updated. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },
@@ -1579,7 +1615,9 @@ COMMENTS
 
                     },
                     error: function (oError) {
-                        MessageBox.error("Activity could not be updated. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             },
@@ -1630,7 +1668,9 @@ COMMENTS
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
-                        MessageBox.error("Item could not be added to Roadmap. Please check your input.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             }else this.ValueStateMethod(); 
@@ -1666,7 +1706,9 @@ COMMENTS
                         that.onCancelDialogPress();
                     },
                     error: function (oError) {
-                        MessageBox.error("Item could not be updated. Please try again.");
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        
                     }
                 });
             }else this.ValueStateMethod(); 
@@ -1690,10 +1732,11 @@ COMMENTS
                                     that.getView().setBusy(false);
                                     that.onCancelDialogPress();
                                 },
-                                error: function () {
-                                    sap.m.MessageToast.show("Item could not be deleted from the roadmap. Please try again.");
+                                error: function (oError) {
                                     that.getView().setBusy(false);
-                                }
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                  }
                             });
 
                         }
