@@ -757,7 +757,7 @@ sap.ui.define([
 
       },
 
-      onAddNewForecast: function (oEvent) {
+      onAddEditForecast: function (oEvent) {
         this.editDialog = false;
 
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
@@ -770,22 +770,10 @@ sap.ui.define([
         oAddProjectModel.setProperty("/actual", 100);
 
 
-        this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
+        this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddEditForecast");
 
       },
 
-      onForecastEdit: function (oEvent) {
-        this.editDialog = true;
-
-        var oAddProjectModel = this.getView().getModel("AddProjectModel");
-
-        // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        // let sMonth = month[new Date().getMonth()];
-        // oAddProjectModel.setProperty("/month", sMonth);
-
-        this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
-
-      },
       onBindMonth: function (oEvent) {
 
         var oTemplate = sap.ui.getCore().byId("monthItem");
@@ -824,41 +812,7 @@ sap.ui.define([
 
         oAddProjectModel.setData(oSelect);
 
-      },
-
-      onEditForecastSubmit: function (oEvent) {
-
-        this.editDialog = false;
-        var that = this;
-
-        var oChart = this.getView().byId("smartChartTeamForecast");
-
-        var that = this;
-        var oAddProjectModel = this.getView().getModel("AddProjectModel");
-        var oPayload = oAddProjectModel.getData();
-
-        if (this.forecastPath) {
-          this.resetValueState();
-          that.getView().setBusy(true);
-          var sPath = this.forecastPath.sPath;
-
-          var oModel = this.getView().getModel();
-          oModel.update(sPath, oPayload, {
-            success: function (oData, response) {
-              MessageToast.show("Forecast has been updated!");
-              that.onCancelDialogPress();
-              oChart.rebindChart();
-              that.getView().setBusy(false);
-            },
-            error: function (oError) {
-              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
-              that.getView().setBusy(false);
-            }
-          });
-        } else this.ValueStateMethod();
-
-      },
-
+      },     
 
       onSubmitNewForecast: function (oEvent) {
         var that = this;

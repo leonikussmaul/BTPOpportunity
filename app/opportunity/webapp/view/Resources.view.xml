@@ -569,18 +569,11 @@
                             <OverflowToolbar>
                                 <ToolbarSpacer />
                                 <Button
-                                    text="Edit"
+                                    text="Add / Edit"
                                     icon="sap-icon://edit"
                                     type="Transparent"
-                                    tooltip="Edit an existing forecast"
-                                    press="onForecastEdit"
-                                />
-
-                                <OverflowToolbarButton
-                                    icon="sap-icon://add"
-                                    type="Accept"
-                                    tooltip="Register a new forecast"
-                                    press="onAddNewForecast"
+                                    tooltip="Add forecast or edit an existing one"
+                                    press="onAddEditForecast"
                                 />
                             </OverflowToolbar>
                         </smartchart:toolbar>

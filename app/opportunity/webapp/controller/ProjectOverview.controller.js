@@ -759,17 +759,12 @@ sap.ui.define([
 
             },
 
-            onAddNewForecast: function (oEvent) {
+            onAddEditForecast: function (oEvent) {
                 this.editDialog = false;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddEditForecast");
 
             },
 
-            onForecastEdit: function (oEvent) {
-                this.editDialog = true;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
-
-            },
             onBindMonth: function (oEvent) {
 
                 var oTemplate = sap.ui.getCore().byId("monthItem");
