@@ -18,6 +18,7 @@
     xmlns:smartchart="sap.ui.comp.smartchart"
     xmlns:cssgrid="sap.ui.layout.cssgrid"
 >
+<!-- test pipeline -->
     <f:DynamicPage
         id="page"
         title="{i18n>title}"
