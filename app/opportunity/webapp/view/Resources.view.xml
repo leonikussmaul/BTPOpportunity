@@ -571,7 +571,7 @@
                                 <Button
                                     text="Add / Edit"
                                     icon="sap-icon://edit"
-                                    type="Transparent"
+                                    type="Emphasized"
                                     tooltip="Add forecast or edit an existing one"
                                     press="onAddEditForecast"
                                 />
