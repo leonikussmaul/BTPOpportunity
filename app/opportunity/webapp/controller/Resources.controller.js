@@ -270,20 +270,10 @@ sap.ui.define([
       },
 
       onAddProjectPress: function (oEvent) {
-        //status: "New Requests"
+        var sTeamMember = this.getView().getBindingContext().getObject().inumber;
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
-
-        var sPath = oEvent.getSource().getParent().getParent().mBindingInfos.items.path.substr(1);
-
-        var sStatus;
-        if (sPath === "newRequests") sStatus = "New Requests";
-        else if (sPath === "RFP") sStatus = "RFP";
-        else if (sPath === "On-Going") sStatus = "On-Going";
-        else if (sPath === "Go-Live") sStatus = "Go-Live"
-        else if (sPath === "Past") sStatus = "Past"
-
-        oAddProjectModel.setProperty("/status", sStatus);
-        oAddProjectModel.setProperty("/allProjects", false);
+        oAddProjectModel.setProperty("/userID_inumber", sTeamMember)
+       // AddProjectModel>/userID_inumber
         this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
 
       },
@@ -415,6 +405,8 @@ sap.ui.define([
           }
 
           _pDialog.open();
+          var bAddProjectDialog = sap.ui.getCore().byId("userComboBox"); 
+          if(bAddProjectDialog) bAddProjectDialog.setEnabled(false);
 
         })
       },
@@ -496,17 +488,18 @@ sap.ui.define([
       },
 
       onDeleteProjectPress: function (oEvent) {
-        var oTable = this.getView().byId("PastTable");
-        if (oTable.getSelectedItem() != undefined) {
-          var oBinding = oTable.getSelectedItem().getBindingContext("ProjectModel");
+        // var oTable = this.getView().byId("PastTable");
+        // if (oTable.getSelectedItem() != undefined) {
+          var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
           var oContext = oBinding.getObject();
 
           var sPath = "/teamProjects/" + oContext.projectID;
           var inumber = oContext.userID_inumber
 
           this.onDeleteItem(sPath, inumber);
+          this.onCancelDialogPress(); 
 
-        } else MessageToast.show("Please select a Project to delete first")
+        // } else MessageToast.show("Please select a Project to delete first")
 
 
 

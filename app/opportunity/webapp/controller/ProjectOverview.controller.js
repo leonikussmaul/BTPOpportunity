@@ -268,23 +268,9 @@ sap.ui.define([
             },
 
             onAddProjectPress: function (oEvent) {
-                //status: "New Requests"
-                var oAddProjectModel = this.getView().getModel("AddProjectModel");
-
-                var sPath = oEvent.getSource().getParent().getParent().mBindingInfos.items.path.substr(1);
-
-                var sStatus;
-                if (sPath === "newRequests") sStatus = "New Requests";
-                else if (sPath === "RFP") sStatus = "RFP";
-                else if (sPath === "On-Going") sStatus = "On-Going";
-                else if (sPath === "Go-Live") sStatus = "Go-Live"
-                else if (sPath === "Past") sStatus = "Past"
-
-                oAddProjectModel.setProperty("/status", sStatus);
-                oAddProjectModel.setProperty("/allProjects", true); 
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
-
-            },
+        
+              },
 
             onSubmitNewProject: function (oEvent) {
                 var aFilterbar = this.aFilterbar; 
@@ -493,22 +479,40 @@ sap.ui.define([
 
             },
 
+            // onDeleteProjectPress: function (oEvent) {
+            //     var oTable = this.getView().byId("PastTable");
+            //     if (oTable.getSelectedItem() != undefined) {
+            //         var oBinding = oTable.getSelectedItem().getBindingContext("ProjectModel");
+            //         var oContext = oBinding.getObject();
+
+            //         var sPath = "/teamProjects/" + oContext.projectID;
+            //         var inumber = oContext.userID_inumber
+
+            //         this.onDeleteItem(sPath, inumber);
+
+            //     } else MessageToast.show("Please select a Project to delete first")
+
+
+
+            // },
+
             onDeleteProjectPress: function (oEvent) {
-                var oTable = this.getView().byId("PastTable");
-                if (oTable.getSelectedItem() != undefined) {
-                    var oBinding = oTable.getSelectedItem().getBindingContext("ProjectModel");
-                    var oContext = oBinding.getObject();
-
-                    var sPath = "/teamProjects/" + oContext.projectID;
-                    var inumber = oContext.userID_inumber
-
-                    this.onDeleteItem(sPath, inumber);
-
-                } else MessageToast.show("Please select a Project to delete first")
-
-
-
-            },
+                // var oTable = this.getView().byId("PastTable");
+                // if (oTable.getSelectedItem() != undefined) {
+                  var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
+                  var oContext = oBinding.getObject();
+        
+                  var sPath = "/teamProjects/" + oContext.projectID;
+                  var inumber = oContext.userID_inumber
+        
+                  this.onDeleteItem(sPath, inumber);
+                  this.onCancelDialogPress(); 
+        
+                // } else MessageToast.show("Please select a Project to delete first")
+        
+        
+        
+              },
 
             onDeleteItem: function (sPath, inumber) {
                 var aFilterbar = this.aFilterbar; 
@@ -1005,7 +1009,55 @@ sap.ui.define([
             onChangeValueState: function(oEvent){
                 var sValue = oEvent.mParameters.newValue; 
                 if(sValue) this.resetValueState(); 
-            }
+            },
+
+
+
+             /* ------------------------------------------------------------------------------------------------------------
+            POPUP
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+
+            onSelectionChange: function (oEvent) {
+                this.getView().setBusy(true);
+                this.resetValueState();
+                var oAddProjectModel = this.getView().getModel("AddProjectModel");
+        
+                this.forecastPath = oEvent.mParameters.listItem.getBindingContext("ProjectModel");
+                var oData = oEvent.mParameters.listItem.getBindingContext("ProjectModel").getObject()
+        
+                var oSelect = {
+                  userID_inumber: this.inumber,
+                  month: oData.month,
+                  year: oData.year,
+                  forecast: oData.forecast,
+                  actual: oData.actual,
+                  order: oData.order
+        
+                };
+        
+                oAddProjectModel.setData(oSelect);
+        
+                var oContext = oEvent.mParameters.listItem.getBindingContext("ProjectModel").getObject();
+                this.onProjectPopup(oEvent, oContext);
+        
+              },
+              onProjectPopup: function (oEvent, oContext) {
+
+                var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
+               // var oContext = oBinding.getObject();
+                var sProjectID = oContext.projectID;
+        
+                this.sProjectID = oContext.projectID;
+                var sPath = "/teamProjects/" + sProjectID;
+        
+        
+                this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+                this.getView().setBusy(false);
+        
+              },
+        
 
 
         });

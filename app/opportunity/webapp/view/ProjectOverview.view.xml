@@ -35,6 +35,16 @@
                         id="headerTitle"
                     />
                 </f:heading>
+                <f:actions>
+						<Button
+								text="Add Project"
+								icon="sap-icon://add"
+								type="Accept"
+								press="onAddProjectPress"/>
+						<!-- <Button
+								text="Delete"
+								type="Transparent"/> -->
+					</f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -207,23 +217,23 @@
 		
 		
         	<contextMenu>
-			<Menu>
+			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
-			</Menu>
+			</Menu> -->
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="New Requests" />
 				<ToolbarSpacer/>
-				<Button
+				<!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
 				<Button
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
-					press="moveDown"/>
+					press="moveDown"/> -->
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
@@ -325,23 +335,23 @@
 		
 		
         	<contextMenu>
-			<Menu>
+			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
-			</Menu>
+			</Menu> -->
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="RFP" />
 				<ToolbarSpacer/>
-				<Button
+				<!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
 				<Button
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
-					press="moveDown"/>
+					press="moveDown"/> -->
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
@@ -439,23 +449,23 @@
 		
 		
         	<contextMenu>
-			<Menu>
+			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
-			</Menu>
+			</Menu> -->
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="On-Going" />
 				<ToolbarSpacer/>
-				<Button
+				<!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
 				<Button
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
-					press="moveDown"/>
+					press="moveDown"/> -->
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
@@ -559,23 +569,23 @@
 		
 		
         	<contextMenu>
-			<Menu>
+			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
-			</Menu>
+			</Menu> -->
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="Go-Live" />
 				<ToolbarSpacer/>
-				<Button
+				<!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
 				<Button
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
-					press="moveDown"/>
+					press="moveDown"/> -->
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
@@ -673,23 +683,23 @@
 		
 		
         	<contextMenu>
-			<Menu>
+			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
-			</Menu>
+			</Menu> -->
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
 				<Title text="Past" />
 				<ToolbarSpacer/>
-				<Button
+				<!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
 				<Button
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
-					press="moveDown"/>
+					press="moveDown"/> -->
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
