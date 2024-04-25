@@ -270,20 +270,10 @@ sap.ui.define([
       },
 
       onAddProjectPress: function (oEvent) {
-        //status: "New Requests"
+        var sTeamMember = this.getView().getBindingContext().getObject().inumber;
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
-
-        var sPath = oEvent.getSource().getParent().getParent().mBindingInfos.items.path.substr(1);
-
-        var sStatus;
-        if (sPath === "newRequests") sStatus = "New Requests";
-        else if (sPath === "RFP") sStatus = "RFP";
-        else if (sPath === "On-Going") sStatus = "On-Going";
-        else if (sPath === "Go-Live") sStatus = "Go-Live"
-        else if (sPath === "Past") sStatus = "Past"
-
-        oAddProjectModel.setProperty("/status", sStatus);
-        oAddProjectModel.setProperty("/allProjects", false);
+        oAddProjectModel.setProperty("/userID_inumber", sTeamMember)
+       // AddProjectModel>/userID_inumber
         this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
 
       },
@@ -415,6 +405,8 @@ sap.ui.define([
           }
 
           _pDialog.open();
+          var bAddProjectDialog = sap.ui.getCore().byId("userComboBox"); 
+          if(bAddProjectDialog) bAddProjectDialog.setEnabled(false);
 
         })
       },
@@ -478,12 +470,18 @@ sap.ui.define([
         this._pDialog = null;
         this.getView().getModel("AddProjectModel").setData({});
 
+        this.getView().byId("newRequestsTable").removeSelections(true);
+        this.getView().byId("RFPTable").removeSelections(true);
+        this.getView().byId("OnGoingTable").removeSelections(true);
+        this.getView().byId("GoLiveTable").removeSelections(true);
+        this.getView().byId("PastTable").removeSelections(true);
+
       },
 
-      onProjectPopup: function (oEvent) {
+      onProjectPopup: function (oEvent, oContext) {
 
         var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
-        var oContext = oBinding.getObject();
+       // var oContext = oBinding.getObject();
         var sProjectID = oContext.projectID;
 
         this.sProjectID = oContext.projectID;
@@ -491,21 +489,18 @@ sap.ui.define([
 
 
         this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+        this.getView().setBusy(false);
 
       },
 
       onDeleteProjectPress: function (oEvent) {
-        var oTable = this.getView().byId("PastTable");
-        if (oTable.getSelectedItem() != undefined) {
-          var oBinding = oTable.getSelectedItem().getBindingContext("ProjectModel");
+          var oBinding = oEvent.getSource().getParent().getParent().getBindingContext();
           var oContext = oBinding.getObject();
 
           var sPath = "/teamProjects/" + oContext.projectID;
           var inumber = oContext.userID_inumber
 
           this.onDeleteItem(sPath, inumber);
-
-        } else MessageToast.show("Please select a Project to delete first")
 
 
 
@@ -520,12 +515,12 @@ sap.ui.define([
           onClose: function (oAction) {
             if (oAction === sap.m.MessageBox.Action.YES) {
 
-
               oModel.remove(sPath, {
                 success: function () {
                   that.onStatusMethod(inumber);
                   that.getView().getModel("ProjectModel").refresh();
-                  sap.m.MessageToast.show("Project deleted successfully.");
+                  sap.m.MessageToast.show("Project deleted successfully");
+                  that.onCancelDialogPress(); 
                 },
                 error: function () {
                   sap.m.MessageToast.show("Project could not be deleted. Please try again.");
@@ -806,11 +801,12 @@ sap.ui.define([
       },
 
       onSelectionChange: function (oEvent) {
+        this.getView().setBusy(true);
         this.resetValueState();
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
 
-        this.forecastPath = oEvent.mParameters.selectedItem.getBindingContext();
-        var oData = oEvent.mParameters.selectedItem.getBindingContext().getObject();
+        this.forecastPath = oEvent.mParameters.listItem.getBindingContext();
+        var oData = oEvent.mParameters.listItem.getBindingContext().getObject();
 
         var oSelect = {
           userID_inumber: this.inumber,
@@ -823,6 +819,9 @@ sap.ui.define([
         };
 
         oAddProjectModel.setData(oSelect);
+
+        var oContext = oEvent.mParameters.listItem.getBindingContext("ProjectModel").getObject();
+        this.onProjectPopup(oEvent, oContext);
 
       },
 
