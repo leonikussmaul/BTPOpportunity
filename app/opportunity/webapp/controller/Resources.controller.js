@@ -494,18 +494,13 @@ sap.ui.define([
       },
 
       onDeleteProjectPress: function (oEvent) {
-        // var oTable = this.getView().byId("PastTable");
-        // if (oTable.getSelectedItem() != undefined) {
-          var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
+          var oBinding = oEvent.getSource().getParent().getParent().getBindingContext();
           var oContext = oBinding.getObject();
 
           var sPath = "/teamProjects/" + oContext.projectID;
           var inumber = oContext.userID_inumber
 
           this.onDeleteItem(sPath, inumber);
-          this.onCancelDialogPress(); 
-
-        // } else MessageToast.show("Please select a Project to delete first")
 
 
 
@@ -520,12 +515,12 @@ sap.ui.define([
           onClose: function (oAction) {
             if (oAction === sap.m.MessageBox.Action.YES) {
 
-
               oModel.remove(sPath, {
                 success: function () {
                   that.onStatusMethod(inumber);
                   that.getView().getModel("ProjectModel").refresh();
-                  sap.m.MessageToast.show("Project deleted successfully.");
+                  sap.m.MessageToast.show("Project deleted successfully");
+                  that.onCancelDialogPress(); 
                 },
                 error: function () {
                   sap.m.MessageToast.show("Project could not be deleted. Please try again.");
