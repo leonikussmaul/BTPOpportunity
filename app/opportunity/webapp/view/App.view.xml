@@ -11,7 +11,7 @@
 <!-- test again -->
     <tnt:ToolPage
         id="toolPage"
-        sideExpanded="false"
+        sideExpanded="true"
     >
         <tnt:header>
             <core:Fragment
