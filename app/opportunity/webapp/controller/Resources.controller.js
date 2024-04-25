@@ -861,7 +861,6 @@ sap.ui.define([
 
 
       onSubmitNewForecast: function (oEvent) {
-
         var that = this;
         that.getView().setBusy(true);
         var oChart = this.getView().byId("smartChartTeamForecast");
@@ -871,8 +870,6 @@ sap.ui.define([
         var oData = oAddProjectModel.getData();
 
         var sYear = this.getView().getModel("AddProjectModel").getProperty("/year");
-
-
         var sOrder = this.onMonthOrder(oData.month);
 
         var oPayload = {
@@ -882,31 +879,74 @@ sap.ui.define([
           forecast: oData.forecast,
           actual: oData.actual,
           order: sOrder
-
         };
 
         var sPath = "/teamForecast"
+        var oModel = this.getOwnerComponent().getModel();
 
-        if (sYear && oData.month) {
-          this.resetValueState();
+        let aFilters = [];
+        aFilters.push(new sap.ui.model.Filter("userID_inumber", "EQ", this.inumber));
+        
+        //getting the current forecasts for this user
+        oModel.read(sPath, {
+          filters: aFilters,
+          success: function (oResponse) {
+            let aCurrentForecasts = oResponse.results;
+            let bFlagUpdate = false;
+            let sUpdatePath = sPath + "/";
+            
+            //check if we have a forecast for this month && year
+            aCurrentForecasts.forEach((forecast) => {
+              if(forecast.month === oData.month && forecast.year === sYear){
+                bFlagUpdate = true;
+                sUpdatePath += String(forecast.forecastID);
+              }  
+            });
 
-          var oModel = this.getView().getModel();
-          oModel.create(sPath, oPayload, {
-            success: function (oData, response) {
-              MessageToast.show("New Forecast has been added!");
-              that.onCancelDialogPress();
-              oChart.rebindChart();
-              that.getView().setBusy(false);
-            },
-            error: function (oError) {
-              sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
+            if (sYear && oData.month) {
+              this.resetValueState();
+
+              //handle update
+              if(bFlagUpdate) {
+                oModel.update(sUpdatePath, oData, {
+                  success: function () {
+                    MessageToast.show("Forecast has been updated!");
+                    that.onCancelDialogPress();
+                    oChart.rebindChart();
+                    that.getView().setBusy(false);
+                  },
+                  error: function () {
+                    sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
+                    that.getView().setBusy(false);
+                  }
+                });
+              }
+
+              //handle creation of new entry
+              else {
+                oModel.create(sPath, oPayload, {
+                  success: function (oData, response) {
+                    MessageToast.show("New Forecast has been added!");
+                    that.onCancelDialogPress();
+                    oChart.rebindChart();
+                    that.getView().setBusy(false);
+                  },
+                  error: function (oError) {
+                    sap.m.MessageBox.error("Forecast could not be updated, check your input and try again.");
+                    that.getView().setBusy(false);
+                  }
+                });
+              }
+            } 
+            else {
+              this.ValueStateMethod();
               that.getView().setBusy(false);
             }
-          });
-        } else {
-          this.ValueStateMethod();
-          that.getView().setBusy(false);
-        }
+          }.bind(this),
+          error: function (oError) {
+            console.log(oError);
+          }
+        });
 
       },
 
