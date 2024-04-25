@@ -809,8 +809,8 @@ sap.ui.define([
         this.resetValueState();
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
 
-        this.forecastPath = oEvent.mParameters.selectedItem.getBindingContext();
-        var oData = oEvent.mParameters.selectedItem.getBindingContext().getObject();
+        this.forecastPath = oEvent.mParameters.listItem.getBindingContext();
+        var oData = oEvent.mParameters.listItem.getBindingContext().getObject();
 
         var oSelect = {
           userID_inumber: this.inumber,

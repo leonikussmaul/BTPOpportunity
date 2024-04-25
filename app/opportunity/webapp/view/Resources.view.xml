@@ -43,6 +43,7 @@
                 <HBox renderType="Bare">
 
                     	<Table
+						id="newRequestsTable"
 		mode="SingleSelectMaster"
 		growing="true"
 		growingThreshold="10"
@@ -91,10 +92,29 @@
 		</columns>
 		<dragDropConfig>
 			<dnd:DragInfo
-				groupName="available2selected"
+				groupName="newRequestsToRFP"
+				sourceAggregation="items" />
+					<dnd:DragInfo
+				groupName="newRequestsToOnGoing"
+				sourceAggregation="items" />
+
+				<dnd:DragInfo
+				groupName="newRequestsToGoLive"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="newRequestsToPast"
 				sourceAggregation="items" />
 			<dnd:DropInfo
-				groupName="selected2available"
+				groupName="RFPToNewRequests"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="onGoingToNewRequests"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="goLiveToNewRequests"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="pastToNewRequests"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
                 	<dnd:DragDropInfo
 				sourceAggregation="items"
@@ -104,6 +124,7 @@
 		</dragDropConfig>
 
         
+		
 
 		<items>
 			<ColumnListItem>
@@ -138,6 +159,7 @@
                     <!-- 2. RFP Table -->
 
                     	<Table
+						id="RFPTable"
 		mode="SingleSelectMaster"
 		growing="true"
 		growingThreshold="10"
@@ -186,10 +208,28 @@
 		</columns>
 		<dragDropConfig>
 			<dnd:DragInfo
-				groupName="available2selected"
+				groupName="RFPToNewRequests"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="RFPToOnGoing"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="RFPToGoLive"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="RFPToPast"
 				sourceAggregation="items" />
 			<dnd:DropInfo
-				groupName="selected2available"
+				groupName="newRequestsToRFP"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="onGoingToRFP"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="goLiveToRFP"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+				<dnd:DropInfo
+				groupName="pastToRFP"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
 			<dnd:DragDropInfo
 				sourceAggregation="items"
@@ -231,6 +271,7 @@
                     <!-- 3. on going table -->
 
                    	<Table
+					id="OnGoingTable"
 		mode="SingleSelectMaster"
 		growing="true"
 		growingThreshold="10"
@@ -278,11 +319,35 @@
 			
 		</columns>
 		<dragDropConfig>
+
+		
+		<dnd:DragInfo
+				groupName="onGoingToNewRequests"
+				sourceAggregation="items"/>
 			<dnd:DragInfo
-				groupName="available2selected"
+				groupName="onGoingToRFP"
 				sourceAggregation="items" />
-			<dnd:DropInfo
-				groupName="selected2available"
+				<dnd:DragInfo
+				groupName="onGoingToGoLive"
+				sourceAggregation="items"/>
+					<dnd:DragInfo
+				groupName="onGoingToPast"
+				sourceAggregation="items"/>
+			
+				<dnd:DropInfo
+				groupName="newRequestsToOnGoing"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+
+				<dnd:DropInfo
+				groupName="RFPToOnGoing"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+
+				<dnd:DropInfo
+				groupName="goLiveToOnGoing"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+
+				<dnd:DropInfo
+				groupName="pastToOnGoing"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
 			<dnd:DragDropInfo
 				sourceAggregation="items"
@@ -325,6 +390,7 @@
                     <!-- 4. Go Live Table -->
 
                     	<Table
+						id="GoLiveTable"
 		mode="SingleSelectMaster"
 		growing="true"
 		growingThreshold="10"
@@ -373,10 +439,28 @@
 		</columns>
 		<dragDropConfig>
 			<dnd:DragInfo
-				groupName="available2selected"
+				groupName="goLiveToRFP"
 				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="goLiveToNewRequests"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="goLiveToOnGoing"
+				sourceAggregation="items" />
+					<dnd:DragInfo
+				groupName="goLiveToPast"
+				sourceAggregation="items" />
+					<dnd:DropInfo
+				groupName="newRequestsToGoLive"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+					<dnd:DropInfo
+				groupName="RFPToGoLive"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
 			<dnd:DropInfo
-				groupName="selected2available"
+				groupName="onGoingToGoLive"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+					<dnd:DropInfo
+				groupName="pastToGoLive"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
                 	<dnd:DragDropInfo
 				sourceAggregation="items"
@@ -418,6 +502,7 @@
 
                     <!-- 5. Archive Table -->
                    	<Table
+					id="PastTable"
 		mode="SingleSelectMaster"
 		growing="true"
 		growingThreshold="10"
@@ -465,11 +550,30 @@
 			
 		</columns>
 		<dragDropConfig>
-			<dnd:DragInfo
-				groupName="available2selected"
+		<dnd:DragInfo
+				groupName="pastToNewRequests"
 				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="pastToRFP"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="pastToOnGoing"
+				sourceAggregation="items" />
+				<dnd:DragInfo
+				groupName="pastToGoLive"
+				sourceAggregation="items" />
+		
 			<dnd:DropInfo
-				groupName="selected2available"
+				groupName="newRequestsToPast"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+					<dnd:DropInfo
+				groupName="RFPToPast"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+					<dnd:DropInfo
+				groupName="onGoingToPast"
+				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+					<dnd:DropInfo
+				groupName="goLiveToPast"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
                 	<dnd:DragDropInfo
 				sourceAggregation="items"
