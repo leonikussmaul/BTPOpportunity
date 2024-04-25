@@ -446,7 +446,7 @@
                                                     />
                                                 </Column>
 
-                                                <Column width="2em">
+                                                <Column width="7rem">
                                                     <customData>
                                                         <core:CustomData
                                                             key="p13nData"
@@ -471,7 +471,7 @@
                                                 </Column>
                                             </columns>
                                             <items>
-                                                <ColumnListItem
+                                                <ColumnListItem 
                                                     vAlign="Middle"
                                                     type="Detail"
                                                     detailPress="onMaturityEdit"
