@@ -46,7 +46,7 @@
                         class="sapUiSmallMarginBottom"
                     />
                     <Button
-                        text="New Opp"
+                        text="Create"
                         icon="sap-icon://add"
                         type="Accept"
                         id="createBtn"
