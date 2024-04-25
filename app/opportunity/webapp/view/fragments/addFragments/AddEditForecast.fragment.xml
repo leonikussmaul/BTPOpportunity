@@ -12,7 +12,7 @@
         <customHeader>
             <Bar>
                 <contentMiddle>
-                    <Title text="Add a New Forecast Record for {firstName}" />
+                    <Title text="Add / Edit a Forecast Record for {firstName}" />
                 </contentMiddle>
                 <contentRight>
                     <Button

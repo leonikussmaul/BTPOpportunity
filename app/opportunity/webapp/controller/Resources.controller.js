@@ -770,7 +770,7 @@ sap.ui.define([
 
       },
 
-      onAddNewForecast: function (oEvent) {
+      onAddEditForecast: function (oEvent) {
         this.editDialog = false;
 
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
@@ -783,22 +783,10 @@ sap.ui.define([
         oAddProjectModel.setProperty("/actual", 100);
 
 
-        this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNewForecast");
+        this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddEditForecast");
 
       },
 
-      onForecastEdit: function (oEvent) {
-        this.editDialog = true;
-
-        var oAddProjectModel = this.getView().getModel("AddProjectModel");
-
-        // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        // let sMonth = month[new Date().getMonth()];
-        // oAddProjectModel.setProperty("/month", sMonth);
-
-        this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditForecast");
-
-      },
       onBindMonth: function (oEvent) {
 
         var oTemplate = sap.ui.getCore().byId("monthItem");
@@ -878,9 +866,7 @@ sap.ui.define([
 
       },
 
-
       onSubmitNewForecast: function (oEvent) {
-
         var that = this;
         that.getView().setBusy(true);
         var oChart = this.getView().byId("smartChartTeamForecast");
@@ -890,8 +876,6 @@ sap.ui.define([
         var oData = oAddProjectModel.getData();
 
         var sYear = this.getView().getModel("AddProjectModel").getProperty("/year");
-
-
         var sOrder = this.onMonthOrder(oData.month);
 
         var oPayload = {
@@ -901,34 +885,76 @@ sap.ui.define([
           forecast: oData.forecast,
           actual: oData.actual,
           order: sOrder
-
         };
 
         var sPath = "/teamForecast"
+        var oModel = this.getOwnerComponent().getModel();
 
-        if (sYear && oData.month) {
-          this.resetValueState();
+        let aFilters = [];
+        aFilters.push(new sap.ui.model.Filter("userID_inumber", "EQ", this.inumber));
+        
+        //getting the current forecasts for this user
+        oModel.read(sPath, {
+          filters: aFilters,
+          success: function (oResponse) {
+            let aCurrentForecasts = oResponse.results;
+            let bFlagUpdate = false;
+            let sUpdatePath = sPath + "/";
+            
+            //check if we have a forecast for this month && year
+            aCurrentForecasts.forEach((forecast) => {
+              if(forecast.month === oData.month && forecast.year === sYear){
+                bFlagUpdate = true;
+                sUpdatePath += String(forecast.forecastID);
+              }  
+            });
 
-          var oModel = this.getView().getModel();
-          oModel.create(sPath, oPayload, {
-            success: function (oData, response) {
-              MessageToast.show("New Forecast has been added!");
-              that.onCancelDialogPress();
-              oChart.rebindChart();
+            if (sYear && oData.month) {
+              this.resetValueState();
+
+              //handle update
+              if(bFlagUpdate) {
+                oModel.update(sUpdatePath, oData, {
+                  success: function () {
+                    MessageToast.show("Forecast has been updated!");
+                    that.onCancelDialogPress();
+                    oChart.rebindChart();
+                    that.getView().setBusy(false);
+                  },
+                  error: function () {
+                    that.getView().setBusy(false);
+                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                    sap.m.MessageBox.error(sMessage);
+                  }
+                });
+              }
+
+              //handle creation of new entry
+              else {
+                oModel.create(sPath, oPayload, {
+                  success: function (oData, response) {
+                    MessageToast.show("New Forecast has been added!");
+                    that.onCancelDialogPress();
+                    oChart.rebindChart();
+                    that.getView().setBusy(false);
+                  },
+                  error: function (oError) {
+                    that.getView().setBusy(false);
+                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                    sap.m.MessageBox.error(sMessage);
+                  }
+                });
+              }
+            } 
+            else {
+              this.ValueStateMethod();
               that.getView().setBusy(false);
-            },
-            error: function (oError) {
-              that.getView().setBusy(false);
-              var sMessage = JSON.parse(oError.responseText).error.message.value;
-              sap.m.MessageBox.error(sMessage);
-              
+            }
+          }.bind(this),
+          error: function (oError) {
+            console.log(oError);
           }
-          });
-        } else {
-          this.ValueStateMethod();
-          that.getView().setBusy(false);
-        }
-
+        });
       },
 
       onMonthOrder(sDate) {
