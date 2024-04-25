@@ -52,7 +52,7 @@
         class="sapUiSmallMarginEnd"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
-        noDataText="Hmm.. time to look for New Requests?"
+        noDataText="No Data"
 
 		 items="{path: 'ProjectModel>/newRequests',
                           sorter: {
@@ -168,7 +168,7 @@
          class="sapUiSmallMarginBeginEnd"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
-        noDataText="Hmm.. time to look for New Requests?"
+        noDataText="No Data"
 
 		 items="{path: 'ProjectModel>/RFP',
                           sorter: {
@@ -280,7 +280,7 @@
          class="sapUiSmallMarginBeginEnd"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
-        noDataText="Hmm.. time to look for New Requests?"
+        noDataText="No Data"
 
 		 items="{path: 'ProjectModel>/On-Going',
                           sorter: {
@@ -399,7 +399,7 @@
         class="sapUiSmallMarginBeginEnd"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
-        noDataText="Hmm.. time to look for New Requests?"
+        noDataText="No Data"
 
 		 items="{path: 'ProjectModel>/Go-Live',
                           sorter: {
@@ -500,7 +500,7 @@
                         />
                     </VBox>
 
-                    <!-- 5. Archive Table -->
+                    <!-- 5. Past Table -->
                    	<Table
 					id="PastTable"
 		mode="SingleSelectMaster"
@@ -511,7 +511,7 @@
         class="sapUiSmallMarginBeginEnd"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
-        noDataText="Hmm.. time to look for New Requests?"
+        noDataText="No Data"
 
 		 items="{path: 'ProjectModel>/Past',
                           sorter: {
@@ -528,7 +528,7 @@
 		</contextMenu>
 		<headerToolbar>
 			<OverflowToolbar>
-				<Title text="Archive" />
+				<Title text="Past" />
 				<ToolbarSpacer/>
 				<Button
 					icon="sap-icon://navigation-up-arrow"

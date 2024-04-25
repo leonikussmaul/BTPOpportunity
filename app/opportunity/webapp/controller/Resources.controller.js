@@ -480,10 +480,10 @@ sap.ui.define([
 
       },
 
-      onProjectPopup: function (oEvent) {
+      onProjectPopup: function (oEvent, oContext) {
 
         var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
-        var oContext = oBinding.getObject();
+       // var oContext = oBinding.getObject();
         var sProjectID = oContext.projectID;
 
         this.sProjectID = oContext.projectID;
@@ -491,6 +491,7 @@ sap.ui.define([
 
 
         this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+        this.getView().setBusy(false);
 
       },
 
@@ -806,6 +807,7 @@ sap.ui.define([
       },
 
       onSelectionChange: function (oEvent) {
+        this.getView().setBusy(true);
         this.resetValueState();
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
 
@@ -823,6 +825,9 @@ sap.ui.define([
         };
 
         oAddProjectModel.setData(oSelect);
+
+        var oContext = oEvent.mParameters.listItem.getBindingContext("ProjectModel").getObject();
+        this.onProjectPopup(oEvent, oContext);
 
       },
 
