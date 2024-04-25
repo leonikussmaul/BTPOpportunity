@@ -192,7 +192,7 @@
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
-        <f:content>
+        <f:content >
              <!-- 1. New Requests Table -->
             <VBox>
                 <HBox renderType="Bare">
@@ -204,7 +204,7 @@
 		growingScrollToLoad="true"
 		beforeOpenContextMenu="onBeforeOpenContextMenu"
         selectionChange="onSelectionChange"
-        class="sapUiSmallMarginEnd"
+        class="sapUiSmallMarginEnd sapUiLargeMarginBottom"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
         noDataText="No Data"
@@ -322,7 +322,7 @@
 				growingScrollToLoad="true"
 		beforeOpenContextMenu="onBeforeOpenContextMenu"
         selectionChange="onSelectionChange"
-         class="sapUiSmallMarginBeginEnd"
+         class="sapUiSmallMarginBeginEnd sapUiLargeMarginBottom"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
         noDataText="No Data"
@@ -436,7 +436,7 @@
 		growingScrollToLoad="true"
 		beforeOpenContextMenu="onBeforeOpenContextMenu"
         selectionChange="onSelectionChange"
-         class="sapUiSmallMarginBeginEnd"
+         class="sapUiSmallMarginBeginEnd sapUiLargeMarginBottom"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
         noDataText="No Data"
@@ -556,7 +556,7 @@
 		growingScrollToLoad="true"
 		beforeOpenContextMenu="onBeforeOpenContextMenu"
         selectionChange="onSelectionChange"
-        class="sapUiSmallMarginBeginEnd"
+        class="sapUiSmallMarginBeginEnd sapUiLargeMarginBottom"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
         noDataText="No Data"
@@ -670,7 +670,7 @@
 		growingScrollToLoad="true"
 		beforeOpenContextMenu="onBeforeOpenContextMenu"
         selectionChange="onSelectionChange"
-        class="sapUiSmallMarginBeginEnd"
+        class="sapUiSmallMarginBeginEnd sapUiLargeMarginBottom"
         sticky="ColumnHeaders,HeaderToolbar"
         delete="onGridListItemDelete"
         noDataText="No Data"
