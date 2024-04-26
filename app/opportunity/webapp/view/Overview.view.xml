@@ -367,7 +367,7 @@
 
                 <!-- TEAM SECTION -->
 
-                <VBox renderType="Bare">
+                <VBox renderType="Bare" class="sapUiLargeMarginBottom">
                     <layoutData>
                         <cssgrid:ResponsiveColumnItemLayoutData />
                     </layoutData>
