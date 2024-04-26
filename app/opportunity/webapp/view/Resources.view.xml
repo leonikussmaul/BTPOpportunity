@@ -94,10 +94,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="70%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -141,7 +141,9 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ProjectModel>account}" wrapping="true"  /> 
+				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+
+ /> 
                       <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
@@ -210,10 +212,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="70%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -253,7 +255,9 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ProjectModel>account}" wrapping="true"  /> 
+				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+
+ /> 
                       <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
@@ -322,10 +326,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="70%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -371,7 +375,9 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ProjectModel>account}" wrapping="true"  /> 
+				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+
+ /> 
                       <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
@@ -441,10 +447,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="70%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -484,7 +490,9 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ProjectModel>account}" wrapping="true"  /> 
+					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+
+ /> 
                       <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
@@ -553,11 +561,11 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account"/>
+			<Column width="70%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
-				<Text text="Topic"/>
+            <Column width="8em">
+				<Text text="Topic" />
 			</Column>
 			
 		</columns>
@@ -597,7 +605,9 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<Text text="{ProjectModel>account}" wrapping="true" /> 
+					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+
+ /> 
                       <tnt:InfoLabel
                                             text="{ProjectModel>topic}"
                                             colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"

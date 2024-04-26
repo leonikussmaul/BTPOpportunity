@@ -237,10 +237,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="60%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -355,10 +355,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="60%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -469,10 +469,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="60%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -589,10 +589,10 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account" />
+			<Column width="60%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
+            <Column width="8em">
 				<Text text="Topic" />
 			</Column>
 			
@@ -703,11 +703,11 @@
 			</OverflowToolbar>
 		</headerToolbar>
 		<columns>
-			<Column>
-				<Text text="Account"/>
+			<Column width="60%" >
+				<Text  text="Account" wrapping="true" />
 			</Column>
-            <Column>
-				<Text text="Topic"/>
+            <Column width="8em">
+				<Text text="Topic" />
 			</Column>
 			
 		</columns>
