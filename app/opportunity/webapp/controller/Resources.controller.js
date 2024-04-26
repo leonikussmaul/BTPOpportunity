@@ -389,8 +389,8 @@ sap.ui.define([
         this._pDialog.then(function (_pDialog) {
           if (sPath) {
             //change this bit
-            _pDialog.setContentWidth("750px");
-            _pDialog.setContentHeight("550px");
+            _pDialog.setContentWidth("1000px");
+            _pDialog.setContentHeight("650px");
             _pDialog.bindElement({
               path: sPath,
               parameters: {

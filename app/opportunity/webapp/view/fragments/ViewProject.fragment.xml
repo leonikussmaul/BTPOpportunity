@@ -31,11 +31,11 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading>
-                            <Title text="{account}" />
+                            <Title text="{account}" wrapping="true" />
                         </f:heading>
 
                         <f:content>
-                            <OverflowToolbar>
+                            <OverflowToolbar >
                                 <tnt:InfoLabel
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
@@ -45,13 +45,18 @@
 
                                 <ToolbarSpacer />
 
-                                <Label text="Go Live" />
+                                <Label text="Go Live" >
+                                <layoutData><OverflowToolbarLayoutData maxWidth="300px" shrinkable="true" priority="NeverOverflow"/></layoutData>
+                          
+                                </Label>
                                 <GenericTag
                                     text="{= ${goLive} ? ${path: 'goLive', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }} : 'N/A'}"
                                     status="Success"
                                     press="onPressOpenPopover"
                                     design="StatusIconHidden"
-                                />
+                                >
+                                	<layoutData><OverflowToolbarLayoutData maxWidth="300px" shrinkable="true" priority="NeverOverflow"/></layoutData>
+                                </GenericTag>
                             </OverflowToolbar>
                         </f:content>
                     </f:DynamicPageTitle>
