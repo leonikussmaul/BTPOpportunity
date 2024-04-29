@@ -37,7 +37,7 @@ sap.ui.define([
                 this.onReadDataOpportunities();
                 this.onReadDataTasks();
 
-                //refresh tasks 
+                //refresh cards
                 this.getView().byId("taskCard").refreshData();
                 this.getView().byId("opportunityCard").refreshData();
                 this.getView().byId("adoptionCard").refreshData();
@@ -45,6 +45,12 @@ sap.ui.define([
                 this.getView().byId("calendarCard").refreshData();
                 this.getView().byId("RFPCard").refreshData();
                 this.getView().byId("goLiveCard").refreshData();
+
+
+                //rebind charts
+                this.getView().byId("smartChart1").rebindChart();
+                this.getView().byId("smartChart2").rebindChart();
+                this.getView().byId("smartChart3").rebindChart();
             },
 
             onRebindUtilizationChart: function (oEvent) {
