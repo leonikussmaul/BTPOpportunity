@@ -46,7 +46,7 @@
                         class="sapUiSmallMarginBottom"
                     />
                     <Button
-                        text="New Opp"
+                        text="Create"
                         icon="sap-icon://add"
                         type="Accept"
                         id="createBtn"
@@ -353,7 +353,7 @@
                 showRowCount="true"
                 enableAutoBinding="true"
                 demandPopin="true"
-                class="sapUiResponsiveContentPadding"
+                class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                 showFullScreenButton="true"
                 initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
                 requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"

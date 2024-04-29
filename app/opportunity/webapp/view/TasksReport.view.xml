@@ -75,7 +75,7 @@
                 showRowCount="true"
                 enableAutoBinding="true"
                 demandPopin="true"
-                class="sapUiResponsiveContentPadding"
+                class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                 showFullScreenButton="true"
                 initiallyVisibleFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionDueDate"
                 requestAtLeastFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionPriority,actionDueDate,actionPriorityNumber,actionCustomer,subTasks"
