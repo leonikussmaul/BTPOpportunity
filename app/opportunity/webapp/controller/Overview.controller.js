@@ -46,7 +46,6 @@ sap.ui.define([
                 this.getView().byId("RFPCard").refreshData();
                 this.getView().byId("goLiveCard").refreshData();
 
-
                 //rebind charts
                 this.getView().byId("smartChart1").rebindChart();
                 this.getView().byId("smartChart2").rebindChart();

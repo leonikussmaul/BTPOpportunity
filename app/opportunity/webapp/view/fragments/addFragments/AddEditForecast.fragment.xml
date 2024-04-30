@@ -83,7 +83,16 @@
                 max="200"
                 showAdvancedTooltip="true"
                 showHandleTooltip="false"
-                enableTickmarks="true"
+                enableTickmarks="false"
+                inputsAsTooltips="true"
+            />
+            <StepInput
+                value="{AddProjectModel>/forecast}"
+                width="20%"
+                min="0"
+                max="200"
+                step="1"
+                largerStep="5"
             />
 
             <Label text="Actual (in %)" />
@@ -95,8 +104,18 @@
                 max="200"
                 showAdvancedTooltip="true"
                 showHandleTooltip="false"
-                enableTickmarks="true"
+                enableTickmarks="false"
+                inputsAsTooltips="true"
             />
+            <StepInput
+                value="{AddProjectModel>/actual}"
+                width="10%"
+                min="0"
+                max="200"
+                step="1"
+                largerStep="5"
+            />
+
         </form:SimpleForm>
         <footer>
             <Toolbar design="Auto">
