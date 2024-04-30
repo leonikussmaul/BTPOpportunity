@@ -34,3 +34,7 @@
 .sapMTokenizer .sapMToken {
     float: left;
 }
+
+.myCustomListItem:hover {
+    background-color: #f5f6f7;
+}
