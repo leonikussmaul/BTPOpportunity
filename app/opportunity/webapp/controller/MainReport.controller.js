@@ -34,6 +34,9 @@ sap.ui.define([
 
                 var oView = this.getView();
                 oView.setModel(new JSONModel({
+                    "progress": 0,
+                    "adoption": 0,
+                    "consumption": 0
                 }), "viewModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel({

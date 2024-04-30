@@ -8,6 +8,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:form="sap.ui.layout.form"
     xmlns:rte="sap.ui.richtexteditor"
+        xmlns:micro="sap.suite.ui.microchart"
 >
     <Dialog
         id="myWizardDialog"
@@ -257,45 +258,102 @@
                                     }"
                                     id="dueDateCreate"
                                 />
-                                <Label text="{i18n>progress}" />
-                                <Slider
+                                  
+                       
+
+                            </form:SimpleForm>
+
+                                   <HBox  class="sapUiResponsiveMargin sapUiMediumMarginTop" alignContent="Center" justifyContent="Center" >
+
+                                 <VBox width="30em" alignContent="Center" justifyContent="Center" >
+                                 <HBox>
+                                    <Title
+                                        text="{i18n>Progress}"
+                                        class="sapUiSmallMarginBegin"
+                                    />
+                                  
+                                    <micro:RadialMicroChart
+                                        size="S"
+                                        percentage="{viewModel>/progress}"
+                                        press="press"
+                                        class="sapUiMediumMarginBegin"
+                                        width="10%"
+                                    />
+                                     </HBox>
+
+                                     <Slider
                                     value="{viewModel>/progress}"
                                     width="100%"
-                                    step="25"
+                                    step="10"
                                     min="0"
                                     max="100"
                                     showAdvancedTooltip="true"
                                     showHandleTooltip="false"
                                     class="sapUiMediumMarginBottom"
-                                    enableTickmarks="true"
                                 />
+                                </VBox>
 
-                                <Label text="{i18n>adoption}" />
-                                <Slider
+
+
+
+
+                                <VBox width="30em" alignContent="Center" justifyContent="Center" >
+                                 <HBox>
+                                    <Title
+                                        text="{i18n>Adoption}"
+                                        class="sapUiSmallMarginBegin"
+                                    />
+                                  
+                                    <micro:RadialMicroChart
+                                        size="S"
+                                        percentage="{viewModel>/adoption}"
+                                        press="press"
+                                        class="sapUiMediumMarginBegin"
+                                        width="10%"
+                                    />
+                                     </HBox>
+                                     <Slider
                                     value="{viewModel>/adoption}"
                                     width="100%"
-                                    step="25"
+                                    step="10"
                                     min="0"
                                     max="100"
                                     showAdvancedTooltip="true"
                                     showHandleTooltip="false"
                                     class="sapUiMediumMarginBottom"
-                                    enableTickmarks="true"
                                 />
+                                </VBox>
 
-                                <Label text="{i18n>consumption}" />
-                                <Slider
+
+
+                                <VBox width="30em" alignContent="Center" justifyContent="Center" >
+                                 <HBox>
+                                    <Title
+                                        text="{i18n>Consumption}"
+                                        class="sapUiSmallMarginBegin"
+                                    />
+                                  
+                                    <micro:RadialMicroChart
+                                        size="S"
+                                        percentage="{viewModel>/consumption}"
+                                        press="press"
+                                        class="sapUiTinyMarginBegin"
+                                        width="10%"
+                                    />
+                                     </HBox>
+                                     <Slider
                                     value="{viewModel>/consumption}"
                                     width="100%"
-                                    step="25"
+                                    step="10"
                                     min="0"
                                     max="100"
                                     showAdvancedTooltip="true"
                                     showHandleTooltip="false"
                                     class="sapUiMediumMarginBottom"
-                                    enableTickmarks="true"
                                 />
-                            </form:SimpleForm>
+                                </VBox>
+                                   </HBox>
+
                         </WizardStep>
                         <!-- step 3 -->
                         <WizardStep
