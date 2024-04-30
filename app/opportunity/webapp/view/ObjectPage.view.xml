@@ -81,12 +81,12 @@
                                 </u:snappedHeading>
 
                                 <u:actions>
-                                    <tnt:InfoLabel
+                                    <!-- <tnt:InfoLabel
                                         text="{topic}"
                                         colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                          visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
                                         class="sapUiSmallMarginEnd"
-                                    />
+                                    /> -->
 
                                     <core:Icon
                                         press="onFavoriteObjectPress"

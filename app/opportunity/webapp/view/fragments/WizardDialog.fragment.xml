@@ -92,7 +92,7 @@
                                 </ComboBox>
 
                                 
-                                <Label text="{i18n>mainTopic}" />
+                                <!-- <Label text="{i18n>mainTopic}" />
                                 <ComboBox
                                     selectedKey="{viewModel>/topic}"
                                     placeholder="{i18n>topicInterestPlaceholder}"
@@ -108,7 +108,7 @@
                                         key="{topic}"
                                         text="{topic}"
                                     />
-                                </ComboBox>
+                                </ComboBox> -->
                                 <Label text="{i18n>valueInK}" />
                                 <Input
                                     value="{viewModel>/opportunityValue}"
