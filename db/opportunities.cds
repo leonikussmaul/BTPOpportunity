@@ -83,6 +83,7 @@ entity opportunityTopics {
         opptID  : Association to opportunityHeader;
         topic   : String(255);
         comment : String(5000);
+        sortOrder: Integer; 
 };
 
 
@@ -295,6 +296,7 @@ entity userFeedback {
 entity opportunityTopicsVH {
     key ID    : UUID;
         topic : String(255);
+        sortOrder: Integer; 
 };
 
 @cds.autoexpose

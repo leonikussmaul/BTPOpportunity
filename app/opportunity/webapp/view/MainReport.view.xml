@@ -352,8 +352,8 @@
                 demandPopin="true"
                 class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                 showFullScreenButton="true"
-                initiallyVisibleFields="account,topic,status,primaryContact,opportunityClosedQuarter,opportunityValue,isFavorite,topics"
-                requestAtLeastFields="marketUnit,account,topic,status,primaryContact,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"
+                initiallyVisibleFields="account,topics,status,primaryContact,opportunityClosedQuarter,opportunityValue,isFavorite"
+                requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityClosedQuarter,opportunityValue,priority,opportunityID"
                 ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
             >
                 <smartTable:customToolbar>
@@ -423,7 +423,7 @@
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
-                                    value='\{"columnKey": "topic", "columnIndex" : "2", "leadingProperty": "topic", "filterProperty": "topic", "type":"string"}'
+                                    value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topic", "filterProperty": "topics/topic", "type":"string"}'
                                 />
                             </customData>
                             <Label text="{i18n>topic}" />
@@ -494,7 +494,7 @@
                                     justifyContent="Center"
                                 >
                                     <CustomListItem class="myCustomListItem"
-                                        content="{ path: 'topics', sorter: { path: 'topic' }}"
+                                        content="{ path: 'topics', sorter: { path: 'sortOrder' }}"
                                     >
                                         <tnt:InfoLabel
                                             text="{ path: 'topic' }"

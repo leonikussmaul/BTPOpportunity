@@ -90,33 +90,29 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
     },
 
     topicColorSchemeFormatter: function (topic) {
-      if (topic === 'CSD') {
-        return 1;
-      } else if (topic === 'Enablement') {
-        return 2;
-      } else if (topic === 'Governance') {
-        return 3;
-      } else if (topic === 'Analytics') {
-        return 4;
-      } else if (topic === 'Data') {
-        return 5;
-      } else if (topic === 'MDG') {
-        return 5;
-      } else if (topic === 'Datasphere') {
-        return 5;
-      } else if (topic === 'Clean Core') {
-        return 6;
-      } else if (topic === 'iCCM') {
-        return 6;
-      } else if (topic === 'Integration') {
-        return 7;
-      } else if (topic === 'LMS') {
-        return 7;
-      } else if (topic === 'Automation / AI') {
-        return 8;
-      } else if (topic === 'Extension') {
-        return 9;
-      } else return;
+      
+      switch (topic) {
+        case "Automation / AI":
+        case "LMS":
+          return 8;
+        case "Analytics":
+        case "Data":
+        case "Datasphere":
+        case "MDG":
+          return 5;
+        case "Clean Core":
+        case "Extension": 
+        case "iCCM": 
+        case "CSD":
+          return 6;
+        case "Enablement":
+        case "Governance":
+          return 1;
+        case "Integration":
+          return 4;
+        default:
+          return 8;
+      }
     },
 
     formatRowHighlight: function (priority) {
