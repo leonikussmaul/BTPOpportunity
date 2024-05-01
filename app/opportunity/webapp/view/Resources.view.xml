@@ -53,26 +53,24 @@
             <!-- 1. New Requests Table -->
             <VBox>
                 <HBox renderType="Bare">
-
                     	<Table
-						id="newRequestsTable"
-		mode="SingleSelectMaster"
-		growing="true"
-		growingThreshold="10"
-		beforeOpenContextMenu="onBeforeOpenContextMenu"
-        selectionChange="onSelectionChange"
-        class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
-        sticky="ColumnHeaders,HeaderToolbar"
-        delete="onGridListItemDelete"
-        noDataText="No Data"
+							id="newRequestsTable"
+							mode="SingleSelectMaster"
+							growing="true"
+							growingThreshold="10"
+							beforeOpenContextMenu="onBeforeOpenContextMenu"
+							selectionChange="onSelectionChange"
+							class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
+							sticky="ColumnHeaders,HeaderToolbar"
+							delete="onGridListItemDelete"
+							noDataText="No Data"
 
-		 items="{path: 'ProjectModel>/newRequests',
-                          sorter: {
-                                                path: 'account',
-                                                descending: false
-                                            }}">
-		
-		
+							items="{path: 'ProjectModel>/newRequests',
+									sorter: {
+										path: 'account',
+										descending: false
+									}}"
+						>
         	<contextMenu>
 			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
@@ -116,7 +114,7 @@
 				<dnd:DragInfo
 				groupName="newRequestsToPast"
 				sourceAggregation="items" />
-			<dnd:DropInfo
+				<dnd:DropInfo
 				groupName="RFPToNewRequests"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
 				<dnd:DropInfo
@@ -135,22 +133,16 @@
 				drop="onDropSelectedProductsTable"/>
 		</dragDropConfig>
 
-        
-		
-
 		<items>
 			<ColumnListItem>
 				<cells>
-				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
-
- /> 
+				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
                       <tnt:InfoLabel
-                                            text="{ProjectModel>topic}"
-                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-					
+							text="{ProjectModel>topic}"
+							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+							renderMode="Narrow"
+						/>			
 				</cells>
 			</ColumnListItem>
 		</items>
@@ -171,26 +163,23 @@
                     </VBox>
 
                     <!-- 2. RFP Table -->
-
                     	<Table
-						id="RFPTable"
-		mode="SingleSelectMaster"
-		growing="true"
-		growingThreshold="10"
-		beforeOpenContextMenu="onBeforeOpenContextMenu"
-        selectionChange="onSelectionChange"
-         class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-        sticky="ColumnHeaders,HeaderToolbar"
-        delete="onGridListItemDelete"
-        noDataText="No Data"
-
-		 items="{path: 'ProjectModel>/RFP',
-                          sorter: {
-                                                path: 'account',
-                                                descending: false
-                                            }}">
-		
-		
+							id="RFPTable"
+							mode="SingleSelectMaster"
+							growing="true"
+							growingThreshold="10"
+							beforeOpenContextMenu="onBeforeOpenContextMenu"
+							selectionChange="onSelectionChange"
+							class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+							sticky="ColumnHeaders,HeaderToolbar"
+							delete="onGridListItemDelete"
+							noDataText="No Data"
+							items="{path: 'ProjectModel>/RFP',
+							sorter: {
+								path: 'account',
+								descending: false
+							}}"
+						>
         	<contextMenu>
 			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
@@ -255,16 +244,13 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
-
- /> 
+				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
                       <tnt:InfoLabel
-                                            text="{ProjectModel>topic}"
-                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-					
+							text="{ProjectModel>topic}"
+							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+							renderMode="Narrow"
+						/>	
 				</cells>
 			</ColumnListItem>
 		</items>
@@ -287,24 +273,23 @@
                     <!-- 3. on going table -->
 
                    	<Table
-					id="OnGoingTable"
-		mode="SingleSelectMaster"
-		growing="true"
-		growingThreshold="10"
-		beforeOpenContextMenu="onBeforeOpenContextMenu"
-        selectionChange="onSelectionChange"
-         class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-        sticky="ColumnHeaders,HeaderToolbar"
-        delete="onGridListItemDelete"
-        noDataText="No Data"
+						id="OnGoingTable"
+						mode="SingleSelectMaster"
+						growing="true"
+						growingThreshold="10"
+						beforeOpenContextMenu="onBeforeOpenContextMenu"
+						selectionChange="onSelectionChange"
+						class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+						sticky="ColumnHeaders,HeaderToolbar"
+						delete="onGridListItemDelete"
+						noDataText="No Data"
 
-		 items="{path: 'ProjectModel>/On-Going',
-                          sorter: {
-                                                path: 'account',
-                                                descending: false
-                                            }}">
-		
-		
+						items="{path: 'ProjectModel>/On-Going',
+                        sorter: {
+                        	path: 'account',
+                            descending: false
+                        }}"
+					>
         	<contextMenu>
 			<!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
@@ -340,13 +325,13 @@
 		<dnd:DragInfo
 				groupName="onGoingToNewRequests"
 				sourceAggregation="items"/>
-			<dnd:DragInfo
+				<dnd:DragInfo
 				groupName="onGoingToRFP"
 				sourceAggregation="items" />
 				<dnd:DragInfo
 				groupName="onGoingToGoLive"
 				sourceAggregation="items"/>
-					<dnd:DragInfo
+				<dnd:DragInfo
 				groupName="onGoingToPast"
 				sourceAggregation="items"/>
 			
@@ -365,7 +350,7 @@
 				<dnd:DropInfo
 				groupName="pastToOnGoing"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-			<dnd:DragDropInfo
+				<dnd:DragDropInfo
 				sourceAggregation="items"
 				targetAggregation="items"
 				dropPosition="Between"
@@ -379,17 +364,15 @@
 
  /> 
                       <tnt:InfoLabel
-                                            text="{ProjectModel>topic}"
-                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-					
+							text="{ProjectModel>topic}"
+							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+							renderMode="Narrow"
+						/>
 				</cells>
 			</ColumnListItem>
 		</items>
 	</Table>
-
 
                     <VBox justifyContent="Center">
                         <Button
@@ -406,25 +389,24 @@
                     </VBox>
 
                     <!-- 4. Go Live Table -->
-
                     	<Table
-						id="GoLiveTable"
-		mode="SingleSelectMaster"
-		growing="true"
-		growingThreshold="10"
-		beforeOpenContextMenu="onBeforeOpenContextMenu"
-        selectionChange="onSelectionChange"
-        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-        sticky="ColumnHeaders,HeaderToolbar"
-        delete="onGridListItemDelete"
-        noDataText="No Data"
+							id="GoLiveTable"
+							mode="SingleSelectMaster"
+							growing="true"
+							growingThreshold="10"
+							beforeOpenContextMenu="onBeforeOpenContextMenu"
+							selectionChange="onSelectionChange"
+							class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+							sticky="ColumnHeaders,HeaderToolbar"
+							delete="onGridListItemDelete"
+							noDataText="No Data"
 
-		 items="{path: 'ProjectModel>/Go-Live',
-                          sorter: {
-                                                path: 'account',
-                                                descending: false
-                                            }}">
-		
+							items="{path: 'ProjectModel>/Go-Live',
+							sorter: {
+								path: 'account',
+								descending: false
+							}}"
+						>
 		
         	<contextMenu>
 			<!-- <Menu>
@@ -474,7 +456,7 @@
 					<dnd:DropInfo
 				groupName="RFPToGoLive"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-			<dnd:DropInfo
+				<dnd:DropInfo
 				groupName="onGoingToGoLive"
 				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
 					<dnd:DropInfo
@@ -490,16 +472,13 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
-
- /> 
+					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
                       <tnt:InfoLabel
-                                            text="{ProjectModel>topic}"
-                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-					
+							text="{ProjectModel>topic}"
+							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+							renderMode="Narrow"
+						/>
 				</cells>
 			</ColumnListItem>
 		</items>
@@ -522,23 +501,21 @@
 
                     <!-- 5. Past Table -->
                    	<Table
-					id="PastTable"
-		mode="SingleSelectMaster"
-		growing="true"
-		growingThreshold="10"
-		beforeOpenContextMenu="onBeforeOpenContextMenu"
-        selectionChange="onSelectionChange"
-        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-        sticky="ColumnHeaders,HeaderToolbar"
-        delete="onGridListItemDelete"
-        noDataText="No Data"
-
-		 items="{path: 'ProjectModel>/Past',
-                          sorter: {
-                                                path: 'account',
-                                                descending: false
-                                            }}">
-		
+						id="PastTable"
+						mode="SingleSelectMaster"
+						growing="true"
+						growingThreshold="10"
+						beforeOpenContextMenu="onBeforeOpenContextMenu"
+						selectionChange="onSelectionChange"
+						class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+						sticky="ColumnHeaders,HeaderToolbar"
+						delete="onGridListItemDelete"
+						noDataText="No Data"
+						items="{path: 'ProjectModel>/Past',
+                        sorter: {
+							path: 'account',
+							descending: false
+						}}">
 		
         	<contextMenu>
 			<!-- <Menu>
@@ -605,16 +582,13 @@
 		<items>
 			<ColumnListItem>
 				<cells>
-					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
-
- /> 
+					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
                       <tnt:InfoLabel
-                                            text="{ProjectModel>topic}"
-                                            colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-					
+							text="{ProjectModel>topic}"
+							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+							renderMode="Narrow"
+						/>			
 				</cells>
 			</ColumnListItem>
 		</items>
