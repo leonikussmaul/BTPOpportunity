@@ -19,8 +19,6 @@ sap.ui.define([
         valueStateText: ""
       };
 
-
-
     return Controller.extend("opportunity.opportunity.controller.Resources", {
       formatter: formatter,
       onInit: function () {
@@ -41,8 +39,6 @@ sap.ui.define([
         });
         this.getView().setModel(oEditModel, "editModel");
 
-
-
         var oMessageModel = new JSONModel({
           message: {
             text: "Please bear in mind that the ideal utilization is at no more than 85%.",
@@ -60,8 +56,24 @@ sap.ui.define([
         var oLocalModel = new JSONModel({});
         this.getView().setModel(oLocalModel, "localModel");
 
+        //yes, I am converting Date to String to int, but is there really a better way?
+        let currentYear = parseInt(new Date().getFullYear().toString());
+        const firstYear = 2022; 
+        
+        //future-proofing
+        let listYears = [];
+        for(let i = firstYear; i <= currentYear; i++){
+          listYears.push({"year" : i});
+        }
 
+        var oYearModel = new JSONModel({
+          filterYear: currentYear,
+          listYears: listYears
+        });
+        this.getView().setModel(oYearModel, "oYearModel");
 
+        let oFilterBar = this.getView().byId("smartFilterBar");
+        //oFilterBar.setLiveMode(true);
       },
 
       _onRoutePatternMatched: function (oEvent) {
@@ -462,8 +474,6 @@ sap.ui.define([
 
     },
 
-
-
       onCancelDialogPress: function (oEvent) {
 
         this.editDialog = false;
@@ -759,6 +769,19 @@ sap.ui.define([
       },
 
       beforeRebindUtilizationChart: function (oEvent) {
+        var oSmartChart = this.getView().byId("smartChartTeamForecast"),
+				oUiState = oSmartChart.getUiState(),
+				oPresentationVariant = oUiState.getPresentationVariant();
+        console.log(oUiState);
+        console.log(oPresentationVariant);
+
+        oPresentationVariant.Visualizations[0].Content.Dimensions = ["month"];
+        oPresentationVariant.Visualizations[0].Content.DimensionAttributes = [{
+          Dimension: "month",
+          Role: "com.sap.vocabularies.UI.v1.ChartDimensionRoleType/Category"
+        }];
+        oUiState.setPresentationVariant(oPresentationVariant);
+        oSmartChart.setUiState(oUiState);
 
         var oBindingParams = oEvent.getParameter('bindingParams');
         var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
@@ -766,8 +789,6 @@ sap.ui.define([
 
         var oSorter = new sap.ui.model.Sorter("order", false);
         oBindingParams.sorter.push(oSorter);
-
-
       },
 
       onAddEditForecast: function (oEvent) {
@@ -989,6 +1010,31 @@ sap.ui.define([
 
       },
 
+      //for year filter
+      handleSelectionChange: function(oEvent){
+        let selection = oEvent.getSource().getValue();
+        let asString = selection.toString();
+        let oYearModel = this.getView().getModel("oYearModel");
+        let oFilterBar = this.getView().byId("smartFilterBar");
+        let oFilterData = oFilterBar.getFilterData();
+
+        oYearModel.setProperty("/filterYear", selection);
+
+        oFilterData.year.ranges[0] = {
+          exclude: false,
+          keyField: "year",
+          operation: "EQ",
+          tokenText: "=" + selection[0] + "," + selection[1] + selection[2] + selection[3],
+          value1: selection,
+          value2: ""
+        }
+
+        oFilterBar.setFilterData(oFilterData, true);
+        console.log(oFilterBar.getFilterData());
+
+        this.getView().byId("smartChartTeamForecast").rebindChart();
+      },
+
       /* ------------------------------------------------------------------------------------------------------------
          VALUE STATE
          --------------------------------------------------------------------------------------------------------------*/
@@ -1012,9 +1058,6 @@ sap.ui.define([
         var sValue = oEvent.mParameters.newValue;
         if (sValue) this.resetValueState();
       }
-
-
-
 
     });
   });

@@ -21,6 +21,7 @@
     xmlns:tnt="sap.tnt"
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:commons="sap.suite.ui.commons"
+	xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
 >
     <f:DynamicPage
         id="TeamPage"
@@ -597,6 +598,20 @@
                 </HBox>
 
                 <VBox class="sapUiLargeMarginTop">
+				<smartfilterbar:SmartFilterBar 
+					id="smartFilterBar"
+					entitySet="teamForecastCopy"
+					visible="false"
+					>
+					<smartfilterbar:controlConfiguration>
+						<smartfilterbar:ControlConfiguration key="year" visibleInAdvancedArea="true">
+							<smartfilterbar:defaultFilterValues>
+								<smartfilterbar:SelectOption low="{oYearModel>/filterYear}"></smartfilterbar:SelectOption>
+							</smartfilterbar:defaultFilterValues>
+						</smartfilterbar:ControlConfiguration>
+					</smartfilterbar:controlConfiguration>
+				</smartfilterbar:SmartFilterBar>
+
                     <smartchart:SmartChart
                         id="smartChartTeamForecast"
                         enableAutoBinding="true"
@@ -606,7 +621,7 @@
                         useVariantManagement="false"
                         useChartPersonalisation="true"
                         showDownloadButton="true"
-                        header="{firstName}'s Utilization"
+                        header="{firstName}'s Utilization for"
                         showFullScreenButton="true"
                         selectionMode="Multi"
                         showChartTooltip="true"
@@ -617,10 +632,21 @@
                         showLegendButton="false"
                         noData="Utilization is either not tracked or not applicable for {firstName}"
                         showSemanticNavigationButton="false"
+						smartFilterId="smartFilterBar" 
                     >
+
                         <smartchart:toolbar>
                             <OverflowToolbar>
-                                <ToolbarSpacer />
+								<ComboBox
+									width="4.7em"
+									selectionChange=".handleSelectionChange"
+									value="{oYearModel>/filterYear}"
+									items="{
+										path: 'oYearModel>/listYears'
+									}">
+									<core:Item key="{oYearModel>year}" text="{oYearModel>year}" />
+								</ComboBox>
+								<ToolbarSpacer />
                                 <Button
                                     text="Add / Edit"
                                     icon="sap-icon://edit"
