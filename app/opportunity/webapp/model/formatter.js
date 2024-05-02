@@ -452,7 +452,16 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
         return sInitials;
 
       }
+    },
+
+    chartColorFormatter: function(sValue){
+      if(sValue == 0) return "Neutral"; 
+      else if(sValue <= 30) return "Error"; 
+      else if(sValue > 30 && sValue <= 60) return "Critical"; 
+      else return "Good"; 
+
     }
+
 
 
   };

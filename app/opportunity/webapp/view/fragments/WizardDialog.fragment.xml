@@ -272,7 +272,8 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                   
-                                    <micro:RadialMicroChart
+                                    <micro:RadialMicroChart 
+                                   valueColor="{path:'viewModel>/progress', formatter:'.formatter.chartColorFormatter'}"
                                         size="S"
                                         percentage="{viewModel>/progress}"
                                         press="press"
@@ -305,6 +306,7 @@
                                     />
                                   
                                     <micro:RadialMicroChart
+                                     valueColor="{path:'viewModel>/adoption', formatter:'.formatter.chartColorFormatter'}"
                                         size="S"
                                         percentage="{viewModel>/adoption}"
                                         press="press"
@@ -334,6 +336,7 @@
                                     />
                                   
                                     <micro:RadialMicroChart
+                                     valueColor="{path:'viewModel>/consumption', formatter:'.formatter.chartColorFormatter'}"
                                         size="S"
                                         percentage="{viewModel>/consumption}"
                                         press="press"
