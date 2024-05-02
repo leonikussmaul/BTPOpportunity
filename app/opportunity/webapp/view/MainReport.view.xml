@@ -79,14 +79,14 @@
                                         selectionChange="customFieldChange"
                                         showSelectAll="true"
                                         items="{
-                path: '/opportunityMarketUnitVH',
-                sorter: {
-                    path: 'region',
-                    descending: false,
-                    group: true
-                },
-                groupHeaderFactory: '.getGroupHeader'
-            }"
+                                            path: '/opportunityMarketUnitVH',
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
                                     >
                                         <core:Item
                                             key="marketUnit"
@@ -493,7 +493,7 @@
                                     alignItems="Center"
                                     justifyContent="Center"
                                 >
-                                    <CustomListItem class="myCustomListItem"
+                                    <CustomListItem class="labelsItem"
                                         content="{ path: 'topics', sorter: { path: 'sortOrder' }}"
                                     >
                                         <tnt:InfoLabel
