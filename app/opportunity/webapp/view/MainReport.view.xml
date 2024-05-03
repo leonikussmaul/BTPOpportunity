@@ -63,7 +63,7 @@
                         showGoOnFB="false"
                         showMessages="true"
                         useDateRangeType="true"
-                        clear="onClearSmartFilterBar" 
+                        clear="onClearSmartFilterBar"
                     >
                         <smartFilterBar:controlConfiguration>
                             <smartFilterBar:ControlConfiguration
@@ -78,15 +78,15 @@
                                         customData:hasValue="false"
                                         selectionChange="customFieldChange"
                                         showSelectAll="true"
-                                       	items="{
-				path: '/opportunityMarketUnitVH',
-				sorter: {
-					path: 'region',
-					descending: false,
-					group: true
-				},
-				groupHeaderFactory: '.getGroupHeader'
-			}"
+                                        items="{
+                                            path: '/opportunityMarketUnitVH',
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
                                     >
                                         <core:Item
                                             key="marketUnit"
@@ -238,7 +238,6 @@
                                     </MultiComboBox>
                                 </smartFilterBar:customControl>
                             </smartFilterBar:ControlConfiguration>
-
                             <smartFilterBar:ControlConfiguration
                                 key="ssa"
                                 label="{i18n>SSA}"
@@ -265,7 +264,6 @@
                                     </MultiComboBox>
                                 </smartFilterBar:customControl>
                             </smartFilterBar:ControlConfiguration>
-
                             <smartFilterBar:ControlConfiguration
                                 key="priority"
                                 index="5"
@@ -337,7 +335,6 @@
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
-
         <f:content>
             <smartTable:SmartTable
                 id="mySmartTable"
@@ -355,8 +352,8 @@
                 demandPopin="true"
                 class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                 showFullScreenButton="true"
-                initiallyVisibleFields="account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,isFavorite"
-                requestAtLeastFields="marketUnit,account,topic,status,primaryContact,ssa,opportunityClosedQuarter,opportunityValue,topics,priority,opportunityID"
+                initiallyVisibleFields="account,topics,status,primaryContact,opportunityClosedQuarter,opportunityValue,isFavorite"
+                requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityClosedQuarter,opportunityValue,priority,opportunityID"
                 ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
             >
                 <smartTable:customToolbar>
@@ -374,7 +371,6 @@
                             tooltip="Go into Edit Mode to Delete items"
                             press="onEditTable"
                         />
-
                         <ToggleButton
                             id="favoriteToggle"
                             icon="sap-icon://unfavorite"
@@ -383,18 +379,32 @@
                         />
                     </OverflowToolbar>
                 </smartTable:customToolbar>
-              
-                <Table
+                <Table 
                     inset="false"
                     growing="true"
                     growingScrollToLoad="true"
                     mode="None"
                     sticky="ColumnHeaders,HeaderToolbar"
                     noDataText="Nothing here. Please adjust your search critera."
-                    delete="onDeleteTableItem" 
+                    delete="onDeleteTableItem"
                 >
                     <columns>
-                        <Column>
+                        <Column
+                            width="2.5em"
+                            hAlign="Center"
+                        >
+                            <customData>
+                                <core:CustomData
+                                    key="p13nData"
+                                    value='\{"columnKey": "isFavorite", "columnIndex" : "0", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
+                                />
+                            </customData>
+                            <Label text="" />
+                        </Column>
+                        <Column
+                            width="10em"
+                            demandPopin="false"
+                        >
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
@@ -408,17 +418,17 @@
                         </Column>
                         <Column
                             hAlign="Center"
-                            width="15%"
+                            width="30%"
                         >
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
-                                    value='\{"columnKey": "topic", "columnIndex" : "2", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topic", "type":"string"}'
+                                    value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topic", "filterProperty": "topics/topic", "type":"string"}'
                                 />
                             </customData>
                             <Label text="{i18n>topic}" />
                         </Column>
-                        <Column>
+                        <Column hAlign="Center">
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
@@ -430,21 +440,11 @@
                                 tooltip="{i18n>primaryContact}"
                             />
                         </Column>
-                        <Column>
+                        <Column hAlign="Center">
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
-                                    value='\{"columnKey": "ssa", "columnIndex" : "4", "leadingProperty": "ssa", "sortProperty": "ssa", "filterProperty": "ssa", "type":"string"}'
-                                />
-                            </customData>
-                            <Label text="{i18n>ssa}" />
-                        </Column>
-                      
-                          <Column hAlign="Center">
-                            <customData>
-                                <core:CustomData
-                                    key="p13nData"
-                                    value='\{"columnKey": "opportunityClosedQuarter", "columnIndex" : "5", "leadingProperty": "opportunityClosedQuarter", "sortProperty": "opportunityClosedQuarter", "filterProperty": "opportunityClosedQuarter", "type":"string"}'
+                                    value='\{"columnKey": "opportunityClosedQuarter", "columnIndex" : "4", "leadingProperty": "opportunityClosedQuarter", "sortProperty": "opportunityClosedQuarter", "filterProperty": "opportunityClosedQuarter", "type":"string"}'
                                 />
                             </customData>
                             <Label text="{i18n>opportunityClosedQuarter}" />
@@ -453,7 +453,7 @@
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
-                                    value='\{"columnKey": "opportunityValue", "columnIndex" : "6", "leadingProperty": "opportunityValue", "sortProperty": "opportunityValue", "filterProperty": "opportunityValue", "type":"string"}'
+                                    value='\{"columnKey": "opportunityValue", "columnIndex" : "5", "leadingProperty": "opportunityValue", "sortProperty": "opportunityValue", "filterProperty": "opportunityValue", "type":"string"}'
                                 />
                             </customData>
                             <Label text="{i18n>opportunityValue}" />
@@ -465,47 +465,48 @@
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
-                                    value='\{"columnKey": "status", "columnIndex" : "7", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                    value='\{"columnKey": "status", "columnIndex" : "6", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
                                 />
                             </customData>
                             <Label text="{i18n>status}" />
                         </Column>
-                        <Column
-                            width="6%"
-                            hAlign="Center"
-                        >
-                            <customData>
-                                <core:CustomData
-                                    key="p13nData"
-                                    value='\{"columnKey": "isFavorite", "columnIndex" : "8", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
-                                />
-                            </customData>
-                            <Label text="{i18n>Favourite}" />
-                        </Column>
                     </columns>
                     <items>
-                        <ColumnListItem
+                        <ColumnListItem class="myCustomListItem"
                             type="Navigation"
                             vAlign="Middle"
                             press="onListItemPress"
                             highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                         >
                             <cells>
+                                <core:Icon
+                                    press="onFavoritePress"
+                                    src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                    size="1.2rem"
+                                    color="#427cac"
+                                />
                                 <ObjectIdentifier
                                     title="{account}"
                                     text="{priority}"
                                 />
-                               
-                                <tnt:InfoLabel
-                                    text="{topic}"
-                                    colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                  visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
-
-
-                                    renderMode="Narrow"
-                                />
+                                <HBox
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                >
+                                    <CustomListItem class="labelsItem"
+                                        content="{ path: 'topics', sorter: { path: 'sortOrder' }}"
+                                    >
+                                        <tnt:InfoLabel
+                                            text="{ path: 'topic' }"
+                                            renderMode="Narrow"
+                                            class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
+                                            colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                            visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
+                                        />
+                                    </CustomListItem>
+                                    
+                                </HBox>
                                 <Text text="{primaryContact}" />
-                                <Text text="{ssa}" />
                                 <Text text="{opportunityClosedQuarter}" />
                                 <ObjectNumber
                                     number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
@@ -518,12 +519,6 @@
                                     visible="{= ${status} !== null}"
                                     icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}"
                                     iconDensityAware="true"
-                                />
-                                <core:Icon
-                                    press="onFavoritePress"
-                                    src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
-                                    size="1.2rem"
-                                    color="#427cac"
                                 />
                             </cells>
                         </ColumnListItem>

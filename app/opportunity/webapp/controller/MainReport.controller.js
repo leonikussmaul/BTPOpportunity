@@ -34,19 +34,19 @@ sap.ui.define([
 
                 var oView = this.getView();
                 oView.setModel(new JSONModel({
+                    "progress": 0,
+                    "adoption": 0,
+                    "consumption": 0
                 }), "viewModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
 
-                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
-                
-
+                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");             
             },
 
             _getText: function (sTextId, aArgs) {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
-
             },
 
 
@@ -55,8 +55,6 @@ sap.ui.define([
                     text: oGroup.key
                 });
             },
-
-
 
             /* ------------------------------------------------------------------------------------------------------------
            TABLE
