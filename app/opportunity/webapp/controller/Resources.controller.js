@@ -769,26 +769,26 @@ sap.ui.define([
       },
 
       beforeRebindUtilizationChart: function (oEvent) {
-        var oSmartChart = this.getView().byId("smartChartTeamForecast"),
-				oUiState = oSmartChart.getUiState(),
-				oPresentationVariant = oUiState.getPresentationVariant();
-        console.log(oUiState);
-        console.log(oPresentationVariant);
-
-        oPresentationVariant.Visualizations[0].Content.Dimensions = ["month"];
-        oPresentationVariant.Visualizations[0].Content.DimensionAttributes = [{
-          Dimension: "month",
-          Role: "com.sap.vocabularies.UI.v1.ChartDimensionRoleType/Category"
-        }];
-        oUiState.setPresentationVariant(oPresentationVariant);
-        oSmartChart.setUiState(oUiState);
-
         var oBindingParams = oEvent.getParameter('bindingParams');
         var oFilter = new Filter("userID_inumber", FilterOperator.EQ, this.inumber);
         oBindingParams.filters.push(oFilter);
 
         var oSorter = new sap.ui.model.Sorter("order", false);
         oBindingParams.sorter.push(oSorter);
+
+        // var oSmartChart = this.getView().byId("smartChartTeamForecast"),
+				// oUiState = oSmartChart.getUiState(),
+				// oPresentationVariant = oUiState.getPresentationVariant();
+        // console.log(oUiState);
+        // console.log(oPresentationVariant);
+
+        // oPresentationVariant.Visualizations[0].Content.Dimensions = ["month"];
+        // oPresentationVariant.Visualizations[0].Content.DimensionAttributes = [{
+        //   Dimension: "month",
+        //   Role: "com.sap.vocabularies.UI.v1.ChartDimensionRoleType/Category"
+        // }];
+        // oUiState.setPresentationVariant(oPresentationVariant);
+        // oSmartChart.setUiState(oUiState);
       },
 
       onAddEditForecast: function (oEvent) {
