@@ -299,20 +299,6 @@
 		</items>
 	</Table>
 
-                    <VBox justifyContent="Center">
-                        <Button
-                            class="sapUiTinyMarginBottom"
-                            icon="sap-icon://navigation-right-arrow"
-                            tooltip="Move to selected"
-                            press="onRightNewRequests"
-                        />
-                        <Button
-                            icon="sap-icon://navigation-left-arrow"
-                            tooltip="Move to available"
-                            press="onLeftRFP"
-                        />
-                    </VBox>
-
                     <!-- 2. RFP Table -->
 
                     	<Table
@@ -412,20 +398,6 @@
 			</ColumnListItem>
 		</items>
 	</Table>
-
-                    <VBox justifyContent="Center">
-                        <Button
-                            class="sapUiTinyMarginBottom"
-                            icon="sap-icon://navigation-right-arrow"
-                            tooltip="Move to selected"
-                            press="onRightRFP"
-                        />
-                        <Button
-                            icon="sap-icon://navigation-left-arrow"
-                            tooltip="Move to available"
-                            press="onLeftOnGoing"
-                        />
-                    </VBox>
 
                        <!-- 3. on going table -->
 
@@ -533,20 +505,6 @@
 		</items>
 	</Table>
 
-
-                    <VBox justifyContent="Center">
-                        <Button
-                            class="sapUiTinyMarginBottom"
-                            icon="sap-icon://navigation-right-arrow"
-                            tooltip="Move to selected"
-                            press="onRightOnGoing"
-                        />
-                        <Button
-                            icon="sap-icon://navigation-left-arrow"
-                            tooltip="Move to available"
-                            press="onLeftGoLive"
-                        />
-                    </VBox>
                        <!-- 4. Go Live Table -->
 
                     	<Table
@@ -646,21 +604,6 @@
 			</ColumnListItem>
 		</items>
 	</Table>
-
-
-                    <VBox justifyContent="Center">
-                        <Button
-                            class="sapUiTinyMarginBottom"
-                            icon="sap-icon://navigation-right-arrow"
-                            tooltip="Move to selected"
-                            press="onRightGoLive"
-                        />
-                        <Button
-                            icon="sap-icon://navigation-left-arrow"
-                            tooltip="Move to available"
-                            press="onLeftPast"
-                        />
-                    </VBox>
 
                      <!-- 5. Past Table -->
                    	<Table
