@@ -574,6 +574,7 @@
                         showDetailsButton="true"
                         showDrillButtons="false"
                         showLegendButton="false"
+						showDimensionsTitle="false"
                         noData="Utilization is either not tracked or not applicable for {firstName}"
                         showSemanticNavigationButton="false"
 						smartFilterId="smartFilterBar" 

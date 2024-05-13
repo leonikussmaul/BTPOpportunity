@@ -40,5 +40,13 @@
 }
 
 .myCustomListItem:hover .labelsItem {
-     background-color: #f5f6f7; 
+    background-color: #f5f6f7; 
+}
+
+.v-axis-item.index_1{
+    visibility: hidden;
+}
+
+.v-valueaxisline{
+    visibility: hidden;
 }
