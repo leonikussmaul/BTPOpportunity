@@ -201,20 +201,23 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading>
-                            <Title text="{account}" />
+                            <!-- <Title text="{account}" /> -->
                         </f:heading>
 
                         <f:content>
                             <Toolbar>
-                                <tnt:InfoLabel
+                               <Label text="Project Name" showColon="true"  width="95px"/>
+                             <Input value="{account}" class="sapUiSmallMarginEnd" width="100%"  id="projectAccount" />
+
+                                <!-- <tnt:InfoLabel
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                     class="sapUiSmallMarginEnd"
                                      visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
-                                />
+                                /> -->
 
                                 <ToolbarSpacer />
-                                <Label text="Go Live:" />
+                                <Label text="Go Live" showColon="true"  width="65px"/>
                                 <DatePicker
                                     value="{ 
                                         path: 'goLive',
@@ -225,7 +228,7 @@
                                         }
                                     }"
                                     placeholder="When is go-live?"
-                                    width="45%"
+                                    width="150px"
                                     id="goLiveDate"
                                 />
                             </Toolbar>

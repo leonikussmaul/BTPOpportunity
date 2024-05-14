@@ -631,6 +631,7 @@ sap.ui.define([
 
         var sOwner = this.inumber;
         var oPayload = {
+          account: sap.ui.getCore().byId("projectAccount").getValue(),
           goLive: goLiveDate,
           projectContact: sap.ui.getCore().byId("projectContact").getValue(),
           marketUnit: sap.ui.getCore().byId("projectMU").getValue(),

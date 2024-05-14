@@ -612,6 +612,7 @@ sap.ui.define([
                 if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
 
                 var oPayload = {
+                    account: sap.ui.getCore().byId("projectAccount").getValue(),
                     goLive: goLiveDate,
                     projectContact: sap.ui.getCore().byId("projectContact").getValue(),
                     marketUnit: sap.ui.getCore().byId("projectMU").getValue(),
