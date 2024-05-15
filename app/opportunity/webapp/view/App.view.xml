@@ -31,10 +31,10 @@
                 width="100%"
             >
                 <App id="app">
-    <!-- <f:FlexibleColumnLayout id="fcl"
-		  stateChange="onStateChanged"
-		  layout="{global>/layout}"
-		  backgroundDesign="Transparent"/> -->
+                    <f:FlexibleColumnLayout id="fcl"
+                        stateChange="onStateChanged"
+                        layout="{global>/layout}"
+                        backgroundDesign="Transparent"/>
               </App>
             </NavContainer>
         </tnt:mainContents>

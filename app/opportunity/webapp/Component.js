@@ -213,7 +213,7 @@ sap.ui.define([
                 var oFCL = this.getRootControl().byId("fcl"),
                     oParams = new URLSearchParams(window.location.search),
                     oSettings = {
-                        defaultTwoColumnLayoutType: LayoutType.OneColumn,
+                        defaultTwoColumnLayoutType: LayoutType.TwoColumnsMidExpanded,
                         defaultThreeColumnLayoutType: LayoutType.ThreeColumnsMidExpanded,
                         mode: oParams.get("mode"),
                         initialColumnsCount: oParams.get("initial"),

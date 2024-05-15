@@ -46,48 +46,46 @@ sap.ui.define([
         _counter++;
       },
 
+      onRouteMatched: function (oEvent) {
+          var sRouteName = oEvent.getParameter("name"),
+            oArguments = oEvent.getParameter("arguments");
+          this.currentRouteName = sRouteName;
+  
+          this._updateUIElements();
+          this.ID = oArguments.opportunityID;
+        },
+  
+        onStateChanged: function (oEvent) {
+          var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
+            sLayout = oEvent.getParameter("layout");
+  
+          this._updateUIElements();
+  
+          // Replace the URL with the new layout if a navigation arrow was used
+          if (bIsNavigationArrow) {
+            this.oRouter.navTo(this.currentRouteName, { layout: sLayout, opportunityID: this.ID }, true);
+          }
+        },
+        _updateUIElements: function () {
+          var oModel = this.getOwnerComponent().getModel("global");
+  
+          var oUIState = this.getOwnerComponent().getHelper().getCurrentUIState();
+          oUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
+          // if (oUIState.layout == "OneColumn" && _counter == 0 && this.currentRouteName !== "List") {
+          //   if (oUIState.layout == "OneColumn" && _counter == 0 && this.currentRouteName == "activityDetail") oUIState = this.getOwnerComponent().getHelper().getNextUIState(2);
+          //   else oUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
+          // }
+          oModel.setData(oUIState);
+        },
+  
+        handleBackButtonPressed: function () {
+          window.history.go(-1);
+        },
+        onExit: function () {
+          this.oRouter.detachRouteMatched(this.onRouteMatched, this);
+          this.oRouter.detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
+        }
+  
 
-
-            onRouteMatched: function (oEvent) {
-                var sRouteName = oEvent.getParameter("name"),
-                  oArguments = oEvent.getParameter("arguments");
-                this.currentRouteName = sRouteName;
-        
-                this._updateUIElements();
-                this.ID = oArguments.opportunityID;
-              },
-        
-              onStateChanged: function (oEvent) {
-                var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
-                  sLayout = oEvent.getParameter("layout");
-        
-                this._updateUIElements();
-        
-                // Replace the URL with the new layout if a navigation arrow was used
-                if (bIsNavigationArrow) {
-                  this.oRouter.navTo(this.currentRouteName, { layout: sLayout, opportunityID: this.ID }, true);
-                }
-              },
-              _updateUIElements: function () {
-                var oModel = this.getOwnerComponent().getModel("global");
-        
-                var oUIState = this.getOwnerComponent().getHelper().getCurrentUIState();
-                oUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
-                // if (oUIState.layout == "OneColumn" && _counter == 0 && this.currentRouteName !== "List") {
-                //   if (oUIState.layout == "OneColumn" && _counter == 0 && this.currentRouteName == "activityDetail") oUIState = this.getOwnerComponent().getHelper().getNextUIState(2);
-                //   else oUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
-                // }
-                oModel.setData(oUIState);
-              },
-        
-              handleBackButtonPressed: function () {
-                window.history.go(-1);
-              },
-              onExit: function () {
-                this.oRouter.detachRouteMatched(this.onRouteMatched, this);
-                this.oRouter.detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
-              }
-        
-
-        });
-    });
+  });
+});
