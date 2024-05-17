@@ -89,14 +89,16 @@ sap.ui.define([
 
             onListItemPress: function (oEvent) {
 
-                var selectedItem = oEvent.getSource().getBindingContext().getObject();
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("ObjectPage", {
-                    opportunityID: selectedItem.opportunityID
-                });
+                this.getView().byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
 
-                var userModel = this.getOwnerComponent().getModel("userModel");
-                userModel.setProperty("/opportunityID", selectedItem.opportunityID);
+                // var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                // oRouter.navTo("ObjectPage", {
+                //     opportunityID: selectedItem.opportunityID
+                // });
+
+                // var userModel = this.getOwnerComponent().getModel("userModel");
+                // userModel.setProperty("/opportunityID", selectedItem.opportunityID);
 
                 // this.onOpenTab(selectedItem); 
             },
