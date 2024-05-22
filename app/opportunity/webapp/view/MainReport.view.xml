@@ -42,7 +42,7 @@
                 >
                     <Title
                         titleStyle="H4"
-                        text="Hi {user>/firstname}, here is today's Demand Generation at a Glance. "
+                        text="Hi {user>/firstname}, here is today's Demand Generation at a Glance. " wrapping="true"
                         class="sapUiSmallMarginBottom"
                     />
                     <Button

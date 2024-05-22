@@ -46,20 +46,29 @@
                         <u:headerTitle>
                             <u:ObjectPageDynamicHeaderTitle>
                                 <u:expandedHeading>
-                                    <HBox>
-                                        <VBox>
+                                   <HBox>
+                                     <Avatar
+                                            class="sapUiTinyMarginEnd"
+                                            initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
+                                            backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
+                                            tooltip="{marketUnit}"
+                                        />
+                                        <VBox class="sapUiTinyMarginBegin">
+                                        
                                             <Title text="{account}" />
                                             <Text
-                                                text="{opportunityID}"
+                                                text="Priority: {priority}"
                                                 class="sapUiNeutral"
+                                                 visible="{= ${priority} !== null}"
                                             />
-                                        </VBox>
-                                        <Button
+                                              <!-- <Button
                                             text="{priority}"
                                             visible="{= ${priority} !== null}"
                                             type="{path: 'priority', formatter:'.formatter.priortityButton'}"
                                             class="sapUiSmallMarginBeginEnd"
-                                        />
+                                        /> -->
+                                        </VBox>
+                                      
                                     </HBox>
                                 </u:expandedHeading>
                                 <u:snappedHeading>
