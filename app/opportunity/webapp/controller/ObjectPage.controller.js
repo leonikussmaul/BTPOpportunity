@@ -108,11 +108,9 @@ sap.ui.define([
                     sorter: oSorter,
                     filters: oFilter
                 });
-
             },
 
             onDeleteLink: function (oEvent) {
-
                 var that = this;
                 var oBindingContext = oEvent.mParameters.listItem.getBindingContext();
                 var sPath = oBindingContext.getPath();
@@ -135,14 +133,11 @@ sap.ui.define([
                         });
                     }
                 });
-
             },
 
 
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
-
-
             },
 
             onSubmitNewLink: function (oEvent) {
@@ -1638,7 +1633,6 @@ COMMENTS
 
             onAddNextStep: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddNextStep");
-
             },
 
             onSubmitNextStep: function (oEvent) {
@@ -1779,7 +1773,6 @@ COMMENTS
                 var sValue = oEvent.mParameters.newValue; 
                 if(sValue) this.resetValueState(); 
             }
-
 
         });
     });
