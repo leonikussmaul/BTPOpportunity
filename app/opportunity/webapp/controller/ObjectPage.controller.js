@@ -216,21 +216,21 @@ sap.ui.define([
 
 
 
-            onTabItemSwitch: function (oEvent) {
+            // onTabItemSwitch: function (oEvent) {
 
-                if (oEvent.mParameters.item) {
-                    var sOpportunityID = oEvent.mParameters.item.getKey();
-                    //this.getOwnerComponent.getModel("userModel").setProperty("/opportunityID", sOppt)
+            //     if (oEvent.mParameters.item) {
+            //         var sOpportunityID = oEvent.mParameters.item.getKey();
+            //         //this.getOwnerComponent.getModel("userModel").setProperty("/opportunityID", sOppt)
 
-                } else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
+            //     } else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
 
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("ObjectPage", {
-                    opportunityID: sOpportunityID
-                });
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
+            //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            //     oRouter.navTo("ObjectPage", {
+            //         opportunityID: sOpportunityID
+            //     });
+            //     sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
 
-            },
+            // },
 
 
             onPress: function (oEvent) {
@@ -265,6 +265,7 @@ sap.ui.define([
             },
 
             onReadModelData: function (sOppID) {
+                var that = this; 
                 var oModel = this.getView().getModel();
                 var sOpportunityID;
                 if (sOppID) sOpportunityID = sOppID;
@@ -285,9 +286,28 @@ sap.ui.define([
                         oPageModel.setProperty("/actionItems", aTasks);
                         oPageModel.setProperty("/topics", aTopics);
                         oPageModel.setProperty("/deliverables", aDeliverables);
+
+                        that.handleSegmentedBtns();
+                       
                     }.bind(this),
                     error: function (oError) {
                         console.log(oError);
+                    }
+                });
+
+            },
+
+            handleSegmentedBtns: function(){
+                var oSegmentedBtns = this.getView().byId("segmentedStatusObject");
+                var aButtons = oSegmentedBtns.getItems(); 
+                 var oSelectedItem = oSegmentedBtns.getSelectedKey(); 
+                aButtons.forEach(function(oBtn) {
+                    if (oBtn.getKey() === oSelectedItem) {
+                        oBtn.setText(oSelectedItem);
+                        oBtn.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oBtn.setText("");
+                        oBtn.setWidth("50px"); // Reset to default width
                     }
                 });
 
@@ -568,6 +588,21 @@ sap.ui.define([
                 oModel.resetChanges();
                 oModel.updateBindings();
 
+
+                //handle segmented btns
+                var oSegmentedBtns = this.getView().byId("segmentedStatusObject");
+                var aButtons = oSegmentedBtns.getItems(); 
+                 var oSelectedItem = oSegmentedBtns.getSelectedKey(); 
+                aButtons.forEach(function(oBtn) {
+                    if (oBtn.getKey() === oSelectedItem) {
+                        oBtn.setText(oSelectedItem);
+                        oBtn.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oBtn.setText("");
+                        oBtn.setWidth("50px"); // Reset to default width
+                    }
+                });
+
             },
 
             onEditObjectPress: function (oEvent) {
@@ -589,6 +624,21 @@ sap.ui.define([
                 oEditModel.setProperty("/editMode", true);
                 var sKey = oEvent.getSource().getSelectedKey();
                 this.getView().getModel("editPageModel").getData().status = sKey;
+
+
+                var aButtons = this.getView().byId("segmentedStatusObject").getItems(); 
+            
+                var oSelectedItem = oEvent.getParameter("item");
+                var sSelectedKey = oSelectedItem.getKey();
+                aButtons.forEach(function(oBtn) {
+                    if (oBtn.getKey() === sSelectedKey) {
+                        oBtn.setText(sSelectedKey);
+                        oBtn.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oBtn.setText("");
+                        oBtn.setWidth("50px"); // Reset to default width
+                    }
+                });
 
             },
 

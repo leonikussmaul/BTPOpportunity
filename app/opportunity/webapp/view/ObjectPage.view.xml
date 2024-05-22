@@ -106,64 +106,14 @@
                         </u:headerTitle>
                         <u:headerContent>
                             <FlexBox wrap="Wrap">
-                                <Avatar
+                                <!-- <Avatar
                                     displaySize="L"
                                     press="onAvatarPress"
                                     backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                     initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
-                                />
-                                <l:VerticalLayout class="sapUiResponsiveMargin">
-                                    <VBox>
-                                        <ObjectStatus
-                                            state="Information"
-                                            text="{i18n>status}"
-                                            icon="sap-icon://message-information"
-                                        />
-                                        <HBox
-                                            alignItems="Center"
-                                            justifyContent="Center"
-                                            width="100%"
-                                        >
-                                            <SegmentedButton
-                                                selectionChange="onSegmentPressed"
-                                                id="segmentedStatusObject"
-                                                width="540px"
-                                                class="apUiTinyMarginBeginEnd"
-                                                selectedKey="{status}"
-                                            >
-                                                <items>
-                                                    <SegmentedButtonItem
-                                                        icon="sap-icon://flag-2"
-                                                        text="Lead"
-                                                        key="Lead"
-                                                    />
-                                                    <SegmentedButtonItem
-                                                        icon="sap-icon://overlay"
-                                                        text="Opp"
-                                                        key="Opportunity"
-                                                    />
-                                                    <SegmentedButtonItem
-                                                        icon="sap-icon://pause"
-                                                        text="Paused"
-                                                        key="Paused"
-                                                    />
-                                                    <SegmentedButtonItem
-                                                        icon="sap-icon://activate"
-                                                        text="Delivery"
-                                                        key="Delivery"
-                                                    />
-                                                    <SegmentedButtonItem
-                                                        icon="sap-icon://checklist-item"
-                                                        text="Complete"
-                                                        key="Completed"
-                                                    />
-                                                </items>
-                                            </SegmentedButton>
-                                        </HBox>
-                                    </VBox>
-                                </l:VerticalLayout>
-
-                                <VBox
+                                /> -->
+                               
+                                <!-- <VBox
                                     class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                                     visible="{= ${opportunityCreatedQuarter} !== null}"
                                 >
@@ -176,22 +126,8 @@
                                         icon="sap-icon://workflow-tasks"
                                         class="sapMObjectStatusLarge"
                                     />
-                                </VBox>
-                                <VBox
-                                    class="sapUiSmallMarginBeginEnd"
-                                    visible="{= ${opportunityValue} !== null}"
-                                >
-                                    <Title
-                                        text="{i18n>Value}"
-                                        class="sapUiTinyMarginBottom"
-                                    />
-                                    <ObjectNumber
-                                        class="sapMObjectNumberLarge"
-                                        state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}"
-                                        number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
-                                        unit="EUR"
-                                    />
-                                </VBox>
+                                </VBox> -->
+                              
                                 <!-- adoption -->
 
                                 <VBox visible="{=!${editModel>/editMode}}">
@@ -263,6 +199,80 @@
                                         enableTickmarks="true"
                                     />
                                 </VBox>
+
+
+  <VBox
+                                    class="sapUiMediumMarginBegin"
+                                    visible="{= ${opportunityValue} !== null}"
+                                >
+                                    <Title
+                                        text="{i18n>Value}"
+                                        class="sapUiTinyMarginBottom"
+                                    />
+                                    <ObjectNumber
+                                        class="sapMObjectNumberLarge"
+                                        state="{path: 'opportunityValue', formatter: '.formatter.numberStateFormatter'}"
+                                        number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
+                                        unit="EUR"
+                                    />
+                                </VBox>
+
+                                 <l:VerticalLayout class="sapUiResponsiveMargin">
+                                    <VBox>
+                                        <ObjectStatus
+                                            state="Information"
+                                            text="{i18n>status}"
+                                            icon="sap-icon://message-information"
+                                        />
+                                        <HBox
+                                            alignItems="Center"
+                                            justifyContent="Center"
+                                            width="100%"
+                                        >
+                                            <SegmentedButton
+                                                selectionChange="onSegmentPressed"
+                                                id="segmentedStatusObject"
+                                                width="300px"
+                                                class="sapUiTinyMarginBeginEnd"
+                                                selectedKey="{status}"
+                                            >
+                                                <items>
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://flag-2"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Lead"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://overlay"
+                                                        text=""
+                                                          width="50px"
+                                                        key="Opportunity"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://pause"
+                                                        text=""
+                                                          width="50px"
+                                                        key="Paused"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://activate"
+                                                        text=""
+                                                          width="50px"
+                                                        key="Delivery"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://checklist-item"
+                                                        text=""
+                                                          width="50px"
+                                                        key="Completed"
+                                                    />
+                                                </items>
+                                            </SegmentedButton>
+                                        </HBox>
+                                    </VBox>
+                                </l:VerticalLayout>
+
                             </FlexBox>
                         </u:headerContent>
                         <!-- section fragments -->
