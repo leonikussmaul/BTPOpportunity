@@ -563,6 +563,21 @@ sap.ui.define([
                 oModel.resetChanges();
                 oModel.updateBindings();
 
+
+                //handle segmented btns
+                var oSegmentedBtns = this.getView().byId("segmentedStatusObject");
+                var aButtons = oSegmentedBtns.getItems(); 
+                 var oSelectedItem = oSegmentedBtns.getSelectedKey(); 
+                aButtons.forEach(function(oBtn) {
+                    if (oBtn.getKey() === oSelectedItem) {
+                        oBtn.setText(oSelectedItem);
+                        oBtn.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oBtn.setText("");
+                        oBtn.setWidth("50px"); // Reset to default width
+                    }
+                });
+
             },
 
             onEditObjectPress: function (oEvent) {
@@ -584,6 +599,22 @@ sap.ui.define([
                 oEditModel.setProperty("/editMode", true);
                 var sKey = oEvent.getSource().getSelectedKey();
                 this.getView().getModel("editPageModel").getData().status = sKey;
+
+
+         
+                 var aButtons = this.getView().byId("segmentedStatusObject").getItems(); 
+            
+                var oSelectedItem = oEvent.getParameter("item");
+                var sSelectedKey = oSelectedItem.getKey();
+                aButtons.forEach(function(oBtn) {
+                    if (oBtn.getKey() === sSelectedKey) {
+                        oBtn.setText(sSelectedKey);
+                        oBtn.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oBtn.setText("");
+                        oBtn.setWidth("50px"); // Reset to default width
+                    }
+                });
 
             },
 
