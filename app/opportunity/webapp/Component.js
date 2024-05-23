@@ -35,7 +35,7 @@ sap.ui.define([
                 this.setModel(new JSONModel(), "global");
                 this.getModel("global").setData({
                     "columnsExpanded": true,
-
+                    "filterbarExpanded": true,
                 })
 
                 // set the device model

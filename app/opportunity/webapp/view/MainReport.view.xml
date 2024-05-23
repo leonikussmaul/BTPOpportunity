@@ -76,6 +76,7 @@
                         showMessages="true"
                         useDateRangeType="true"
                         clear="onClearSmartFilterBar"
+                        filterBarExpanded="{global>/filterbarExpanded}"
                     >
                         <smartFilterBar:controlConfiguration>
                             <smartFilterBar:ControlConfiguration
