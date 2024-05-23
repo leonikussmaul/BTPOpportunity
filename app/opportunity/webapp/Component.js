@@ -33,6 +33,10 @@ sap.ui.define([
 
                 //global model for fcl 
                 this.setModel(new JSONModel(), "global");
+                this.getModel("global").setData({
+                    "columnsExpanded": true,
+
+                })
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");

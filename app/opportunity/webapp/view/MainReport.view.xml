@@ -431,6 +431,7 @@
                                         <Column
                                             hAlign="Center"
                                             width="30%"
+                                            visible="{global>/columnsExpanded}"
                                         >
                                             <customData>
                                                 <core:CustomData
@@ -452,7 +453,7 @@
                                                 tooltip="{i18n>primaryContact}"
                                             />
                                         </Column>
-                                        <Column hAlign="Center">
+                                        <Column hAlign="Center"  visible="{global>/columnsExpanded}">
                                             <customData>
                                                 <core:CustomData
                                                     key="p13nData"
@@ -463,7 +464,7 @@
                                                 text="{i18n>opportunityClosedQuarter}"
                                             />
                                         </Column>
-                                        <Column hAlign="Center">
+                                        <Column hAlign="Center"  visible="{global>/columnsExpanded}">
                                             <customData>
                                                 <core:CustomData
                                                     key="p13nData"
@@ -474,7 +475,7 @@
                                                 text="{i18n>opportunityValue}"
                                             />
                                         </Column>
-                                        <Column
+                                        <Column  visible="{global>/columnsExpanded}"
                                             hAlign="Center"
                                             width="15%"
                                         >
@@ -510,7 +511,7 @@
                                                     alignItems="Center"
                                                     justifyContent="Center"
                                                 >
-                                                    <CustomListItem
+                                                    <CustomListItem 
                                                         class="labelsItem"
                                                         content="{ path: 'topics', sorter: { path: 'sortOrder' }}"
                                                     >
@@ -532,7 +533,7 @@
                                                     unit="EUR"
                                                     visible="{= ${opportunityValue} !== null}"
                                                 />
-                                                <ObjectStatus
+                                                <ObjectStatus 
                                                     text="{status}"
                                                     state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
                                                     visible="{= ${status} !== null}"

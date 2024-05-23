@@ -117,44 +117,13 @@ sap.ui.define([
               var userModel = this.getOwnerComponent().getModel("userModel");
               userModel.setProperty("/opportunityID", selectedItem.opportunityID);
 
-                // this.getView().byId("smartFilterBar").setVisible(false);
-                // this.getView().byId("mySmartTable").deactivateColumns(["opportunityClosedQuarter", "opportunityValue", "status", "topics/topic"]);
+              this.handleVisibilityForFCL(); 
+            },
 
-                // var selectedItem = oEvent.getSource().getBindingContext().getObject();
-                // var userModel = this.getOwnerComponent().getModel("userModel");
-                // userModel.setProperty("/opportunityID", selectedItem.opportunityID);
+            handleVisibilityForFCL: function(){
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/columnsExpanded", false);
 
-                // var oModel = this.getView().getModel();
-                // var sOpportunityID = selectedItem.opportunityID;
-                // if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID");
-                // this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
-
-                // this.getView().bindElement({
-                //     path: "/opportunityHeader/" + sOpportunityID,
-                //     parameters: {
-                //         expand: "actionItems,comments,deliverables,links"
-                //     }
-                // });
-
-                // this.sOpportunityID = sOpportunityID;
-                // this.onFilterComments(sOpportunityID);
-                // this.onFilterLinkList(sOpportunityID);
-                // this.onFilterNextSteps(sOpportunityID);
-
-                // oModel.setDefaultBindingMode("TwoWay");
-
-                // //oModel read for tasks deep entity 
-                // this.onReadModelData(sOpportunityID);
-                // this.onSetLayout();
-
-                // var oMaturityTable = this.getView().byId("maturityTableID");
-                // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
-
-                // var oActivitiesTable = this.getView().byId("activitiesTableID");
-                // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
-                // this.onReadTopics();
-                // this.onReadDeliverables();
             },
 
             onReadModelData: function (sOppID) {

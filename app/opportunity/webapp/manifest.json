@@ -141,9 +141,8 @@
             "routes": [
                 {
                     "name": "Overview",
-                    "pattern": ":?query:",
+                    "pattern": "",
                     "target": [
-                        "MainReport",
                         "Overview"
                     ]
                 },
@@ -204,7 +203,7 @@
                     "controlAggregation": "beginColumnPages"
                   },
                   "MainReport": {
-                    "level": 0,
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "MainReport",
