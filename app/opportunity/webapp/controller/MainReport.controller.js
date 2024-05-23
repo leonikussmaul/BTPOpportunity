@@ -104,45 +104,57 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onListItemPress: function (oEvent) {
-                this.getView().byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
-                this.getView().byId("smartFilterBar").setVisible(false);
-                this.getView().byId("mySmartTable").deactivateColumns(["opportunityClosedQuarter", "opportunityValue", "status", "topics/topic"]);
+              //  this.getView().byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
+              this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
 
-                var selectedItem = oEvent.getSource().getBindingContext().getObject();
-                var userModel = this.getOwnerComponent().getModel("userModel");
-                userModel.setProperty("/opportunityID", selectedItem.opportunityID);
+              var selectedItem = oEvent.getSource().getBindingContext().getObject();
+              var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+              oRouter.navTo("ObjectPage", {
+                  opportunityID: selectedItem.opportunityID,
+                  layout: "TwoColumnsMidExpanded"
+              });
 
-                var oModel = this.getView().getModel();
-                var sOpportunityID = selectedItem.opportunityID;
-                if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID");
-                this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
+              var userModel = this.getOwnerComponent().getModel("userModel");
+              userModel.setProperty("/opportunityID", selectedItem.opportunityID);
 
-                this.getView().bindElement({
-                    path: "/opportunityHeader/" + sOpportunityID,
-                    parameters: {
-                        expand: "actionItems,comments,deliverables,links"
-                    }
-                });
+                // this.getView().byId("smartFilterBar").setVisible(false);
+                // this.getView().byId("mySmartTable").deactivateColumns(["opportunityClosedQuarter", "opportunityValue", "status", "topics/topic"]);
 
-                this.sOpportunityID = sOpportunityID;
-                this.onFilterComments(sOpportunityID);
-                this.onFilterLinkList(sOpportunityID);
-                this.onFilterNextSteps(sOpportunityID);
+                // var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                // var userModel = this.getOwnerComponent().getModel("userModel");
+                // userModel.setProperty("/opportunityID", selectedItem.opportunityID);
 
-                oModel.setDefaultBindingMode("TwoWay");
+                // var oModel = this.getView().getModel();
+                // var sOpportunityID = selectedItem.opportunityID;
+                // if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID");
+                // this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
 
-                //oModel read for tasks deep entity 
-                this.onReadModelData(sOpportunityID);
-                this.onSetLayout();
+                // this.getView().bindElement({
+                //     path: "/opportunityHeader/" + sOpportunityID,
+                //     parameters: {
+                //         expand: "actionItems,comments,deliverables,links"
+                //     }
+                // });
 
-                var oMaturityTable = this.getView().byId("maturityTableID");
-                if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
+                // this.sOpportunityID = sOpportunityID;
+                // this.onFilterComments(sOpportunityID);
+                // this.onFilterLinkList(sOpportunityID);
+                // this.onFilterNextSteps(sOpportunityID);
 
-                var oActivitiesTable = this.getView().byId("activitiesTableID");
-                if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+                // oModel.setDefaultBindingMode("TwoWay");
 
-                this.onReadTopics();
-                this.onReadDeliverables();
+                // //oModel read for tasks deep entity 
+                // this.onReadModelData(sOpportunityID);
+                // this.onSetLayout();
+
+                // var oMaturityTable = this.getView().byId("maturityTableID");
+                // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
+
+                // var oActivitiesTable = this.getView().byId("activitiesTableID");
+                // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+
+                // this.onReadTopics();
+                // this.onReadDeliverables();
             },
 
             onReadModelData: function (sOppID) {

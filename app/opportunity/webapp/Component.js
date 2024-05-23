@@ -6,10 +6,13 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "opportunity/opportunity/model/models",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/f/library",
+	"sap/f/FlexibleColumnLayoutSemanticHelper"
 ],
-    function (UIComponent, Device, models, JSONModel) {
+    function (UIComponent, Device, models, JSONModel, library, FlexibleColumnLayoutSemanticHelper) {
         "use strict";
+        var LayoutType = library.LayoutType;
 
         return UIComponent.extend("opportunity.opportunity.Component", {
             metadata: {
@@ -27,6 +30,9 @@ sap.ui.define([
 
                 // enable routing
                 this.getRouter().initialize();
+
+                //global model for fcl 
+                this.setModel(new JSONModel(), "global");
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
@@ -235,6 +241,20 @@ sap.ui.define([
             //         this.getModel().refresh();
             //     }
             // },
+
+            getHelper: function () {
+                var oFCL = this.getRootControl().byId("app"),
+                    oParams = UriParameters.fromQuery(location.search),
+                    oSettings = {
+                        defaultTwoColumnLayoutType: LayoutType.TwoColumnsMidExpanded,
+                        mode: oParams.get("mode"),
+                        initialColumnsCount: oParams.get("initial"),
+                        maxColumnsCount: oParams.get("max")
+                    };
+    
+                return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);
+            }
+    
     
         });
     }

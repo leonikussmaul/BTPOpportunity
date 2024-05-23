@@ -136,29 +136,32 @@
                 "viewType": "XML",
                 "async": true,
                 "viewPath": "opportunity.opportunity.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false,
-                "path": "opportunity.opportunity.view",
-                "bypassed": {
-                    "target": "NotFound"
-                 }
+                "controlId": "app"
             },
             "routes": [
                 {
                     "name": "Overview",
                     "pattern": ":?query:",
-                    "target": "Overview"
+                    "target": [
+                        "MainReport",
+                        "Overview"
+                    ]
                 },
                 {
                     "name": "MainReport",
                     "pattern": "MainReport",
-                    "target": "MainReport"
+                    "target": [
+                        "MainReport",
+                        "ObjectPage"
+                    ]
                 },
                 {
                     "name": "ObjectPage",
-                    "pattern": "ObjectPage/{opportunityID}",
-                    "target": "ObjectPage"
+                    "pattern": "ObjectPage/{opportunityID}/{layout}",
+                    "target": [
+                        "MainReport",
+                        "ObjectPage"
+                    ]
                 },
                 {
                     "name": "TasksReport",
@@ -193,41 +196,42 @@
             ],
             "targets": {
                 "Overview": {
+                    "level": 0,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "Overview",
                     "viewName": "Overview",
-                    "viewLevel": 0
-                },
-                "MainReport": {
+                    "controlAggregation": "beginColumnPages"
+                  },
+                  "MainReport": {
+                    "level": 0,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "MainReport",
                     "viewName": "MainReport",
-                    "viewLevel": 1
-                },
-                "ObjectPage": {
+                    "controlAggregation": "beginColumnPages"
+                  },
+                  "ObjectPage": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "ObjectPage",
                     "viewName": "ObjectPage",
-                    "viewLevel": 2
-                },
+                    "controlAggregation": "midColumnPages"
+                  },
+             
                 "TasksReport": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",
-                    "viewLevel": 1
+                    "viewLevel": 1,
+                    "controlAggregation": "midColumnPages"
                 },
                 "TaskDetail": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "midColumnPages",
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
                     "viewLevel": 2
@@ -235,7 +239,7 @@
                 "Calendar": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "midColumnPages",
                     "viewId": "Calendar",
                     "viewName": "Calendar",
                     "viewLevel": 1
@@ -243,7 +247,7 @@
                 "Team": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "midColumnPages",
                     "viewId": "Team",
                     "viewName": "Team",
                     "viewLevel": 1
@@ -251,7 +255,7 @@
                 "Resources": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "midColumnPages",
                     "viewId": "Resources",
                     "viewName": "Resources",
                     "viewLevel": 2
@@ -259,7 +263,7 @@
                 "ProjectOverview": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "midColumnPages",
                     "viewId": "ProjectOverview",
                     "viewName": "ProjectOverview",
                     "viewLevel": 1
