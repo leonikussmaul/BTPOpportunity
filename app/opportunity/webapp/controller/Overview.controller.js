@@ -25,6 +25,8 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+
                 var oChart1 = this.getView().byId("smartChart1");
                 if (oChart1.isInitialised()) oChart1.rebindChart();
 

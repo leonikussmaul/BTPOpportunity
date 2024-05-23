@@ -66,10 +66,10 @@ sap.ui.define([
                 });
 
                 this.onStatusMethod();
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
 
                 //   var oChart = this.getView().byId("smartChartTeamForecast");
                 //   if (oChart.isInitialised()) oChart.rebindChart();
-
             },
 
             onStatusMethod: function (aFilterbar) {

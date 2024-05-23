@@ -76,7 +76,7 @@ sap.ui.define([
 
             _onRoutePatternMatched: function (oEvent) {
                 this.onReadTasksData(); 
-                
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
             },
            
 

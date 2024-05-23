@@ -124,7 +124,7 @@ sap.ui.define([
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/columnsExpanded", false);
                 oGlobalModel.setProperty("/filterbarExpanded", false);
-
+                
             },
 
             // onOpenTab: function(selectedItem) {

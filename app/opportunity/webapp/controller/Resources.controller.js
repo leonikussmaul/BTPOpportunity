@@ -91,6 +91,7 @@ sap.ui.define([
         var oChart = this.getView().byId("smartChartTeamForecast");
         if (oChart.isInitialised()) oChart.rebindChart();
 
+        this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
       },
 
       onStatusMethod: function (inumber) {

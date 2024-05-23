@@ -17,6 +17,11 @@ sap.ui.define([
         return Controller.extend("opportunity.opportunity.controller.Team", {
             formatter: formatter,
             onInit: function () {
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("Team").attachPatternMatched(this._onRoutePatternMatched, this);
+            },
+
+            _onRoutePatternMatched: function(){
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
             },
 
             onSelectionChange: function (oEvent) {

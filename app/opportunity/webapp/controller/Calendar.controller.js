@@ -38,7 +38,6 @@ sap.ui.define([
         });
         this.getView().setModel(oEditModel, "editModel");
 
-
         var legendItems = [
           // {
           //     text: "Public holiday",
@@ -92,6 +91,9 @@ sap.ui.define([
 
       },
 
+      _onRoutePatternMatched: function(){
+        this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+      },
 
       handleAppointmentSelect: function (oEvent) {
         var oAppointment = oEvent.getParameter("appointment"),

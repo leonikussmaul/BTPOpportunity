@@ -71,6 +71,7 @@ sap.ui.define([
                 this.onFilterLinkList(this._sID);
                 this.onFilterComments(this._sID);
 
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
             },
 
             onReadSubTasksData: function (sthisID) {
