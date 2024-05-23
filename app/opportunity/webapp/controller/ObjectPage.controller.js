@@ -1803,7 +1803,43 @@ COMMENTS
             onChangeValueState: function(oEvent){
                 var sValue = oEvent.mParameters.newValue; 
                 if(sValue) this.resetValueState(); 
-            }
+            },
+
+
+              /* ------------------------------------------------------------------------------------------------------------
+            FCL BUTTONS
+            --------------------------------------------------------------------------------------------------------------*/
+
+
+            handleFullScreen: function (){
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "MidColumnFullScreen");
+
+                this.byId("enterFullScreenBtn").setVisible(false);
+                this.byId("exitFullScreenBtn").setVisible(true);
+            },
+
+            handleExitFullScreen: function (){
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+
+                this.byId("enterFullScreenBtn").setVisible(true);
+                this.byId("exitFullScreenBtn").setVisible(false);
+            },
+
+            handleClose: function () {
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+
+                this.byId("enterFullScreenBtn").setVisible(true);
+                this.byId("exitFullScreenBtn").setVisible(false);
+                
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/columnsExpanded", true);
+                oGlobalModel.setProperty("/filterbarExpanded", true);
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("MainReport", {
+                });
+                
+            },
 
         });
     });
