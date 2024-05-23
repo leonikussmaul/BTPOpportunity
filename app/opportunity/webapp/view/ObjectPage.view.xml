@@ -45,28 +45,55 @@
                             <u:ObjectPageDynamicHeaderTitle>
                                 <u:expandedHeading>
                                     <HBox>
-                                     <Avatar
+                                        <Avatar
                                             class="sapUiTinyMarginEnd"
                                             initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
                                             backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                             tooltip="{marketUnit}"
                                         />
                                         <VBox>
-                                        
                                             <Title text="{account}" />
                                             <Text
                                                 text="Priority: {priority}"
                                                 class="sapUiNeutral"
-                                                 visible="{= ${priority} !== null}"
+                                                visible="{= ${priority} !== null}"
                                             />
-                                              <!-- <Button
+                                            <!-- <Button
                                             text="{priority}"
                                             visible="{= ${priority} !== null}"
                                             type="{path: 'priority', formatter:'.formatter.priortityButton'}"
                                             class="sapUiSmallMarginBeginEnd"
                                         /> -->
                                         </VBox>
-                                      
+
+                                        <HBox
+                                            width="400px"
+                                            alignItems="Start"
+                                            justifyContent="End"
+                                        >
+                                            <l:HorizontalLayout
+                                                id="topicsID"
+                                                allowWrapping="true"
+                                                class="sapUiLargeMarginBegin"
+                                                content="{}"
+                                            >
+                                                <tnt:InfoLabel
+                                                    text="{ path: 'pageModel>topic' }"
+                                                    renderMode="Narrow"
+                                                    class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
+                                                    colorScheme="{path:'pageModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                                    visible="{= ${pageModel>topic} !== null &amp;&amp; ${pageModel>topic} !== '' }"
+                                                >
+                                                    <tnt:customData>
+                                                        <core:CustomData
+                                                            key="topic"
+                                                            value="{pageModel>topic}"
+                                                            class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                        />
+                                                    </tnt:customData>
+                                                </tnt:InfoLabel>
+                                            </l:HorizontalLayout>
+                                        </HBox>
                                     </HBox>
                                 </u:expandedHeading>
                                 <u:snappedHeading>
@@ -110,11 +137,29 @@
                                     />
                                 </u:actions>
 
-                        <u:navigationActions>
-							<OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press=".handleFullScreen" id="enterFullScreenBtn" tooltip="Enter Full Screen Mode"/>
-							<OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press=".handleExitFullScreen" id="exitFullScreenBtn" tooltip="Exit Full Screen Mode" visible="false"/>
-							<OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press=".handleClose" tooltip="Close middle column"/>
-                        </u:navigationActions>
+                                <u:navigationActions>
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://full-screen"
+                                        press=".handleFullScreen"
+                                        id="enterFullScreenBtn"
+                                        tooltip="Enter Full Screen Mode"
+                                    />
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://exit-full-screen"
+                                        press=".handleExitFullScreen"
+                                        id="exitFullScreenBtn"
+                                        tooltip="Exit Full Screen Mode"
+                                        visible="false"
+                                    />
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://decline"
+                                        press=".handleClose"
+                                        tooltip="Close middle column"
+                                    />
+                                </u:navigationActions>
                             </u:ObjectPageDynamicHeaderTitle>
                         </u:headerTitle>
                         <u:headerContent>
@@ -125,7 +170,7 @@
                                     backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                     initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
                                 /> -->
-                               
+
                                 <!-- <VBox
                                     class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                                     visible="{= ${opportunityCreatedQuarter} !== null}"
@@ -140,7 +185,7 @@
                                         class="sapMObjectStatusLarge"
                                     />
                                 </VBox> -->
-                              
+
                                 <!-- adoption -->
 
                                 <VBox visible="{=!${editModel>/editMode}}">
@@ -213,8 +258,7 @@
                                     />
                                 </VBox>
 
-
-  <VBox
+                                <VBox
                                     class="sapUiMediumMarginBegin"
                                     visible="{= ${opportunityValue} !== null}"
                                 >
@@ -230,7 +274,7 @@
                                     />
                                 </VBox>
 
-                                 <l:VerticalLayout class="sapUiResponsiveMargin">
+                                <l:VerticalLayout class="sapUiResponsiveMargin">
                                     <VBox>
                                         <ObjectStatus
                                             state="Information"
@@ -259,25 +303,25 @@
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://overlay"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Opportunity"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://pause"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Paused"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://activate"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Delivery"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://checklist-item"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Completed"
                                                     />
                                                 </items>
@@ -285,7 +329,6 @@
                                         </HBox>
                                     </VBox>
                                 </l:VerticalLayout>
-
                             </FlexBox>
                         </u:headerContent>
                         <!-- section fragments -->
@@ -494,7 +537,7 @@
                                                 </Column>
                                             </columns>
                                             <items>
-                                                <ColumnListItem 
+                                                <ColumnListItem
                                                     vAlign="Middle"
                                                     type="Detail"
                                                     detailPress="onMaturityEdit"
@@ -679,11 +722,12 @@
                                                     userName="{nextStep}"
                                                     filterValue="{completed}"
                                                     maxCharacters="500"
-                                                    dateTime="{postedOn}" 
+                                                    dateTime="{postedOn}"
                                                 >
                                                     <commons:embeddedControl>
                                                         <VBox>
-                                                            <Text  visible="{= ${nextStepDescription} === true }"
+                                                            <Text
+                                                                visible="{= ${nextStepDescription} === true }"
                                                                 class="sapUiSmallMarginBegin"
                                                                 text="{nextStepDescription}"
                                                                 width="90%"
@@ -859,7 +903,7 @@
                                         <tnt:InfoLabel
                                             text="{pageModel>actionTopic}"
                                             colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                             visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
+                                            visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </OverflowToolbar>

@@ -239,6 +239,14 @@ sap.ui.define([
 
             onSetLayout: function () {
 
+                var oLayout1 = this.getView().byId("topicsID");
+                var oTemplate1 = oLayout1.getBindingInfo("content").template;
+                oLayout1.bindAggregation("content", {
+                    path: 'pageModel>/topics',
+                    template: oTemplate1,
+                    sorter: new sap.ui.model.Sorter('sortOrder', false)
+                });
+
                 var oLayout1 = this.getView().byId("TopicFiltersObject");
                 var oTemplate1 = oLayout1.getBindingInfo("content").template;
                 oLayout1.bindAggregation("content", {
