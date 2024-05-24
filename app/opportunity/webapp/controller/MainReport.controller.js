@@ -43,21 +43,6 @@ sap.ui.define([
                 }), "localModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");         
-                
-                //Object page models
-                var oPageModel = new JSONModel({});
-                this.getView().setModel(oPageModel, "pageModel");
-
-                var oEditModel = new JSONModel({
-                    editMode: false
-                });
-                this.getView().setModel(oEditModel, "editModel");
-
-                var AddTaskModel = new JSONModel({});
-                this.getView().setModel(AddTaskModel, "AddTaskModel");
-
-                var oEditPageModel = new JSONModel({});
-                this.getView().setModel(oEditPageModel, "editPageModel");
             },
 
             _getText: function (sTextId, aArgs) {
