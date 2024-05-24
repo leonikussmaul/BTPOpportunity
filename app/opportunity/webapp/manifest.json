@@ -142,7 +142,7 @@
             "routes": [
                 {
                     "name": "Overview",
-                    "pattern": "Overview",
+                    "pattern": ":?query:",
                     "target": [
                         "Overview"
                     ]
