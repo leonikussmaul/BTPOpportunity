@@ -55,8 +55,8 @@ sap.ui.define([
                 }), "localModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
-
-
+                
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
             },
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
