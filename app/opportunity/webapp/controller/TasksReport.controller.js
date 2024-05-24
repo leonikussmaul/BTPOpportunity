@@ -19,10 +19,10 @@ sap.ui.define([
     function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, Sorter, Message, MessageToast, ValueState, FilterType, formatter, CoreLibrary) {
         "use strict";
         var ValueState = CoreLibrary.ValueState,
-        oValueState = {
-            valueState: ValueState.None,
-            valueStateText: ""
-        };
+            oValueState = {
+                valueState: ValueState.None,
+                valueStateText: ""
+            };
 
 
         return Controller.extend("opportunity.opportunity.controller.TasksReport", {
@@ -41,8 +41,8 @@ sap.ui.define([
 
                 this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
-                
-               
+
+
 
             },
 
@@ -51,19 +51,19 @@ sap.ui.define([
                 var oActionItemModel = this.getView().getModel("actionItemModel");
 
                 oModel.read("/opportunityActionItems", {
-                     urlParameters: {
-                         "$expand": "subTasks"
-                     },
+                    urlParameters: {
+                        "$expand": "subTasks"
+                    },
                     success: function (oResponse) {
                         var aTasks = oResponse.results;
-                        var aAllSubTasks = []; 
-                        for(var i=0; i < aTasks.length; i++ ){
+                        var aAllSubTasks = [];
+                        for (var i = 0; i < aTasks.length; i++) {
                             var oItem = aTasks[i].subTasks.results;
-                            for(var j=0; j < oItem.length; j++) {
+                            for (var j = 0; j < oItem.length; j++) {
                                 aAllSubTasks.push(oItem[j]);
                             }
                         }
-                        
+
                         oActionItemModel.setProperty("/actionItems", aTasks);
                         oActionItemModel.setProperty("/subTasks", aAllSubTasks);
                     }.bind(this),
@@ -75,30 +75,30 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
-                this.onReadTasksData(); 
+                this.onReadTasksData();
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
             },
-           
+
 
             onBeforeRebindTaskTable: function (oEvent) {
                 var oBindingParams = oEvent.getParameter("bindingParams");
-              
+
                 var fnGroupHeaderFormatter = function (oContext) {
-                    var sHeader; 
+                    var sHeader;
                     // if(oContext.getProperty("actionPriorityNumber") != null){
-                  sHeader = oContext.getProperty("actionCustomer");
-                // }
-                  return {
-                    key: sHeader,
-                  };
+                    sHeader = oContext.getProperty("actionCustomer");
+                    // }
+                    return {
+                        key: sHeader,
+                    };
                 };
                 var oGrouping = new sap.ui.model.Sorter("actionCustomer", false, fnGroupHeaderFormatter);
                 oBindingParams.sorter.push(oGrouping);
-              
-               
-              },
 
-              onDeleteTableItem: function (oEvent) {
+
+            },
+
+            onDeleteTableItem: function (oEvent) {
                 var oSmartTable = this.getView().byId("myTaskTable");
                 var aSelectedItems = oSmartTable.getTable().getSelectedItems();
 
@@ -120,7 +120,7 @@ sap.ui.define([
                                     error: function (oError) {
                                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                                         sap.m.MessageToast.show(sMessage);
-                                      }
+                                    }
                                 });
                             }
                         }
@@ -132,73 +132,73 @@ sap.ui.define([
             onAddToDoTablePress: function () {
                 var that = this;
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDoTask");
-                
+
             },
-            onSubmitNewTask: function(oEvent) {
+            onSubmitNewTask: function (oEvent) {
                 var that = this;
                 //var oDialog = oEvent.getSource().getParent().getParent(); 
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oData = oAddTaskModel.getData();
-              
-                var oSelected = sap.ui.getCore().byId("accountComboBox").getSelectedItem(); 
-                if(oSelected){
 
-                if(oData.actionTask && oData.actionTitle){
-                    var sCustomer = oSelected.getText();
-                    this.resetValueState(); 
+                var oSelected = sap.ui.getCore().byId("accountComboBox").getSelectedItem();
+                if (oSelected) {
 
-                var sDueDate;
-                if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+                    if (oData.actionTask && oData.actionTitle) {
+                        var sCustomer = oSelected.getText();
+                        this.resetValueState();
 
-                var sPriorityNumber; 
-                if(oData.actionPriority === "High") sPriorityNumber = 1; 
-                else if (oData.actionPriority === "Medium") sPriorityNumber = 2; 
-                else if (oData.actionPriority === "Low") sPriorityNumber = 3; 
-              
-                var oNewTask = {
-                  actionDueDate: sDueDate,
-                  actionCustomer: sCustomer,
-                  actionOwner: oData.actionOwner,
-                  actionProgress: oData.actionProgress,
-                  actionTopic: oData.actionTopic,
-                  actionTask: oData.actionTask,
-                  actionTitle: oData.actionTitle,
-                  actionPriority: oData.actionPriority,
-                  actionPriorityNumber: sPriorityNumber,
-                  opptID_opportunityID: oData.account
-                };
-              
-                var sPath = "/opportunityActionItems";
-              
-                var oModel = this.getView().getModel();
-                oModel.create(sPath, oNewTask, {
-                  success: function(oData, response) {
-                    MessageToast.show("New Task created!");
-                   // oDialog.close(); 
-                    that.onCancelDialogPress(); 
-                  },
-                  error: function (oError) {
-                    var sMessage = JSON.parse(oError.responseText).error.message.value;
-                    sap.m.MessageBox.error(sMessage);
-                    
-                }
-                });
-            } else this.ValueStateMethod(); 
-        } else MessageToast.show("You have to select an account to link the task to first")
-              },
-              
+                        var sDueDate;
+                        if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
 
-             
+                        var sPriorityNumber;
+                        if (oData.actionPriority === "High") sPriorityNumber = 1;
+                        else if (oData.actionPriority === "Medium") sPriorityNumber = 2;
+                        else if (oData.actionPriority === "Low") sPriorityNumber = 3;
 
-              onDialogOpen: function (fragmentName) {
-                this.resetValueState(); 
+                        var oNewTask = {
+                            actionDueDate: sDueDate,
+                            actionCustomer: sCustomer,
+                            actionOwner: oData.actionOwner,
+                            actionProgress: oData.actionProgress,
+                            actionTopic: oData.actionTopic,
+                            actionTask: oData.actionTask,
+                            actionTitle: oData.actionTitle,
+                            actionPriority: oData.actionPriority,
+                            actionPriorityNumber: sPriorityNumber,
+                            opptID_opportunityID: oData.account
+                        };
+
+                        var sPath = "/opportunityActionItems";
+
+                        var oModel = this.getView().getModel();
+                        oModel.create(sPath, oNewTask, {
+                            success: function (oData, response) {
+                                MessageToast.show("New Task created!");
+                                // oDialog.close(); 
+                                that.onCancelDialogPress();
+                            },
+                            error: function (oError) {
+                                var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                sap.m.MessageBox.error(sMessage);
+
+                            }
+                        });
+                    } else this.ValueStateMethod();
+                } else MessageToast.show("You have to select an account to link the task to first")
+            },
+
+
+
+
+            onDialogOpen: function (fragmentName) {
+                this.resetValueState();
                 var that = this;
-                if(!this._pDialog){
+                if (!this._pDialog) {
                     this._pDialog = Fragment.load({
                         //id:"myDialog",
                         name: fragmentName,
-                        controller:this
-                    }).then(function(_pDialog){
+                        controller: this
+                    }).then(function (_pDialog) {
                         that.getView().addDependent(_pDialog);
                         _pDialog.setEscapeHandler(function () {
                             that.onCloseDialog();
@@ -206,31 +206,45 @@ sap.ui.define([
                         return _pDialog;
                     });
                 }
-                this._pDialog.then(function(_pDialog){                
+                this._pDialog.then(function (_pDialog) {
                     _pDialog.open();
-                    
+
                 })
-        },
+            },
 
 
-        onCancelDialogPress: function (oEvent) {
-                this._pDialog.then(function(_pDialog){
+            onCancelDialogPress: function (oEvent) {
+                this._pDialog.then(function (_pDialog) {
                     _pDialog.close();
                     _pDialog.destroy();
                 });
-                this._pDialog = null;   
+                this._pDialog = null;
                 var oAddTaskModel = this.getView().getModel("AddTaskModel");
-                oAddTaskModel.setData({});  
-          
-        },
+                oAddTaskModel.setData({});
+
+            },
+
 
 
             onListItemPress: function (oEvent) {
+                //  this.getView().byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+
                 var selectedItem = oEvent.getSource().getBindingContext().getObject();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("TaskDetail", {
-                    ID: selectedItem.ID
+                    ID: selectedItem.ID,
+                    layout: "TwoColumnsMidExpanded"
                 });
+
+                this.handleVisibilityForFCL();
+            },
+
+            handleVisibilityForFCL: function () {
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/columnsExpanded", false);
+                oGlobalModel.setProperty("/filterbarExpanded", false);
+
             },
 
             onSearch: function (oEvent) {
@@ -239,24 +253,24 @@ sap.ui.define([
                 if (sQuery && sQuery.length > 0) {
                     var aFilters = [
                         new Filter({
-                          filters: [
-                            new Filter({ path: "actionTitle", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "actionTask", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "actionCustomer", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "actionTopic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                            new Filter({ path: "actionOwner", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                    
-        
-                          ],
-                          and: false
+                            filters: [
+                                new Filter({ path: "actionTitle", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "actionTask", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "actionCustomer", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "actionTopic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                new Filter({ path: "actionOwner", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+
+
+                            ],
+                            and: false
                         })
-                      ];
+                    ];
                 }
 
                 var oList = this.byId("myTaskTable").getTable();
                 var oBinding = oList.getBinding("items")
                 oBinding.filter(aFilters, FilterType.Application);
-  
+
             },
 
 
@@ -264,26 +278,27 @@ sap.ui.define([
                 var oButton = oEvent.getSource(),
                     oView = this.getView(),
                     iIndex = oEvent.getSource().getBindingContext().sPath;
-            
-                    this._pPopover = Fragment.load({
-                        id: oView.getId(),
-                        name: "opportunity.opportunity.view.fragments.taskPopover.TaskPopover",
-                        controller: this
-                    }).then(function(oPopover) {
-                        oView.addDependent(oPopover);
-                        oPopover.bindElement({
-                            path: iIndex, 
-                            events: {
-                                change: function() {
-                                    oPopover.invalidate();  }
+
+                this._pPopover = Fragment.load({
+                    id: oView.getId(),
+                    name: "opportunity.opportunity.view.fragments.taskPopover.TaskPopover",
+                    controller: this
+                }).then(function (oPopover) {
+                    oView.addDependent(oPopover);
+                    oPopover.bindElement({
+                        path: iIndex,
+                        events: {
+                            change: function () {
+                                oPopover.invalidate();
                             }
-                        });
-                       
-                        return oPopover;
-                    })
-                
-                this._pPopover.then(function(oPopover) {
-                    oPopover.attachAfterClose(function() {
+                        }
+                    });
+
+                    return oPopover;
+                })
+
+                this._pPopover.then(function (oPopover) {
+                    oPopover.attachAfterClose(function () {
                         oPopover.destroy();
                         //this._pPopover = null;
                     }.bind(this));
@@ -291,57 +306,57 @@ sap.ui.define([
                 });
             },
 
-            
+
             /* ------------------------------------------------------------------------------------------------------------
             EXPORT TO EXCEL
             --------------------------------------------------------------------------------------------------------------*/
 
 
-            onBeforeExportTasks: function(oEvent){
+            onBeforeExportTasks: function (oEvent) {
 
                 //var oi18nModel = this.getView().getModel("i18n")
-            var oWorkbook = oEvent.getParameter("exportSettings").workbook;
-            oWorkbook.columns.unshift({ property: 'actionPriority', label: "Priority" })
+                var oWorkbook = oEvent.getParameter("exportSettings").workbook;
+                oWorkbook.columns.unshift({ property: 'actionPriority', label: "Priority" })
 
-            //change col order
-            // var oFavouriteCol = oWorkbook.columns[1]
-            // var oValueDriverCol = oWorkbook.columns[2]
-             oWorkbook.columns[5].label = "Progress"
-            // oWorkbook.columns[2] = oFavouriteCol;
+                //change col order
+                // var oFavouriteCol = oWorkbook.columns[1]
+                // var oValueDriverCol = oWorkbook.columns[2]
+                oWorkbook.columns[5].label = "Progress"
+                // oWorkbook.columns[2] = oFavouriteCol;
 
-            // //customization 
-            // oWorkbook.context.sheetName = "Business Goals and Value Drivers"
-            // oWorkbook.columns[0].width = "40%";
-            // oWorkbook.columns[1].width = "50%";
+                // //customization 
+                // oWorkbook.context.sheetName = "Business Goals and Value Drivers"
+                // oWorkbook.columns[0].width = "40%";
+                // oWorkbook.columns[1].width = "50%";
 
             },
 
 
-             /* ------------------------------------------------------------------------------------------------------------
-            VALUE STATE
-            --------------------------------------------------------------------------------------------------------------*/
+            /* ------------------------------------------------------------------------------------------------------------
+           VALUE STATE
+           --------------------------------------------------------------------------------------------------------------*/
 
 
-            ValueStateMethod: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            ValueStateMethod: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 MessageToast.show("Please fill all mandatory fields");
                 oValueStateModel.setProperty("/valueState", ValueState.Error);
                 oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
 
             },
 
-            resetValueState: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            resetValueState: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 oValueStateModel.setProperty("/valueState", ValueState.None);
                 oValueStateModel.setProperty("/valueStateText", "");
             },
 
-            onChangeValueState: function(oEvent){
-                var sValue = oEvent.mParameters.newValue; 
-                if(sValue) this.resetValueState(); 
+            onChangeValueState: function (oEvent) {
+                var sValue = oEvent.mParameters.newValue;
+                if (sValue) this.resetValueState();
             }
-           
-           
+
+
 
         });
     });

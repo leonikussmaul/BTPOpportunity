@@ -20,10 +20,10 @@ sap.ui.define([
     function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, ValueState, FilterType, formatter, History, UI5Date, library, CoreLibrary) {
         "use strict";
         var ValueState = CoreLibrary.ValueState,
-        oValueState = {
-            valueState: ValueState.None,
-            valueStateText: ""
-        };
+            oValueState = {
+                valueState: ValueState.None,
+                valueStateText: ""
+            };
 
 
         return Controller.extend("opportunity.opportunity.controller.TaskDetail", {
@@ -71,7 +71,7 @@ sap.ui.define([
                 this.onFilterLinkList(this._sID);
                 this.onFilterComments(this._sID);
 
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
             },
 
             onReadSubTasksData: function (sthisID) {
@@ -165,57 +165,57 @@ sap.ui.define([
                 //var oDialog = oEvent.getSource().getParent().getParent();
                 var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
                 var oData = oAddSubTaskModel.getData();
-                if(oData.subTask){
-                    this.resetValueState(); 
-              
-                var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length;
+                if (oData.subTask) {
+                    this.resetValueState();
 
-                var subTaskStatus;
-                if (oData.subTaskStatus) subTaskStatus = oData.subTaskStatus;
-                else subTaskStatus = "Not Started";
+                    var iOrder = this.getView().getModel("subTaskModel").getData().subtasks.length;
 
-                var bCompleted = false; 
-                if (oData.subTaskStatus === "Completed"){
-                    bCompleted = true
-                } 
+                    var subTaskStatus;
+                    if (oData.subTaskStatus) subTaskStatus = oData.subTaskStatus;
+                    else subTaskStatus = "Not Started";
 
-                var sDueDate;
-                if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
-
-                var oNewSubTask = {
-                    subTask: oData.subTask,
-                    subTaskOwner: oData.subTaskOwner,
-                    subTaskDueDate: sDueDate,
-                    opptID_ID: this._sID,
-                    subTaskCompleted: bCompleted,
-                    subTaskStatus: subTaskStatus,
-                    subTaskOrder: iOrder
-                };
-
-                that.getView().setBusy(true);
-                var oModel = that.getView().getModel();
-                oModel.create("/opportunitySubTasks", oNewSubTask, {
-                    success: function (oData, response) {
-                        MessageToast.show("New sub-task added!");
-                        that.onReadSubTasksData();
-                        that.getView().setBusy(false);
-                       // oDialog.close();
-                        //oAddSubTaskModel.setData({});
-                        that.onCancelDialogPress(); 
-
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-                        
+                    var bCompleted = false;
+                    if (oData.subTaskStatus === "Completed") {
+                        bCompleted = true
                     }
-                });
-            }else this.ValueStateMethod(); 
+
+                    var sDueDate;
+                    if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
+
+                    var oNewSubTask = {
+                        subTask: oData.subTask,
+                        subTaskOwner: oData.subTaskOwner,
+                        subTaskDueDate: sDueDate,
+                        opptID_ID: this._sID,
+                        subTaskCompleted: bCompleted,
+                        subTaskStatus: subTaskStatus,
+                        subTaskOrder: iOrder
+                    };
+
+                    that.getView().setBusy(true);
+                    var oModel = that.getView().getModel();
+                    oModel.create("/opportunitySubTasks", oNewSubTask, {
+                        success: function (oData, response) {
+                            MessageToast.show("New sub-task added!");
+                            that.onReadSubTasksData();
+                            that.getView().setBusy(false);
+                            // oDialog.close();
+                            //oAddSubTaskModel.setData({});
+                            that.onCancelDialogPress();
+
+                        },
+                        error: function (oError) {
+                            that.getView().setBusy(false);
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+
+                        }
+                    });
+                } else this.ValueStateMethod();
             },
 
             onDialogOpen: function (fragmentName) {
-                this.resetValueState(); 
+                this.resetValueState();
                 var that = this;
                 if (!this._pDialog) {
                     this._pDialog = Fragment.load({
@@ -290,10 +290,10 @@ sap.ui.define([
                                 that.getView().setBusy(false);
                             },
                             error: function (oError) {
-                                that.getView().setBusy(false); 
+                                that.getView().setBusy(false);
                                 var sMessage = JSON.parse(oError.responseText).error.message.value;
                                 sap.m.MessageToast.show(sMessage);
-                              }
+                            }
                         });
                     }
                 });
@@ -362,8 +362,8 @@ sap.ui.define([
                 var that = this;
                 var oData = oEvent.getSource().getBindingContext("subTaskModel").getObject();
                 var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
-                if(oData.subTaskDueDate){
-                    oData.subTaskDueDate= oData.subTaskDueDate.toISOString().split('T')[0];
+                if (oData.subTaskDueDate) {
+                    oData.subTaskDueDate = oData.subTaskDueDate.toISOString().split('T')[0];
                 }
                 oAddSubTaskModel.setData(oData);
                 this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditSubTask");
@@ -375,15 +375,15 @@ sap.ui.define([
 
                 var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
                 var oData = oAddSubTaskModel.getData();
-       
+
                 var subTaskStatus;
                 if (oData.subTaskStatus) subTaskStatus = oData.subTaskStatus;
                 else subTaskStatus = "Not Started";
 
-                var bCompleted = false; 
-                if (oData.subTaskStatus === "Completed"){
+                var bCompleted = false;
+                if (oData.subTaskStatus === "Completed") {
                     bCompleted = true
-                } 
+                }
 
                 var sDueDate;
                 if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
@@ -397,20 +397,20 @@ sap.ui.define([
 
                 that.getView().setBusy(true);
                 var oModel = that.getView().getModel();
-                var sPath = "/opportunitySubTasks/" + oAddSubTaskModel.getData().ID; 
+                var sPath = "/opportunitySubTasks/" + oAddSubTaskModel.getData().ID;
                 oModel.update(sPath, oPayload, {
                     success: function (oData, response) {
                         MessageToast.show("Sub-task updated!");
                         that.onReadSubTasksData();
                         that.getView().setBusy(false);
-                        that.onCancelDialogPress(); 
+                        that.onCancelDialogPress();
 
                     },
                     error: function (oError) {
                         that.getView().setBusy(false);
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageBox.error(sMessage);
-                        
+
                     }
                 });
             },
@@ -443,7 +443,7 @@ sap.ui.define([
                                     that.getView().setBusy(false);
                                     var sMessage = JSON.parse(oError.responseText).error.message.value;
                                     sap.m.MessageToast.show(sMessage);
-                                  }
+                                }
                             });
                         } else {
                             that.getView().setBusy(false);
@@ -465,10 +465,10 @@ sap.ui.define([
                 var oData = oEditPageModel.getData();
 
 
-                var sPriority; 
-                if(oData.actionPriority == "High") sPriority = 1; 
-                else if(oData.actionPriority == "Medium") sPriority = 2; 
-                else if(oData.actionPriority == "Low") sPriority = 3; 
+                var sPriority;
+                if (oData.actionPriority == "High") sPriority = 1;
+                else if (oData.actionPriority == "Medium") sPriority = 2;
+                else if (oData.actionPriority == "Low") sPriority = 3;
 
                 var oPayload = {
                     actionTask: oData.actionTask,
@@ -490,7 +490,7 @@ sap.ui.define([
                     error: function (oError) {
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageBox.error(sMessage);
-                        
+
                     }
                 });
             },
@@ -581,7 +581,7 @@ sap.ui.define([
                                 error: function (oError) {
                                     var sMessage = JSON.parse(oError.responseText).error.message.value;
                                     sap.m.MessageToast.show(sMessage);
-                                  }
+                                }
                             });
                         } else {
                             // Skip creating a new item
@@ -651,7 +651,7 @@ sap.ui.define([
                     error: function (oError) {
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageToast.show(sMessage);
-                      }
+                    }
                 });
             },
 
@@ -676,7 +676,7 @@ sap.ui.define([
                         error: function (oError) {
                             var sMessage = JSON.parse(oError.responseText).error.message.value;
                             sap.m.MessageToast.show(sMessage);
-                          }
+                        }
                     });
 
                 }
@@ -745,8 +745,8 @@ COMMENTS
 
                 var that = this;
                 var oValue = oEvent.mParameters.value;
-                this.taskID = this.getView().getBindingContext().getObject().ID; 
-                var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");  
+                this.taskID = this.getView().getBindingContext().getObject().ID;
+                var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
                 //this.opptID = this.getView().getBindingContext().getObject().opptID_opportunityID;
 
                 var oPayload = {
@@ -766,7 +766,7 @@ COMMENTS
                         that.getView().setBusy(false);
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageBox.error(sMessage);
-                        
+
                     }
                 });
 
@@ -775,7 +775,7 @@ COMMENTS
 
             onDeleteTaskComment: function (oEvent) {
                 var that = this;
-                this.taskID = this.getView().getBindingContext().getObject().ID; 
+                this.taskID = this.getView().getBindingContext().getObject().ID;
                 var sPath = oEvent.getSource().getParent().getBindingContext().sPath;
                 that.getView().setBusy(true);
                 var oModel = that.getView().getModel();
@@ -788,14 +788,14 @@ COMMENTS
                         that.getView().setBusy(false);
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageToast.show(sMessage);
-                      }
+                    }
                 });
 
             },
 
 
 
-                   /* ------------------------------------------------------------------------------------------------------------
+            /* ------------------------------------------------------------------------------------------------------------
 LINK
 --------------------------------------------------------------------------------------------------------------*/
 
@@ -804,54 +804,54 @@ LINK
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
 
-               
+
             },
 
-            onSubmitNewLink: function(oEvent){
+            onSubmitNewLink: function (oEvent) {
                 var that = this;
-               var sID = this.getView().getBindingContext().getObject().ID;
+                var sID = this.getView().getBindingContext().getObject().ID;
 
-                var oLocalModel = this.getView().getModel("localModel"); 
-                var oData = oLocalModel.getData(); 
+                var oLocalModel = this.getView().getModel("localModel");
+                var oData = oLocalModel.getData();
 
-                var oValueStateModel = this.getView().getModel("valueState"); 
-                if(oData.linkName && oData.link){
-                            oValueStateModel.setProperty("/valueState", ValueState.None);
+                var oValueStateModel = this.getView().getModel("valueState");
+                if (oData.linkName && oData.link) {
+                    oValueStateModel.setProperty("/valueState", ValueState.None);
 
 
-                var oPayload = {
-                    linkName: oData.linkName,
-                    linkDescription: oData.linkDescription,
-                    link: oData.link,
-                    opptID_ID: sID
-                }
-                that.getView().setBusy(true);
-                var oModel = that.getView().getModel();
-                oModel.create("/opportunityTasksLinks", oPayload, {
-                    success: function (oData, response) {
-                        MessageToast.show("New Link added!");
-                        that.getView().setBusy(false);
-                        that.onFilterLinkList(sID);
-                        that.onCancelDialogPress(); 
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-                        
+                    var oPayload = {
+                        linkName: oData.linkName,
+                        linkDescription: oData.linkDescription,
+                        link: oData.link,
+                        opptID_ID: sID
                     }
-                });
+                    that.getView().setBusy(true);
+                    var oModel = that.getView().getModel();
+                    oModel.create("/opportunityTasksLinks", oPayload, {
+                        success: function (oData, response) {
+                            MessageToast.show("New Link added!");
+                            that.getView().setBusy(false);
+                            that.onFilterLinkList(sID);
+                            that.onCancelDialogPress();
+                        },
+                        error: function (oError) {
+                            that.getView().setBusy(false);
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
 
-            }else{
-                MessageToast.show("Please enter a link and a title");
-                oValueStateModel.setProperty("/valueState", ValueState.Error);
-                oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
-            }
+                        }
+                    });
+
+                } else {
+                    MessageToast.show("Please enter a link and a title");
+                    oValueStateModel.setProperty("/valueState", ValueState.Error);
+                    oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+                }
 
             },
 
 
-            onFilterLinkList: function(sID){
+            onFilterLinkList: function (sID) {
 
                 var oTemplate = this.getView().byId("linkListItem");
                 var oSorter = new sap.ui.model.Sorter("linkName", true);
@@ -865,12 +865,12 @@ LINK
 
             },
 
-            onDeleteLink: function(oEvent){
+            onDeleteLink: function (oEvent) {
 
                 var that = this;
                 var oBindingContext = oEvent.mParameters.listItem.getBindingContext();
                 var sPath = oBindingContext.getPath();
-                var sLinkName= oBindingContext.getObject("linkName");
+                var sLinkName = oBindingContext.getObject("linkName");
 
                 MessageBox.confirm("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
@@ -885,42 +885,78 @@ LINK
                                 that.getView().setBusy(false);
                                 var sMessage = JSON.parse(oError.responseText).error.message.value;
                                 sap.m.MessageToast.show(sMessage);
-                              }
+                            }
                         });
                     }
                 });
 
             },
 
-            onSelectLink: function(oEvent){
+            onSelectLink: function (oEvent) {
                 var sLink = oEvent.getSource().getBindingContext().getObject().link;
                 library.URLHelper.redirect(sLink, true);
-              },
+            },
 
 
-               /* ------------------------------------------------------------------------------------------------------------
-            VALUE STATE
-            --------------------------------------------------------------------------------------------------------------*/
+            /* ------------------------------------------------------------------------------------------------------------
+         VALUE STATE
+         --------------------------------------------------------------------------------------------------------------*/
 
 
-              ValueStateMethod: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            ValueStateMethod: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 MessageToast.show("Please fill all mandatory fields");
                 oValueStateModel.setProperty("/valueState", ValueState.Error);
                 oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
 
             },
 
-            resetValueState: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            resetValueState: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 oValueStateModel.setProperty("/valueState", ValueState.None);
                 oValueStateModel.setProperty("/valueStateText", "");
             },
 
-            onChangeValueState: function(oEvent){
-                var sValue = oEvent.mParameters.newValue; 
-                if(sValue) this.resetValueState(); 
-            }
+            onChangeValueState: function (oEvent) {
+                var sValue = oEvent.mParameters.newValue;
+                if (sValue) this.resetValueState();
+            },
+
+
+            /* ------------------------------------------------------------------------------------------------------------
+          FCL BUTTONS
+          --------------------------------------------------------------------------------------------------------------*/
+
+
+            handleFullScreen: function () {
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "MidColumnFullScreen");
+
+                this.byId("enterFullScreenBtn").setVisible(false);
+                this.byId("exitFullScreenBtn").setVisible(true);
+            },
+
+            handleExitFullScreen: function () {
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+
+                this.byId("enterFullScreenBtn").setVisible(true);
+                this.byId("exitFullScreenBtn").setVisible(false);
+            },
+
+            handleClose: function () {
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+
+                this.byId("enterFullScreenBtn").setVisible(true);
+                this.byId("exitFullScreenBtn").setVisible(false);
+
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/columnsExpanded", true);
+                oGlobalModel.setProperty("/filterbarExpanded", true);
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("TasksReport", {
+                });
+
+            },
 
 
 

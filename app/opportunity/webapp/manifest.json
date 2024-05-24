@@ -166,12 +166,18 @@
                 {
                     "name": "TasksReport",
                     "pattern": "TasksReport",
-                    "target": "TasksReport"
+                    "target": [
+                        "TasksReport",
+                        "TaskDetail"
+                    ]
                 },
                 {
                     "name": "TaskDetail",
-                    "pattern": "TaskReport/{ID}",
-                    "target": "TaskDetail"
+                    "pattern": "TaskDetail/{ID}/{layout}",
+                    "target": [
+                        "TasksReport",
+                        "TaskDetail"
+                    ]
                 },
                 {
                     "name": "Team",
@@ -220,20 +226,20 @@
                     "controlAggregation": "midColumnPages"
                 },
                 "TasksReport": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",
-                    "viewLevel": 1,
                     "controlAggregation": "beginColumnPages"
                 },
                 "TaskDetail": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "controlAggregation": "beginColumnPages",
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
-                    "viewLevel": 2
+                    "controlAggregation": "midColumnPages"
                 },
                 "Calendar": {
                     "viewType": "XML",
