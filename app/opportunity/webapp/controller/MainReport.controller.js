@@ -89,9 +89,6 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onListItemPress: function (oEvent) {
-              //  this.getView().byId("flexibleColumnLayout").setLayout("TwoColumnsMidExpanded");
-              this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
-
               var selectedItem = oEvent.getSource().getBindingContext().getObject();
               var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
               oRouter.navTo("ObjectPage", {
