@@ -56,7 +56,7 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
                 
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+               // this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
             },
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
@@ -64,51 +64,216 @@ sap.ui.define([
 
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
-                var sOpportunityID = oEvent.getParameter("arguments").opportunityID;
-                if (!sOpportunityID) var sOpportunityID = this.getOwnerComponent.getModel("userModel").getProperty("/opportunityID")
+                
+                var sOpportunityID = oEvent.getParameter("arguments").opportunityID || this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
                 this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
-
+            
                 this.getView().bindElement({
                     path: "/opportunityHeader/" + sOpportunityID,
                     parameters: {
                         expand: "actionItems,comments,deliverables,links"
                     }
                 });
-
+            
                 this.sOpportunityID = sOpportunityID;
-                this.onFilterComments(sOpportunityID);
-                this.onFilterLinkList(sOpportunityID);
-                this.onFilterNextSteps(sOpportunityID);
-
-
+            
                 oModel.setDefaultBindingMode("TwoWay");
-                //oModel read for tasks deep entity 
-                this.onReadModelData(sOpportunityID);
-                this.onSetLayout();
-                // this.initRichTextEditor();
-
-                var oMaturityTable = this.getView().byId("maturityTableID");
-                if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
-
-
-                var oActivitiesTable = this.getView().byId("activitiesTableID");
-                if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
-                this.onReadTopics();
-                this.onReadDeliverables();
-            },
-
-            onFilterLinkList: function (sOpportunityID) {
-                var oTemplate = this.getView().byId("linkListItem");
-                var oSorter = new sap.ui.model.Sorter("linkName", true);
-                var oFilter = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                this.getView().byId("linkList").bindAggregation("items", {
-                    template: oTemplate,
-                    path: "/opportunityLinks",
-                    sorter: oSorter,
-                    filters: oFilter
+            
+                // wait for async calls 
+                Promise.all([
+                    this.onFilterComments(sOpportunityID),
+                    this.onFilterLinkList(sOpportunityID),
+                    this.onFilterNextSteps(sOpportunityID),
+                    this.onReadModelData(sOpportunityID),
+                    this.onSetLayout(),
+                    this.onReadTopics(),
+                    this.onReadDeliverables()
+                ]).then(() => {
+                    var oMaturityTable = this.getView().byId("maturityTableID");
+                    if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
+            
+                    var oActivitiesTable = this.getView().byId("activitiesTableID");
+                    if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+            
+                    this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+                }).catch(err => {
+                    console.error("Error with route:", err);
                 });
             },
+            
+            onFilterComments: function (sOpportunityID) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var oList = this.getView().byId("opportunityComments");
+                        var commentTemp = this.getView().byId("commentItem");
+                        var oSorter = new sap.ui.model.Sorter("postedOn", true);
+            
+                        var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                        oList.bindAggregation("items", {
+                            template: commentTemp,
+                            path: "/opportunityComments",
+                            sorter: oSorter,
+                            filters: aCommentFilters
+                        });
+                        oList.updateBindings();
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+            
+            onFilterLinkList: function (sOpportunityID) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var oTemplate = this.getView().byId("linkListItem");
+                        var oSorter = new sap.ui.model.Sorter("linkName", true);
+                        var oFilter = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                        this.getView().byId("linkList").bindAggregation("items", {
+                            template: oTemplate,
+                            path: "/opportunityLinks",
+                            sorter: oSorter,
+                            filters: oFilter
+                        });
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+            
+            onFilterNextSteps: function (sOpportunityID) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var oList = this.getView().byId("idTimeline");
+                        var commentTemp = this.getView().byId("timelineTasks");
+                        var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
+                        oList.bindAggregation("content", {
+                            template: commentTemp,
+                            path: "/opportunityNextSteps",
+                            filters: aCommentFilters
+                        });
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+            
+            onReadModelData: function (sOppID) {
+                return new Promise((resolve, reject) => {
+                    var oModel = this.getView().getModel();
+                    var sOpportunityID = sOppID || this.getView().getBindingContext().getObject().opportunityID;
+                    var aFilters = [new Filter("opportunityID", FilterOperator.EQ, sOpportunityID)];
+                    var oPageModel = this.getView().getModel("pageModel");
+            
+                    oModel.read("/opportunityHeader", {
+                        urlParameters: {
+                            "$expand": "actionItems/subTasks,topics,deliverables,maturity"
+                        },
+                        filters: aFilters,
+                        success: function (oResponse) {
+                            var aTasks = oResponse.results[0].actionItems.results;
+                            var aTopics = oResponse.results[0].topics.results;
+                            var aDeliverables = oResponse.results[0].deliverables.results;
+                            oPageModel.setProperty("/actionItems", aTasks);
+                            oPageModel.setProperty("/topics", aTopics);
+                            oPageModel.setProperty("/deliverables", aDeliverables);
+                            resolve();
+                        }.bind(this),
+                        error: function (oError) {
+                            console.log(oError);
+                            reject(oError);
+                        }
+                    });
+                });
+            },
+            
+            onSetLayout: function () {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var oLayout1 = this.getView().byId("topicsID");
+                        var oTemplate1 = oLayout1.getBindingInfo("content").template;
+                        oLayout1.bindAggregation("content", {
+                            path: 'pageModel>/topics',
+                            template: oTemplate1,
+                            sorter: new sap.ui.model.Sorter('sortOrder', false)
+                        });
+            
+                        oLayout1 = this.getView().byId("TopicFiltersObject");
+                        oTemplate1 = oLayout1.getBindingInfo("content").template;
+                        oLayout1.bindAggregation("content", {
+                            path: '/opportunityTopicsVH',
+                            template: oTemplate1,
+                            sorter: new sap.ui.model.Sorter('topic', false)
+                        });
+            
+                        var oLayout2 = this.getView().byId("DeliverablesFiltersObject");
+                        var oTemplate2 = oLayout2.getBindingInfo("content").template;
+                        oLayout2.bindAggregation("content", {
+                            path: '/opportunityDeliverablesVH',
+                            template: oTemplate2,
+                            sorter: new sap.ui.model.Sorter('deliverable', false)
+                        });
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+            
+            onReadTopics: function () {
+                return new Promise((resolve, reject) => {
+                    var that = this;
+                    that.getView().setBusy(true);
+                    var oLocalModel = that.getView().getModel("localModel");
+                    var oModel = that.getView().getModel();
+            
+                    oModel.read("/opportunityTopics", {
+                        urlParameters: {
+                            "$orderby": "topic"
+                        },
+                        success: function (oResponse) {
+                            var aTopics = oResponse.results;
+                            oLocalModel.setProperty("/topics", aTopics);
+                            that.getView().setBusy(false);
+                            resolve();
+                        }.bind(this),
+                        error: function (oError) {
+                            console.log(oError);
+                            that.getView().setBusy(false);
+                            reject(oError);
+                        }
+                    });
+                });
+            },
+            
+            onReadDeliverables: function () {
+                return new Promise((resolve, reject) => {
+                    var that = this;
+                    that.getView().setBusy(true);
+                    var oLocalModel = that.getView().getModel("localModel");
+                    var oModel = that.getView().getModel();
+            
+                    oModel.read("/opportunityDeliverables", {
+                        urlParameters: {
+                            "$orderby": "deliverable"
+                        },
+                        success: function (oResponse) {
+                            var aDeliverables = oResponse.results;
+                            oLocalModel.setProperty("/deliverables", aDeliverables);
+                            that.getView().setBusy(false);
+                            resolve();
+                        }.bind(this),
+                        error: function (oError) {
+                            console.log(oError);
+                            that.getView().setBusy(false);
+                            reject(oError);
+                        }
+                    });
+                });
+            },
+            
 
             onDeleteLink: function (oEvent) {
                 var that = this;
@@ -237,65 +402,9 @@ sap.ui.define([
 
             },
 
-            onSetLayout: function () {
+          
 
-                var oLayout1 = this.getView().byId("topicsID");
-                var oTemplate1 = oLayout1.getBindingInfo("content").template;
-                oLayout1.bindAggregation("content", {
-                    path: 'pageModel>/topics',
-                    template: oTemplate1,
-                    sorter: new sap.ui.model.Sorter('sortOrder', false)
-                });
-
-                var oLayout1 = this.getView().byId("TopicFiltersObject");
-                var oTemplate1 = oLayout1.getBindingInfo("content").template;
-                oLayout1.bindAggregation("content", {
-                    path: '/opportunityTopicsVH',
-                    template: oTemplate1,
-                    sorter: new sap.ui.model.Sorter('topic', false)
-                });
-                // oLayout1.getBindingInfo('content').binding.refresh();
-
-                var oLayout2 = this.getView().byId("DeliverablesFiltersObject");
-                var oTemplate2 = oLayout2.getBindingInfo("content").template;
-                oLayout2.bindAggregation("content", {
-                    path: '/opportunityDeliverablesVH',
-                    template: oTemplate2,
-                    sorter: new sap.ui.model.Sorter('deliverable', false)
-                });
-                // oLayout2.getBindingInfo('content').binding.refresh();
-
-            },
-
-            onReadModelData: function (sOppID) {
-                var oModel = this.getView().getModel();
-                var sOpportunityID;
-                if (sOppID) sOpportunityID = sOppID;
-                else sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
-
-                var aFilters = [];
-                aFilters.push(new Filter("opportunityID", FilterOperator.EQ, sOpportunityID));
-                var oPageModel = this.getView().getModel("pageModel");
-                oModel.read("/opportunityHeader", {
-                    urlParameters: {
-                        "$expand": "actionItems/subTasks,topics,deliverables,maturity"
-                    },
-                    filters: aFilters,
-                    success: function (oResponse) {
-                        var aTasks = oResponse.results[0].actionItems.results;
-                        var aTopics = oResponse.results[0].topics.results;
-                        var aDeliverables = oResponse.results[0].deliverables.results;
-                        oPageModel.setProperty("/actionItems", aTasks);
-                        oPageModel.setProperty("/topics", aTopics);
-                        oPageModel.setProperty("/deliverables", aDeliverables);
-                    }.bind(this),
-                    error: function (oError) {
-                        console.log(oError);
-                    }
-                });
-
-            },
-
+        
             _getText: function (sTextId, aArgs) {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
 
@@ -1302,65 +1411,13 @@ sap.ui.define([
                 oTable.getBinding("items").filter(oFilter);
             },
 
-            onReadTopics: function () {
-                var that = this;
-                that.getView().setBusy(true);
-                var oLocalModel = that.getView().getModel("localModel");
-                var oModel = that.getView().getModel();
-                oModel.read("/opportunityTopics", {
-                    urlParameters: {
-                        "$orderby": "topic"
-                    },
-                    success: function (oResponse) {
-                        var aTopics = oResponse.results;
-                        oLocalModel.setProperty("/topics", aTopics);
-                    }.bind(this),
-                    error: function (oError) {
-                        console.log(oError);
-                    }
-                });
-            },
-            onReadDeliverables: function () {
-                var that = this;
-                that.getView().setBusy(true);
-                var oLocalModel = that.getView().getModel("localModel");
-                var oModel = that.getView().getModel();
-                oModel.read("/opportunityDeliverables", {
-                    urlParameters: {
-                        "$orderby": "deliverable"
-                    },
-                    success: function (oResponse) {
-                        var aDeliverables = oResponse.results;
-                        oLocalModel.setProperty("/deliverables", aDeliverables);
-                        that.getView().setBusy(false);
-                    }.bind(this),
-                    error: function (oError) {
-                        console.log(oError);
-                        that.getView().setBusy(false);
-                    }
-                });
-            },
+
 
             /* ------------------------------------------------------------------------------------------------------------
 COMMENTS
    --------------------------------------------------------------------------------------------------------------*/
 
 
-            onFilterComments(sOpportunityID) {
-                var oList = this.getView().byId("opportunityComments")
-                var commentTemp = this.getView().byId("commentItem");
-                var oSorter = new sap.ui.model.Sorter("postedOn", true);
-
-                var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                oList.bindAggregation("items", {
-                    template: commentTemp,
-                    path: "/opportunityComments",
-                    sorter: oSorter,
-                    filters: aCommentFilters
-                });
-                oList.updateBindings();
-
-            },
 
             onPostComment: function (oEvent) {
 
@@ -1653,20 +1710,6 @@ COMMENTS
                         sap.m.MessageBox.error(sMessage);
                         
                     }
-                });
-            },
-
-            onFilterNextSteps(sOpportunityID) {
-                var oList = this.getView().byId("idTimeline")
-                var commentTemp = this.getView().byId("timelineTasks");
-                // var oSorter = new sap.ui.model.Sorter("postedOn", true);
-
-                var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                oList.bindAggregation("content", {
-                    template: commentTemp,
-                    path: "/opportunityNextSteps",
-                    //sorter: oSorter,
-                    filters: aCommentFilters
                 });
             },
 
