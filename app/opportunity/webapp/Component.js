@@ -3,6 +3,7 @@
  */
 
 sap.ui.define([
+    "sap/base/util/UriParameters",
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "opportunity/opportunity/model/models",
@@ -10,7 +11,7 @@ sap.ui.define([
     "sap/f/library",
 	"sap/f/FlexibleColumnLayoutSemanticHelper"
 ],
-    function (UIComponent, Device, models, JSONModel, library, FlexibleColumnLayoutSemanticHelper) {
+    function (UriParameters, UIComponent, Device, models, JSONModel, library, FlexibleColumnLayoutSemanticHelper) {
         "use strict";
         var LayoutType = library.LayoutType;
 
@@ -30,7 +31,7 @@ sap.ui.define([
 
                 // enable routing
                 this.getRouter().initialize();
-
+                
                 //global model for fcl 
                 this.setModel(new JSONModel(), "global");
                 this.getModel("global").setData({

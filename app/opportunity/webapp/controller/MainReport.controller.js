@@ -27,6 +27,8 @@ sap.ui.define([
             formatter: formatter,
             onInit: function () {
 
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("MainReport").attachPatternMatched(this._onRoutePatternMatched, this);
+
                 this.getView().setModel(new JSONModel({
                     "isFavourite": false
                 }), "favModel");
@@ -53,6 +55,14 @@ sap.ui.define([
                 return new SeparatorItem( {
                     text: oGroup.key
                 });
+            },
+
+            _onRoutePatternMatched: function (oEvent) {
+                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
+                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
+
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                this.getView().byId("mySmartTable").rebindTable();
             },
 
             /* ------------------------------------------------------------------------------------------------------------

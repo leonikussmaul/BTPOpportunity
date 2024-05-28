@@ -71,6 +71,9 @@ sap.ui.define([
                 this.onFilterLinkList(this._sID);
                 this.onFilterComments(this._sID);
 
+                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
+                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
+
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
             },
 
