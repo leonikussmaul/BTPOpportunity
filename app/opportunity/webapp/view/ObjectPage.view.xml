@@ -67,9 +67,8 @@
                                         </VBox>
 
                                         <HBox
-                                            width="400px"
+                                            width="600px"
                                             alignItems="Start"
-                                            justifyContent="End"
                                         >
                                             <l:HorizontalLayout
                                                 id="topicsID"

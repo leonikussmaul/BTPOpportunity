@@ -25,12 +25,6 @@
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:grid="sap.ui.layout.cssgrid"
 >
-    <f:FlexibleColumnLayout
-        id="flexibleColumnLayout"
-        backgroundDesign="Solid"
-        layout="OneColumn"
-    >
-        <f:beginColumnPages>
             <u:ObjectPageLayout
                 id="ObjectPageLayoutBegin"
                 showTitleInHeaderContent="true"
@@ -550,10 +544,4 @@
                     </u:ObjectPageSection>
                 </u:sections>
             </u:ObjectPageLayout>
-        </f:beginColumnPages>
-        <f:midColumnPages>
-            <mvc:XMLView viewName="opportunity.opportunity.view.ObjectPage" />
-        </f:midColumnPages>
-        <f:endColumnPages />
-    </f:FlexibleColumnLayout>
 </mvc:View>
