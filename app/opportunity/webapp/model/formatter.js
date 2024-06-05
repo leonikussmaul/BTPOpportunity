@@ -25,6 +25,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Arpit.jpeg";
         case "Bas":
           return "./images/Bas.jpeg";
+        case "Bal":
+          return "./images/Bal.jpeg";
         case "Biswajit":
           return "./images/Biswajit.jpeg";
         case "Byader":
@@ -90,7 +92,7 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
     },
 
     topicColorSchemeFormatter: function (topic) {
-      
+
       switch (topic) {
         case "Automation / AI":
         case "LMS":
@@ -101,8 +103,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
         case "MDG":
           return 5;
         case "Clean Core":
-        case "Extension": 
-        case "iCCM": 
+        case "Extension":
+        case "iCCM":
         case "CSD":
           return 6;
         case "Enablement":
@@ -454,11 +456,11 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       }
     },
 
-    chartColorFormatter: function(sValue){
-      if(sValue == 0) return "Neutral"; 
-      else if(sValue <= 30) return "Error"; 
-      else if(sValue > 30 && sValue <= 60) return "Critical"; 
-      else return "Good"; 
+    chartColorFormatter: function (sValue) {
+      if (sValue == 0) return "Neutral";
+      else if (sValue <= 30) return "Error";
+      else if (sValue > 30 && sValue <= 60) return "Critical";
+      else return "Good";
 
     }
 

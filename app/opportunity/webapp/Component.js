@@ -150,6 +150,10 @@ sap.ui.define([
                                 {
                                     "from": "Ravi",
                                     "to": "Philip"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Bal"
                                 }
                             ]
                 }
