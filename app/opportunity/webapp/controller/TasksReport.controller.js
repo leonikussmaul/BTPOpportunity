@@ -75,12 +75,16 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
+               
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
+               
 
                 this.onReadTasksData();
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
                 this.getView().byId("myTaskTable").rebindTable();
+               
+                
             },
 
 

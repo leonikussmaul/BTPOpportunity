@@ -375,37 +375,6 @@ sap.ui.define([
 
             //    sap.ui.getCore().byId("editRTE").destroy(); 
             // },
-
-
-
-            onTabItemSwitch: function (oEvent) {
-
-                if (oEvent.mParameters.item) {
-                    var sOpportunityID = oEvent.mParameters.item.getKey();
-                    //this.getOwnerComponent.getModel("userModel").setProperty("/opportunityID", sOppt)
-
-                } else var sOpportunityID = window.location.href.split('#')[1].split('/')[2];
-
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("ObjectPage", {
-                    opportunityID: sOpportunityID
-                });
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
-
-            },
-
-
-            onPress: function (oEvent) {
-                var selectedItem = oEvent.getSource().getBindingContext().getObject();
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("TaskDetail", {
-                    opportunityID: selectedItem.opportunityID
-                });
-
-            },
-
-          
-
         
             _getText: function (sTextId, aArgs) {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
@@ -963,7 +932,8 @@ sap.ui.define([
                 var selectedItem = oEvent.getSource().getBindingContext("pageModel").getObject();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("TaskDetail", {
-                    ID: selectedItem.ID
+                    ID: selectedItem.ID,
+                    layout: "TwoColumnsMidExpanded"
                 });
             },
 

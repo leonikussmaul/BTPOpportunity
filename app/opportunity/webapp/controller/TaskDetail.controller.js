@@ -700,7 +700,8 @@ sap.ui.define([
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {
-                    opportunityID: oppID
+                    opportunityID: oppID,
+                    layout: "TwoColumnsMidExpanded"
                 });
             },
 
@@ -946,12 +947,12 @@ LINK
             },
 
             handleClose: function () {
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
-
+              
                 this.byId("enterFullScreenBtn").setVisible(true);
                 this.byId("exitFullScreenBtn").setVisible(false);
 
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
                 oGlobalModel.setProperty("/columnsExpanded", true);
                 oGlobalModel.setProperty("/filterbarExpanded", true);
 
