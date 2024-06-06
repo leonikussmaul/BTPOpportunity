@@ -17,10 +17,10 @@ sap.ui.define([
     function (Controller, MessageBox, Fragment, JSONModel, Filter, FilterOperator, MessageToast, FilterType, formatter, CoreLibrary, SeparatorItem) {
         "use strict";
         var ValueState = CoreLibrary.ValueState,
-                oValueState = {
-                    valueState: ValueState.None,
-                    valueStateText: ""
-                };
+            oValueState = {
+                valueState: ValueState.None,
+                valueStateText: ""
+            };
 
 
         return Controller.extend("opportunity.opportunity.controller.MainReport", {
@@ -44,7 +44,7 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel({
                 }), "localModel");
 
-                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");         
+                oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
             },
 
             _getText: function (sTextId, aArgs) {
@@ -52,7 +52,7 @@ sap.ui.define([
             },
 
             getGroupHeader: function (oGroup) {
-                return new SeparatorItem( {
+                return new SeparatorItem({
                     text: oGroup.key
                 });
             },
@@ -63,6 +63,8 @@ sap.ui.define([
 
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
                 this.getView().byId("mySmartTable").rebindTable();
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/selectedKey", "Opportunities");
             },
 
             /* ------------------------------------------------------------------------------------------------------------
@@ -99,21 +101,21 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onListItemPress: function (oEvent) {
-              var selectedItem = oEvent.getSource().getBindingContext().getObject();
-              var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-              oRouter.navTo("ObjectPage", {
-                  opportunityID: selectedItem.opportunityID,
-                  layout: "TwoColumnsMidExpanded"
-              });
+                var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("ObjectPage", {
+                    opportunityID: selectedItem.opportunityID,
+                    layout: "TwoColumnsMidExpanded"
+                });
 
-              var userModel = this.getOwnerComponent().getModel("userModel");
-              userModel.setProperty("/opportunityID", selectedItem.opportunityID);
+                var userModel = this.getOwnerComponent().getModel("userModel");
+                userModel.setProperty("/opportunityID", selectedItem.opportunityID);
 
             },
             /* ------------------------------------------------------------------------------------------------------------
             FCL Buttons
             --------------------------------------------------------------------------------------------------------------*/
-            
+
             handleClose: function () {
                 this.oFlexibleColumnLayout = this.byId("flexibleColumnLayout");
                 this.oFlexibleColumnLayout.setLayout("OneColumn");
@@ -125,7 +127,7 @@ sap.ui.define([
                 this.getView().byId("mySmartTable").deactivateColumns();
             },
 
-            handleFullScreen: function (){
+            handleFullScreen: function () {
                 this.oFlexibleColumnLayout = this.byId("flexibleColumnLayout");
                 this.oFlexibleColumnLayout.setLayout("MidColumnFullScreen");
 
@@ -133,7 +135,7 @@ sap.ui.define([
                 this.byId("exitFullScreenBtn").setVisible(true);
             },
 
-            handleExitFullScreen: function (){
+            handleExitFullScreen: function () {
                 this.oFlexibleColumnLayout = this.byId("flexibleColumnLayout");
                 this.oFlexibleColumnLayout.setLayout("TwoColumnsMidExpanded");
 
@@ -146,7 +148,7 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onWizardDialogPress: function (oEvent) {
-                this.resetValueState(); 
+                this.resetValueState();
                 var oController = this;
                 oController.getView().setBusy(true);
                 if (!this._oDialog) {
@@ -184,121 +186,121 @@ sap.ui.define([
                 var that = this;
                 var oViewModel = this.getView().getModel("viewModel");
                 var oData = oViewModel.getData();
-                
-                if(oData.account && oData.marketUnit){
-                this.resetValueState(); 
-                that.getView().setBusy(true);
 
-                var sDate, sDueDate, bCRM, sTodayDate;
+                if (oData.account && oData.marketUnit) {
+                    this.resetValueState();
+                    that.getView().setBusy(true);
 
-                sTodayDate = new Date().toISOString().split("T")[0];
-                if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
-                if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+                    var sDate, sDueDate, bCRM, sTodayDate;
 
-                if (oData.opportunityInCRM) bCRM = "Yes"
-                else bCRM = "No"
+                    sTodayDate = new Date().toISOString().split("T")[0];
+                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
+                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
 
-                var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+                    if (oData.opportunityInCRM) bCRM = "Yes"
+                    else bCRM = "No"
 
-                var aTopics = [];
-                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent();
-                aTopicFilters.forEach(oItem => {
-                    if (oItem.getPressed()) {
-                        var oTopic = {
-                            topic: oItem.getText()
-                        };
-                        aTopics.push(oTopic);
-                    }
-                });
-                var aDeliverables = [];
-                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent();
-                aDeliverablesFilters.forEach(oItem => {
-                    if (oItem.getPressed()) {
-                        var oDeliverable = {
-                            deliverable: oItem.getText()
-                        };
-                        aDeliverables.push(oDeliverable);
-                    }
-                })
+                    var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
-                const monthNames = ["January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                ];
+                    var aTopics = [];
+                    var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent();
+                    aTopicFilters.forEach(oItem => {
+                        if (oItem.getPressed()) {
+                            var oTopic = {
+                                topic: oItem.getText()
+                            };
+                            aTopics.push(oTopic);
+                        }
+                    });
+                    var aDeliverables = [];
+                    var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent();
+                    aDeliverablesFilters.forEach(oItem => {
+                        if (oItem.getPressed()) {
+                            var oDeliverable = {
+                                deliverable: oItem.getText()
+                            };
+                            aDeliverables.push(oDeliverable);
+                        }
+                    })
 
-                const d = new Date();
-                var sMonth = monthNames[d.getMonth()];
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ];
 
-                var sAdoption = 0;
-                var sConsumption = 0;
-                var sProgress = 0;
-                if (oData.adoption) sAdoption = oData.adoption;
-                if (oData.consumption) sConsumption = oData.consumption;
-                if (oData.progress) sProgress = oData.progress;
+                    const d = new Date();
+                    var sMonth = monthNames[d.getMonth()];
 
-                //add deliverable field to odata
-                var oNewItem = {
-                    account: oData.account,
-                    topic: oData.topic,
-                    marketUnit: oData.marketUnit,
-                    opportunityStartDate: sDate,
-                    opportunityStartDate: sDueDate,
-                    opportunityValue: oData.opportunityValue,
-                    opportunityInCRM: bCRM,
-                    source: oData.source,
-                    ssa: oData.ssa,
-                    clientContactPerson: oData.clientContactPerson,
-                    status: sStatus,
-                    primaryContact: oData.primaryContact,
-                    opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
-                    opportunityClosedQuarter: oData.opportunityClosedQuarter,
-                    priority: oData.priority,
-                    noteDate: sTodayDate,
-                    noteText: oData.noteText,
-                    progress: sProgress,
-                    adoption: sAdoption,
-                    consumption: sConsumption,
-                    valueMonth: sMonth,
-                    valueYear: new Date().getFullYear().toString(),
-                    maturity: [{
-                        topic: "Overall BTP Knowledge",
-                    },
-                    {
-                        topic: "Integration",
-                    }, {
-                        topic: "Governance",
-                    }, {
-                        topic: "Extension",
-                    }, {
-                        topic: "Data",
-                    }, {
-                        topic: "Clean Core",
-                    }, {
-                        topic: "Automation / AI",
-                    },
-                    {
-                        topic: "Analytics",
-                    }],
-                    topics: aTopics,
-                    deliverables: aDeliverables
-                };
+                    var sAdoption = 0;
+                    var sConsumption = 0;
+                    var sProgress = 0;
+                    if (oData.adoption) sAdoption = oData.adoption;
+                    if (oData.consumption) sConsumption = oData.consumption;
+                    if (oData.progress) sProgress = oData.progress;
 
-                var oModel = this.getView().getModel();
-                oModel.create("/opportunityHeader", oNewItem, {
-                    success: function (oData, response) {
+                    //add deliverable field to odata
+                    var oNewItem = {
+                        account: oData.account,
+                        topic: oData.topic,
+                        marketUnit: oData.marketUnit,
+                        opportunityStartDate: sDate,
+                        opportunityStartDate: sDueDate,
+                        opportunityValue: oData.opportunityValue,
+                        opportunityInCRM: bCRM,
+                        source: oData.source,
+                        ssa: oData.ssa,
+                        clientContactPerson: oData.clientContactPerson,
+                        status: sStatus,
+                        primaryContact: oData.primaryContact,
+                        opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
+                        opportunityClosedQuarter: oData.opportunityClosedQuarter,
+                        priority: oData.priority,
+                        noteDate: sTodayDate,
+                        noteText: oData.noteText,
+                        progress: sProgress,
+                        adoption: sAdoption,
+                        consumption: sConsumption,
+                        valueMonth: sMonth,
+                        valueYear: new Date().getFullYear().toString(),
+                        maturity: [{
+                            topic: "Overall BTP Knowledge",
+                        },
+                        {
+                            topic: "Integration",
+                        }, {
+                            topic: "Governance",
+                        }, {
+                            topic: "Extension",
+                        }, {
+                            topic: "Data",
+                        }, {
+                            topic: "Clean Core",
+                        }, {
+                            topic: "Automation / AI",
+                        },
+                        {
+                            topic: "Analytics",
+                        }],
+                        topics: aTopics,
+                        deliverables: aDeliverables
+                    };
 
-                        MessageToast.show("New Opportunity created!");
-                        that.onCloseWizardPress(oEvent);
-                        that.getView().setBusy(false);
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-                        
-                    }
-                });
+                    var oModel = this.getView().getModel();
+                    oModel.create("/opportunityHeader", oNewItem, {
+                        success: function (oData, response) {
 
-            } else this.ValueStateMethod(); 
+                            MessageToast.show("New Opportunity created!");
+                            that.onCloseWizardPress(oEvent);
+                            that.getView().setBusy(false);
+                        },
+                        error: function (oError) {
+                            that.getView().setBusy(false);
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+
+                        }
+                    });
+
+                } else this.ValueStateMethod();
 
             },
 
@@ -314,7 +316,7 @@ sap.ui.define([
                 var aTopics = this.getView().getModel("localModel").getData().topics;
 
                 if (oValue != "" && oInput != null) {
-                    this.resetValueState(); 
+                    this.resetValueState();
                     MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -340,7 +342,7 @@ sap.ui.define([
                                         that.getView().setBusy(false);
                                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                                         sap.m.MessageBox.error(sMessage);
-                                        
+
                                     }
                                 });
                                 //}
@@ -350,7 +352,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else this.ValueStateMethod(); 
+                } else this.ValueStateMethod();
             },
 
             onPostNewItem: function () {
@@ -366,7 +368,7 @@ sap.ui.define([
                     error: function (oError) {
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageBox.error(sMessage);
-                        
+
                     }
                 });
 
@@ -383,7 +385,7 @@ sap.ui.define([
                 var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
 
                 if (oValue != "" && oInput != null) {
-                    this.resetValueState(); 
+                    this.resetValueState();
                     MessageBox.warning("Are you sure you want to post the deliverable " + oValue + " to the DataBase? This action is not reversible.", {
                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                         emphasizedAction: MessageBox.Action.OK,
@@ -407,7 +409,7 @@ sap.ui.define([
                                         that.getView().setBusy(false);
                                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                                         sap.m.MessageBox.error(sMessage);
-                                        
+
                                     }
                                 });
                                 //}
@@ -417,7 +419,7 @@ sap.ui.define([
                             }
                         }
                     });
-                } else this.ValueStateMethod(); 
+                } else this.ValueStateMethod();
             },
 
             onSelectAllTopicsPress: function (oEvent) {
@@ -525,7 +527,7 @@ sap.ui.define([
                                 error: function (oError) {
                                     var sMessage = JSON.parse(oError.responseText).error.message.value;
                                     sap.m.MessageToast.show(sMessage);
-                                  }
+                                }
                             });
                         }
                     }
@@ -594,7 +596,7 @@ sap.ui.define([
 
 
             onDialogOpen: function (fragmentName) {
-                this.resetValueState(); 
+                this.resetValueState();
                 var that = this;
                 if (!this._pDialog) {
                     this._pDialog = Fragment.load({
@@ -706,7 +708,7 @@ sap.ui.define([
                     error: function (oError) {
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageToast.show(sMessage);
-                      }
+                    }
                 });
 
             },
@@ -729,7 +731,7 @@ sap.ui.define([
                         that.getView().setBusy(false);
                         var sMessage = JSON.parse(oError.responseText).error.message.value;
                         sap.m.MessageBox.error(sMessage);
-                        
+
                     }
                 });
             },
@@ -814,28 +816,28 @@ sap.ui.define([
 
             },
 
-             /* ------------------------------------------------------------------------------------------------------------
-            VALUE STATE
-            --------------------------------------------------------------------------------------------------------------*/
+            /* ------------------------------------------------------------------------------------------------------------
+           VALUE STATE
+           --------------------------------------------------------------------------------------------------------------*/
 
 
-            ValueStateMethod: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            ValueStateMethod: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 MessageToast.show("Please fill all mandatory fields");
                 oValueStateModel.setProperty("/valueState", ValueState.Error);
                 oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
 
             },
 
-            resetValueState: function(oEvent){
-                var oValueStateModel = this.getView().getModel("valueState"); 
+            resetValueState: function (oEvent) {
+                var oValueStateModel = this.getView().getModel("valueState");
                 oValueStateModel.setProperty("/valueState", ValueState.None);
                 oValueStateModel.setProperty("/valueStateText", "");
             },
 
-            onChangeValueState: function(oEvent){
-                var sValue = oEvent.mParameters.newValue; 
-                if(sValue) this.resetValueState(); 
+            onChangeValueState: function (oEvent) {
+                var sValue = oEvent.mParameters.newValue;
+                if (sValue) this.resetValueState();
             }
 
         });

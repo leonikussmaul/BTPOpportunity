@@ -91,7 +91,9 @@ sap.ui.define([
         var oChart = this.getView().byId("smartChartTeamForecast");
         if (oChart.isInitialised()) oChart.rebindChart();
 
-        this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+        var oGlobalModel = this.getOwnerComponent().getModel("global");
+        oGlobalModel.setProperty("/layout", "OneColumn");
+        oGlobalModel.setProperty("/selectedKey", "Engagement");
       },
 
       onStatusMethod: function (inumber) {

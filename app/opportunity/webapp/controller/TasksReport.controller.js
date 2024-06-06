@@ -47,6 +47,7 @@ sap.ui.define([
             },
 
             onReadTasksData: function () {
+                var that = this;
                 var oModel = this.getView().getModel();
                 var oActionItemModel = this.getView().getModel("actionItemModel");
 
@@ -66,6 +67,7 @@ sap.ui.define([
 
                         oActionItemModel.setProperty("/actionItems", aTasks);
                         oActionItemModel.setProperty("/subTasks", aAllSubTasks);
+                        that.getView().byId("myTaskTable").rebindTable();
                     }.bind(this),
                     error: function (oError) {
                         console.log(oError);
@@ -75,16 +77,16 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
-               
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
-                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
-                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
-               
+
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
+                oGlobalModel.setProperty("/columnsExpanded", true);
+                oGlobalModel.setProperty("/filterbarExpanded", true);
+                oGlobalModel.setProperty("/selectedKey", "Tasks");
 
                 this.onReadTasksData();
                 this.getView().byId("myTaskTable").rebindTable();
-               
-                
+
             },
 
 

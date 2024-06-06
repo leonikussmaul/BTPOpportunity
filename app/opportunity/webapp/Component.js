@@ -47,9 +47,6 @@ sap.ui.define([
 
                 this.setModel(models.createUserModel(), "user");
 
-                this.setModel(new JSONModel(), "tabModel");
-                this.getModel("tabModel").setProperty("/tabs", []);
-
                 
                 var aTeam = {
 

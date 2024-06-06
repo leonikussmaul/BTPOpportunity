@@ -66,7 +66,9 @@ sap.ui.define([
                 });
 
                 this.onStatusMethod();
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
+                oGlobalModel.setProperty("/selectedKey", "ProjectOverview");
 
                 //   var oChart = this.getView().byId("smartChartTeamForecast");
                 //   if (oChart.isInitialised()) oChart.rebindChart();

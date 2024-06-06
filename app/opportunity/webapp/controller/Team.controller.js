@@ -21,7 +21,9 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function(){
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
+                oGlobalModel.setProperty("/selectedKey", "Team");
             },
 
             onSelectionChange: function (oEvent) {

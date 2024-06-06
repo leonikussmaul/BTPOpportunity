@@ -71,10 +71,11 @@ sap.ui.define([
                 this.onFilterLinkList(this._sID);
                 this.onFilterComments(this._sID);
 
-                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
-                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
-
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+                var oGlobalModel = this.getOwnerComponent().getModel("global"); 
+                oGlobalModel.setProperty("/selectedKey", "Tasks");
+                oGlobalModel.setProperty("/columnsExpanded", false);
+                oGlobalModel.setProperty("/filterbarExpanded", false);
+                oGlobalModel.setProperty("/layout", "TwoColumnsMidExpanded");
             },
 
             onReadSubTasksData: function (sthisID) {
@@ -690,13 +691,6 @@ sap.ui.define([
                 var oContext = this.getView().getBindingContext().getObject();
                 var oppID = oContext.opptID_opportunityID;
                 this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", oppID);
-
-                // var oTabModel = this.getOwnerComponent().getModel("tabModel");
-                // var aData = oTabModel.getData().tabs; 
-
-                // var oObject = this.getView().getModel().getProperty("/opportunityHeader(" + oppID + ")");
-                // aData.unshift(oObject); 
-                // oTabModel.setProperty("/tabs", aData); 
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.navTo("ObjectPage", {

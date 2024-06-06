@@ -168,11 +168,8 @@ sap.ui.define(
           });
         }
         this._pDialog.then(function (_pDialog) {
-          //_pDialog.getContent()[0].scrollToElement(sap.ui.getCore().byId("hiThere"));
           _pDialog.open();
-         //_pDialog.getContent()[0].scrollTo(0);
          
-
         })
       },
       onOpenCalendar: function (oEvent) {

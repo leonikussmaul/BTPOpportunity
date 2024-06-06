@@ -76,7 +76,8 @@ sap.ui.define([
                 });
             
                 this.sOpportunityID = sOpportunityID;
-            
+                var oGlobalModel = this.getOwnerComponent().getModel("global"); 
+                oGlobalModel.setProperty("/selectedKey", "Opportunities");
                 oModel.setDefaultBindingMode("TwoWay");
             
                 // wait for async calls 
@@ -935,6 +936,10 @@ sap.ui.define([
                     ID: selectedItem.ID,
                     layout: "TwoColumnsMidExpanded"
                 });
+
+                var oGlobalModel = this.getOwnerComponent().getModel("global"); 
+                oGlobalModel.setProperty("/selectedKey", "Tasks");
+
             },
 
 
@@ -1201,11 +1206,6 @@ sap.ui.define([
                 var oModel = this.getView().getModel();
                 oModel.create("/opportunityHeader", oNewItem, {
                     success: function (oData, response) {
-
-                        var oTabModel = that.getOwnerComponent().getModel("tabModel");
-                        var aData = oTabModel.getData().tabs;
-                        aData.push(oData);
-                        oTabModel.setProperty("/tabs", aData);
 
                         MessageToast.show("New Opportunity created!");
                         that.onCloseWizardPress(oEvent);
