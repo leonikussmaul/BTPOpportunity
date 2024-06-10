@@ -41,7 +41,9 @@ sap.ui.define([
 
                 this.getView().setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
-
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/columnsExpanded", true);
+                oGlobalModel.setProperty("/filterbarExpanded", true);
 
 
             },
