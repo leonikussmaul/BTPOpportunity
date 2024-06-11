@@ -298,30 +298,35 @@
                                                         text=""
                                                         width="50px"
                                                         key="Lead"
+                                                        tooltip = "Lead"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://overlay"
                                                         text=""
                                                         width="50px"
                                                         key="Opportunity"
+                                                        tooltip = "Opportunity"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://pause"
                                                         text=""
                                                         width="50px"
                                                         key="Paused"
+                                                        tooltip = "Paused"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://activate"
                                                         text=""
                                                         width="50px"
                                                         key="Delivery"
+                                                        tooltip = "Delivery"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://checklist-item"
                                                         text=""
                                                         width="50px"
                                                         key="Completed"
+                                                        tooltip = "Completed"
                                                     />
                                                 </items>
                                             </SegmentedButton>
