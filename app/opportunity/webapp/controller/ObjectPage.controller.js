@@ -55,8 +55,6 @@ sap.ui.define([
                 }), "localModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
-                
-               // this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
             },
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
@@ -99,6 +97,9 @@ sap.ui.define([
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
                     this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
                     this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
+
+                    //set segmented button text for current status of opportunity
+                    this.setSegButtonText();
                 }).catch(err => {
                     console.error("Error with route:", err);
                 });
@@ -689,12 +690,11 @@ sap.ui.define([
                 var sKey = oEvent.getSource().getSelectedKey();
                 this.getView().getModel("editPageModel").getData().status = sKey;
 
-
-         
-                 var aButtons = this.getView().byId("segmentedStatusObject").getItems(); 
+                var aButtons = this.getView().byId("segmentedStatusObject").getItems(); 
             
                 var oSelectedItem = oEvent.getParameter("item");
                 var sSelectedKey = oSelectedItem.getKey();
+
                 aButtons.forEach(function(oBtn) {
                     if (oBtn.getKey() === sSelectedKey) {
                         oBtn.setText(sSelectedKey);
@@ -704,7 +704,22 @@ sap.ui.define([
                         oBtn.setWidth("50px"); // Reset to default width
                     }
                 });
+            },
 
+            setSegButtonText: function(){
+                let oSegmentedButton = this.getView().byId("segmentedStatusObject");
+                let aButtons = oSegmentedButton.getItems(); 
+                let sSelectedKey = oSegmentedButton.getSelectedKey();
+
+                aButtons.forEach(function(oButton) {
+                    if (oButton.getKey() === sSelectedKey) {
+                        oButton.setText(sSelectedKey);
+                        oButton.setWidth("120px"); // Set width for the selected button
+                    } else {
+                        oButton.setText("");
+                        oButton.setWidth("50px"); // Reset to default width
+                    }
+                });
             },
 
             /* ------------------------------------------------------------------------------------------------------------
