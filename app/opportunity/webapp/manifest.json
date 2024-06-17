@@ -148,10 +148,10 @@
                     ]
                 },
                 {
-                    "name": "MainReport",
-                    "pattern": "MainReport",
+                    "name": "OpportunityReport",
+                    "pattern": "OpportunityReport",
                     "target": [
-                        "MainReport",
+                        "OpportunityReport",
                         "OpportunityDetail"
                     ]
                 },
@@ -159,7 +159,7 @@
                     "name": "OpportunityDetail",
                     "pattern": "OpportunityDetail/{opportunityID}/{layout}",
                     "target": [
-                        "MainReport",
+                        "OpportunityReport",
                         "OpportunityDetail"
                     ]
                 },
@@ -209,12 +209,12 @@
                     "viewName": "Overview",
                     "controlAggregation": "beginColumnPages"
                 },
-                "MainReport": {
+                "OpportunityReport": {
                     "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "viewId": "MainReport",
-                    "viewName": "MainReport",
+                    "viewId": "OpportunityReport",
+                    "viewName": "OpportunityReport",
                     "controlAggregation": "beginColumnPages"
                 },
                 "OpportunityDetail": {

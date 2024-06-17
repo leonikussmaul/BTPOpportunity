@@ -69,7 +69,7 @@ sap.ui.define(
 
         var viewName = window.location.href.split('#')[1];
         if (viewName != '' && oBtn.getText() != "Go to Tasks") {
-          oRouter.navTo("MainReport");
+          oRouter.navTo("OpportunityReport");
           oBtn.setText("Go to Tasks");
 
         } else {
@@ -81,7 +81,7 @@ sap.ui.define(
 
       onNavToOpportunities: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("MainReport");
+        oRouter.navTo("OpportunityReport");
       },
 
       onNavToTeamEngagement: function (oEvent) {

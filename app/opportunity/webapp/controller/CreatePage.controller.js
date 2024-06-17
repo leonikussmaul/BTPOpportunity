@@ -22,12 +22,12 @@ sap.ui.define([
 
             onNavBackPress: function(oEvent){
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("MainReport");
+                oRouter.navTo("OpportunityReport");
             },
 
             handleCreateOppPress: function(oEvent){
                 var that = this; 
-                var oBinding = that.getOwnerComponent().byId("MainReport--mainTable").getBinding("items"); 
+                var oBinding = that.getOwnerComponent().byId("OpportunityReport--mainTable").getBinding("items"); 
                 var oModel = this.getView().getModel();
                 var oList = oModel.bindList("/opportunityHeader");
                 var oSelected = ""
@@ -57,7 +57,7 @@ sap.ui.define([
                     oBinding.refresh();
                     MessageToast.show("New account created successfully.");
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
-                    oRouter.navTo("MainReport");
+                    oRouter.navTo("OpportunityReport");
                 
                 //}, function (oError) {
                     // that.getView().setBusy(false);

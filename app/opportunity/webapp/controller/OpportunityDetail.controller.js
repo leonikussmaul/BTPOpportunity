@@ -399,7 +399,7 @@ sap.ui.define([
                                 // If user confirms, navigate back
                                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                                 if (sPreviousHash !== undefined) window.history.go(-1);
-                                else oRouter.navTo("MainReport");
+                                else oRouter.navTo("OpportunityReport");
                                 oEditModel.setProperty("/editMode", false);
 
                                 if (oModel.hasPendingChanges()) {
@@ -413,7 +413,7 @@ sap.ui.define([
                     // If edit mode is disabled, directly navigate back
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     if (sPreviousHash !== undefined) window.history.go(-1);
-                    else oRouter.navTo("MainReport");
+                    else oRouter.navTo("OpportunityReport");
                 }
 
                 // this.destroyRichTextEditor(); 
@@ -436,7 +436,7 @@ sap.ui.define([
                 MessageBox.confirm("Do you want to delete this opportunity with " + sDeletedAccount + "?", function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
                         var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
-                        oRouter.navTo("MainReport");
+                        oRouter.navTo("OpportunityReport");
                         that.getView().setBusy(true);
 
                         var oModel = that.getView().getModel();
@@ -1874,7 +1874,7 @@ COMMENTS
                 oGlobalModel.setProperty("/filterbarExpanded", true);
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("MainReport", {
+                oRouter.navTo("OpportunityReport", {
                 });
                 
             },

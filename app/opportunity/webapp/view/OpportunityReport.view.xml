@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="opportunity.opportunity.controller.MainReport"
+    controllerName="opportunity.opportunity.controller.OpportunityReport"
     id="view1"
     xmlns:u="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"

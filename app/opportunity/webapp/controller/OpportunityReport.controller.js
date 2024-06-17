@@ -23,11 +23,11 @@ sap.ui.define([
             };
 
 
-        return Controller.extend("opportunity.opportunity.controller.MainReport", {
+        return Controller.extend("opportunity.opportunity.controller.OpportunityReport", {
             formatter: formatter,
             onInit: function () {
 
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("MainReport").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("OpportunityReport").attachPatternMatched(this._onRoutePatternMatched, this);
 
                 this.getView().setModel(new JSONModel({
                     "isFavourite": false
