@@ -180,9 +180,9 @@
                     ]
                 },
                 {
-                    "name": "Team",
-                    "pattern": "Team",
-                    "target": "Team"
+                    "name": "TeamChart",
+                    "pattern": "TeamChart",
+                    "target": "TeamChart"
                 },
                 {
                     "name": "IndividualEngagement",
@@ -249,12 +249,12 @@
                     "viewName": "Calendar",
                     "viewLevel": 1
                 },
-                "Team": {
+                "TeamChart": {
                     "viewType": "XML",
                     "transition": "slide",
                     "controlAggregation": "beginColumnPages",
-                    "viewId": "Team",
-                    "viewName": "Team",
+                    "viewId": "TeamChart",
+                    "viewName": "TeamChart",
                     "viewLevel": 1
                 },
                 "IndividualEngagement": {

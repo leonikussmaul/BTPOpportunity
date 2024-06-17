@@ -14,16 +14,16 @@ sap.ui.define([
         "use strict";
 
 
-        return Controller.extend("opportunity.opportunity.controller.Team", {
+        return Controller.extend("opportunity.opportunity.controller.TeamChart", {
             formatter: formatter,
             onInit: function () {
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("Team").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("TeamChart").attachPatternMatched(this._onRoutePatternMatched, this);
             },
 
             _onRoutePatternMatched: function(){
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/layout", "OneColumn");
-                oGlobalModel.setProperty("/selectedKey", "Team");
+                oGlobalModel.setProperty("/selectedKey", "TeamChart");
             },
 
             onSelectionChange: function (oEvent) {

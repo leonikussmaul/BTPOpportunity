@@ -107,9 +107,9 @@ sap.ui.define(
 
       },
 
-      onOpenTeam: function (oEvent) {
+      onOpenTeamChart: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("Team");
+        oRouter.navTo("TeamChart");
       },
 
       onOpenIndividualEngagement: function (oEvent) {

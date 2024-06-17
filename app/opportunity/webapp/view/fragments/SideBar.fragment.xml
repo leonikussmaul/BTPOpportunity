@@ -54,8 +54,8 @@
                 />
 
                 <tnt:NavigationListItem
-                    text="Team" key="Team"
-                    select="onOpenTeam"
+                    text="Team" key="TeamChart"
+                    select="onOpenTeamChart"
                     icon="sap-icon://employee-lookup"
                 />
 

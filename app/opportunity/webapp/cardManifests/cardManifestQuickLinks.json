@@ -38,7 +38,7 @@
 					{
 						"Name": "Team",
 						"icon": "sap-icon://employee-lookup",
-						"url": "/app/opportunity/webapp/index.html#/Team"
+						"url": "/app/opportunity/webapp/index.html#/TeamChart"
 					},
 					{
 						"Name": "Services Catalog",
