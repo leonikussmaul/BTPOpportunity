@@ -34,7 +34,7 @@ sap.ui.define([
                         title: "Detail",
                         icon: "sap-icon://person-placeholder",
                         press: (oEvent) => {
-                            this.onPersonDetails(oNode, oEvent.getParameter("buttonElement"));
+                            this.onTeamMemberDetails(oNode, oEvent.getParameter("buttonElement"));
                         }
                     });
                     oNode.addActionButton(oDetailButton);
@@ -50,10 +50,10 @@ sap.ui.define([
                 });
             },
 
-            onPersonDetails: function (oNode, oButton) {
+            onTeamMemberDetails: function (oNode, oButton) {
                 if (!this._oQuickView) {
                     sap.ui.core.Fragment.load({
-                        name: "opportunity.opportunity.view.fragments.PersonDetail",
+                        name: "opportunity.opportunity.view.fragments.TeamMemberDetails",
                         type: "XML"
                     }).then((oFragment) => {
                         this._oQuickView = oFragment;

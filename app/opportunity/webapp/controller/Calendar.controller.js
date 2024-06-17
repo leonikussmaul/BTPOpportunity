@@ -119,7 +119,7 @@ sap.ui.define([
 
         this.inumber = oAppointment.getBindingContext().getObject().userID_inumber;
         this.sProjectID = sProjectID;
-        this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+        this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
 
       },
 

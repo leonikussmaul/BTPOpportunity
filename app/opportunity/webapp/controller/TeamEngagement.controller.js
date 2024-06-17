@@ -382,7 +382,7 @@ sap.ui.define([
                 var sPath = "/teamProjects/" + sProjectID;
 
 
-                this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+                this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
 
             },
 
@@ -948,7 +948,7 @@ sap.ui.define([
                 var sPath = "/teamProjects/" + sProjectID;
 
 
-                this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+                this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
                 this.getView().setBusy(false);
 
             },
