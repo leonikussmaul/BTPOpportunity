@@ -57,7 +57,7 @@
                             icon="sap-icon://add"
                             type="Accept"
                             id="createBtn"
-                            press="onWizardDialogPress"
+                            press="onCreateOpportunityPress"
                             tooltip="Create a New Opportunity in the System"
                         />
                     </FlexBox>

@@ -11,7 +11,7 @@
         xmlns:micro="sap.suite.ui.microchart"
 >
     <Dialog
-        id="myWizardDialog"
+        id="myCreateOpportunity"
         resizable="true"
         draggable="true"
         verticalScrolling="false"
@@ -44,7 +44,7 @@
             <f:content>
                 <Wizard
                     complete="onCreateNewItem"
-                    id="WizardDialog"
+                    id="CreateOpportunity"
                     renderMode="Page"
                 >
                     <steps>

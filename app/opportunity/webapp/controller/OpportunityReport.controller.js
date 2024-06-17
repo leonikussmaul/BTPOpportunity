@@ -147,12 +147,12 @@ sap.ui.define([
             WIZARD
             --------------------------------------------------------------------------------------------------------------*/
 
-            onWizardDialogPress: function (oEvent) {
+            onCreateOpportunityPress: function (oEvent) {
                 this.resetValueState();
                 var oController = this;
                 oController.getView().setBusy(true);
                 if (!this._oDialog) {
-                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.WizardDialog", controller: this });
+                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.CreateOpportunity", controller: this });
                 }
                 this._oDialog.then(function (_oDialog) {
                     oController.getView().addDependent(_oDialog);
@@ -436,9 +436,9 @@ sap.ui.define([
             },
 
             onCloseWizardPress: function (oEvent) {
-                var oWizardDialog = sap.ui.getCore().byId("myWizardDialog");
-                oWizardDialog.close();
-                var oDialog = sap.ui.getCore().byId("WizardDialog");
+                var oCreateOpportunity = sap.ui.getCore().byId("myCreateOpportunity");
+                oCreateOpportunity.close();
+                var oDialog = sap.ui.getCore().byId("CreateOpportunity");
                 oDialog.setCurrentStep("WizardStep1");
                 this.getView().getModel("viewModel").setData({});
                 this.getView().setBusy(false);
@@ -473,7 +473,7 @@ sap.ui.define([
             },
 
             onPreviousStep: function (oEvent) {
-                sap.ui.getCore().byId("WizardDialog").previousStep();
+                sap.ui.getCore().byId("CreateOpportunity").previousStep();
 
             },
 
