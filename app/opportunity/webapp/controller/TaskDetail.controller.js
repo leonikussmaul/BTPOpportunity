@@ -693,7 +693,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", oppID);
 
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("ObjectPage", {
+                oRouter.navTo("OpportunityDetail", {
                     opportunityID: oppID,
                     layout: "TwoColumnsMidExpanded"
                 });

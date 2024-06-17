@@ -27,11 +27,11 @@ sap.ui.define([
             valueStateText: ""
         };
 
-        return Controller.extend("opportunity.opportunity.controller.ObjectPage", {
+        return Controller.extend("opportunity.opportunity.controller.OpportunityDetail", {
             formatter: formatter,
             onInit: function () {
 
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ObjectPage").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("OpportunityDetail").attachPatternMatched(this._onRoutePatternMatched, this);
 
                 var oPageModel = new JSONModel({});
                 this.getView().setModel(oPageModel, "pageModel");
@@ -93,7 +93,7 @@ sap.ui.define([
             
                     var oActivitiesTable = this.getView().byId("activitiesTableID");
                     if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-            
+                    
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
                     this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
                     this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);

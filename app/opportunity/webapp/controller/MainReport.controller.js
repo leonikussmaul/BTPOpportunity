@@ -103,7 +103,7 @@ sap.ui.define([
             onListItemPress: function (oEvent) {
                 var selectedItem = oEvent.getSource().getBindingContext().getObject();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("ObjectPage", {
+                oRouter.navTo("OpportunityDetail", {
                     opportunityID: selectedItem.opportunityID,
                     layout: "TwoColumnsMidExpanded"
                 });

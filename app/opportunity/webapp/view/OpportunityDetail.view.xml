@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="opportunity.opportunity.controller.ObjectPage"
+    controllerName="opportunity.opportunity.controller.OpportunityDetail"
     xmlns:u="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
@@ -22,7 +22,7 @@
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 >
     <Page
-        id="ObjectPage"
+        id="OpportunityDetail"
         showHeader="false"
     >
         <content>
@@ -193,6 +193,7 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
+                                    id="adoptionChart"
                                         size="S"
                                         percentage="{adoption}"
                                         press="press"
@@ -229,6 +230,7 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
+                                      id="consumptionChart"
                                         size="S"
                                         percentage="{consumption}"
                                         press="press"

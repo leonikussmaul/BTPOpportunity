@@ -63,7 +63,7 @@
 						"type": "Navigation",
                         "target": "_self",
 						"parameters": {
-							"url": "/app/opportunity/webapp/index.html#/ObjectPage/{opportunityID}" 
+							"url": "/app/opportunity/webapp/index.html#/OpportunityDetail/{opportunityID}" 
 						}
 					}
 				]

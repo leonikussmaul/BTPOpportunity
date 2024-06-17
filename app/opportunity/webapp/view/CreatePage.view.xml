@@ -10,7 +10,7 @@
     xmlns:core="sap.ui.core"
     xmlns:suite="sap.suite.ui.commons"
 >
-    <Page id="ObjectPage" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress" >
+    <Page id="OpportunityDetail" showHeader="true" showNavButton="true" navButtonPress="onNavBackPress" >
         <content >
 
         	<f:SidePanel id="mySidePanel" toggle="onToggle" sidePanelResizable="true"  sidePanelMinWidth="30rem" sidePanelWidth="20rem">
