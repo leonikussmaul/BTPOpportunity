@@ -112,7 +112,7 @@ sap.ui.define(
         oRouter.navTo("Team");
       },
 
-      onOpenResources: function (oEvent) {
+      onOpenIndividualEngagement: function (oEvent) {
         this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.TeamSelection");
       },
 
@@ -181,7 +181,7 @@ sap.ui.define(
         var inumber = oEvent.getSource().getBindingContext().getObject().inumber;
 
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("Resources", {
+        oRouter.navTo("IndividualEngagement", {
           inumber: inumber
         }
         );

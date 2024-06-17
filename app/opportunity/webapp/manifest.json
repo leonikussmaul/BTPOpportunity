@@ -185,9 +185,9 @@
                     "target": "Team"
                 },
                 {
-                    "name": "Resources",
-                    "pattern": "Resources/{inumber}",
-                    "target": "Resources"
+                    "name": "IndividualEngagement",
+                    "pattern": "IndividualEngagement/{inumber}",
+                    "target": "IndividualEngagement"
                 },
                 {
                     "name": "ProjectOverview",
@@ -257,12 +257,12 @@
                     "viewName": "Team",
                     "viewLevel": 1
                 },
-                "Resources": {
+                "IndividualEngagement": {
                     "viewType": "XML",
                     "transition": "slide",
                     "controlAggregation": "beginColumnPages",
-                    "viewId": "Resources",
-                    "viewName": "Resources",
+                    "viewId": "IndividualEngagement",
+                    "viewName": "IndividualEngagement",
                     "viewLevel": 2
                 },
                 "ProjectOverview": {

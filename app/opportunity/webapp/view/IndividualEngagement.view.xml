@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="opportunity.opportunity.controller.Resources"
+    controllerName="opportunity.opportunity.controller.IndividualEngagement"
     id="Team"
     xmlns:u="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"

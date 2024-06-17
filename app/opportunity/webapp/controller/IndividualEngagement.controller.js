@@ -19,10 +19,10 @@ sap.ui.define([
         valueStateText: ""
       };
 
-    return Controller.extend("opportunity.opportunity.controller.Resources", {
+    return Controller.extend("opportunity.opportunity.controller.IndividualEngagement", {
       formatter: formatter,
       onInit: function () {
-        sap.ui.core.UIComponent.getRouterFor(this).getRoute("Resources").attachPatternMatched(this._onRoutePatternMatched, this);
+        sap.ui.core.UIComponent.getRouterFor(this).getRoute("IndividualEngagement").attachPatternMatched(this._onRoutePatternMatched, this);
         var oProjectModel = new JSONModel({});
         this.getView().setModel(oProjectModel, "ProjectModel");
 

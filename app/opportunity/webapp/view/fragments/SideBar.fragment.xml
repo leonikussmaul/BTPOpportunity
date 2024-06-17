@@ -49,7 +49,7 @@
             <tnt:NavigationList>
                 <tnt:NavigationListItem
                     text="Engagement" key="Engagement"
-                    select="onOpenResources"
+                    select="onOpenIndividualEngagement"
                     icon="sap-icon://work-history"
                 />
 

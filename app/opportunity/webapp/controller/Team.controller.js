@@ -106,7 +106,7 @@ sap.ui.define([
 
                 var inumber = oNode.getAttributes()[0].getLabel();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("Resources", {
+                oRouter.navTo("IndividualEngagement", {
                     inumber: inumber
                 }
                 );
