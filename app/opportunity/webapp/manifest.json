@@ -190,9 +190,9 @@
                     "target": "IndividualEngagement"
                 },
                 {
-                    "name": "ProjectOverview",
-                    "pattern": "ProjectOverview",
-                    "target": "ProjectOverview"
+                    "name": "TeamEngagement",
+                    "pattern": "TeamEngagement",
+                    "target": "TeamEngagement"
                 },
                 {
                     "name": "Calendar",
@@ -265,12 +265,12 @@
                     "viewName": "IndividualEngagement",
                     "viewLevel": 2
                 },
-                "ProjectOverview": {
+                "TeamEngagement": {
                     "viewType": "XML",
                     "transition": "slide",
                     "controlAggregation": "beginColumnPages",
-                    "viewId": "ProjectOverview",
-                    "viewName": "ProjectOverview",
+                    "viewId": "TeamEngagement",
+                    "viewName": "TeamEngagement",
                     "viewLevel": 1
             },
             "NotFound": {

@@ -84,9 +84,9 @@ sap.ui.define(
         oRouter.navTo("MainReport");
       },
 
-      onNavToProjectOverview: function (oEvent) {
+      onNavToTeamEngagement: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("ProjectOverview");
+        oRouter.navTo("TeamEngagement");
       },
 
       onNavToTasks: function (oEvent) {

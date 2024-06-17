@@ -20,10 +20,10 @@ sap.ui.define([
             };
 
 
-        return Controller.extend("opportunity.opportunity.controller.ProjectOverview", {
+        return Controller.extend("opportunity.opportunity.controller.TeamEngagement", {
             formatter: formatter,
             onInit: function () {
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ProjectOverview").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("TeamEngagement").attachPatternMatched(this._onRoutePatternMatched, this);
                 var oProjectModel = new JSONModel({});
                 this.getView().setModel(oProjectModel, "ProjectModel");
 
@@ -68,7 +68,7 @@ sap.ui.define([
                 this.onStatusMethod();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/layout", "OneColumn");
-                oGlobalModel.setProperty("/selectedKey", "ProjectOverview");
+                oGlobalModel.setProperty("/selectedKey", "TeamEngagement");
 
                 //   var oChart = this.getView().byId("smartChartTeamForecast");
                 //   if (oChart.isInitialised()) oChart.rebindChart();

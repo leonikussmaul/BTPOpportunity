@@ -27,7 +27,7 @@
 					{
 						"Name": "Projects",
 						"icon": "sap-icon://meeting-room",
-						"url": "/app/opportunity/webapp/index.html#/ProjectOverview"
+						"url": "/app/opportunity/webapp/index.html#/TeamEngagement"
 					},
 
 					{
