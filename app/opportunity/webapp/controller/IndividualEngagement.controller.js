@@ -29,11 +29,6 @@ sap.ui.define([
         var AddProjectModel = new JSONModel({});
         this.getView().setModel(AddProjectModel, "AddProjectModel");
 
-        // const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        // let sMonth = month[new Date().getMonth()];
-        // AddProjectModel.setProperty("/month", sMonth);
-        // AddProjectModel.setProperty("/year", new Date().getUTCFullYear());
-
         var oEditModel = new JSONModel({
           editMode: false
         });
@@ -58,12 +53,12 @@ sap.ui.define([
 
         //yes, I am converting Date to String to int, but is there really a better way?
         let currentYear = parseInt(new Date().getFullYear().toString());
-        const firstYear = 2022; 
-        
+        const firstYear = 2022;
+
         //future-proofing
         let listYears = [];
-        for(let i = firstYear; i <= currentYear; i++){
-          listYears.push({"year" : i});
+        for (let i = firstYear; i <= currentYear; i++) {
+          listYears.push({ "year": i });
         }
 
         var oYearModel = new JSONModel({
@@ -71,9 +66,6 @@ sap.ui.define([
           listYears: listYears
         });
         this.getView().setModel(oYearModel, "oYearModel");
-
-        let oFilterBar = this.getView().byId("smartFilterBar");
-        //oFilterBar.setLiveMode(true);
       },
 
       _onRoutePatternMatched: function (oEvent) {
@@ -138,7 +130,7 @@ sap.ui.define([
 
         var that = this;
 
-        var oDropTarget = oEvent.getSource().getDropTarget();
+        //var oDropTarget = oEvent.getSource().getDropTarget();
         // i.e. = "/RFP"
         //var sPath = oEvent.getSource().getDropTarget().mBindingInfos.items.path;
         var sDropPath = oEvent.getSource().getDropTarget().mBindingInfos.items.path;
@@ -174,8 +166,8 @@ sap.ui.define([
             that.getView().getModel("ProjectModel").refresh();
             that.getView().setBusy(false);
           },
-           function (oError) {
-            that.getView().setBusy(false); 
+          function(oError) {
+            that.getView().setBusy(false);
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageToast.show(sMessage);
           }
@@ -186,7 +178,7 @@ sap.ui.define([
         var sTeamMember = this.getView().getBindingContext().getObject().inumber;
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
         oAddProjectModel.setProperty("/userID_inumber", sTeamMember)
-       // AddProjectModel>/userID_inumber
+        // AddProjectModel>/userID_inumber
         this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddProject");
 
       },
@@ -246,8 +238,8 @@ sap.ui.define([
             error: function (oError) {
               var sMessage = JSON.parse(oError.responseText).error.message.value;
               sap.m.MessageBox.error(sMessage);
-              
-          }
+
+            }
           });
         } else this.ValueStateMethod();
 
@@ -270,13 +262,9 @@ sap.ui.define([
 
       },
 
-
-
-
       /* ------------------------------------------------------------------------------------------------------------
           Dialogs
      --------------------------------------------------------------------------------------------------------------*/
-
 
       onDialogOpen: function (fragmentName, sPath, sProjectID) {
         this.resetValueState();
@@ -310,18 +298,14 @@ sap.ui.define([
             })
             that.onFilterSkills(sProjectID);
             that.onFilterTools(sProjectID);
-            that.onFilterTopics(sProjectID); 
-
-
+            that.onFilterTopics(sProjectID);
           }
           if (bEdit) {
             that.onBindMonth();
-
           }
-
           _pDialog.open();
-          var bAddProjectDialog = sap.ui.getCore().byId("userComboBox"); 
-          if(bAddProjectDialog) bAddProjectDialog.setEnabled(false);
+          var bAddProjectDialog = sap.ui.getCore().byId("userComboBox");
+          if (bAddProjectDialog) bAddProjectDialog.setEnabled(false);
 
         })
       },
@@ -364,17 +348,16 @@ sap.ui.define([
 
         var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
         oList.bindAggregation("tokens", {
-            template: oTemplate,
-            path: "/topics",
-            sorter: oSorter,
-            filters: aFilters
+          template: oTemplate,
+          path: "/topics",
+          sorter: oSorter,
+          filters: aFilters
         });
         oList.updateBindings();
 
-    },
+      },
 
       onCancelDialogPress: function (oEvent) {
-
         this.editDialog = false;
         this._pDialog.then(function (_pDialog) {
           _pDialog.close();
@@ -394,7 +377,7 @@ sap.ui.define([
       onProjectPopup: function (oEvent, oContext) {
 
         var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
-       // var oContext = oBinding.getObject();
+        // var oContext = oBinding.getObject();
         var sProjectID = oContext.projectID;
 
         this.sProjectID = oContext.projectID;
@@ -407,15 +390,12 @@ sap.ui.define([
       },
 
       onDeleteProjectPress: function (oEvent) {
-          var oBinding = oEvent.getSource().getParent().getParent().getBindingContext();
-          var oContext = oBinding.getObject();
+        var oBinding = oEvent.getSource().getParent().getParent().getBindingContext();
+        var oContext = oBinding.getObject();
 
-          var sPath = "/teamProjects/" + oContext.projectID;
-          var inumber = oContext.userID_inumber
-
-          this.onDeleteItem(sPath, inumber);
-
-
+        var sPath = "/teamProjects/" + oContext.projectID;
+        var inumber = oContext.userID_inumber
+        this.onDeleteItem(sPath, inumber);
 
       },
 
@@ -433,7 +413,7 @@ sap.ui.define([
                   that.onStatusMethod(inumber);
                   that.getView().getModel("ProjectModel").refresh();
                   sap.m.MessageToast.show("Project deleted successfully");
-                  that.onCancelDialogPress(); 
+                  that.onCancelDialogPress();
                 },
                 error: function (oError) {
                   var sMessage = JSON.parse(oError.responseText).error.message.value;
@@ -449,8 +429,6 @@ sap.ui.define([
 
       onDeleteToken: function (oEvent) {
         var sPath = oEvent.getParameter("token").getBindingContext().sPath;
-
-        var that = this;
         var oModel = this.getView().getModel();
         sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
           actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
@@ -486,7 +464,7 @@ sap.ui.define([
 
       onAddProjectTopic: function (oEvent) {
         this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddProjectTopic", oEvent);
-    },
+      },
 
 
       onPopover: function (sFragment, oEvent) {
@@ -549,8 +527,8 @@ sap.ui.define([
           error: function (oError) {
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageBox.error(sMessage);
-            
-        }
+
+          }
 
         });
       },
@@ -572,36 +550,35 @@ sap.ui.define([
           error: function (oError) {
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageBox.error(sMessage);
-            
-        }
+
+          }
 
         });
       },
 
       onSubmitTopic: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/topic");
         var oPayload = {
-            topic: oItem,
-            projectID_projectID: this.sProjectID
+          topic: oItem,
+          projectID_projectID: this.sProjectID
         };
         var oModel = this.getView().getModel();
         oModel.create("/topics", oPayload, {
-            success: function (oData, response) {
-                MessageToast.show("New Topic added");
-               oLocalModel.setData({}); 
-            },
-            error: function (oError) {
-              var sMessage = JSON.parse(oError.responseText).error.message.value;
-              sap.m.MessageBox.error(sMessage);
-              
+          success: function (oData, response) {
+            MessageToast.show("New Topic added");
+            oLocalModel.setData({});
+          },
+          error: function (oError) {
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+
           }
 
         });
-    },
+      },
 
       onEditProject: function (oEvent) {
-
         var oNavContainer = sap.ui.getCore().byId("navContainer");
         var oEditModel = this.getView().getModel("editModel");
         var bEdit = oEditModel.getProperty("/editMode");
@@ -612,8 +589,6 @@ sap.ui.define([
           oEditModel.setProperty("/editMode", true);
           oNavContainer.to("dynamicPage2", "show");
         }
-
-
       },
 
       onSaveProject: function (oEvent) {
@@ -659,11 +634,10 @@ sap.ui.define([
             that.onCancelDialogPress();
           },
           error: function (oError) {
-            that.getView().setBusy(false); 
+            that.getView().setBusy(false);
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageToast.show(sMessage);
           }
-
         });
 
       },
@@ -689,7 +663,6 @@ sap.ui.define([
         oAddProjectModel.setProperty("/forecast", 100);
         oAddProjectModel.setProperty("/actual", 100);
 
-
         this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddEditForecast");
 
       },
@@ -709,7 +682,6 @@ sap.ui.define([
           sorter: oSorter,
           filters: aFilters
         });
-
 
       },
 
@@ -739,13 +711,10 @@ sap.ui.define([
       },
 
       onEditForecastSubmit: function (oEvent) {
-
         this.editDialog = false;
         var that = this;
 
         var oChart = this.getView().byId("smartChartTeamForecast");
-
-        var that = this;
         var oAddProjectModel = this.getView().getModel("AddProjectModel");
         var oPayload = oAddProjectModel.getData();
 
@@ -766,8 +735,8 @@ sap.ui.define([
               that.getView().setBusy(false);
               var sMessage = JSON.parse(oError.responseText).error.message.value;
               sap.m.MessageBox.error(sMessage);
-              
-          }
+
+            }
           });
         } else this.ValueStateMethod();
 
@@ -799,7 +768,7 @@ sap.ui.define([
 
         let aFilters = [];
         aFilters.push(new sap.ui.model.Filter("userID_inumber", "EQ", this.inumber));
-        
+
         //getting the current forecasts for this user
         oModel.read(sPath, {
           filters: aFilters,
@@ -807,20 +776,20 @@ sap.ui.define([
             let aCurrentForecasts = oResponse.results;
             let bFlagUpdate = false;
             let sUpdatePath = sPath + "/";
-            
+
             //check if we have a forecast for this month && year
             aCurrentForecasts.forEach((forecast) => {
-              if(forecast.month === oData.month && forecast.year === sYear){
+              if (forecast.month === oData.month && forecast.year === sYear) {
                 bFlagUpdate = true;
                 sUpdatePath += String(forecast.forecastID);
-              }  
+              }
             });
 
             if (sYear && oData.month) {
               this.resetValueState();
 
               //handle update
-              if(bFlagUpdate) {
+              if (bFlagUpdate) {
                 oModel.update(sUpdatePath, oData, {
                   success: function () {
                     MessageToast.show("Forecast has been updated!");
@@ -852,7 +821,7 @@ sap.ui.define([
                   }
                 });
               }
-            } 
+            }
             else {
               this.ValueStateMethod();
               that.getView().setBusy(false);
@@ -897,7 +866,7 @@ sap.ui.define([
       },
 
       //for year filter
-      handleSelectionChange: function(oEvent){
+      handleSelectionChange: function (oEvent) {
         let selection = oEvent.getSource().getValue();
         let asString = selection.toString();
         let oYearModel = this.getView().getModel("oYearModel");

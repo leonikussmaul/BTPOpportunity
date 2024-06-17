@@ -7,13 +7,12 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/FilterType",
-    "sap/base/Log",
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     'sap/m/MessageBox',
   ],
-  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType, Log, UIComponent, JSONModel, MessageToast, MessageBox) {
+  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType, UIComponent, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("opportunity.opportunity.controller.App", {
@@ -38,7 +37,7 @@ sap.ui.define(
       onHomeIconPressed: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Overview");
-        this.getView().byId("sideNavigation").setSelectedItem(null); 
+        this.getView().byId("sideNavigation").setSelectedItem(null);
       },
 
       onOpenSAPOne: function () {
@@ -140,7 +139,6 @@ sap.ui.define(
 
 
       onCancelDialogPress: function (oEvent) {
-
         this.editDialog = false;
         this._pDialog.then(function (_pDialog) {
           _pDialog.close();
@@ -169,7 +167,7 @@ sap.ui.define(
         }
         this._pDialog.then(function (_pDialog) {
           _pDialog.open();
-         
+
         })
       },
       onOpenCalendar: function (oEvent) {
@@ -214,38 +212,38 @@ sap.ui.define(
         var oLocalModel = this.getView().getModel("localModel");
 
         var oData = oLocalModel.getData();
-        if(oData.feedback){
+        if (oData.feedback) {
 
-        var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
+          var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
 
 
-        var bPositive;
+          var bPositive;
 
-        if (oData.positive === true) bPositive = true;
-        else if (oData.negative === true) bPositive = false;
+          if (oData.positive === true) bPositive = true;
+          else if (oData.negative === true) bPositive = false;
 
-        var oPayload = {
-          feedback: oData.feedback,
-          positive: bPositive,
-          postedBy: sPostedBy,
-          postedOn: new Date()
-        }
+          var oPayload = {
+            feedback: oData.feedback,
+            positive: bPositive,
+            postedBy: sPostedBy,
+            postedOn: new Date()
+          }
 
-        that.getView().setBusy(true);
-        var oModel = that.getView().getModel();
-        oModel.create("/userFeedback", oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("Your Feedback has been registered. Thank you!");
-            that.getView().setBusy(false);
-          },
-          error: function (oError) {
-            that.getView().setBusy(false);
-            var sMessage = JSON.parse(oError.responseText).error.message.value;
-            sap.m.MessageBox.error(sMessage);
-            
-        }
-        });
-      }else MessageToast.show("Please enter your feedback first");
+          that.getView().setBusy(true);
+          var oModel = that.getView().getModel();
+          oModel.create("/userFeedback", oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("Your Feedback has been registered. Thank you!");
+              that.getView().setBusy(false);
+            },
+            error: function (oError) {
+              that.getView().setBusy(false);
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+
+            }
+          });
+        } else MessageToast.show("Please enter your feedback first");
 
 
       },
@@ -261,39 +259,39 @@ sap.ui.define(
         oLocalModel.setProperty("/negative", true);
       },
 
-      onThemePicker: function(oEvent){
-        var sTheme = oEvent.getParameters().item.getKey(); 
-        if(sTheme === "MorningHorizon"){
-          sap.ui.getCore().applyTheme("sap_horizon"); 
+      onThemePicker: function (oEvent) {
+        var sTheme = oEvent.getParameters().item.getKey();
+        if (sTheme === "MorningHorizon") {
+          sap.ui.getCore().applyTheme("sap_horizon");
 
-        } else if(sTheme === "EveningHorizon"){
-          sap.ui.getCore().applyTheme("sap_horizon_dark"); 
+        } else if (sTheme === "EveningHorizon") {
+          sap.ui.getCore().applyTheme("sap_horizon_dark");
 
         }
 
       },
-          onRouteMatched: function (oEvent) {
-            var sRouteName = oEvent.getParameter("name"),
-              oArguments = oEvent.getParameter("arguments");
-      
-            // Save the current route name
-            this.currentRouteName = sRouteName;
-            this.opportunityID = oArguments.opportunityID;
-          },
-      
-          onStateChanged: function (oEvent) {
-            var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
-              sLayout = oEvent.getParameter("layout");
-      
-            // Replace the URL with the new layout if a navigation arrow was used
-            if (bIsNavigationArrow) {
-              this.oRouter.navTo(this.currentRouteName, {layout: sLayout, opportunityID: this.opportunityID}, true);
-            }
-          },
-      
-          onExit: function () {
-            this.oRouter.detachRouteMatched(this.onRouteMatched, this);
-          }
+      onRouteMatched: function (oEvent) {
+        var sRouteName = oEvent.getParameter("name"),
+          oArguments = oEvent.getParameter("arguments");
+
+        // Save the current route name
+        this.currentRouteName = sRouteName;
+        this.opportunityID = oArguments.opportunityID;
+      },
+
+      onStateChanged: function (oEvent) {
+        var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
+          sLayout = oEvent.getParameter("layout");
+
+        // Replace the URL with the new layout if a navigation arrow was used
+        if (bIsNavigationArrow) {
+          this.oRouter.navTo(this.currentRouteName, { layout: sLayout, opportunityID: this.opportunityID }, true);
+        }
+      },
+
+      onExit: function () {
+        this.oRouter.detachRouteMatched(this.onRouteMatched, this);
+      }
 
 
     });

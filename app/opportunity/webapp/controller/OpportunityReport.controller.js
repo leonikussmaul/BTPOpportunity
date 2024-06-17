@@ -32,7 +32,6 @@ sap.ui.define([
                 this.getView().setModel(new JSONModel({
                     "isFavourite": false
                 }), "favModel");
-                var oFavModel = this.getView().getModel("favModel");
 
                 var oView = this.getView();
                 oView.setModel(new JSONModel({
@@ -345,7 +344,6 @@ sap.ui.define([
 
                                     }
                                 });
-                                //}
                             } else {
                                 oInput.setValue("");
                                 that.getView().setBusy(false);
@@ -382,7 +380,6 @@ sap.ui.define([
                 var that = this;
                 var oInput = sap.ui.getCore().byId("deliverableInput");
                 var oValue = oInput.getValue();
-                var aDeliverables = this.getView().getModel("localModel").getData().deliverables;
 
                 if (oValue != "" && oInput != null) {
                     this.resetValueState();
@@ -400,7 +397,6 @@ sap.ui.define([
                                 oModel.create("/opportunityDeliverablesVH", oNewDeliverable, {
                                     success: function (oData, response) {
                                         MessageToast.show("New deliverable posted!");
-                                        //oDialog.close();
                                         that.onCancelDialogPress();
                                         oInput.setValue("");
                                         that.getView().setBusy(false);
@@ -412,7 +408,6 @@ sap.ui.define([
 
                                     }
                                 });
-                                //}
                             } else {
                                 oInput.setValue("");
                                 that.getView().setBusy(false);

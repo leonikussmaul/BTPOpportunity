@@ -485,7 +485,6 @@ sap.ui.define([
 
             }
           });
-          //}
         } else this.ValueStateMethod();
 
       },
