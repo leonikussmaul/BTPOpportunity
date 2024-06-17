@@ -31,10 +31,10 @@
             />
 
             <tnt:NavigationListItem
-                text="Project Overview" key="TeamEngagement"
+                text="Team Engagement" key="TeamEngagement"
                 icon="sap-icon://meeting-room"
                 select="onNavToTeamEngagement"
-                tooltip="Project Overview"
+                tooltip="Team Engagement"
             />
 
             <tnt:NavigationListItem
