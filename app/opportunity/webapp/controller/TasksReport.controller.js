@@ -120,9 +120,10 @@ sap.ui.define([
                 }
                 var oModel = oSmartTable.getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected tasks?", {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-                    onClose: function (oAction) {
-                        if (oAction === sap.m.MessageBox.Action.YES) {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
                             for (var i = aSelectedItems.length - 1; i >= 0; i--) {
                                 var sPath = aSelectedItems[i].getBindingContext().getPath();
                                 oModel.remove(sPath, {

@@ -404,9 +404,10 @@ sap.ui.define([
         //var sPath = oBinding.getPath(); 
         var oModel = this.getView().getModel();
         sap.m.MessageBox.warning("Are you sure you want to delete the selected Project?", {
-          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-          onClose: function (oAction) {
-            if (oAction === sap.m.MessageBox.Action.YES) {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+              if (sAction === MessageBox.Action.OK) {
 
               oModel.remove(sPath, {
                 success: function () {
@@ -431,9 +432,10 @@ sap.ui.define([
         var sPath = oEvent.getParameter("token").getBindingContext().sPath;
         var oModel = this.getView().getModel();
         sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
-          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-          onClose: function (oAction) {
-            if (oAction === sap.m.MessageBox.Action.YES) {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+              if (sAction === MessageBox.Action.OK) {
 
 
               oModel.remove(sPath, {

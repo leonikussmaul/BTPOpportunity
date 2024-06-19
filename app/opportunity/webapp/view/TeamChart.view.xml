@@ -23,7 +23,7 @@
             <f:DynamicPageTitle>
                 <f:heading>
                     <m:Title
-                        text="Team Overview"
+                        text="Team Chart"
                         id="headerTitle"
                     />
                 </f:heading>

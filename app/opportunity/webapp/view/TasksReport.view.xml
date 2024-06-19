@@ -51,7 +51,7 @@
                         wrapping="true"
                     />
                     <Button
-                        text="New Task"
+                        text="Add Task"
                         type="Accept"
                         icon="sap-icon://add"
                         tooltip="{i18n>addTableItem}"

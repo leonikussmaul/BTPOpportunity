@@ -317,9 +317,10 @@ sap.ui.define([
                 var oModel = this.getView().getModel();
 
                 sap.m.MessageBox.warning("Are you sure you want to delete all the completed sub-tasks?", {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-                    onClose: function (oAction) {
-                        if (oAction === sap.m.MessageBox.Action.YES) {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
                             var promises = []; // array to store promises
                             for (var i = aSelectedItems.length - 1; i >= 0; i--) {
                                 var oData = aSelectedItems[i].getBindingContext("subTaskModel").getObject();
@@ -864,31 +865,34 @@ LINK
             },
 
             onDeleteLink: function (oEvent) {
-
                 var that = this;
-                var oBindingContext = oEvent.mParameters.listItem.getBindingContext();
+                var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
                 var sPath = oBindingContext.getPath();
-                var sLinkName = oBindingContext.getObject("linkName");
-
-                MessageBox.warning("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
-                    if (oAction === MessageBox.Action.OK) {
-                        that.getView().setBusy(true);
-                        var oModel = that.getView().getModel();
-                        oModel.remove(sPath, {
-                            success: function () {
-                                sap.m.MessageToast.show("Link deleted successfully.");
-                                that.getView().setBusy(false);
-                            },
-                            error: function (oError) {
-                                that.getView().setBusy(false);
-                                var sMessage = JSON.parse(oError.responseText).error.message.value;
-                                sap.m.MessageToast.show(sMessage);
-                            }
-                        });
+                var sLinkName = oBindingContext.getProperty("linkName");
+            
+                MessageBox.warning("Are you sure you want to delete the link '" + sLinkName + "'?", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            oModel.remove(sPath, {
+                                success: function () {
+                                    sap.m.MessageToast.show("Link deleted successfully.");
+                                    that.getView().setBusy(false);
+                                },
+                                error: function (oError) {
+                                    that.getView().setBusy(false);
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                }
+                            });
+                        }
                     }
                 });
-
             },
+            
 
             onSelectLink: function (oEvent) {
                 var sLink = oEvent.getSource().getBindingContext().getObject().link;
