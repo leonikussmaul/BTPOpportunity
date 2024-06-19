@@ -185,7 +185,8 @@
                                     />
                                     <micro:RadialMicroChart
                                         id="adoptionChart"
-                                        size="S"    visible="{= ${adoption} !== null}"
+                                        size="S"
+                                        visible="{= ${adoption} !== null}"
                                         percentage="{adoption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
@@ -222,7 +223,8 @@
                                     />
                                     <micro:RadialMicroChart
                                         id="consumptionChart"
-                                        size="S" visible="{= ${consumption} !== null}"
+                                        size="S"
+                                        visible="{= ${consumption} !== null}"
                                         percentage="{consumption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
@@ -360,85 +362,106 @@
                             <u:ObjectPageSection
                                 id="idSectionTopics"
                                 titleUppercase="false"
-                                title="{i18n>Content}"
                             >
                                 <u:ObjectPageSubSection
                                     id="idSubSectionTopics"
                                     titleUppercase="false"
-                                    title="{i18n>Topics}"
-                                    class="sapUiSmallMarginTop"
+                                    title="Topics"
                                 >
-                                    <u:actions>
-                                        <Link
-                                            text="{i18n>addTopic}"
-                                            press="onAddTopicPress"
+                                    <VBox width="100%">
+                                        <MessageStrip
+                                            showIcon="true"
+                                            class="sapUiTinyMarginTop"
+                                            text="The relevant Topics for {account} are shown in blue. Go into Edit Mode to select more."
+                                            showCloseButton="true"
                                         />
-                                    </u:actions>
-                                    <HBox class="sapUiSmallMarginTopBottom">
-                                        <l:HorizontalLayout
-                                            id="TopicFiltersObject"
-                                            allowWrapping="true"
-                                            class="sapUiResponsiveMargin "
-                                            content="{}"
-                                        >
-                                            <ToggleButton
-                                                text="{topic}"
-                                                press="onPressToggle1"
-                                                class="sapUiSmallMarginEnd"
-                                                pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
-                                                enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-                                                tooltip="{i18n>toggle1Tooltip}"
-                                            >
-                                                <customData>
-                                                    <core:CustomData
-                                                        key="topic"
-                                                        value="{topic}"
-                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
-                                                    />
-                                                </customData>
-                                            </ToggleButton>
-                                        </l:HorizontalLayout>
-                                    </HBox>
-                                </u:ObjectPageSubSection>
-
-                                <u:ObjectPageSubSection
-                                    id="idSubSectionDeliverables"
-                                    titleUppercase="false"
-                                    title="{i18n>Deliverables}"
-                                    class="sapUiSmallMarginTop"
-                                >
-                                    <u:actions>
-                                        <Link
-                                            text="{i18n>addDeliverable}"
-                                            press="onAddDeliverablePress"
-                                        />
-                                    </u:actions>
-
-                                    <HBox class="sapUiSmallMarginTopBottom">
-                                        <l:HorizontalLayout
-                                            id="DeliverablesFiltersObject"
-                                            allowWrapping="true"
-                                            class="sapUiResponsiveMargin"
-                                            content="{}"
-                                        >
-                                            <ToggleButton
-                                                text="{deliverable}"
-                                                press="onPressToggle2"
-                                                class="sapUiSmallMarginEnd"
-                                                pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
-                                                enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-                                                tooltip="{i18n>toggle2Tooltip}"
-                                            >
-                                                <customData>
-                                                    <core:CustomData
-                                                        key="ID"
-                                                        value="{deliverable}"
-                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
-                                                    />
-                                                </customData>
-                                            </ToggleButton>
-                                        </l:HorizontalLayout>
-                                    </HBox>
+                                        <HBox width="100%">
+                                            <VBox width="50%">
+                                                <l:HorizontalLayout
+                                                    id="TopicFiltersObject"
+                                                    allowWrapping="true"
+                                                    class="sapUiResponsiveMargin"
+                                                    content="{}"
+                                                >
+                                                    <ToggleButton
+                                                        text="{topic}"
+                                                        press="onPressToggle1"
+                                                        class="sapUiSmallMarginEnd"
+                                                        pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                        enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                        tooltip="{i18n>toggle1Tooltip}"
+                                                    >
+                                                        <customData>
+                                                            <core:CustomData
+                                                                key="topic"
+                                                                value="{topic}"
+                                                                class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                            />
+                                                        </customData>
+                                                    </ToggleButton>
+                                                </l:HorizontalLayout>
+                                            </VBox>
+                                            <VBox width="50%">
+                                                <l:HorizontalLayout
+                                                    id="DeliverablesFiltersObject"
+                                                    allowWrapping="true"
+                                                    class="sapUiResponsiveMargin"
+                                                    content="{}"
+                                                >
+                                                    <ToggleButton
+                                                        text="{deliverable}"
+                                                        press="onPressToggle2"
+                                                        class="sapUiSmallMarginEnd"
+                                                        pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                        enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                        tooltip="{i18n>toggle2Tooltip}"
+                                                    >
+                                                        <customData>
+                                                            <core:CustomData
+                                                                key="ID"
+                                                                value="{deliverable}"
+                                                                class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                            />
+                                                        </customData>
+                                                    </ToggleButton>
+                                                </l:HorizontalLayout>
+                                            </VBox>
+                                        </HBox>
+                                        <HBox width="100%">
+                                            <VBox width="50%">
+                                                <IllustratedMessage
+                                                    enableVerticalResponsiveness="true"
+                                                    illustrationSize="Spot"
+                                                    illustrationType="sapIllus-AddDimensions"
+                                                    enableDefaultTitleAndDescription="false"
+                                                >
+                                                    <additionalContent>
+                                                        <Button
+                                                            text="Add Topic"
+                                                            type="Accept"
+                                                            press="onAddTopicPress"
+                                                        />
+                                                    </additionalContent>
+                                                </IllustratedMessage>
+                                            </VBox>
+                                            <VBox width="50%">
+                                                <IllustratedMessage
+                                                    enableVerticalResponsiveness="true"
+                                                    illustrationSize="Spot"
+                                                    illustrationType="sapIllus-EmptyPlanningCalendar"
+                                                    enableDefaultTitleAndDescription="false"
+                                                >
+                                                    <additionalContent>
+                                                        <Button
+                                                            text="Add Deliverable"
+                                                            type="Accept"
+                                                            press="onAddDeliverablePress"
+                                                        />
+                                                    </additionalContent>
+                                                </IllustratedMessage>
+                                            </VBox>
+                                        </HBox>
+                                    </VBox>
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
 
@@ -447,14 +470,6 @@
                                 titleUppercase="false"
                                 title="{i18n>Activities}"
                             >
-                                <u:heading>
-                                    <MessageStrip
-                                        showIcon="true"
-                                        text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more."
-                                        showCloseButton="true"
-                                    />
-                                </u:heading>
-
                                 <u:ObjectPageSubSection
                                     id="idSubSectionActivities"
                                 >
@@ -994,7 +1009,8 @@
                     text="Delete"
                     tooltip="{i18n>deleteItemTooltip}"
                     press="onDeleteObjectPress"
-                    type="Reject"  visible="{= !${editModel>/editMode}}"
+                    type="Reject"
+                    visible="{= !${editModel>/editMode}}"
                 />
                 <Button
                     id="EditBtn"

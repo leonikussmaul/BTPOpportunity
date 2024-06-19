@@ -10,16 +10,17 @@
     >
         <beginButton>
             <Button
+                text="Cancel"
+                press="onCancelDialogPress"
+            />
+        </beginButton>
+        <endButton>
+         <Button
                 text="Add"
                 type="Accept"
                 press="onSubmitNewLink"
             />
-        </beginButton>
-        <endButton>
-            <Button
-                text="Cancel"
-                press="onCancelDialogPress"
-            />
+           
         </endButton>
         <l:VerticalLayout
             class="sapUiContentPadding"

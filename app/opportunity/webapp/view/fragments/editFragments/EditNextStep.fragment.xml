@@ -10,12 +10,6 @@
                 <contentMiddle>
                     <Title text="Edit Roadmap Item '{localModel>/nextStep}'" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://delete"
-                        press="onDeleteNextStep"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
         <l:VerticalLayout
@@ -57,6 +51,11 @@
                 <content>
                     <ToolbarSpacer />
 
+  <Button
+  type="Reject"
+                        icon="sap-icon://delete" text="Delete"
+                        press="onDeleteNextStep"
+                    />
                     <Button
                         text="Save"
                         type="Accept"

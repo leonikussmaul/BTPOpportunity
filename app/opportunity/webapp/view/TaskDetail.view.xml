@@ -573,7 +573,7 @@
                     <u:ObjectPageSection
                         id="idSectionLinks"
                         titleUppercase="false"
-                        title="{i18n>Links}"
+                        title="Repository"
                     >
                         <u:ObjectPageSubSection id="idSubSectionLinks">
                             <List
@@ -585,22 +585,7 @@
                                 selectionChange="onSelectLink"
                                 delete="onDeleteLink"
                             >
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <content>
-                                            <Title
-                                                text="Respository"
-                                                level="H1"
-                                            />
-                                            <ToolbarSpacer />
-                                            <Button
-                                                type="Accept"
-                                                icon="sap-icon://add"
-                                                press="onAddNewLink"
-                                            />
-                                        </content>
-                                    </OverflowToolbar>
-                                </headerToolbar>
+                               
                                 <StandardListItem
                                     press="onSelectLink"
                                     type="Active"
@@ -611,6 +596,18 @@
                                     iconDensityAware="true"
                                     iconInset="true"
                                 />
+                                 <noData>
+       	<IllustratedMessage enableVerticalResponsiveness="true" illustrationType="sapIllus-SearchFolder" 
+        title="No Links Found" description="Start by adding some">
+        <additionalContent>
+        <Button
+                                                type="Accept" text="Add Item"
+                                                press="onAddNewLink"
+                                            />
+        </additionalContent>
+					
+				</IllustratedMessage>
+    </noData>
                             </List>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>

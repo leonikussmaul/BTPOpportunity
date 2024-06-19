@@ -5,7 +5,7 @@
 >
     <Dialog
         class="sapUiPopupWithPadding"
-        contentWidth="60%"
+        contentWidth="50%"
         resizable="true"
         draggable="true"
     >

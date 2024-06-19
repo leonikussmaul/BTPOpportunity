@@ -287,7 +287,7 @@ sap.ui.define([
                 var sPath = oBindingContext.getPath();
                 var sLinkName = oBindingContext.getObject("linkName");
 
-                MessageBox.confirm("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
+                MessageBox.warning("Are you sure you want to delete the link '" + sLinkName + "'?", function (oAction) {
                     if (oAction === MessageBox.Action.OK) {
                         that.getView().setBusy(true);
                         var oModel = that.getView().getModel();

@@ -111,9 +111,6 @@ sap.ui.define(
         oRouter.navTo("TeamChart");
       },
 
-      onOpenIndividualEngagement: function (oEvent) {
-        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.TeamSelection");
-      },
 
       onOpenPopover: function (oEvent, sFragment) {
         var oButton = oEvent.getSource(),
@@ -149,40 +146,51 @@ sap.ui.define(
 
       },
 
-
-      onDialogOpen: function (fragmentName) {
-
+      onOpenIndividualEngagement: function (oEvent) {
+        // Adjusted function call with the correct fragment name and path
+        this.onDialogOpen("opportunity.opportunity.view.fragments.TeamSelection");
+    },
+    
+    onDialogOpen: function (fragmentName) {
         var that = this;
         if (!this._pDialog) {
-          this._pDialog = Fragment.load({
-            name: fragmentName,
-            controller: this
-          }).then(function (_pDialog) {
-            that.getView().addDependent(_pDialog);
-            _pDialog.setEscapeHandler(function () {
-              that.onCloseDialog();
+            this._pDialog = Fragment.load({
+                name: fragmentName,
+                controller: this
+            }).then(function (oDialog) {
+                that.getView().addDependent(oDialog);
+                oDialog.setEscapeHandler(function () {
+                    that.onCloseDialog();
+                });
+                return oDialog;
             });
-            return _pDialog;
-          });
         }
-        this._pDialog.then(function (_pDialog) {
-          _pDialog.open();
-
-        })
-      },
+        this._pDialog.then(function (oDialog) {
+            oDialog.open();
+        });
+    },
+    
+    onCloseDialog: function () {
+        this._pDialog.then(function (oDialog) {
+            oDialog.close();
+        });
+        this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
+    },
+    
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Calendar");
       },
 
       onSelectTeamMember: function (oEvent) {
-        var inumber = oEvent.getSource().getBindingContext().getObject().inumber;
+        var inumber = oEvent.getParameter("listItem").getBindingContext().getObject().inumber;
 
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("IndividualEngagement", {
           inumber: inumber
         }
         );
+        this.onCloseDialog(); 
 
       },
 

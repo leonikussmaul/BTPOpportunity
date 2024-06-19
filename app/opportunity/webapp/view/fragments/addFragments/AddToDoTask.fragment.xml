@@ -14,12 +14,12 @@
                 <contentMiddle>
                     <Title text="Add Task" />
                 </contentMiddle>
-                <contentRight>
+                <!-- <contentRight>
                     <Button
                         icon="sap-icon://decline"
                         press="onCancelDialogPress"
                     />
-                </contentRight>
+                </contentRight> -->
             </Bar>
         </customHeader>
 
@@ -154,6 +154,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                       <Button  
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    ></Button>
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

@@ -17,12 +17,7 @@
                 <contentMiddle>
                     <Title text="{status}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
+               
             </Bar>
         </customHeader>
 
@@ -381,6 +376,16 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                      <Button
+                       text="Cancel"
+                        press="onCancelDialogPress"
+                    />
+                      <Button
+                        visible="{= !${editModel>/editMode}}"
+                        type="Reject"
+                        text="Delete"
+                        press="onDeleteProjectPress"
+                    />
                     <Button
                         visible="{= ${editModel>/editMode}}"
                         type="Accept"
@@ -395,12 +400,7 @@
                         press="onEditProject"
                     />
 
-                     <Button
-                        visible="{= !${editModel>/editMode}}"
-                        type="Reject"
-                        text="Delete"
-                        press="onDeleteProjectPress"
-                    />
+                   
                 </content>
             </Toolbar>
         </footer>

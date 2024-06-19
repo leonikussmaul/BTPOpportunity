@@ -37,27 +37,32 @@
                 tooltip="Team Engagement"
             />
 
-            <tnt:NavigationListItem
-                text="Calendar" key="Calendar"
-                select="onOpenCalendar"
-                icon="sap-icon://appointment-2"
-            />
+             <tnt:NavigationListItem
+                    text="Engagement" key="Engagement"
+                    select="onOpenIndividualEngagement"
+                    icon="sap-icon://account"
+                />
+
+        
 
             
         </tnt:NavigationList>
         <tnt:fixedItem>
             <tnt:NavigationList>
-                <tnt:NavigationListItem
-                    text="Engagement" key="Engagement"
-                    select="onOpenIndividualEngagement"
-                    icon="sap-icon://work-history"
-                />
+            
 
                 <tnt:NavigationListItem
                     text="Team Chart" key="TeamChart"
                     select="onOpenTeamChart"
                     icon="sap-icon://employee-lookup"
                 />
+
+
+                    <tnt:NavigationListItem
+                text="Calendar" key="Calendar"
+                select="onOpenCalendar"
+                icon="sap-icon://appointment-2"
+            />
 
                 <tnt:NavigationListItem
                     text="About Demand Genius" key="About"

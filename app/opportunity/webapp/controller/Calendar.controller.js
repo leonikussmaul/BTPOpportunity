@@ -222,7 +222,6 @@ sap.ui.define([
       onDeleteToken: function (oEvent) {
         var sPath = oEvent.getParameter("token").getBindingContext().sPath;
 
-        var that = this;
         var oModel = this.getView().getModel();
         sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
           actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
