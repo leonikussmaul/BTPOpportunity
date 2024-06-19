@@ -185,7 +185,7 @@
                                     />
                                     <micro:RadialMicroChart
                                         id="adoptionChart"
-                                        size="S"
+                                        size="S"    visible="{= ${adoption} !== null}"
                                         percentage="{adoption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
@@ -222,7 +222,7 @@
                                     />
                                     <micro:RadialMicroChart
                                         id="consumptionChart"
-                                        size="S"
+                                        size="S" visible="{= ${consumption} !== null}"
                                         percentage="{consumption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
