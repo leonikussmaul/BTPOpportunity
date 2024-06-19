@@ -623,7 +623,7 @@
                                                     <ToolbarSpacer />
                                                     <Button
                                                         type="Accept"
-                                                        icon="sap-icon://add"
+                                                        text="Add"
                                                         press="onAddNewLink"
                                                     />
                                                 </content>
@@ -639,6 +639,15 @@
                                             iconDensityAware="true"
                                             iconInset="true"
                                         />
+                                        <noData>
+                                            <!-- Illustrated message when there is no data -->
+                                            <IllustratedMessage
+                                                enableVerticalResponsiveness="true"
+                                                illustrationType="sapIllus-SearchFolder"
+                                                title="No Links Found"
+                                                description="Start by adding a link to the repository"
+                                            />
+                                        </noData>
                                     </List>
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
@@ -694,8 +703,8 @@
                                             <ToolbarSpacer />
 
                                             <Button
-                                                icon="sap-icon://add"
                                                 type="Accept"
+                                                text="Add"
                                                 press="onAddNextStep"
                                             />
 
@@ -707,7 +716,7 @@
                                         </Toolbar>
                                         <commons:Timeline
                                             axisOrientation="Horizontal"
-                                            noDataText="There are no Roadmap Items for this opportunity."
+                                            noDataText="There are no Roadmap Items for this opportunity. Start by adding one"
                                             width="100%"
                                             id="idTimeline"
                                             content="{/opportunityNextSteps}"
@@ -921,6 +930,14 @@
                                     </OverflowToolbar>
                                 </VBox>
                             </f:GridListItem>
+                              <f:noData>
+        <IllustratedMessage
+            enableVerticalResponsiveness="true"
+            illustrationType="sapIllus-BalloonSky"
+            title="No Tasks Found"
+            description="Start by adding one"
+        />
+    </f:noData>
                         </f:GridList>
                     </f:SidePanelItem>
 

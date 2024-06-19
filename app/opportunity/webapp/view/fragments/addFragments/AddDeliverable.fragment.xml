@@ -11,12 +11,6 @@
                 <contentMiddle>
                     <Title text="{i18n>addDeliverableHeader}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
         <Label text="{i18n>addNew}" />
@@ -40,6 +34,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                      text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

@@ -86,7 +86,7 @@
                             /> -->
                         </u:actions>
                         <u:navigationActions>
-                         <tnt:InfoLabel
+                            <tnt:InfoLabel
                                 text="{actionTopic}"
                                 colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                 visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
@@ -306,7 +306,7 @@
 
                                         <OverflowToolbarButton
                                             type="Accept"
-                                            icon="sap-icon://add"
+                                            text="Add"
                                             tooltip="{i18n>addTableItem}"
                                             press="onAddSubTask"
                                         />
@@ -474,6 +474,16 @@
                                         </cells>
                                     </ColumnListItem>
                                 </items>
+                                   <noData>
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-NoTasks"
+                                        title="No Sub-Tasks Found"
+                                        description="Start by creating one"
+                                    >
+                                    </IllustratedMessage>
+                                </noData>
+                                
                             </Table>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
@@ -564,6 +574,7 @@
                                     placeholder="Add a comment to this task"
                                     post="onPostComment"
                                 />
+                                
                             </VBox>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
@@ -573,43 +584,57 @@
                     <u:ObjectPageSection
                         id="idSectionLinks"
                         titleUppercase="false"
-                        title="Repository"
+                        title="Links"
                     >
                         <u:ObjectPageSubSection id="idSubSectionLinks">
-                            <List
-                                id="linkList"
-                                items="{}"
-                                mode="Delete"
-                                noDataText="There are no links added to this task yet."
-                                includeItemInSelection="true"
-                                selectionChange="onSelectLink"
-                                delete="onDeleteLink"
-                            >
-                               
-                                <StandardListItem
-                                    press="onSelectLink"
-                                    type="Active"
-                                    id="linkListItem"
-                                    title="{linkName}"
-                                    description="{linkDescription}"
-                                    icon="sap-icon://chain-link"
-                                    iconDensityAware="true"
-                                    iconInset="true"
-                                />
-                                 <noData>
-       	<IllustratedMessage enableVerticalResponsiveness="true" illustrationType="sapIllus-SearchFolder" 
-        title="No Links Found" description="Start by adding some">
-        <additionalContent>
-        <Button
-                                                type="Accept" text="Add Item"
+               
+                <List
+                    id="linkList"
+                    items="{}"
+                    mode="Delete"
+                    noDataText="There are no links added to this task yet."
+                    includeItemInSelection="true"
+                    selectionChange="onSelectLink"
+                    delete="onDeleteLink"
+                >
+                 <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title
+                                                text="Respository"
+                                                level="H1"
+                                            />
+                                            <ToolbarSpacer />
+                                            <Button
+                                                type="Accept"
+                                                text="Add"
                                                 press="onAddNewLink"
                                             />
-        </additionalContent>
-					
-				</IllustratedMessage>
-    </noData>
-                            </List>
-                        </u:ObjectPageSubSection>
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                    <StandardListItem
+                        press="onSelectLink"
+                        type="Active"
+                        id="linkListItem"
+                        title="{linkName}"
+                        description="{linkDescription}"
+                        icon="sap-icon://chain-link"
+                        iconDensityAware="true"
+                        iconInset="true"
+                    />
+                    <noData>
+                        <!-- Illustrated message when there is no data -->
+                        <IllustratedMessage
+                            enableVerticalResponsiveness="true"
+                            illustrationType="sapIllus-SearchFolder"
+                            title="No Links Found"
+                            description="Start by adding a link to the repository"
+                       />
+                      
+                    </noData>
+                </List>
+            </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
                 </u:sections>
             </u:ObjectPageLayout>

@@ -538,6 +538,15 @@
                                             </cells>
                                         </ColumnListItem>
                                     </items>
+                                     <noData>
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-SearchEarth"
+                                        title="No Opportunities Found"
+                                        description="Clear the filters or create a new opportunity"
+                                    >
+                                    </IllustratedMessage>
+                                </noData>
                                 </Table>
                             </smartTable:SmartTable>
                         </u:ObjectPageSubSection>

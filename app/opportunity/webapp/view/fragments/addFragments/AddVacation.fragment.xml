@@ -6,7 +6,7 @@
 >
     <Dialog title="Add a new Vacation">
         <beginButton>
-              <Button
+            <Button
                 text="Cancel"
                 press="onCancelDialogPress"
             />

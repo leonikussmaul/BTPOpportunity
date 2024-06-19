@@ -27,7 +27,7 @@
             <OverflowToolbar design="Transparent">
                 <ToolbarSpacer />
                 <Button
-                    icon="sap-icon://add"
+                     text="Add"
                     press="onAddActivityPress"
                     type="Accept"
                 />
@@ -39,7 +39,7 @@
             delete="onDeleteActivity"
             growingThreshold="10"
             growing="true"
-            noDataText="Looks like there are no activities yet."
+            noDataText="Looks like there are no activities yet"
         >
             <columns>
                 <Column width="25%">
@@ -141,6 +141,16 @@
                     </cells>
                 </ColumnListItem>
             </items>
+                <noData>
+                        <!-- Illustrated message when there is no data -->
+                        <IllustratedMessage
+                            enableVerticalResponsiveness="true"
+                            illustrationType="sapIllus-NoActivities"
+                            title="Looks like there are no activities"
+                            description="Start by adding some"
+                       />
+                      
+                    </noData>
         </Table>
     </smartTable:SmartTable>
 </core:FragmentDefinition>

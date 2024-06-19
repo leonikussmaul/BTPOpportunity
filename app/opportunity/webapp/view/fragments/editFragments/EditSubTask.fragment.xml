@@ -14,7 +14,6 @@
                 <contentMiddle>
                     <Title text="Edit Sub-Task for {actionCustomer}" />
                 </contentMiddle>
-        
             </Bar>
         </customHeader>
         <form:SimpleForm editable="true">
@@ -81,7 +80,7 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
-                     <Button
+                    <Button
                         text="Cancel"
                         press="onCancelDialogPress"
                     />

@@ -254,6 +254,15 @@
                             </cells>
                         </ColumnListItem>
                     </items>
+                    <noData>
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-NoTasks"
+                                        title="No Tasks Found"
+                                        description="Start by creating one"
+                                    >
+                                    </IllustratedMessage>
+                                </noData>
                 </Table>
             </smartTable:SmartTable>
         </f:content>

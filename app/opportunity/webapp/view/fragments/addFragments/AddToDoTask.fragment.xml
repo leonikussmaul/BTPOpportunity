@@ -14,12 +14,6 @@
                 <contentMiddle>
                     <Title text="Add Task" />
                 </contentMiddle>
-                <!-- <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight> -->
             </Bar>
         </customHeader>
 
@@ -59,17 +53,21 @@
                 required="true"
             />
             <Input
-                value="{AddTaskModel>/actionTitle}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTitle}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTitleInputTask"
                 placeholder="{i18n>toDoPlaceholder}"
             />
             <Label
-                text="{i18n>actionTask}" 
+                text="{i18n>actionTask}"
                 required="true"
             />
             <TextArea
-                value="{AddTaskModel>/actionTask}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTask}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTaskInputTask"
                 placeholder="{i18n>shortDescPlaceholder}"
@@ -154,10 +152,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
-                       <Button  
+                    <Button
                         text="Cancel"
                         press="onCancelDialogPress"
-                    ></Button>
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

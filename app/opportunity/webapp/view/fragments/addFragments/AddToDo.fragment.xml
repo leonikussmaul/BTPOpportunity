@@ -33,7 +33,9 @@
                 required="true"
             />
             <Input
-                value="{AddTaskModel>/actionTitle}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTitle}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTitleInput"
                 placeholder="{i18n>toDoPlaceholder}"
@@ -43,7 +45,9 @@
                 required="true"
             />
             <TextArea
-                value="{AddTaskModel>/actionTask}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTask}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTaskInput"
                 maxLength="800"
@@ -128,10 +132,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
-                    <Button  
+                    <Button
                         text="Cancel"
                         press="onCancelDialogPress"
-                    ></Button>
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

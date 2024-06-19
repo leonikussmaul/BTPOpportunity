@@ -21,7 +21,7 @@
     xmlns:tnt="sap.tnt"
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:commons="sap.suite.ui.commons"
-	xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
 >
     <f:DynamicPage
         id="TeamPage"
@@ -36,53 +36,51 @@
                         id="headerTitle"
                     />
                 </f:heading>
-				<f:actions>
-						<Button
-								text="Add Project"
-								icon="sap-icon://add"
-								type="Accept"
-								press="onAddProjectPress"/>
-						<!-- <Button
+                <f:actions>
+                    <Button
+                        text="Add Project"
+                        type="Accept"
+                        press="onAddProjectPress"
+                    />
+                    <!-- <Button
 								text="Delete"
 								type="Transparent"/> -->
-					</f:actions>
+                </f:actions>
             </f:DynamicPageTitle>
-			
         </f:title>
-		
+
         <f:content>
             <!-- 1. New Requests Table -->
             <VBox>
                 <HBox renderType="Bare">
-                    	<Table
-							id="newRequestsTable"
-							mode="SingleSelectMaster"
-							growing="true"
-							growingThreshold="10"
-							beforeOpenContextMenu="onBeforeOpenContextMenu"
-							selectionChange="onSelectionChange"
-							class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
-							sticky="ColumnHeaders,HeaderToolbar"
-							delete="onGridListItemDelete"
-							noDataText="No Data"
-
-							items="{path: 'ProjectModel>/newRequests',
+                    <Table
+                        id="newRequestsTable"
+                        mode="SingleSelectMaster"
+                        growing="true"
+                        growingThreshold="10"
+                        beforeOpenContextMenu="onBeforeOpenContextMenu"
+                        selectionChange="onSelectionChange"
+                        class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Data"
+                        items="{path: 'ProjectModel>/newRequests',
 									sorter: {
 										path: 'account',
 										descending: false
 									}}"
-						>
-        	<contextMenu>
-			<!-- <Menu>
+                    >
+                        <contextMenu>
+                            <!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
 			</Menu> -->
-		</contextMenu>
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="New Requests" />
-				<ToolbarSpacer/>
-				<!-- <Button
+                        </contextMenu>
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="New Requests" />
+                                <ToolbarSpacer />
+                                <!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
@@ -90,94 +88,128 @@
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
 					press="moveDown"/> -->
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column width="70%" >
-				<Text  text="Account" wrapping="true" />
-			</Column>
-            <Column width="8em">
-				<Text text="Topic" />
-			</Column>
-			
-		</columns>
-		<dragDropConfig>
-			<dnd:DragInfo
-				groupName="newRequestsToRFP"
-				sourceAggregation="items" />
-					<dnd:DragInfo
-				groupName="newRequestsToOnGoing"
-				sourceAggregation="items" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="70%">
+                                <Text
+                                    text="Account"
+                                    wrapping="true"
+                                />
+                            </Column>
+                            <Column width="8em">
+                                <Text text="Topic" />
+                            </Column>
+                        </columns>
+                        <dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="newRequestsToRFP"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="newRequestsToOnGoing"
+                                sourceAggregation="items"
+                            />
 
-				<dnd:DragInfo
-				groupName="newRequestsToGoLive"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="newRequestsToPast"
-				sourceAggregation="items" />
-				<dnd:DropInfo
-				groupName="RFPToNewRequests"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="onGoingToNewRequests"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="goLiveToNewRequests"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="pastToNewRequests"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-                	<dnd:DragDropInfo
-				sourceAggregation="items"
-				targetAggregation="items"
-				dropPosition="Between"
-				drop="onDropSelectedProductsTable"/>
-		</dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="newRequestsToGoLive"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="newRequestsToPast"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="RFPToNewRequests"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="onGoingToNewRequests"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="goLiveToNewRequests"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="pastToNewRequests"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DragDropInfo
+                                sourceAggregation="items"
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                drop="onDropSelectedProductsTable"
+                            />
+                        </dragDropConfig>
 
-		<items>
-			<ColumnListItem>
-				<cells>
-				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
-                      <tnt:InfoLabel
-							text="{ProjectModel>topic}"
-							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-							renderMode="Narrow"
-						/>			
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{ProjectModel>account}"
+                                        text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+                                    />
+                                    <tnt:InfoLabel
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                        renderMode="Narrow"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <noData>
+                            <!-- Illustrated message when there is no data -->
+                            <IllustratedMessage
+                                enableVerticalResponsiveness="true"
+                                illustrationType="sapIllus-SimpleMail"
+                                enableDefaultTitleAndDescription="false"
+                            />
+                        </noData>
+                    </Table>
 
                     <!-- 2. RFP Table -->
-                    	<Table
-							id="RFPTable"
-							mode="SingleSelectMaster"
-							growing="true"
-							growingThreshold="10"
-							beforeOpenContextMenu="onBeforeOpenContextMenu"
-							selectionChange="onSelectionChange"
-							class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-							sticky="ColumnHeaders,HeaderToolbar"
-							delete="onGridListItemDelete"
-							noDataText="No Data"
-							items="{path: 'ProjectModel>/RFP',
+                    <Table
+                        id="RFPTable"
+                        mode="SingleSelectMaster"
+                        growing="true"
+                        growingThreshold="10"
+                        beforeOpenContextMenu="onBeforeOpenContextMenu"
+                        selectionChange="onSelectionChange"
+                        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Data"
+                        items="{path: 'ProjectModel>/RFP',
 							sorter: {
 								path: 'account',
 								descending: false
 							}}"
-						>
-        	<contextMenu>
-			<!-- <Menu>
+                    >
+                        <contextMenu>
+                            <!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
 			</Menu> -->
-		</contextMenu>
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="RFP" />
-				<ToolbarSpacer/>
-				<!-- <Button
+                        </contextMenu>
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="RFP" />
+                                <ToolbarSpacer />
+                                <!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
@@ -185,95 +217,128 @@
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
 					press="moveDown"/> -->
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column width="70%" >
-				<Text  text="Account" wrapping="true" />
-			</Column>
-            <Column width="8em">
-				<Text text="Topic" />
-			</Column>
-			
-		</columns>
-		<dragDropConfig>
-			<dnd:DragInfo
-				groupName="RFPToNewRequests"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="RFPToOnGoing"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="RFPToGoLive"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="RFPToPast"
-				sourceAggregation="items" />
-			<dnd:DropInfo
-				groupName="newRequestsToRFP"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="onGoingToRFP"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="goLiveToRFP"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="pastToRFP"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-			<dnd:DragDropInfo
-				sourceAggregation="items"
-				targetAggregation="items"
-				dropPosition="Between"
-				drop="onDropSelectedProductsTable"/>
-        </dragDropConfig>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="70%">
+                                <Text
+                                    text="Account"
+                                    wrapping="true"
+                                />
+                            </Column>
+                            <Column width="8em">
+                                <Text text="Topic" />
+                            </Column>
+                        </columns>
+                        <dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="RFPToNewRequests"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="RFPToOnGoing"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="RFPToGoLive"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="RFPToPast"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="newRequestsToRFP"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="onGoingToRFP"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="goLiveToRFP"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="pastToRFP"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DragDropInfo
+                                sourceAggregation="items"
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                drop="onDropSelectedProductsTable"
+                            />
+                        </dragDropConfig>
 
-		<items>
-			<ColumnListItem>
-				<cells>
-				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
-                      <tnt:InfoLabel
-							text="{ProjectModel>topic}"
-							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-							renderMode="Narrow"
-						/>	
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{ProjectModel>account}"
+                                        text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+                                    />
+                                    <tnt:InfoLabel
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                        renderMode="Narrow"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <noData>
+                            <!-- Illustrated message when there is no data -->
+                            <IllustratedMessage
+                                enableVerticalResponsiveness="true"
+                                illustrationType="sapIllus-AddDimensions"
+                                enableDefaultTitleAndDescription="false"
+                            />
+                        </noData>
+                    </Table>
 
                     <!-- 3. on going table -->
 
-                   	<Table
-						id="OnGoingTable"
-						mode="SingleSelectMaster"
-						growing="true"
-						growingThreshold="10"
-						beforeOpenContextMenu="onBeforeOpenContextMenu"
-						selectionChange="onSelectionChange"
-						class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-						sticky="ColumnHeaders,HeaderToolbar"
-						delete="onGridListItemDelete"
-						noDataText="No Data"
-
-						items="{path: 'ProjectModel>/On-Going',
+                    <Table
+                        id="OnGoingTable"
+                        mode="SingleSelectMaster"
+                        growing="true"
+                        growingThreshold="10"
+                        beforeOpenContextMenu="onBeforeOpenContextMenu"
+                        selectionChange="onSelectionChange"
+                        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Data"
+                        items="{path: 'ProjectModel>/On-Going',
                         sorter: {
                         	path: 'account',
                             descending: false
                         }}"
-					>
-        	<contextMenu>
-			<!-- <Menu>
+                    >
+                        <contextMenu>
+                            <!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
 			</Menu> -->
-		</contextMenu>
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="On-Going" />
-				<ToolbarSpacer/>
-				<!-- <Button
+                        </contextMenu>
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="On-Going" />
+                                <ToolbarSpacer />
+                                <!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
@@ -281,104 +346,131 @@
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
 					press="moveDown"/> -->
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column width="70%" >
-				<Text  text="Account" wrapping="true" />
-			</Column>
-            <Column width="8em">
-				<Text text="Topic" />
-			</Column>
-			
-		</columns>
-		<dragDropConfig>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="70%">
+                                <Text
+                                    text="Account"
+                                    wrapping="true"
+                                />
+                            </Column>
+                            <Column width="8em">
+                                <Text text="Topic" />
+                            </Column>
+                        </columns>
+                        <dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="onGoingToNewRequests"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="onGoingToRFP"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="onGoingToGoLive"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="onGoingToPast"
+                                sourceAggregation="items"
+                            />
 
-		
-		<dnd:DragInfo
-				groupName="onGoingToNewRequests"
-				sourceAggregation="items"/>
-				<dnd:DragInfo
-				groupName="onGoingToRFP"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="onGoingToGoLive"
-				sourceAggregation="items"/>
-				<dnd:DragInfo
-				groupName="onGoingToPast"
-				sourceAggregation="items"/>
-			
-				<dnd:DropInfo
-				groupName="newRequestsToOnGoing"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                            <dnd:DropInfo
+                                groupName="newRequestsToOnGoing"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
 
-				<dnd:DropInfo
-				groupName="RFPToOnGoing"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                            <dnd:DropInfo
+                                groupName="RFPToOnGoing"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
 
-				<dnd:DropInfo
-				groupName="goLiveToOnGoing"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
+                            <dnd:DropInfo
+                                groupName="goLiveToOnGoing"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
 
-				<dnd:DropInfo
-				groupName="pastToOnGoing"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DragDropInfo
-				sourceAggregation="items"
-				targetAggregation="items"
-				dropPosition="Between"
-				drop="onDropSelectedProductsTable"/>
-        </dragDropConfig>
+                            <dnd:DropInfo
+                                groupName="pastToOnGoing"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DragDropInfo
+                                sourceAggregation="items"
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                drop="onDropSelectedProductsTable"
+                            />
+                        </dragDropConfig>
 
-		<items>
-			<ColumnListItem>
-				<cells>
-				<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
-
- /> 
-                      <tnt:InfoLabel
-							text="{ProjectModel>topic}"
-							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-							renderMode="Narrow"
-						/>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
-
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{ProjectModel>account}"
+                                        text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+                                    />
+                                    <tnt:InfoLabel
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                        renderMode="Narrow"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <noData>
+                            <!-- Illustrated message when there is no data -->
+                            <IllustratedMessage
+                                enableVerticalResponsiveness="true"
+                                illustrationType="sapIllus-Connection"
+                                enableDefaultTitleAndDescription="false"
+                            />
+                        </noData>
+                    </Table>
 
                     <!-- 4. Go Live Table -->
-                    	<Table
-							id="GoLiveTable"
-							mode="SingleSelectMaster"
-							growing="true"
-							growingThreshold="10"
-							beforeOpenContextMenu="onBeforeOpenContextMenu"
-							selectionChange="onSelectionChange"
-							class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-							sticky="ColumnHeaders,HeaderToolbar"
-							delete="onGridListItemDelete"
-							noDataText="No Data"
-
-							items="{path: 'ProjectModel>/Go-Live',
+                    <Table
+                        id="GoLiveTable"
+                        mode="SingleSelectMaster"
+                        growing="true"
+                        growingThreshold="10"
+                        beforeOpenContextMenu="onBeforeOpenContextMenu"
+                        selectionChange="onSelectionChange"
+                        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Data"
+                        items="{path: 'ProjectModel>/Go-Live',
 							sorter: {
 								path: 'account',
 								descending: false
 							}}"
-						>
-		
-        	<contextMenu>
-			<!-- <Menu>
+                    >
+                        <contextMenu>
+                            <!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
 			</Menu> -->
-		</contextMenu>
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="Go-Live" />
-				<ToolbarSpacer/>
-				<!-- <Button
+                        </contextMenu>
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="Go-Live" />
+                                <ToolbarSpacer />
+                                <!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
@@ -386,93 +478,127 @@
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
 					press="moveDown"/> -->
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column width="70%" >
-				<Text  text="Account" wrapping="true" />
-			</Column>
-            <Column width="8em">
-				<Text text="Topic" />
-			</Column>
-			
-		</columns>
-		<dragDropConfig>
-			<dnd:DragInfo
-				groupName="goLiveToRFP"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="goLiveToNewRequests"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="goLiveToOnGoing"
-				sourceAggregation="items" />
-					<dnd:DragInfo
-				groupName="goLiveToPast"
-				sourceAggregation="items" />
-					<dnd:DropInfo
-				groupName="newRequestsToGoLive"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-					<dnd:DropInfo
-				groupName="RFPToGoLive"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-				<dnd:DropInfo
-				groupName="onGoingToGoLive"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-					<dnd:DropInfo
-				groupName="pastToGoLive"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-                	<dnd:DragDropInfo
-				sourceAggregation="items"
-				targetAggregation="items"
-				dropPosition="Between"
-				drop="onDropSelectedProductsTable"/>
-		</dragDropConfig>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="70%">
+                                <Text
+                                    text="Account"
+                                    wrapping="true"
+                                />
+                            </Column>
+                            <Column width="8em">
+                                <Text text="Topic" />
+                            </Column>
+                        </columns>
+                        <dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="goLiveToRFP"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="goLiveToNewRequests"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="goLiveToOnGoing"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="goLiveToPast"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="newRequestsToGoLive"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="RFPToGoLive"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="onGoingToGoLive"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="pastToGoLive"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DragDropInfo
+                                sourceAggregation="items"
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                drop="onDropSelectedProductsTable"
+                            />
+                        </dragDropConfig>
 
-		<items>
-			<ColumnListItem>
-				<cells>
-					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
-                      <tnt:InfoLabel
-							text="{ProjectModel>topic}"
-							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-							renderMode="Narrow"
-						/>
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{ProjectModel>account}"
+                                        text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+                                    />
+                                    <tnt:InfoLabel
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                        renderMode="Narrow"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <noData>
+                            <!-- Illustrated message when there is no data -->
+                            <IllustratedMessage
+                                enableVerticalResponsiveness="true"
+                                illustrationType="sapIllus-SuccessHighFive"
+                                enableDefaultTitleAndDescription="false"
+                            />
+                        </noData>
+                    </Table>
 
                     <!-- 5. Past Table -->
-                   	<Table
-						id="PastTable"
-						mode="SingleSelectMaster"
-						growing="true"
-						growingThreshold="10"
-						beforeOpenContextMenu="onBeforeOpenContextMenu"
-						selectionChange="onSelectionChange"
-						class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
-						sticky="ColumnHeaders,HeaderToolbar"
-						delete="onGridListItemDelete"
-						noDataText="No Data"
-						items="{path: 'ProjectModel>/Past',
+                    <Table
+                        id="PastTable"
+                        mode="SingleSelectMaster"
+                        growing="true"
+                        growingThreshold="10"
+                        beforeOpenContextMenu="onBeforeOpenContextMenu"
+                        selectionChange="onSelectionChange"
+                        class="sapUiSmallMarginBeginEnd sapUiMediumMarginBottom"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        delete="onGridListItemDelete"
+                        noDataText="No Data"
+                        items="{path: 'ProjectModel>/Past',
                         sorter: {
 							path: 'account',
 							descending: false
-						}}">
-		
-        	<contextMenu>
-			<!-- <Menu>
+						}}"
+                    >
+                        <contextMenu>
+                            <!-- <Menu>
 				<MenuItem text="Move up" press="moveUp" />
 				<MenuItem text="Move down" press="moveDown" />
 			</Menu> -->
-		</contextMenu>
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="Past" />
-				<ToolbarSpacer/>
-				<!-- <Button
+                        </contextMenu>
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="Past" />
+                                <ToolbarSpacer />
+                                <!-- <Button
 					icon="sap-icon://navigation-up-arrow"
 					tooltip="Move up"
 					press="moveUp"/>
@@ -480,81 +606,119 @@
 					icon="sap-icon://navigation-down-arrow"
 					tooltip="Move down"
 					press="moveDown"/> -->
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column width="70%" >
-				<Text  text="Account" wrapping="true" />
-			</Column>
-            <Column width="8em">
-				<Text text="Topic" />
-			</Column>
-			
-		</columns>
-		<dragDropConfig>
-		<dnd:DragInfo
-				groupName="pastToNewRequests"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="pastToRFP"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="pastToOnGoing"
-				sourceAggregation="items" />
-				<dnd:DragInfo
-				groupName="pastToGoLive"
-				sourceAggregation="items" />
-		
-			<dnd:DropInfo
-				groupName="newRequestsToPast"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-					<dnd:DropInfo
-				groupName="RFPToPast"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-					<dnd:DropInfo
-				groupName="onGoingToPast"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-					<dnd:DropInfo
-				groupName="goLiveToPast"
-				drop="onDrop"   dropLayout="Horizontal"  dropPosition="Between"  targetAggregation="items"/>
-                	<dnd:DragDropInfo
-				sourceAggregation="items"
-				targetAggregation="items"
-				dropPosition="Between"
-				drop="onDropSelectedProductsTable"/>
-		</dragDropConfig>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="70%">
+                                <Text
+                                    text="Account"
+                                    wrapping="true"
+                                />
+                            </Column>
+                            <Column width="8em">
+                                <Text text="Topic" />
+                            </Column>
+                        </columns>
+                        <dragDropConfig>
+                            <dnd:DragInfo
+                                groupName="pastToNewRequests"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="pastToRFP"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="pastToOnGoing"
+                                sourceAggregation="items"
+                            />
+                            <dnd:DragInfo
+                                groupName="pastToGoLive"
+                                sourceAggregation="items"
+                            />
 
-		<items>
-			<ColumnListItem>
-				<cells>
-					<ObjectIdentifier title="{ProjectModel>account}" text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"/> 
-                      <tnt:InfoLabel
-							text="{ProjectModel>topic}"
-							colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-							visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
-							renderMode="Narrow"
-						/>			
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
+                            <dnd:DropInfo
+                                groupName="newRequestsToPast"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="RFPToPast"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="onGoingToPast"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DropInfo
+                                groupName="goLiveToPast"
+                                drop="onDrop"
+                                dropLayout="Horizontal"
+                                dropPosition="Between"
+                                targetAggregation="items"
+                            />
+                            <dnd:DragDropInfo
+                                sourceAggregation="items"
+                                targetAggregation="items"
+                                dropPosition="Between"
+                                drop="onDropSelectedProductsTable"
+                            />
+                        </dragDropConfig>
 
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier
+                                        title="{ProjectModel>account}"
+                                        text="{= ${ProjectModel>percentage} !== null &amp;&amp; ${ProjectModel>percentage} !== 0 ? ${ProjectModel>percentage} + '%' : '' }"
+                                    />
+                                    <tnt:InfoLabel
+                                        text="{ProjectModel>topic}"
+                                        colorScheme="{path:'ProjectModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                        visible="{= ${ProjectModel>topic} !== null &amp;&amp; ${ProjectModel>topic} !== ''}"
+                                        renderMode="Narrow"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                        <noData>
+                            <!-- Illustrated message when there is no data -->
+                            <IllustratedMessage
+                                enableVerticalResponsiveness="true"
+                                illustrationType="sapIllus-SimpleTask"
+                                enableDefaultTitleAndDescription="false"
+                            />
+                        </noData>
+                    </Table>
                 </HBox>
 
                 <VBox class="sapUiLargeMarginTop">
-				<smartfilterbar:SmartFilterBar 
-					id="smartFilterBar"
-					entitySet="teamForecastCopy"
-					visible="false"
-					>
-					<smartfilterbar:controlConfiguration>
-						<smartfilterbar:ControlConfiguration key="year" visibleInAdvancedArea="true">
-							<smartfilterbar:defaultFilterValues>
-								<smartfilterbar:SelectOption low="{oYearModel>/filterYear}"></smartfilterbar:SelectOption>
-							</smartfilterbar:defaultFilterValues>
-						</smartfilterbar:ControlConfiguration>
-					</smartfilterbar:controlConfiguration>
-				</smartfilterbar:SmartFilterBar>
+                    <smartfilterbar:SmartFilterBar
+                        id="smartFilterBar"
+                        entitySet="teamForecastCopy"
+                        visible="false"
+                    >
+                        <smartfilterbar:controlConfiguration>
+                            <smartfilterbar:ControlConfiguration
+                                key="year"
+                                visibleInAdvancedArea="true"
+                            >
+                                <smartfilterbar:defaultFilterValues>
+                                    <smartfilterbar:SelectOption
+                                        low="{oYearModel>/filterYear}"
+                                    />
+                                </smartfilterbar:defaultFilterValues>
+                            </smartfilterbar:ControlConfiguration>
+                        </smartfilterbar:controlConfiguration>
+                    </smartfilterbar:SmartFilterBar>
 
                     <smartchart:SmartChart
                         id="smartChartTeamForecast"
@@ -574,24 +738,27 @@
                         showDetailsButton="true"
                         showDrillButtons="false"
                         showLegendButton="false"
-						showDimensionsTitle="false"
+                        showDimensionsTitle="false"
                         noData="Utilization is either not tracked or not applicable for {firstName}"
                         showSemanticNavigationButton="false"
-						smartFilterId="smartFilterBar" 
+                        smartFilterId="smartFilterBar"
                     >
-
                         <smartchart:toolbar>
                             <OverflowToolbar>
-								<ComboBox
-									width="4.7em"
-									selectionChange=".handleSelectionChange"
-									value="{oYearModel>/filterYear}"
-									items="{
+                                <ComboBox
+                                    width="4.7em"
+                                    selectionChange=".handleSelectionChange"
+                                    value="{oYearModel>/filterYear}"
+                                    items="{
 										path: 'oYearModel>/listYears'
-									}">
-									<core:Item key="{oYearModel>year}" text="{oYearModel>year}" />
-								</ComboBox>
-								<ToolbarSpacer />
+									}"
+                                >
+                                    <core:Item
+                                        key="{oYearModel>year}"
+                                        text="{oYearModel>year}"
+                                    />
+                                </ComboBox>
+                                <ToolbarSpacer />
                                 <Button
                                     text="Add / Edit"
                                     icon="sap-icon://edit"

@@ -16,7 +16,7 @@
         </beginButton>
         <endButton>
          <Button
-                text="Add"
+                text="Submit"
                 type="Accept"
                 press="onSubmitNewLink"
             />
