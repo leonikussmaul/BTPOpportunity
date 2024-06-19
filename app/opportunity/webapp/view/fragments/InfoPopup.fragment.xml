@@ -31,9 +31,9 @@
         showHeaderContent="false"
     >
         <uxap:sections>
-            <uxap:ObjectPageSection title="Holistic Overview" titleUppercase="false">
+            <uxap:ObjectPageSection title="Overview" titleUppercase="false">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection title="Holistic Overview">
+                    <uxap:ObjectPageSubSection title="Overview">
                         <FormattedText htmlText="{infoModel>/holisticOverview}" />
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>

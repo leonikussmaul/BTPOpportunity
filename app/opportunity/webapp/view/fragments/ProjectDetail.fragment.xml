@@ -405,6 +405,12 @@
                         text="Cancel"
                         press="onCancelDialogPress"
                     />
+                    <Button
+                        visible="{= !${editModel>/editMode}}"
+                        type="Reject"
+                        text="Delete"
+                        press="onDeleteProjectPress"
+                    />
 
                     <Button
                         visible="{= ${editModel>/editMode}}"
@@ -418,13 +424,8 @@
                         type="Emphasized"
                         text="Edit"
                         press="onEditProject"
-                    />
-                    <Button
-                        visible="{= !${editModel>/editMode}}"
-                        type="Reject"
-                        text="Delete"
-                        press="onDeleteProjectPress"
-                    />
+                        />
+                  
                 </content>
             </Toolbar>
         </footer>
