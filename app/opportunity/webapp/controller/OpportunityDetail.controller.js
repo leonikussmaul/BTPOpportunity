@@ -1851,5 +1851,14 @@ COMMENTS
 
             },
 
+            onSidePanelToggle: function(oEvent){
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                var bExpanded = oEvent.getParameter("expanded");
+                if(bExpanded) oGlobalModel.setProperty("/layout", "MidColumnFullScreen");
+                else oGlobalModel.setProperty("/layout", "TwoColumnsMidExpanded");
+
+            }
+
+
         });
     });
