@@ -72,20 +72,26 @@
                             />
                         </u:expandedContent>
                         <u:actions>
-                            <tnt:InfoLabel
+                            <!-- <tnt:InfoLabel
+                                text="{actionTopic}"
+                                colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
+                                class="sapUiSmallMarginEnd"
+                            /> -->
+                            <!-- <u:ObjectPageHeaderActionButton
+                                icon="sap-icon://delete"
+                                text="{i18n>deleteTask}"
+                                tooltip="{i18n>deleteTask}"
+                                press="onDeleteTaskObjectPress"
+                            /> -->
+                        </u:actions>
+                        <u:navigationActions>
+                         <tnt:InfoLabel
                                 text="{actionTopic}"
                                 colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                 visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
                                 class="sapUiSmallMarginEnd"
                             />
-                            <u:ObjectPageHeaderActionButton
-                                icon="sap-icon://delete"
-                                text="{i18n>deleteTask}"
-                                tooltip="{i18n>deleteTask}"
-                                press="onDeleteTaskObjectPress"
-                            />
-                        </u:actions>
-                        <u:navigationActions>
                             <OverflowToolbarButton
                                 type="Transparent"
                                 icon="sap-icon://full-screen"
@@ -628,6 +634,14 @@
                     press="onGoToOpportunity"
                     visible="{= !${editModel>/editMode}}"
                     tooltip="Navigate to the Opportunity"
+                />
+                <Button
+                    icon="sap-icon://delete"
+                    text="Delete"
+                    tooltip="{i18n>deleteTask}"
+                    press="onDeleteTaskObjectPress"
+                    type="Reject"
+                    visible="{= !${editModel>/editMode}}"
                 />
                 <Button
                     id="EditBtn"
