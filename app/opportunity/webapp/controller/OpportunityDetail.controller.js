@@ -62,6 +62,8 @@ sap.ui.define([
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
 
+               
+
                 var sOpportunityID = oEvent.getParameter("arguments").opportunityID || this.getOwnerComponent().getModel("userModel").getProperty("/opportunityID");
                 this.getOwnerComponent().getModel("userModel").setProperty("/opportunityID", sOpportunityID);
 
@@ -87,15 +89,16 @@ sap.ui.define([
                     this.onReadTopics(),
                     this.onReadDeliverables()
                 ]).then(() => {
+
+                    this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+                    this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
+                    this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
+
                     var oMaturityTable = this.getView().byId("maturityTableID");
                     if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
 
                     var oActivitiesTable = this.getView().byId("activitiesTableID");
                     if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
-                    this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
-                    this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
-                    this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
 
                     //set segmented button text for current status of opportunity
                     this.setSegButtonText();

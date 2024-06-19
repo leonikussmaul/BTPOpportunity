@@ -113,30 +113,21 @@
                                     </FlexBox>
                                 </u:snappedHeading>
 
-                                <u:actions>
-                                    <!-- <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                         visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
-                                        class="sapUiSmallMarginEnd"
-                                    /> -->
-
-                                    <core:Icon
-                                        press="onFavoriteObjectPress"
-                                        tooltip="{i18n>favoriteItemTooltip}"
-                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
-                                        size="1.1rem"
-                                        color="#427cac"
-                                    />
-                                    <u:ObjectPageHeaderActionButton
+                                <u:navigationActions>
+                                    <!-- <OverflowToolbarButton
                                         icon="sap-icon://delete"
                                         text="{i18n>deleteItemTooltip}"
                                         tooltip="{i18n>deleteItemTooltip}"
-                                        press="onDeleteObjectPress"
-                                    />
-                                </u:actions>
+                                        press="onDeleteObjectPress" 
+                                    /> -->
+                                    <!-- <core:Icon
+                                        press="onFavoriteObjectPress"
+                                        tooltip="{i18n>favoriteItemTooltip}"
+                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                        size="1.1rem" 
+                                        color="#427cac"
+                                    /> -->
 
-                                <u:navigationActions>
                                     <OverflowToolbarButton
                                         type="Transparent"
                                         icon="sap-icon://full-screen"
@@ -193,7 +184,7 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
-                                    id="adoptionChart"
+                                        id="adoptionChart"
                                         size="S"
                                         percentage="{adoption}"
                                         press="press"
@@ -230,7 +221,7 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
-                                      id="consumptionChart"
+                                        id="consumptionChart"
                                         size="S"
                                         percentage="{consumption}"
                                         press="press"
@@ -300,35 +291,35 @@
                                                         text=""
                                                         width="50px"
                                                         key="Lead"
-                                                        tooltip = "Lead"
+                                                        tooltip="Lead"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://overlay"
                                                         text=""
                                                         width="50px"
                                                         key="Opportunity"
-                                                        tooltip = "Opportunity"
+                                                        tooltip="Opportunity"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://pause"
                                                         text=""
                                                         width="50px"
                                                         key="Paused"
-                                                        tooltip = "Paused"
+                                                        tooltip="Paused"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://activate"
                                                         text=""
                                                         width="50px"
                                                         key="Delivery"
-                                                        tooltip = "Delivery"
+                                                        tooltip="Delivery"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://checklist-item"
                                                         text=""
                                                         width="50px"
                                                         key="Completed"
-                                                        tooltip = "Completed"
+                                                        tooltip="Completed"
                                                     />
                                                 </items>
                                             </SegmentedButton>
@@ -997,6 +988,13 @@
                     press="onCancelObjectPress"
                     type="Reject"
                     visible="{editModel>/editMode}"
+                />
+                <Button
+                    icon="sap-icon://delete"
+                    text="Delete"
+                    tooltip="{i18n>deleteItemTooltip}"
+                    press="onDeleteObjectPress"
+                    type="Reject"  visible="{= !${editModel>/editMode}}"
                 />
                 <Button
                     id="EditBtn"
