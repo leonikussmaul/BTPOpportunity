@@ -17,55 +17,54 @@
             />
 
             <tnt:NavigationListItem
-                text="Opportunities" key="Opportunities"
+                text="Opportunities"
+                key="Opportunities"
                 icon="sap-icon://target-group"
                 select="onNavToOpportunities"
                 tooltip="Go to the Opportunities Report"
             />
 
             <tnt:NavigationListItem
-                text="Tasks" key="Tasks"
+                text="Tasks"
+                key="Tasks"
                 icon="sap-icon://activities"
                 select="onNavToTasks"
                 tooltip="Go to the Tasks and Sub-Tasks List"
             />
 
             <tnt:NavigationListItem
-                text="Team Engagement" key="TeamEngagement"
+                text="Team Engagement"
+                key="TeamEngagement"
                 icon="sap-icon://meeting-room"
                 select="onNavToTeamEngagement"
                 tooltip="Team Engagement"
             />
 
-             <tnt:NavigationListItem
-                    text="Engagement" key="Engagement"
-                    select="onOpenIndividualEngagement"
-                    icon="sap-icon://account"
-                />
-
-        
-
-            
+            <tnt:NavigationListItem
+                text="Engagement"
+                key="Engagement"
+                select="onOpenIndividualEngagement"
+                icon="sap-icon://account"
+            />
         </tnt:NavigationList>
         <tnt:fixedItem>
             <tnt:NavigationList>
-            
-
                 <tnt:NavigationListItem
-                    text="Team Chart" key="TeamChart"
+                    text="Calendar"
+                    key="Calendar"
+                    select="onOpenCalendar"
+                    icon="sap-icon://appointment-2"
+                />
+                <tnt:NavigationListItem
+                    text="Team Chart"
+                    key="TeamChart"
                     select="onOpenTeamChart"
-                    icon="sap-icon://employee-lookup"
+                    icon="sap-icon://org-chart"
                 />
 
-
-                    <tnt:NavigationListItem
-                text="Calendar" key="Calendar"
-                select="onOpenCalendar"
-                icon="sap-icon://appointment-2"
-            />
-
                 <tnt:NavigationListItem
-                    text="About Demand Genius" key="About"
+                    text="About Demand Genius"
+                    key="About"
                     select="onOpenAbout"
                     icon="sap-icon://hint"
                 />
