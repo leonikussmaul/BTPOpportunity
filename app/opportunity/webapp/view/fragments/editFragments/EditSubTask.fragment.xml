@@ -12,14 +12,8 @@
         <customHeader>
             <Bar>
                 <contentMiddle>
-                    <Title text="{i18n>addSubTaskFor} {actionCustomer}" />
+                    <Title text="Edit Sub-Task for {actionCustomer}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
         <form:SimpleForm editable="true">
@@ -86,6 +80,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

@@ -14,12 +14,6 @@
                 <contentMiddle>
                     <Title text="{i18n>addToDoFor} {account}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
 
@@ -39,7 +33,9 @@
                 required="true"
             />
             <Input
-                value="{AddTaskModel>/actionTitle}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTitle}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTitleInput"
                 placeholder="{i18n>toDoPlaceholder}"
@@ -49,7 +45,9 @@
                 required="true"
             />
             <TextArea
-                value="{AddTaskModel>/actionTask}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddTaskModel>/actionTask}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="actionTaskInput"
                 maxLength="800"
@@ -134,6 +132,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

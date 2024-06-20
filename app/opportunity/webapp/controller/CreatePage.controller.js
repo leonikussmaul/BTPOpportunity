@@ -22,12 +22,12 @@ sap.ui.define([
 
             onNavBackPress: function(oEvent){
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("MainReport");
+                oRouter.navTo("OpportunityReport");
             },
 
             handleCreateOppPress: function(oEvent){
                 var that = this; 
-                var oBinding = that.getOwnerComponent().byId("MainReport--mainTable").getBinding("items"); 
+                var oBinding = that.getOwnerComponent().byId("OpportunityReport--mainTable").getBinding("items"); 
                 var oModel = this.getView().getModel();
                 var oList = oModel.bindList("/opportunityHeader");
                 var oSelected = ""
@@ -41,7 +41,6 @@ sap.ui.define([
                     account: this.getView().byId("account").getValue(),
                     marketUnit: this.getView().byId("marketUnit").getValue(),
                     status: this.getView().byId("status").getValue(),
-                    //topic: ,
                     opportunityDate: sConvertDate,
                     opportunityValue: +this.getView().byId("opportunityValue").getValue(),
                     opportunityCreatedQuarter: this.getView().byId("opportunityCreatedQuarter").getValue(),
@@ -50,20 +49,12 @@ sap.ui.define([
                     ssa: this.getView().byId("ssa").getValue(), 
                     clientContactPerson: this.getView().byId("clientContactPerson").getValue(),
                     opportunityInCRM: oSelected
-                    //opportunityNotes = {};
                 });
-                //oBinding.created.then(function () {
                     that.getView().setBusy(false);
                     oBinding.refresh();
                     MessageToast.show("New account created successfully.");
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(that);
-                    oRouter.navTo("MainReport");
-                
-                //}, function (oError) {
-                    // that.getView().setBusy(false);
-                    // MessageBox.error(oError.message);
-                   
-                //});
+                    oRouter.navTo("OpportunityReport");
                 
             },
 

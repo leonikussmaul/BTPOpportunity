@@ -20,14 +20,14 @@
         header="Planned, On-Going &amp; Completed"
         class="sapUiResponsiveContentPadding"
         showFullScreenButton="true"
-        requestAtLeastFields="deliverable,status,primaryContact,shortDescription,deliverableDate,completedOn,primaryContact"
+        requestAtLeastFields="deliverable,status,primaryContact,shortDescription,deliverableDate,primaryContact"
         ignoreFromPersonalisation="ID,opptID_opportunityID"
     >
         <smartTable:customToolbar>
             <OverflowToolbar design="Transparent">
                 <ToolbarSpacer />
                 <Button
-                    icon="sap-icon://add"
+                     text="Add"
                     press="onAddActivityPress"
                     type="Accept"
                 />
@@ -39,14 +39,14 @@
             delete="onDeleteActivity"
             growingThreshold="10"
             growing="true"
-            noDataText="Looks like there are no activities yet."
+            noDataText="Looks like there are no activities yet"
         >
             <columns>
                 <Column width="25%">
                     <customData>
                         <core:CustomData
                             key="p13nData"
-                            value='\{"columnKey": "deliverable", "columnIndex" : "0", "leadingProperty": "deliverable", "sortProperty": "deliverable", "filterProperty": "deliverable"}'
+                            value='\{"columnKey": "deliverable", "columnIndex" : "1", "leadingProperty": "deliverable", "sortProperty": "deliverable", "filterProperty": "deliverable"}'
                         />
                     </customData>
                     <Label
@@ -55,53 +55,51 @@
                     />
                 </Column>
 
-                <Column width="10rem">
+                <Column width="40%">
                     <customData>
                         <core:CustomData
                             key="p13nData"
-                            value='\{"columnKey": "completed", "columnIndex" : "3", "leadingProperty": "completed", "sortProperty": "completed", "filterProperty": "completed"}'
+                            value='\{"columnKey": "shortDescription", "columnIndex" : "2", "leadingProperty": "shortDescription", "sortProperty": "shortDescription", "filterProperty": "shortDescription"}'
+                        />
+                    </customData>
+                    <Label text="{i18n>shortDescription}" />
+                </Column>
+
+                <Column width="7rem">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "deliverableDate", "columnIndex" : "3", "leadingProperty": "deliverableDate", "sortProperty": "deliverableDate", "filterProperty": "deliverableDate"}'
+                        />
+                    </customData>
+                    <Label text="Due Date" />
+                </Column>
+
+                <Column
+                    width="10%"
+                    minScreenWidth="Tablet"
+                    demandPopin="true"
+                >
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "primaryContact", "columnIndex" : "5", "leadingProperty": "primaryContact", "sortProperty": "primaryContact", "filterProperty": "primaryContact"}'
+                        />
+                    </customData>
+                    <Label text="{i18n>primaryContact}" />
+                </Column>
+
+                <Column width="7rem">
+                    <customData>
+                        <core:CustomData
+                            key="p13nData"
+                            value='\{"columnKey": "completed", "columnIndex" : "7", "leadingProperty": "completed", "sortProperty": "completed", "filterProperty": "completed"}'
                         />
                     </customData>
                     <Label
                         text="{i18n>status}"
                         tooltip="{i18n>status}"
                     />
-                </Column>
-                <Column width="12%">
-                    <customData>
-                        <core:CustomData
-                            key="p13nData"
-                            value='\{"columnKey": "deliverableDate", "columnIndex" : "4", "leadingProperty": "deliverableDate", "sortProperty": "deliverableDate", "filterProperty": "deliverableDate"}'
-                        />
-                    </customData>
-                    <Label text="{i18n>deliverableDate}" />
-                </Column>
-                <Column width="12%">
-                    <customData>
-                        <core:CustomData
-                            key="p13nData"
-                            value='\{"columnKey": "completedOn", "columnIndex" : "5", "leadingProperty": "completedOn", "sortProperty": "completedOn", "filterProperty": "completedOn"}'
-                        />
-                    </customData>
-                    <Label text="Completed On" />
-                </Column>
-                <Column width="10%">
-                    <customData>
-                        <core:CustomData
-                            key="p13nData"
-                            value='\{"columnKey": "primaryContact", "columnIndex" : "6", "leadingProperty": "primaryContact", "sortProperty": "primaryContact", "filterProperty": "primaryContact"}'
-                        />
-                    </customData>
-                    <Label text="{i18n>primaryContact}" />
-                </Column>
-                <Column width="25%">
-                    <customData>
-                        <core:CustomData
-                            key="p13nData"
-                            value='\{"columnKey": "shortDescription", "columnIndex" : "7", "leadingProperty": "shortDescription", "sortProperty": "shortDescription", "filterProperty": "shortDescription"}'
-                        />
-                    </customData>
-                    <Label text="{i18n>shortDescription}" />
                 </Column>
             </columns>
             <items>
@@ -114,12 +112,13 @@
                             title="{deliverable}"
                             text="{status}"
                         />
-
+                        <Text text="{shortDescription}" />
+                        <!-- 
                         <CheckBox
                             selected="{= ${completed} === true}"
                             text="Completed"
                             select="onActivityCompletedCheck"
-                        />
+                        /> -->
 
                         <Text
                             text="{
@@ -132,22 +131,26 @@
                             wrapping="false"
                         />
 
-                        <Text
-                            text="{
-                             path: 'completedOn',
-                             type: 'sap.ui.model.type.Date',
-                             formatOptions: {
-									style: 'medium'
-						}
-                           }"
-                            wrapping="false"
-                        />
-
                         <Text text="{primaryContact}" />
-                        <Text text="{shortDescription}" />
+
+                        <CheckBox
+                            selected="{= ${completed} === true}"
+                            text="Completed"
+                            select="onActivityCompletedCheck"
+                        />
                     </cells>
                 </ColumnListItem>
             </items>
+                <noData>
+                        <!-- Illustrated message when there is no data -->
+                        <IllustratedMessage
+                            enableVerticalResponsiveness="true"
+                            illustrationType="sapIllus-NoActivities"
+                            title="Looks like there are no activities"
+                            description="Start by adding some"
+                       />
+                      
+                    </noData>
         </Table>
     </smartTable:SmartTable>
 </core:FragmentDefinition>

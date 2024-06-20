@@ -14,12 +14,6 @@
                 <contentMiddle>
                     <Title text="{i18n>addSubTaskFor} {actionCustomer}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
         <form:SimpleForm editable="true">
@@ -28,7 +22,9 @@
                 required="true"
             />
             <TextArea
-                value="{AddSubTaskModel>/subTask}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                value="{AddSubTaskModel>/subTask}"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 id="subTaskInput"
                 maxLength="5000"
@@ -87,6 +83,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

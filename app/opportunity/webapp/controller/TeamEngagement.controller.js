@@ -20,10 +20,10 @@ sap.ui.define([
             };
 
 
-        return Controller.extend("opportunity.opportunity.controller.ProjectOverview", {
+        return Controller.extend("opportunity.opportunity.controller.TeamEngagement", {
             formatter: formatter,
             onInit: function () {
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("ProjectOverview").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("TeamEngagement").attachPatternMatched(this._onRoutePatternMatched, this);
                 var oProjectModel = new JSONModel({});
                 this.getView().setModel(oProjectModel, "ProjectModel");
 
@@ -66,10 +66,12 @@ sap.ui.define([
                 });
 
                 this.onStatusMethod();
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
+                oGlobalModel.setProperty("/selectedKey", "TeamEngagement");
 
                 //   var oChart = this.getView().byId("smartChartTeamForecast");
                 //   if (oChart.isInitialised()) oChart.rebindChart();
-
             },
 
             onStatusMethod: function (aFilterbar) {
@@ -380,7 +382,7 @@ sap.ui.define([
                 var sPath = "/teamProjects/" + sProjectID;
 
 
-                this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+                this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
 
             },
 
@@ -401,9 +403,10 @@ sap.ui.define([
                 //var sPath = oBinding.getPath(); 
                 var oModel = this.getView().getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected Project?", {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-                    onClose: function (oAction) {
-                        if (oAction === sap.m.MessageBox.Action.YES) {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
 
                             oModel.remove(sPath, {
                                 success: function () {
@@ -430,10 +433,10 @@ sap.ui.define([
                 var that = this;
                 var oModel = this.getView().getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
-                    actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-                    onClose: function (oAction) {
-                        if (oAction === sap.m.MessageBox.Action.YES) {
-
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
 
                             oModel.remove(sPath, {
                                 success: function () {
@@ -946,7 +949,7 @@ sap.ui.define([
                 var sPath = "/teamProjects/" + sProjectID;
 
 
-                this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+                this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
                 this.getView().setBusy(false);
 
             },

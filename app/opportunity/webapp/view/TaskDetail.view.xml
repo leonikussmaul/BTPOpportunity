@@ -21,9 +21,7 @@
 >
     <Page
         id="TaskDetail"
-        showHeader="true"
-        showNavButton="true"
-        navButtonPress="onNavBackPress"
+        showHeader="false"
     >
         <content>
             <u:ObjectPageLayout
@@ -74,27 +72,56 @@
                             />
                         </u:expandedContent>
                         <u:actions>
-                            <tnt:InfoLabel
+                            <!-- <tnt:InfoLabel
                                 text="{actionTopic}"
                                 colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                 visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
+                                visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
                                 class="sapUiSmallMarginEnd"
-                            />
-                            <u:ObjectPageHeaderActionButton
+                            /> -->
+                            <!-- <u:ObjectPageHeaderActionButton
                                 icon="sap-icon://delete"
                                 text="{i18n>deleteTask}"
                                 tooltip="{i18n>deleteTask}"
                                 press="onDeleteTaskObjectPress"
-                            />
+                            /> -->
                         </u:actions>
+                        <u:navigationActions>
+                            <tnt:InfoLabel
+                                text="{actionTopic}"
+                                colorScheme="{path:'actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                visible="{= ${actionTopic} !== null &amp;&amp; ${actionTopic} !== ''}"
+                                class="sapUiSmallMarginEnd"
+                            />
+                            <OverflowToolbarButton
+                                type="Transparent"
+                                icon="sap-icon://full-screen"
+                                press=".handleFullScreen"
+                                id="enterFullScreenBtn"
+                                tooltip="Enter Full Screen Mode"
+                            />
+                            <OverflowToolbarButton
+                                type="Transparent"
+                                icon="sap-icon://exit-full-screen"
+                                press=".handleExitFullScreen"
+                                id="exitFullScreenBtn"
+                                tooltip="Exit Full Screen Mode"
+                                visible="false"
+                            />
+                            <OverflowToolbarButton
+                                type="Transparent"
+                                icon="sap-icon://decline"
+                                press=".handleClose"
+                                tooltip="Close middle column"
+                            />
+                        </u:navigationActions>
                     </u:ObjectPageDynamicHeaderTitle>
                 </u:headerTitle>
                 <u:headerContent>
                     <FlexBox wrap="Wrap">
                         <VBox
-                            class="sapUiMediumMarginEnd sapUiMediumMarginBottom"
+                            class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                             visible="{= ${actionTask} !== null}"
-                            width="20%"
+                            width="40%"
                         >
                             <Text
                                 text="{actionTask}"
@@ -103,7 +130,7 @@
                             />
                         </VBox>
                         <VBox
-                            class="sapUiMediumMarginEnd sapUiMediumMarginBottom"
+                            class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                             visible="{= ${actionOwner} !== null}"
                         >
                             <Title
@@ -111,7 +138,6 @@
                                 class="sapUiTinyMarginBottom"
                             />
                             <HBox>
-                              
                                 <Avatar
                                     src="{path: 'actionOwner', formatter: '.formatter.formatterTeamPictures'}"
                                     displayShape="Circle"
@@ -129,7 +155,7 @@
                         </VBox>
 
                         <VBox
-                            class="sapUiMediumMarginEnd sapUiMediumMarginBottom"
+                            class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                             visible="{= ${actionDueDate} !== null}"
                         >
                             <Title
@@ -150,7 +176,7 @@
                         </VBox>
 
                         <VBox
-                            class="sapUiMediumMarginBeginEnd"
+                            class="sapUiSmallMarginBeginEnd"
                             width="15%"
                             visible="{= ${actionProgress} !== null &amp;&amp; !${editModel>/editMode}}"
                         >
@@ -166,7 +192,7 @@
                         </VBox>
 
                         <VBox
-                            class="sapUiMediumMarginBeginEnd"
+                            class="sapUiSmallMarginBeginEnd"
                             width="15%"
                             visible="{= ${editModel>/editMode}}"
                         >
@@ -186,7 +212,7 @@
                             />
                         </VBox>
                         <VBox
-                            class="sapUiMediumMarginBeginEnd"
+                            class="sapUiSmallMarginBeginEnd"
                             width="20%"
                             visible="{= ${subTaskModel>/subtasks}.length > 0}"
                         >
@@ -280,7 +306,7 @@
 
                                         <OverflowToolbarButton
                                             type="Accept"
-                                            icon="sap-icon://add"
+                                            text="Add"
                                             tooltip="{i18n>addTableItem}"
                                             press="onAddSubTask"
                                         />
@@ -368,7 +394,9 @@
                                     </Column>
                                 </columns>
                                 <items>
-                                    <ColumnListItem type="Detail" detailPress="onEditSubTask"
+                                    <ColumnListItem
+                                        type="Detail"
+                                        detailPress="onEditSubTask"
                                         vAlign="Middle"
                                         selected="{subTaskModel>subTaskCompleted}"
                                     >
@@ -381,7 +409,7 @@
                                                 text="{subTaskModel>subTask}"
                                                 wrapping="true"
                                             />
-                                           
+
                                             <Avatar
                                                 src="{path: 'subTaskModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}"
                                                 displayShape="Circle"
@@ -446,6 +474,16 @@
                                         </cells>
                                     </ColumnListItem>
                                 </items>
+                                   <noData>
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-NoTasks"
+                                        title="No Sub-Tasks Found"
+                                        description="Start by creating one"
+                                    >
+                                    </IllustratedMessage>
+                                </noData>
+                                
                             </Table>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
@@ -536,6 +574,7 @@
                                     placeholder="Add a comment to this task"
                                     post="onPostComment"
                                 />
+                                
                             </VBox>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
@@ -545,19 +584,20 @@
                     <u:ObjectPageSection
                         id="idSectionLinks"
                         titleUppercase="false"
-                        title="{i18n>Links}"
+                        title="Links"
                     >
                         <u:ObjectPageSubSection id="idSubSectionLinks">
-                            <List
-                                id="linkList"
-                                items="{}"
-                                mode="Delete"
-                                noDataText="There are no links added to this task yet."
-                                includeItemInSelection="true"
-                                selectionChange="onSelectLink"
-                                delete="onDeleteLink"
-                            >
-                                <headerToolbar>
+               
+                <List
+                    id="linkList"
+                    items="{}"
+                    mode="Delete"
+                    noDataText="There are no links added to this task yet."
+                    includeItemInSelection="true"
+                    selectionChange="onSelectLink"
+                    delete="onDeleteLink"
+                >
+                 <headerToolbar>
                                     <OverflowToolbar>
                                         <content>
                                             <Title
@@ -567,24 +607,34 @@
                                             <ToolbarSpacer />
                                             <Button
                                                 type="Accept"
-                                                icon="sap-icon://add"
+                                                text="Add"
                                                 press="onAddNewLink"
                                             />
                                         </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
-                                <StandardListItem
-                                    press="onSelectLink"
-                                    type="Active"
-                                    id="linkListItem"
-                                    title="{linkName}"
-                                    description="{linkDescription}"
-                                    icon="sap-icon://chain-link"
-                                    iconDensityAware="true"
-                                    iconInset="true"
-                                />
-                            </List>
-                        </u:ObjectPageSubSection>
+                    <StandardListItem
+                        press="onSelectLink"
+                        type="Active"
+                        id="linkListItem"
+                        title="{linkName}"
+                        description="{linkDescription}"
+                        icon="sap-icon://chain-link"
+                        iconDensityAware="true"
+                        iconInset="true"
+                    />
+                    <noData>
+                        <!-- Illustrated message when there is no data -->
+                        <IllustratedMessage
+                            enableVerticalResponsiveness="true"
+                            illustrationType="sapIllus-SearchFolder"
+                            title="No Links Found"
+                            description="Start by adding a link to the repository"
+                       />
+                      
+                    </noData>
+                </List>
+            </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
                 </u:sections>
             </u:ObjectPageLayout>
@@ -606,6 +656,14 @@
                     press="onGoToOpportunity"
                     visible="{= !${editModel>/editMode}}"
                     tooltip="Navigate to the Opportunity"
+                />
+                <Button
+                    icon="sap-icon://delete"
+                    text="Delete"
+                    tooltip="{i18n>deleteTask}"
+                    press="onDeleteTaskObjectPress"
+                    type="Reject"
+                    visible="{= !${editModel>/editMode}}"
                 />
                 <Button
                     id="EditBtn"

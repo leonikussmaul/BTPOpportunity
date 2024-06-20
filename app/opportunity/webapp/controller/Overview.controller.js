@@ -25,6 +25,10 @@ sap.ui.define([
             },
 
             _onRoutePatternMatched: function (oEvent) {
+                var oGlobalModel = this.getOwnerComponent().getModel("global");
+                oGlobalModel.setProperty("/layout", "OneColumn");
+                oGlobalModel.setProperty("/selectedKey", "");
+
                 var oChart1 = this.getView().byId("smartChart1");
                 if (oChart1.isInitialised()) oChart1.rebindChart();
 
@@ -147,7 +151,7 @@ sap.ui.define([
 
             onNavToOpportunities: function (oEvent) {
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("MainReport");
+                oRouter.navTo("OpportunityReport");
             },
 
             onNavToTasks: function (oEvent) {

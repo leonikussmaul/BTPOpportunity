@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="opportunity.opportunity.controller.ObjectPage"
+    controllerName="opportunity.opportunity.controller.OpportunityDetail"
     xmlns:u="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
@@ -22,10 +22,8 @@
     xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 >
     <Page
-        id="ObjectPage"
-        showHeader="true"
-        showNavButton="true"
-        navButtonPress="onNavBackPress"
+        id="OpportunityDetail"
+        showHeader="false"
     >
         <content>
             <f:SidePanel
@@ -46,29 +44,55 @@
                         <u:headerTitle>
                             <u:ObjectPageDynamicHeaderTitle>
                                 <u:expandedHeading>
-                                   <HBox>
-                                     <Avatar
+                                    <HBox>
+                                        <Avatar
                                             class="sapUiTinyMarginEnd"
                                             initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
                                             backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                             tooltip="{marketUnit}"
                                         />
-                                        <VBox class="sapUiTinyMarginBegin">
-                                        
+                                        <VBox>
                                             <Title text="{account}" />
                                             <Text
                                                 text="Priority: {priority}"
                                                 class="sapUiNeutral"
-                                                 visible="{= ${priority} !== null}"
+                                                visible="{= ${priority} !== null}"
                                             />
-                                              <!-- <Button
+                                            <!-- <Button
                                             text="{priority}"
                                             visible="{= ${priority} !== null}"
                                             type="{path: 'priority', formatter:'.formatter.priortityButton'}"
                                             class="sapUiSmallMarginBeginEnd"
                                         /> -->
                                         </VBox>
-                                      
+
+                                        <HBox
+                                            width="600px"
+                                            alignItems="Start"
+                                        >
+                                            <l:HorizontalLayout
+                                                id="topicsID"
+                                                allowWrapping="true"
+                                                class="sapUiLargeMarginBegin"
+                                                content="{}"
+                                            >
+                                                <tnt:InfoLabel
+                                                    text="{ path: 'pageModel>topic' }"
+                                                    renderMode="Narrow"
+                                                    class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
+                                                    colorScheme="{path:'pageModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                                    visible="{= ${pageModel>topic} !== null &amp;&amp; ${pageModel>topic} !== '' }"
+                                                >
+                                                    <tnt:customData>
+                                                        <core:CustomData
+                                                            key="topic"
+                                                            value="{pageModel>topic}"
+                                                            class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                        />
+                                                    </tnt:customData>
+                                                </tnt:InfoLabel>
+                                            </l:HorizontalLayout>
+                                        </HBox>
                                     </HBox>
                                 </u:expandedHeading>
                                 <u:snappedHeading>
@@ -89,28 +113,43 @@
                                     </FlexBox>
                                 </u:snappedHeading>
 
-                                <u:actions>
-                                    <!-- <tnt:InfoLabel
-                                        text="{topic}"
-                                        colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                         visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
-                                        class="sapUiSmallMarginEnd"
-                                    /> -->
-
-                                    <core:Icon
-                                        press="onFavoriteObjectPress"
-                                        tooltip="{i18n>favoriteItemTooltip}"
-                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
-                                        size="1.1rem"
-                                        color="#427cac"
-                                    />
-                                    <u:ObjectPageHeaderActionButton
+                                <u:navigationActions>
+                                    <!-- <OverflowToolbarButton
                                         icon="sap-icon://delete"
                                         text="{i18n>deleteItemTooltip}"
                                         tooltip="{i18n>deleteItemTooltip}"
-                                        press="onDeleteObjectPress"
+                                        press="onDeleteObjectPress" 
+                                    /> -->
+                                    <!-- <core:Icon
+                                        press="onFavoriteObjectPress"
+                                        tooltip="{i18n>favoriteItemTooltip}"
+                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                        size="1.1rem" 
+                                        color="#427cac"
+                                    /> -->
+
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://full-screen"
+                                        press=".handleFullScreen"
+                                        id="enterFullScreenBtn"
+                                        tooltip="Enter Full Screen Mode"
                                     />
-                                </u:actions>
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://exit-full-screen"
+                                        press=".handleExitFullScreen"
+                                        id="exitFullScreenBtn"
+                                        tooltip="Exit Full Screen Mode"
+                                        visible="false"
+                                    />
+                                    <OverflowToolbarButton
+                                        type="Transparent"
+                                        icon="sap-icon://decline"
+                                        press=".handleClose"
+                                        tooltip="Close middle column"
+                                    />
+                                </u:navigationActions>
                             </u:ObjectPageDynamicHeaderTitle>
                         </u:headerTitle>
                         <u:headerContent>
@@ -121,7 +160,7 @@
                                     backgroundColor="{path: 'marketUnit', formatter:'.formatter.formatInitialsColor'}"
                                     initials="{path: 'marketUnit', formatter:'.formatter.formatInitials'}"
                                 /> -->
-                               
+
                                 <!-- <VBox
                                     class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
                                     visible="{= ${opportunityCreatedQuarter} !== null}"
@@ -136,7 +175,7 @@
                                         class="sapMObjectStatusLarge"
                                     />
                                 </VBox> -->
-                              
+
                                 <!-- adoption -->
 
                                 <VBox visible="{=!${editModel>/editMode}}">
@@ -145,7 +184,9 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
+                                        id="adoptionChart"
                                         size="S"
+                                        visible="{= ${adoption} !== null}"
                                         percentage="{adoption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
@@ -181,7 +222,9 @@
                                         class="sapUiSmallMarginBegin"
                                     />
                                     <micro:RadialMicroChart
+                                        id="consumptionChart"
                                         size="S"
+                                        visible="{= ${consumption} !== null}"
                                         percentage="{consumption}"
                                         press="press"
                                         class="sapUiMediumMarginBegin"
@@ -209,8 +252,7 @@
                                     />
                                 </VBox>
 
-
-  <VBox
+                                <VBox
                                     class="sapUiMediumMarginBegin"
                                     visible="{= ${opportunityValue} !== null}"
                                 >
@@ -226,7 +268,7 @@
                                     />
                                 </VBox>
 
-                                 <l:VerticalLayout class="sapUiResponsiveMargin">
+                                <l:VerticalLayout class="sapUiResponsiveMargin">
                                     <VBox>
                                         <ObjectStatus
                                             state="Information"
@@ -251,37 +293,41 @@
                                                         text=""
                                                         width="50px"
                                                         key="Lead"
+                                                        tooltip="Lead"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://overlay"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Opportunity"
+                                                        tooltip="Opportunity"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://pause"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Paused"
+                                                        tooltip="Paused"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://activate"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Delivery"
+                                                        tooltip="Delivery"
                                                     />
                                                     <SegmentedButtonItem
                                                         icon="sap-icon://checklist-item"
                                                         text=""
-                                                          width="50px"
+                                                        width="50px"
                                                         key="Completed"
+                                                        tooltip="Completed"
                                                     />
                                                 </items>
                                             </SegmentedButton>
                                         </HBox>
                                     </VBox>
                                 </l:VerticalLayout>
-
                             </FlexBox>
                         </u:headerContent>
                         <!-- section fragments -->
@@ -316,85 +362,106 @@
                             <u:ObjectPageSection
                                 id="idSectionTopics"
                                 titleUppercase="false"
-                                title="{i18n>Content}"
                             >
                                 <u:ObjectPageSubSection
                                     id="idSubSectionTopics"
                                     titleUppercase="false"
-                                    title="{i18n>Topics}"
-                                    class="sapUiSmallMarginTop"
+                                    title="Topics"
                                 >
-                                    <u:actions>
-                                        <Link
-                                            text="{i18n>addTopic}"
-                                            press="onAddTopicPress"
+                                    <VBox width="100%">
+                                        <MessageStrip
+                                            showIcon="true"
+                                            class="sapUiTinyMarginTop"
+                                            text="The relevant Topics for {account} are shown in blue. Go into Edit Mode to select more."
+                                            showCloseButton="true"
                                         />
-                                    </u:actions>
-                                    <HBox class="sapUiSmallMarginTopBottom">
-                                        <l:HorizontalLayout
-                                            id="TopicFiltersObject"
-                                            allowWrapping="true"
-                                            class="sapUiResponsiveMargin "
-                                            content="{}"
-                                        >
-                                            <ToggleButton
-                                                text="{topic}"
-                                                press="onPressToggle1"
-                                                class="sapUiSmallMarginEnd"
-                                                pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
-                                                enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-                                                tooltip="{i18n>toggle1Tooltip}"
-                                            >
-                                                <customData>
-                                                    <core:CustomData
-                                                        key="topic"
-                                                        value="{topic}"
-                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
-                                                    />
-                                                </customData>
-                                            </ToggleButton>
-                                        </l:HorizontalLayout>
-                                    </HBox>
-                                </u:ObjectPageSubSection>
-
-                                <u:ObjectPageSubSection
-                                    id="idSubSectionDeliverables"
-                                    titleUppercase="false"
-                                    title="{i18n>Deliverables}"
-                                    class="sapUiSmallMarginTop"
-                                >
-                                    <u:actions>
-                                        <Link
-                                            text="{i18n>addDeliverable}"
-                                            press="onAddDeliverablePress"
-                                        />
-                                    </u:actions>
-
-                                    <HBox class="sapUiSmallMarginTopBottom">
-                                        <l:HorizontalLayout
-                                            id="DeliverablesFiltersObject"
-                                            allowWrapping="true"
-                                            class="sapUiResponsiveMargin"
-                                            content="{}"
-                                        >
-                                            <ToggleButton
-                                                text="{deliverable}"
-                                                press="onPressToggle2"
-                                                class="sapUiSmallMarginEnd"
-                                                pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
-                                                enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
-                                                tooltip="{i18n>toggle2Tooltip}"
-                                            >
-                                                <customData>
-                                                    <core:CustomData
-                                                        key="ID"
-                                                        value="{deliverable}"
-                                                        class="sapUiNoMarginTop sapUiNoMarginBottom"
-                                                    />
-                                                </customData>
-                                            </ToggleButton>
-                                        </l:HorizontalLayout>
-                                    </HBox>
+                                        <HBox width="100%">
+                                            <VBox width="50%">
+                                                <l:HorizontalLayout
+                                                    id="TopicFiltersObject"
+                                                    allowWrapping="true"
+                                                    class="sapUiResponsiveMargin"
+                                                    content="{}"
+                                                >
+                                                    <ToggleButton
+                                                        text="{topic}"
+                                                        press="onPressToggle1"
+                                                        class="sapUiSmallMarginEnd"
+                                                        pressed="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                        enabled="{parts: [{path: 'pageModel>/topics'}, {path: 'topic'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                        tooltip="{i18n>toggle1Tooltip}"
+                                                    >
+                                                        <customData>
+                                                            <core:CustomData
+                                                                key="topic"
+                                                                value="{topic}"
+                                                                class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                            />
+                                                        </customData>
+                                                    </ToggleButton>
+                                                </l:HorizontalLayout>
+                                            </VBox>
+                                            <VBox width="50%">
+                                                <l:HorizontalLayout
+                                                    id="DeliverablesFiltersObject"
+                                                    allowWrapping="true"
+                                                    class="sapUiResponsiveMargin"
+                                                    content="{}"
+                                                >
+                                                    <ToggleButton
+                                                        text="{deliverable}"
+                                                        press="onPressToggle2"
+                                                        class="sapUiSmallMarginEnd"
+                                                        pressed="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}], formatter: '.formatter.toggleButtonPressed'}"
+                                                        enabled="{parts: [{path: 'pageModel>/deliverables'}, {path: 'deliverable'}, {path: 'editModel>/editMode'}], formatter: '.formatter.toggleButtonEnabled'}"
+                                                        tooltip="{i18n>toggle2Tooltip}"
+                                                    >
+                                                        <customData>
+                                                            <core:CustomData
+                                                                key="ID"
+                                                                value="{deliverable}"
+                                                                class="sapUiNoMarginTop sapUiNoMarginBottom"
+                                                            />
+                                                        </customData>
+                                                    </ToggleButton>
+                                                </l:HorizontalLayout>
+                                            </VBox>
+                                        </HBox>
+                                        <HBox width="100%">
+                                            <VBox width="50%">
+                                                <IllustratedMessage
+                                                    enableVerticalResponsiveness="true"
+                                                    illustrationSize="Spot"
+                                                    illustrationType="sapIllus-AddDimensions"
+                                                    enableDefaultTitleAndDescription="false"
+                                                >
+                                                    <additionalContent>
+                                                        <Button
+                                                            text="Add Topic"
+                                                            type="Accept"
+                                                            press="onAddTopicPress"
+                                                        />
+                                                    </additionalContent>
+                                                </IllustratedMessage>
+                                            </VBox>
+                                            <VBox width="50%">
+                                                <IllustratedMessage
+                                                    enableVerticalResponsiveness="true"
+                                                    illustrationSize="Spot"
+                                                    illustrationType="sapIllus-EmptyPlanningCalendar"
+                                                    enableDefaultTitleAndDescription="false"
+                                                >
+                                                    <additionalContent>
+                                                        <Button
+                                                            text="Add Deliverable"
+                                                            type="Accept"
+                                                            press="onAddDeliverablePress"
+                                                        />
+                                                    </additionalContent>
+                                                </IllustratedMessage>
+                                            </VBox>
+                                        </HBox>
+                                    </VBox>
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
 
@@ -403,14 +470,6 @@
                                 titleUppercase="false"
                                 title="{i18n>Activities}"
                             >
-                                <u:heading>
-                                    <MessageStrip
-                                        showIcon="true"
-                                        text="The relevant Topics &amp; Deliverables for {account} are shown above as selected. Go into Edit Mode to select more."
-                                        showCloseButton="true"
-                                    />
-                                </u:heading>
-
                                 <u:ObjectPageSubSection
                                     id="idSubSectionActivities"
                                 >
@@ -490,7 +549,7 @@
                                                 </Column>
                                             </columns>
                                             <items>
-                                                <ColumnListItem 
+                                                <ColumnListItem
                                                     vAlign="Middle"
                                                     type="Detail"
                                                     detailPress="onMaturityEdit"
@@ -564,7 +623,7 @@
                                                     <ToolbarSpacer />
                                                     <Button
                                                         type="Accept"
-                                                        icon="sap-icon://add"
+                                                        text="Add"
                                                         press="onAddNewLink"
                                                     />
                                                 </content>
@@ -580,6 +639,15 @@
                                             iconDensityAware="true"
                                             iconInset="true"
                                         />
+                                        <noData>
+                                            <!-- Illustrated message when there is no data -->
+                                            <IllustratedMessage
+                                                enableVerticalResponsiveness="true"
+                                                illustrationType="sapIllus-SearchFolder"
+                                                title="No Links Found"
+                                                description="Start by adding a link to the repository"
+                                            />
+                                        </noData>
                                     </List>
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
@@ -635,8 +703,8 @@
                                             <ToolbarSpacer />
 
                                             <Button
-                                                icon="sap-icon://add"
                                                 type="Accept"
+                                                text="Add"
                                                 press="onAddNextStep"
                                             />
 
@@ -648,7 +716,7 @@
                                         </Toolbar>
                                         <commons:Timeline
                                             axisOrientation="Horizontal"
-                                            noDataText="There are no Roadmap Items for this opportunity."
+                                            noDataText="There are no Roadmap Items for this opportunity. Start by adding one"
                                             width="100%"
                                             id="idTimeline"
                                             content="{/opportunityNextSteps}"
@@ -675,11 +743,12 @@
                                                     userName="{nextStep}"
                                                     filterValue="{completed}"
                                                     maxCharacters="500"
-                                                    dateTime="{postedOn}" 
+                                                    dateTime="{postedOn}"
                                                 >
                                                     <commons:embeddedControl>
                                                         <VBox>
-                                                            <Text  visible="{= ${nextStepDescription} === true }"
+                                                            <Text
+                                                                visible="{= ${nextStepDescription} === true }"
                                                                 class="sapUiSmallMarginBegin"
                                                                 text="{nextStepDescription}"
                                                                 width="90%"
@@ -855,12 +924,20 @@
                                         <tnt:InfoLabel
                                             text="{pageModel>actionTopic}"
                                             colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                             visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
+                                            visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
                                             renderMode="Narrow"
                                         />
                                     </OverflowToolbar>
                                 </VBox>
                             </f:GridListItem>
+                              <f:noData>
+        <IllustratedMessage
+            enableVerticalResponsiveness="true"
+            illustrationType="sapIllus-BalloonSky"
+            title="No Tasks Found"
+            description="Start by adding one"
+        />
+    </f:noData>
                         </f:GridList>
                     </f:SidePanelItem>
 
@@ -943,6 +1020,14 @@
                     press="onCancelObjectPress"
                     type="Reject"
                     visible="{editModel>/editMode}"
+                />
+                <Button
+                    icon="sap-icon://delete"
+                    text="Delete"
+                    tooltip="{i18n>deleteItemTooltip}"
+                    press="onDeleteObjectPress"
+                    type="Reject"
+                    visible="{= !${editModel>/editMode}}"
                 />
                 <Button
                     id="EditBtn"

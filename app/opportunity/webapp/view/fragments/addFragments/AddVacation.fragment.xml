@@ -7,15 +7,15 @@
     <Dialog title="Add a new Vacation">
         <beginButton>
             <Button
-                text="Add"
-                type="Accept"
-                press="onSubmitVacation"
+                text="Cancel"
+                press="onCancelDialogPress"
             />
         </beginButton>
         <endButton>
             <Button
-                text="Cancel"
-                press="onCancelDialogPress"
+                text="Add"
+                type="Accept"
+                press="onSubmitVacation"
             />
         </endButton>
         <l:VerticalLayout

@@ -11,7 +11,7 @@
         xmlns:micro="sap.suite.ui.microchart"
 >
     <Dialog
-        id="myWizardDialog"
+        id="myCreateOpportunity"
         resizable="true"
         draggable="true"
         verticalScrolling="false"
@@ -44,7 +44,7 @@
             <f:content>
                 <Wizard
                     complete="onCreateNewItem"
-                    id="WizardDialog"
+                    id="CreateOpportunity"
                     renderMode="Page"
                 >
                     <steps>
@@ -556,7 +556,6 @@
                         <!-- <Button text="{i18n>delete}" press="onDeleteTopic" /> -->
                         <!-- <Button text="Previous Step" press="onPreviousStep" /> -->
                         <Button
-                            type="Reject"
                             text="{i18n>cancel}"
                             press="onCloseWizardPress"
                         />

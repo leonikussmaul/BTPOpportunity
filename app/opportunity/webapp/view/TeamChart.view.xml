@@ -1,6 +1,6 @@
 <mvc:View
-    controllerName="opportunity.opportunity.controller.Team"
-    id="Team"
+    controllerName="opportunity.opportunity.controller.TeamChart"
+    id="TeamChart"
     xmlns:u="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
@@ -23,7 +23,7 @@
             <f:DynamicPageTitle>
                 <f:heading>
                     <m:Title
-                        text="Team Overview"
+                        text="Team Chart"
                         id="headerTitle"
                     />
                 </f:heading>

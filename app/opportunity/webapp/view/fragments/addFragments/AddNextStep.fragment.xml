@@ -9,17 +9,18 @@
         contentWidth="600px"
     >
         <beginButton>
-            <Button
-                text="Add"
-                type="Accept"
-                press="onSubmitNextStep"
-            />
-        </beginButton>
-        <endButton>
-            <Button
+          <Button
                 text="Cancel"
                 press="onCancelDialogPress"
             />
+        </beginButton>
+        <endButton>
+         <Button
+                text="Submit"
+                type="Accept"
+                press="onSubmitNextStep"
+            />
+            
         </endButton>
         <l:VerticalLayout
             class="sapUiContentPadding"

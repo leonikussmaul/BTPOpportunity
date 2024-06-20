@@ -15,12 +15,7 @@
                 <contentMiddle>
                     <Title text="Add a comment for '{localModel>/topic}'" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
+              
             </Bar>
         </customHeader>
 
@@ -36,6 +31,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                     <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

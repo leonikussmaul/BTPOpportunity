@@ -17,12 +17,6 @@
                 <contentMiddle>
                     <Title text="{status}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
 
@@ -31,23 +25,31 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading>
-                            <Title text="{account}" wrapping="true" />
+                            <Title
+                                text="{account}"
+                                wrapping="true"
+                            />
                         </f:heading>
 
                         <f:content>
-                            <OverflowToolbar >
+                            <OverflowToolbar>
                                 <tnt:InfoLabel
                                     text="{topic}"
                                     colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
                                     class="sapUiSmallMarginEnd"
-                                     visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
+                                    visible="{= ${topic} !== null &amp;&amp; ${topic} !== ''}"
                                 />
 
                                 <ToolbarSpacer />
 
-                                <Label text="Go Live" >
-                                <layoutData><OverflowToolbarLayoutData maxWidth="300px" shrinkable="true" priority="NeverOverflow"/></layoutData>
-                          
+                                <Label text="Go Live">
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData
+                                            maxWidth="300px"
+                                            shrinkable="true"
+                                            priority="NeverOverflow"
+                                        />
+                                    </layoutData>
                                 </Label>
                                 <GenericTag
                                     text="{= ${goLive} ? ${path: 'goLive', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }} : 'N/A'}"
@@ -55,7 +57,13 @@
                                     press="onPressOpenPopover"
                                     design="StatusIconHidden"
                                 >
-                                	<layoutData><OverflowToolbarLayoutData maxWidth="300px" shrinkable="true" priority="NeverOverflow"/></layoutData>
+                                    <layoutData>
+                                        <OverflowToolbarLayoutData
+                                            maxWidth="300px"
+                                            shrinkable="true"
+                                            priority="NeverOverflow"
+                                        />
+                                    </layoutData>
                                 </GenericTag>
                             </OverflowToolbar>
                         </f:content>
@@ -116,9 +124,11 @@
                                 text="{path: 'projectEndDate', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
                             />
 
-                            <Label  text="RFP Value"/>
-                            <Text text="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }"  visible="{= ${status} === 'RFP' }" />
-
+                            <Label text="RFP Value" />
+                            <Text
+                                text="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }"
+                                visible="{= ${status} === 'RFP' }"
+                            />
 
                             <core:Title text="Involvement" />
 
@@ -131,7 +141,7 @@
                                 state="{path: 'percentage', formatter: '.formatter.projectInvolvement'}"
                             />
 
-                             <core:Title text="Topics" />
+                            <core:Title text="Topics" />
                             <VBox>
                                 <Tokenizer
                                     id="topicTokens"
@@ -149,7 +159,6 @@
                                     class="sapUiTinyMarginTop"
                                 />
                             </VBox>
-
 
                             <core:Title text="Skills" />
 
@@ -189,9 +198,6 @@
                                     class="sapUiTinyMarginTop"
                                 />
                             </VBox>
-
-
-                              
                         </form:content>
                     </form:SimpleForm>
                 </f:content>
@@ -206,8 +212,17 @@
 
                         <f:content>
                             <Toolbar>
-                               <Label text="Project Name" showColon="true"  width="95px"/>
-                             <Input value="{account}" class="sapUiSmallMarginEnd" width="100%"  id="projectAccount" />
+                                <Label
+                                    text="Project Name"
+                                    showColon="true"
+                                    width="95px"
+                                />
+                                <Input
+                                    value="{account}"
+                                    class="sapUiSmallMarginEnd"
+                                    width="100%"
+                                    id="projectAccount"
+                                />
 
                                 <!-- <tnt:InfoLabel
                                     text="{topic}"
@@ -217,7 +232,11 @@
                                 /> -->
 
                                 <ToolbarSpacer />
-                                <Label text="Go Live" showColon="true"  width="65px"/>
+                                <Label
+                                    text="Go Live"
+                                    showColon="true"
+                                    width="65px"
+                                />
                                 <DatePicker
                                     value="{ 
                                         path: 'goLive',
@@ -238,8 +257,7 @@
                 <f:header>
                     <f:DynamicPageHeader pinnable="true">
                         <layout:HorizontalLayout allowWrapping="false">
-                            <layout:VerticalLayout>
-                            </layout:VerticalLayout>
+                            <layout:VerticalLayout />
                         </layout:HorizontalLayout>
                     </f:DynamicPageHeader>
                 </f:header>
@@ -340,11 +358,13 @@
                                     ]
                                 }"
                             />
-                              
-                            <Label  text="RFP Value"/>
-                            <Input value="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }" id="projectValue" visible="{= ${status} === 'RFP' }" />
 
-
+                            <Label text="RFP Value" />
+                            <Input
+                                value="{= ${status} === 'RFP' ? (${projectValue} ? ${projectValue} + '€' : '-') : '' }"
+                                id="projectValue"
+                                visible="{= ${status} === 'RFP' }"
+                            />
 
                             <core:Title text="Involvement (in %)" />
 
@@ -382,6 +402,17 @@
                 <content>
                     <ToolbarSpacer />
                     <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
+                    <Button
+                        visible="{= !${editModel>/editMode}}"
+                        type="Reject"
+                        text="Delete"
+                        press="onDeleteProjectPress"
+                    />
+
+                    <Button
                         visible="{= ${editModel>/editMode}}"
                         type="Accept"
                         text="Save"
@@ -393,14 +424,8 @@
                         type="Emphasized"
                         text="Edit"
                         press="onEditProject"
-                    />
-
-                     <Button
-                        visible="{= !${editModel>/editMode}}"
-                        type="Reject"
-                        text="Delete"
-                        press="onDeleteProjectPress"
-                    />
+                        />
+                  
                 </content>
             </Toolbar>
         </footer>

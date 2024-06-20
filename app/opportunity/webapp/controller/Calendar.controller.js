@@ -13,10 +13,10 @@ sap.ui.define([
   function (Controller, JSONModel, MessageBox, UI5Date, formatter, Fragment, MessageToast, Filter, FilterOperator, CoreLibrary) {
     "use strict";
     var ValueState = CoreLibrary.ValueState,
-    oValueState = {
+      oValueState = {
         valueState: ValueState.None,
         valueStateText: ""
-    };
+      };
 
     return Controller.extend("opportunity.opportunity.controller.Calendar", {
       formatter: formatter,
@@ -31,13 +31,12 @@ sap.ui.define([
 
         var startDate = UI5Date.getInstance();
         oCalendarModel.setProperty("/startDate", startDate);
-        
+
 
         var oEditModel = new JSONModel({
           editMode: false
         });
         this.getView().setModel(oEditModel, "editModel");
-
 
         var legendItems = [
           // {
@@ -92,6 +91,11 @@ sap.ui.define([
 
       },
 
+      _onRoutePatternMatched: function () {
+        var oGlobalModel = this.getOwnerComponent().getModel("global");
+        oGlobalModel.setProperty("/layout", "OneColumn");
+        oGlobalModel.setProperty("/selectedKey", "Calendar");
+      },
 
       handleAppointmentSelect: function (oEvent) {
         var oAppointment = oEvent.getParameter("appointment"),
@@ -115,12 +119,12 @@ sap.ui.define([
 
         this.inumber = oAppointment.getBindingContext().getObject().userID_inumber;
         this.sProjectID = sProjectID;
-        this.onDialogOpen("opportunity.opportunity.view.fragments.ViewProject", sPath, sProjectID);
+        this.onDialogOpen("opportunity.opportunity.view.fragments.ProjectDetail", sPath, sProjectID);
 
       },
 
       onDialogOpen: function (fragmentName, sPath, sProjectID) {
-        this.resetValueState(); 
+        this.resetValueState();
 
         var oEditModel = this.getView().getModel("editModel");
         oEditModel.setProperty("/editMode", false);
@@ -195,14 +199,14 @@ sap.ui.define([
 
         var aFilters = new Filter("projectID_projectID", FilterOperator.EQ, sProjectID);
         oList.bindAggregation("tokens", {
-            template: oTemplate,
-            path: "/topics",
-            sorter: oSorter,
-            filters: aFilters
+          template: oTemplate,
+          path: "/topics",
+          sorter: oSorter,
+          filters: aFilters
         });
         oList.updateBindings();
 
-    },
+      },
 
 
       onCancelDialogPress: function (oEvent) {
@@ -218,12 +222,12 @@ sap.ui.define([
       onDeleteToken: function (oEvent) {
         var sPath = oEvent.getParameter("token").getBindingContext().sPath;
 
-        var that = this;
         var oModel = this.getView().getModel();
         sap.m.MessageBox.warning("Are you sure you want to delete this token for the project?", {
-          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-          onClose: function (oAction) {
-            if (oAction === sap.m.MessageBox.Action.YES) {
+          actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+          emphasizedAction: MessageBox.Action.OK,
+          onClose: function (sAction) {
+              if (sAction === MessageBox.Action.OK) {
 
 
               oModel.remove(sPath, {
@@ -254,7 +258,7 @@ sap.ui.define([
 
       onAddProjectTopic: function (oEvent) {
         this.onToolsPopover("opportunity.opportunity.view.fragments.addFragments.AddProjectTopic", oEvent);
-    },
+      },
 
 
 
@@ -264,15 +268,15 @@ sap.ui.define([
 
         // create popover
         if (!this._pPopover) {
-        this._pPopover = Fragment.load({
-          // id: oView.getId(),
-          name: sFragment,
-          controller: this
-        }).then(function (oPopover) {
-          oView.addDependent(oPopover);
-          return oPopover;
-        });
-         }
+          this._pPopover = Fragment.load({
+            // id: oView.getId(),
+            name: sFragment,
+            controller: this
+          }).then(function (oPopover) {
+            oView.addDependent(oPopover);
+            return oPopover;
+          });
+        }
 
         this._pPopover.then(function (oPopover) {
           oPopover.openBy(oButton);
@@ -282,28 +286,28 @@ sap.ui.define([
 
       onToolsPopover: function (sFragment, oEvent) {
         var oButton = oEvent.getSource(),
-            oView = this.getView();
+          oView = this.getView();
 
         // create popover
         if (!this._tPopover) {
-        this._tPopover = Fragment.load({
+          this._tPopover = Fragment.load({
             //id: oView.getId(),
             name: sFragment,
             controller: this
-        }).then(function (oPopover) {
+          }).then(function (oPopover) {
             oView.addDependent(oPopover);
             return oPopover;
-        });
+          });
         }
 
         this._tPopover.then(function (oPopover) {
-            oPopover.openBy(oButton);
+          oPopover.openBy(oButton);
         });
 
-    },
+      },
 
       onSubmitSkill: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/skill");
         var oPayload = {
           skill: oItem,
@@ -314,18 +318,18 @@ sap.ui.define([
         oModel.create("/skills", oPayload, {
           success: function (oData, response) {
             MessageToast.show("New Skill added");
-            oLocalModel.setData({}); 
+            oLocalModel.setData({});
           },
           error: function (oError) {
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageBox.error(sMessage);
-            
-        }
+
+          }
         });
       },
 
       onSubmitTool: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/tool");
         var oPayload = {
           tool: oItem,
@@ -341,31 +345,31 @@ sap.ui.define([
           error: function (oError) {
             var sMessage = JSON.parse(oError.responseText).error.message.value;
             sap.m.MessageBox.error(sMessage);
-            
-        }
+
+          }
         });
       },
 
       onSubmitTopic: function (oEvent) {
-        var oLocalModel = this.getView().getModel("localModel"); 
+        var oLocalModel = this.getView().getModel("localModel");
         var oItem = oLocalModel.getProperty("/topic");
         var oPayload = {
-            topic: oItem,
-            projectID_projectID: this.sProjectID
+          topic: oItem,
+          projectID_projectID: this.sProjectID
         };
         var oModel = this.getView().getModel();
         oModel.create("/topics", oPayload, {
-            success: function (oData, response) {
-                MessageToast.show("New Topic added");
-               oLocalModel.setData({}); 
-            },
-            error: function (oError) {
-              var sMessage = JSON.parse(oError.responseText).error.message.value;
-              sap.m.MessageBox.error(sMessage);
-              
+          success: function (oData, response) {
+            MessageToast.show("New Topic added");
+            oLocalModel.setData({});
+          },
+          error: function (oError) {
+            var sMessage = JSON.parse(oError.responseText).error.message.value;
+            sap.m.MessageBox.error(sMessage);
+
           }
         });
-    },
+      },
 
       onEditProject: function (oEvent) {
 
@@ -439,7 +443,7 @@ sap.ui.define([
 
       onMemberChange: function (oEvent) {
         oEvent;
-        this.resetValueState(); 
+        this.resetValueState();
         var oLocalModel = this.getView().getModel("localModel");
         var sName = oEvent.mParameters.selectedItem.getText();
         oLocalModel.getData().firstName = sName;
@@ -450,44 +454,43 @@ sap.ui.define([
         var that = this;
         var oLocalModel = this.getView().getModel("localModel");
         var oData = oLocalModel.getData();
-        if(oData.firstName && oData.vacationStartDate && oData.vacationEndDate){
-          this.resetValueState(); 
+        if (oData.firstName && oData.vacationStartDate && oData.vacationEndDate) {
+          this.resetValueState();
 
-        var sApproved;
-        if (oData.approved == true) sApproved = "Yes";
-        else if (oData.approved == false) sApproved = "No";
+          var sApproved;
+          if (oData.approved == true) sApproved = "Yes";
+          else if (oData.approved == false) sApproved = "No";
 
-        var oPayload = {
-          vacationStartDate: oData.vacationStartDate,
-          vacationEndDate: oData.vacationEndDate,
-          approved: sApproved,
-          vacationComment: oData.vacationComment,
-          primaryContact: oData.firstName,
-          userID_inumber: oData.userID_inumber
-        }
+          var oPayload = {
+            vacationStartDate: oData.vacationStartDate,
+            vacationEndDate: oData.vacationEndDate,
+            approved: sApproved,
+            vacationComment: oData.vacationComment,
+            primaryContact: oData.firstName,
+            userID_inumber: oData.userID_inumber
+          }
 
-        that.getView().setBusy(true);
-        var oModel = that.getView().getModel();
-        oModel.create("/teamVacations", oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("New vacation added!");
-            that.onCancelDialogPress();
-            that.getView().setBusy(false);
-          },
-          error: function (oError) {
-            that.getView().setBusy(false);
-            var sMessage = JSON.parse(oError.responseText).error.message.value;
-            sap.m.MessageBox.error(sMessage);
-            
-        }
-        });
-        //}
-      } else this.ValueStateMethod(); 
+          that.getView().setBusy(true);
+          var oModel = that.getView().getModel();
+          oModel.create("/teamVacations", oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("New vacation added!");
+              that.onCancelDialogPress();
+              that.getView().setBusy(false);
+            },
+            error: function (oError) {
+              that.getView().setBusy(false);
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+
+            }
+          });
+        } else this.ValueStateMethod();
 
       },
 
       onDateChange: function (oEvent) {
-        this.resetValueState(); 
+        this.resetValueState();
         var oLocalModel = this.getView().getModel("localModel");
         var dateArray = oEvent.mParameters.newValue.split(' - ')
         var startDate = new Date(dateArray[0]);
@@ -500,29 +503,29 @@ sap.ui.define([
 
 
 
-          /* ------------------------------------------------------------------------------------------------------------
-            VALUE STATE
-            --------------------------------------------------------------------------------------------------------------*/
+      /* ------------------------------------------------------------------------------------------------------------
+        VALUE STATE
+        --------------------------------------------------------------------------------------------------------------*/
 
 
-            ValueStateMethod: function(oEvent){
-              var oValueStateModel = this.getView().getModel("valueState"); 
-              MessageToast.show("Please fill all mandatory fields");
-              oValueStateModel.setProperty("/valueState", ValueState.Error);
-              oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
+      ValueStateMethod: function (oEvent) {
+        var oValueStateModel = this.getView().getModel("valueState");
+        MessageToast.show("Please fill all mandatory fields");
+        oValueStateModel.setProperty("/valueState", ValueState.Error);
+        oValueStateModel.setProperty("/valueStateText", "This field is mandatory");
 
-          },
+      },
 
-          resetValueState: function(oEvent){
-              var oValueStateModel = this.getView().getModel("valueState"); 
-              oValueStateModel.setProperty("/valueState", ValueState.None);
-              oValueStateModel.setProperty("/valueStateText", "");
-          },
+      resetValueState: function (oEvent) {
+        var oValueStateModel = this.getView().getModel("valueState");
+        oValueStateModel.setProperty("/valueState", ValueState.None);
+        oValueStateModel.setProperty("/valueStateText", "");
+      },
 
-          onChangeValueState: function(oEvent){
-              var sValue = oEvent.mParameters.newValue; 
-              if(sValue) this.resetValueState(); 
-          }
+      onChangeValueState: function (oEvent) {
+        var sValue = oEvent.mParameters.newValue;
+        if (sValue) this.resetValueState();
+      }
 
 
 

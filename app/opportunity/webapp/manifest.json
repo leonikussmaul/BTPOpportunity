@@ -136,54 +136,63 @@
                 "viewType": "XML",
                 "async": true,
                 "viewPath": "opportunity.opportunity.view",
-                "controlAggregation": "pages",
                 "controlId": "app",
-                "clearControlAggregation": false,
-                "path": "opportunity.opportunity.view",
-                "bypassed": {
-                    "target": "NotFound"
-                 }
+                "clearControlAggregation": true
             },
             "routes": [
                 {
                     "name": "Overview",
                     "pattern": ":?query:",
-                    "target": "Overview"
+                    "target": [
+                        "Overview"
+                    ]
                 },
                 {
-                    "name": "MainReport",
-                    "pattern": "MainReport",
-                    "target": "MainReport"
+                    "name": "OpportunityReport",
+                    "pattern": "OpportunityReport",
+                    "target": [
+                        "OpportunityReport",
+                        "OpportunityDetail"
+                    ]
                 },
                 {
-                    "name": "ObjectPage",
-                    "pattern": "ObjectPage/{opportunityID}",
-                    "target": "ObjectPage"
+                    "name": "OpportunityDetail",
+                    "pattern": "OpportunityDetail/{opportunityID}/{layout}",
+                    "target": [
+                        "OpportunityReport",
+                        "OpportunityDetail"
+                    ]
                 },
                 {
                     "name": "TasksReport",
                     "pattern": "TasksReport",
-                    "target": "TasksReport"
+                    "target": [
+                        "TasksReport",
+                        "TaskDetail"
+                    ]
                 },
                 {
                     "name": "TaskDetail",
-                    "pattern": "TaskReport/{ID}",
-                    "target": "TaskDetail"
+                    "pattern": "TaskDetail/{ID}/{layout}",
+                    "target": [
+                        "TasksReport",
+                        "TaskDetail"
+                    ]
                 },
                 {
-                    "name": "Team",
-                    "pattern": "Team",
-                    "target": "Team"
+                    "name": "TeamChart",
+                    "pattern": "TeamChart",
+                    "target": "TeamChart"
                 },
                 {
-                    "name": "Resources",
-                    "pattern": "Resources/{inumber}",
-                    "target": "Resources"
+                    "name": "IndividualEngagement",
+                    "pattern": "IndividualEngagement/{inumber}",
+                    "target": "IndividualEngagement"
                 },
                 {
-                    "name": "ProjectOverview",
-                    "pattern": "ProjectOverview",
-                    "target": "ProjectOverview"
+                    "name": "TeamEngagement",
+                    "pattern": "TeamEngagement",
+                    "target": "TeamEngagement"
                 },
                 {
                     "name": "Calendar",
@@ -193,75 +202,75 @@
             ],
             "targets": {
                 "Overview": {
+                    "level": 0,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "Overview",
                     "viewName": "Overview",
-                    "viewLevel": 0
+                    "controlAggregation": "beginColumnPages"
                 },
-                "MainReport": {
+                "OpportunityReport": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "MainReport",
-                    "viewName": "MainReport",
-                    "viewLevel": 1
+                    "viewId": "OpportunityReport",
+                    "viewName": "OpportunityReport",
+                    "controlAggregation": "beginColumnPages"
                 },
-                "ObjectPage": {
+                "OpportunityDetail": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "ObjectPage",
-                    "viewName": "ObjectPage",
-                    "viewLevel": 2
+                    "viewId": "OpportunityDetail",
+                    "viewName": "OpportunityDetail",
+                    "controlAggregation": "midColumnPages"
                 },
                 "TasksReport": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "TasksReport",
                     "viewName": "TasksReport",
-                    "viewLevel": 1
+                    "controlAggregation": "beginColumnPages"
                 },
                 "TaskDetail": {
+                    "level": 1,
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
                     "viewId": "TaskDetail",
                     "viewName": "TaskDetail",
-                    "viewLevel": 2
+                    "controlAggregation": "midColumnPages"
                 },
                 "Calendar": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
+                    "controlAggregation": "beginColumnPages",
                     "viewId": "Calendar",
                     "viewName": "Calendar",
                     "viewLevel": 1
                 },
-                "Team": {
+                "TeamChart": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Team",
-                    "viewName": "Team",
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "TeamChart",
+                    "viewName": "TeamChart",
                     "viewLevel": 1
                 },
-                "Resources": {
+                "IndividualEngagement": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Resources",
-                    "viewName": "Resources",
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "IndividualEngagement",
+                    "viewName": "IndividualEngagement",
                     "viewLevel": 2
                 },
-                "ProjectOverview": {
+                "TeamEngagement": {
                     "viewType": "XML",
                     "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "ProjectOverview",
-                    "viewName": "ProjectOverview",
+                    "controlAggregation": "beginColumnPages",
+                    "viewId": "TeamEngagement",
+                    "viewName": "TeamEngagement",
                     "viewLevel": 1
             },
             "NotFound": {

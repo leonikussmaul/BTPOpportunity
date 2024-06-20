@@ -11,7 +11,8 @@
     >
         <content>
             <Input
-                width="220px" value="{localModel>/tool}"
+                width="220px"
+                value="{localModel>/tool}"
                 class="sapUiResponsiveMargin"
                 placeholder="Add a new tool to this project"
             />

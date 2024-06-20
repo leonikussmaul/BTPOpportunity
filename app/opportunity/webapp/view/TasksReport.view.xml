@@ -47,10 +47,11 @@
                     <Title
                         titleStyle="H4"
                         text="Hi {user>/firstname}, here are all open tasks for the team. "
-                        class="sapUiSmallMarginBottom"
+                        class="sapUiSmallMarginBottom sapUiSmallMarginEnd"
+                        wrapping="true"
                     />
                     <Button
-                        text="New Task"
+                        text="Add Task"
                         type="Accept"
                         icon="sap-icon://add"
                         tooltip="{i18n>addTableItem}"
@@ -86,7 +87,7 @@
                     <OverflowToolbar design="Transparent">
                         <ToolbarSpacer />
                         <SearchField
-                            width="30%"
+                            width="40%"
                             liveChange="onSearch"
                             class="sapUiSizeCompact"
                         />
@@ -122,6 +123,7 @@
                         <Column
                             width="30%"
                             importance="High"
+                            visible="{global>/columnsExpanded}"
                         >
                             <customData>
                                 <core:CustomData
@@ -131,7 +133,10 @@
                             </customData>
                             <Label text="{i18n>actionTask}" />
                         </Column>
-                        <Column width="5em">
+                        <Column
+                            width="5em"
+                            visible="{global>/columnsExpanded}"
+                        >
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
@@ -143,7 +148,10 @@
                                 tooltip="{i18n>actionOwner}"
                             />
                         </Column>
-                        <Column hAlign="Center">
+                        <Column
+                            hAlign="Center"
+                            visible="{global>/columnsExpanded}"
+                        >
                             <customData>
                                 <core:CustomData
                                     key="p13nData"
@@ -153,6 +161,7 @@
                             <Label text="{i18n>actionTopic}" />
                         </Column>
                         <Column
+                            visible="{global>/columnsExpanded}"
                             width="20%"
                             importance="High"
                         >
@@ -165,6 +174,7 @@
                             <Label text="Flow" />
                         </Column>
                         <Column
+                            visible="{global>/columnsExpanded}"
                             width="12em"
                             importance="High"
                         >
@@ -217,7 +227,7 @@
                                 <commons:MicroProcessFlow
                                     renderType="Scrolling"
                                     class="sapUiSmallMarginTop"
-                                     content="{path: 'subTasks', sorter: { path: 'subTaskOrder' }}"
+                                    content="{path: 'subTasks', sorter: { path: 'subTaskOrder' }}"
                                 >
                                     <commons:content>
                                         <commons:MicroProcessFlowItem
@@ -244,6 +254,15 @@
                             </cells>
                         </ColumnListItem>
                     </items>
+                    <noData>
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-NoTasks"
+                                        title="No Tasks Found"
+                                        description="Start by creating one"
+                                    >
+                                    </IllustratedMessage>
+                                </noData>
                 </Table>
             </smartTable:SmartTable>
         </f:content>

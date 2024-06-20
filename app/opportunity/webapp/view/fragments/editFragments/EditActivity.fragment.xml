@@ -5,7 +5,7 @@
 >
     <Dialog
         class="sapUiPopupWithPadding"
-        contentWidth="60%"
+        contentWidth="50%"
         resizable="true"
         draggable="true"
     >
@@ -14,12 +14,6 @@
                 <contentMiddle>
                     <Title text="Edit Activity for {localModel>/deliverable}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
 
@@ -30,7 +24,9 @@
             />
             <Input
                 value="{localModel>/deliverable}"
-                id="acitivtyTitleInput" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                id="acitivtyTitleInput"
+                valueState="{valueState>/valueState}"
+                valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 placeholder="What's the activity?"
             />
@@ -108,6 +104,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

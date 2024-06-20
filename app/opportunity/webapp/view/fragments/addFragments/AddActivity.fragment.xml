@@ -14,12 +14,6 @@
                 <contentMiddle>
                     <Title text="Add Activity for {account}" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
 
@@ -30,8 +24,8 @@
             />
             <Input
                 value="{AddTaskModel>/deliverable}"
-                id="acitivtyTitleInput" 
-                valueState="{valueState>/valueState}" 
+                id="acitivtyTitleInput"
+                valueState="{valueState>/valueState}"
                 valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
                 placeholder="What's the activity?"
@@ -108,6 +102,10 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="{i18n>Submit}"

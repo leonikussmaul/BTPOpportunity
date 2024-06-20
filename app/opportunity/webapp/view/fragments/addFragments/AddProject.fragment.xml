@@ -12,14 +12,9 @@
         <customHeader>
             <Bar>
                 <contentMiddle>
-                    <Title text="Add a New Project for {firstName}" />
+                    <Title text="Add a New Project" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://decline"
-                        press="onCancelDialogPress"
-                    />
-                </contentRight>
+               
             </Bar>
         </customHeader>
 
@@ -197,6 +192,11 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
+
+                      <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
                     <Button
                         type="Accept"
                         text="Add Project"

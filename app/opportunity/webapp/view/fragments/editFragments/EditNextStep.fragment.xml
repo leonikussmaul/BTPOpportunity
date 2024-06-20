@@ -4,18 +4,12 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
 >
-    <Dialog  contentWidth="600px">
+    <Dialog contentWidth="600px">
         <customHeader>
             <Bar>
                 <contentMiddle>
                     <Title text="Edit Roadmap Item '{localModel>/nextStep}'" />
                 </contentMiddle>
-                <contentRight>
-                    <Button
-                        icon="sap-icon://delete"
-                        press="onDeleteNextStep"
-                    />
-                </contentRight>
             </Bar>
         </customHeader>
         <l:VerticalLayout
@@ -28,9 +22,14 @@
                 layout="ResponsiveGridLayout"
                 singleContainerFullSize="false"
             >
-                <Label text="Roadmap Item" required="true" />
+                <Label
+                    text="Roadmap Item"
+                    required="true"
+                />
                 <Input
-                    placeholder="Enter a title for the Roadmap Item" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                    placeholder="Enter a title for the Roadmap Item"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
                     liveChange="onChangeValueState"
                     value="{localModel>/nextStep}"
                 />
@@ -56,16 +55,20 @@
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
-
+                    <Button
+                        text="Cancel"
+                        press="onCancelDialogPress"
+                    />
+                    <Button
+                        type="Reject"
+                        icon="sap-icon://delete"
+                        text="Delete"
+                        press="onDeleteNextStep"
+                    />
                     <Button
                         text="Save"
                         type="Accept"
                         press="onSubmitEditedNextStep"
-                    />
-
-                    <Button
-                        text="Cancel"
-                        press="onCancelDialogPress"
                     />
                 </content>
             </Toolbar>

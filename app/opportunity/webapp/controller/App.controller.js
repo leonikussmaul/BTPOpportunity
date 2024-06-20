@@ -7,13 +7,12 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/ui/model/FilterType",
-    "sap/base/Log",
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast",
     'sap/m/MessageBox',
   ],
-  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType, Log, UIComponent, JSONModel, MessageToast, MessageBox) {
+  function (BaseController, library, Fragment, formatter, Filter, FilterOperator, FilterType, UIComponent, JSONModel, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("opportunity.opportunity.controller.App", {
@@ -23,6 +22,10 @@ sap.ui.define(
 
         var oLocalModel = new JSONModel({});
         this.getView().setModel(oLocalModel, "localModel");
+
+        this.oOwnerComponent = this.getOwnerComponent();
+        this.oRouter = this.oOwnerComponent.getRouter();
+        this.oRouter.attachRouteMatched(this.onRouteMatched, this);
 
       },
 
@@ -34,7 +37,7 @@ sap.ui.define(
       onHomeIconPressed: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Overview");
-        this.getView().byId("sideNavigation").setSelectedItem(null); 
+        this.getView().byId("sideNavigation").setSelectedItem(null);
       },
 
       onOpenSAPOne: function () {
@@ -65,7 +68,7 @@ sap.ui.define(
 
         var viewName = window.location.href.split('#')[1];
         if (viewName != '' && oBtn.getText() != "Go to Tasks") {
-          oRouter.navTo("MainReport");
+          oRouter.navTo("OpportunityReport");
           oBtn.setText("Go to Tasks");
 
         } else {
@@ -77,12 +80,12 @@ sap.ui.define(
 
       onNavToOpportunities: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("MainReport");
+        oRouter.navTo("OpportunityReport");
       },
 
-      onNavToProjectOverview: function (oEvent) {
+      onNavToTeamEngagement: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("ProjectOverview");
+        oRouter.navTo("TeamEngagement");
       },
 
       onNavToTasks: function (oEvent) {
@@ -103,14 +106,11 @@ sap.ui.define(
 
       },
 
-      onOpenTeam: function (oEvent) {
+      onOpenTeamChart: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("Team");
+        oRouter.navTo("TeamChart");
       },
 
-      onOpenResources: function (oEvent) {
-        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.TeamSelection");
-      },
 
       onOpenPopover: function (oEvent, sFragment) {
         var oButton = oEvent.getSource(),
@@ -136,7 +136,6 @@ sap.ui.define(
 
 
       onCancelDialogPress: function (oEvent) {
-
         this.editDialog = false;
         this._pDialog.then(function (_pDialog) {
           _pDialog.close();
@@ -147,43 +146,51 @@ sap.ui.define(
 
       },
 
-
-      onDialogOpen: function (fragmentName) {
-
+      onOpenIndividualEngagement: function (oEvent) {
+        // Adjusted function call with the correct fragment name and path
+        this.onDialogOpen("opportunity.opportunity.view.fragments.TeamSelection");
+    },
+    
+    onDialogOpen: function (fragmentName) {
         var that = this;
         if (!this._pDialog) {
-          this._pDialog = Fragment.load({
-            name: fragmentName,
-            controller: this
-          }).then(function (_pDialog) {
-            that.getView().addDependent(_pDialog);
-            _pDialog.setEscapeHandler(function () {
-              that.onCloseDialog();
+            this._pDialog = Fragment.load({
+                name: fragmentName,
+                controller: this
+            }).then(function (oDialog) {
+                that.getView().addDependent(oDialog);
+                oDialog.setEscapeHandler(function () {
+                    that.onCloseDialog();
+                });
+                return oDialog;
             });
-            return _pDialog;
-          });
         }
-        this._pDialog.then(function (_pDialog) {
-          //_pDialog.getContent()[0].scrollToElement(sap.ui.getCore().byId("hiThere"));
-          _pDialog.open();
-         //_pDialog.getContent()[0].scrollTo(0);
-         
-
-        })
-      },
+        this._pDialog.then(function (oDialog) {
+            oDialog.open();
+        });
+    },
+    
+    onCloseDialog: function () {
+        this._pDialog.then(function (oDialog) {
+            oDialog.close();
+        });
+        this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
+    },
+    
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Calendar");
       },
 
       onSelectTeamMember: function (oEvent) {
-        var inumber = oEvent.getSource().getBindingContext().getObject().inumber;
+        var inumber = oEvent.getParameter("listItem").getBindingContext().getObject().inumber;
 
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("Resources", {
+        oRouter.navTo("IndividualEngagement", {
           inumber: inumber
         }
         );
+        this.onCloseDialog(); 
 
       },
 
@@ -213,38 +220,38 @@ sap.ui.define(
         var oLocalModel = this.getView().getModel("localModel");
 
         var oData = oLocalModel.getData();
-        if(oData.feedback){
+        if (oData.feedback) {
 
-        var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
+          var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
 
 
-        var bPositive;
+          var bPositive;
 
-        if (oData.positive === true) bPositive = true;
-        else if (oData.negative === true) bPositive = false;
+          if (oData.positive === true) bPositive = true;
+          else if (oData.negative === true) bPositive = false;
 
-        var oPayload = {
-          feedback: oData.feedback,
-          positive: bPositive,
-          postedBy: sPostedBy,
-          postedOn: new Date()
-        }
+          var oPayload = {
+            feedback: oData.feedback,
+            positive: bPositive,
+            postedBy: sPostedBy,
+            postedOn: new Date()
+          }
 
-        that.getView().setBusy(true);
-        var oModel = that.getView().getModel();
-        oModel.create("/userFeedback", oPayload, {
-          success: function (oData, response) {
-            MessageToast.show("Your Feedback has been registered. Thank you!");
-            that.getView().setBusy(false);
-          },
-          error: function (oError) {
-            that.getView().setBusy(false);
-            var sMessage = JSON.parse(oError.responseText).error.message.value;
-            sap.m.MessageBox.error(sMessage);
-            
-        }
-        });
-      }else MessageToast.show("Please enter your feedback first");
+          that.getView().setBusy(true);
+          var oModel = that.getView().getModel();
+          oModel.create("/userFeedback", oPayload, {
+            success: function (oData, response) {
+              MessageToast.show("Your Feedback has been registered. Thank you!");
+              that.getView().setBusy(false);
+            },
+            error: function (oError) {
+              that.getView().setBusy(false);
+              var sMessage = JSON.parse(oError.responseText).error.message.value;
+              sap.m.MessageBox.error(sMessage);
+
+            }
+          });
+        } else MessageToast.show("Please enter your feedback first");
 
 
       },
@@ -260,24 +267,39 @@ sap.ui.define(
         oLocalModel.setProperty("/negative", true);
       },
 
-      onThemePicker: function(oEvent){
-        var sTheme = oEvent.getParameters().item.getKey(); 
-        if(sTheme === "MorningHorizon"){
-          sap.ui.getCore().applyTheme("sap_horizon"); 
+      onThemePicker: function (oEvent) {
+        var sTheme = oEvent.getParameters().item.getKey();
+        if (sTheme === "MorningHorizon") {
+          sap.ui.getCore().applyTheme("sap_horizon");
 
-        } else if(sTheme === "EveningHorizon"){
-          sap.ui.getCore().applyTheme("sap_horizon_dark"); 
+        } else if (sTheme === "EveningHorizon") {
+          sap.ui.getCore().applyTheme("sap_horizon_dark");
 
         }
 
       },
+      onRouteMatched: function (oEvent) {
+        var sRouteName = oEvent.getParameter("name"),
+          oArguments = oEvent.getParameter("arguments");
 
+        // Save the current route name
+        this.currentRouteName = sRouteName;
+        this.opportunityID = oArguments.opportunityID;
+      },
 
+      onStateChanged: function (oEvent) {
+        var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
+          sLayout = oEvent.getParameter("layout");
 
+        // Replace the URL with the new layout if a navigation arrow was used
+        if (bIsNavigationArrow) {
+          this.oRouter.navTo(this.currentRouteName, { layout: sLayout, opportunityID: this.opportunityID }, true);
+        }
+      },
 
-
-
-
+      onExit: function () {
+        this.oRouter.detachRouteMatched(this.onRouteMatched, this);
+      }
 
 
     });

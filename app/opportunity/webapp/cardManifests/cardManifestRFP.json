@@ -68,7 +68,7 @@
 						"type": "Navigation",
 						"target": "_self",
 						"parameters": {
-							"url": "/app/opportunity/webapp/index.html#/Resources/{userID_inumber}" 
+							"url": "/app/opportunity/webapp/index.html#/IndividualEngagement/{userID_inumber}" 
 						}
 					}
 				]
