@@ -102,7 +102,7 @@
                         <ui-integration:Card
                             id="taskCard"
                             manifest="./cardManifests/cardManifestTasks.json"
-                            width="560px"
+                            width="480px"
                             class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
                         >
                             <w:layoutData>
