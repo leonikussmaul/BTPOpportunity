@@ -36,12 +36,12 @@
                         <u:expandedHeading>
                             <HBox>
                                 <Title text="{actionTitle}" />
-                                <Button
+                                <!-- <Button
                                     text="{actionPriority}"
                                     visible="{= ${actionPriority} !== null}"
                                     type="{path: 'actionPriority', formatter:'.formatter.priortityButton'}"
                                     class="sapUiSmallMarginBeginEnd"
-                                />
+                                /> -->
                             </HBox>
                         </u:expandedHeading>
                         <u:snappedHeading>
@@ -123,11 +123,16 @@
                             visible="{= ${actionTask} !== null}"
                             width="40%"
                         >
+                        <ObjectStatus 	inverted="true" class="sapUiTinyMarginBottom"
+                                    text="{actionPriority} Priority"
+                                    visible="{= ${actionPriority} !== null}"  state="{path: 'actionPriority', formatter:'.formatter.piorityStatusFormatter'}"
+                                />
+                        
                             <Text
                                 text="{actionTask}"
                                 wrapping="true"
-                                class="sapUiMediumMarginTop"
                             />
+                           
                         </VBox>
                         <VBox
                             class="sapUiSmallMarginEnd sapUiMediumMarginBottom"
@@ -304,9 +309,9 @@
 
                                         <ToolbarSpacer />
 
-                                        <OverflowToolbarButton
+                                        <Button
                                             type="Accept"
-                                            text="Add"
+                                            text="Add" 
                                             tooltip="{i18n>addTableItem}"
                                             press="onAddSubTask"
                                         />

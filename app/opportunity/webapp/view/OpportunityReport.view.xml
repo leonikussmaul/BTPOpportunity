@@ -56,7 +56,7 @@
                             text="Create"
                             icon="sap-icon://add"
                             type="Accept"
-                            id="createBtn"
+                            id="createBtn" class="sapUiSmallMarginBegin"
                             press="onCreateOpportunityPress"
                             tooltip="Create a New Opportunity in the System"
                         />

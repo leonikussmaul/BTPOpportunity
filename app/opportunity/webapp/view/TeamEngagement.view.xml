@@ -319,7 +319,7 @@
                             <!-- Illustrated message when there is no data -->
                             <IllustratedMessage
                                 enableVerticalResponsiveness="true"
-                                illustrationType="sapIllus-SimpleMail"
+                                illustrationType="sapIllus-SimpleMail" illustrationSize="Dot"
                          enableDefaultTitleAndDescription="false"
                             />
                         </noData>
@@ -447,7 +447,7 @@
 						  <noData>
                             <!-- Illustrated message when there is no data -->
                             <IllustratedMessage
-                                enableVerticalResponsiveness="true"
+                                enableVerticalResponsiveness="true" illustrationSize="Dot"
                                 illustrationType="sapIllus-AddDimensions"
                          enableDefaultTitleAndDescription="false"
                             />
@@ -581,7 +581,7 @@
                             <!-- Illustrated message when there is no data -->
                             <IllustratedMessage
                                 enableVerticalResponsiveness="true"
-                                illustrationType="sapIllus-Connection"
+                                illustrationType="sapIllus-Connection" illustrationSize="Dot"
                          enableDefaultTitleAndDescription="false"
                             />
                         </noData>
@@ -710,7 +710,7 @@
                             <!-- Illustrated message when there is no data -->
                             <IllustratedMessage
                                 enableVerticalResponsiveness="true"
-                                illustrationType="sapIllus-SuccessHighFive"
+                                illustrationType="sapIllus-SuccessHighFive" illustrationSize="Dot"
                          enableDefaultTitleAndDescription="false"
                             />
                         </noData>
@@ -839,7 +839,7 @@
                             <!-- Illustrated message when there is no data -->
                             <IllustratedMessage
                                 enableVerticalResponsiveness="true"
-                                illustrationType="sapIllus-SimpleTask"
+                                illustrationType="sapIllus-SimpleTask" illustrationSize="Dot"
                          enableDefaultTitleAndDescription="false"
                             />
                         </noData>

@@ -256,6 +256,18 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
 
     },
 
+    piorityStatusFormatter: function (sPriority) {
+      if (sPriority === 'High') {
+        return 'Indication02';
+      } else if (sPriority === 'Medium') {
+        return 'Indication03';
+      } else if (sPriority === 'Low') {
+        return 'Indication04';
+      }
+
+    },
+
+
     toggleButtonPressed: function (aItems, oToggle) {
       var isMatch = aItems.some(oItem => {
         if (oItem.topic) {

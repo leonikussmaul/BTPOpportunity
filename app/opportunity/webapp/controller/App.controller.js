@@ -210,7 +210,7 @@ sap.ui.define(
           ];
         }
 
-        var oList = this.byId("teamMemberList").getBinding("items");
+        var oList = sap.ui.getCore().byId("teamMemberList").getBinding("items");
         oList.filter(aFilters, FilterType.Application);
 
       },

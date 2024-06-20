@@ -52,7 +52,7 @@
                     />
                     <Button
                         text="Add Task"
-                        type="Accept"
+                        type="Accept" class="sapUiSmallMarginBeginEnd"
                         icon="sap-icon://add"
                         tooltip="{i18n>addTableItem}"
                         press="onAddToDoTablePress"
