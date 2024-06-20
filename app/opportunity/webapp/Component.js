@@ -129,6 +129,10 @@ sap.ui.define([
                                 },
                                 {
                                     "from": "Ravi",
+                                    "to": "Giulia"
+                                },
+                                {
+                                    "from": "Ravi",
                                     "to": "Sneha"
                                 },
                                 {
@@ -158,6 +162,10 @@ sap.ui.define([
                                 {
                                     "from": "Ravi",
                                     "to": "Philip"
+                                },
+                                {
+                                    "from": "Ravi",
+                                    "to": "Bal"
                                 }
                             ]
                 }
