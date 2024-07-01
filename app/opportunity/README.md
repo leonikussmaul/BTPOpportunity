@@ -12,7 +12,7 @@
 |**Application Title**<br>BTP Opportunity Tracker|
 |**Namespace**<br>opportunity|
 |**UI5 Theme**<br>sap_horizon_dark|
-|**UI5 Version**<br>1.112.1|
+|**UI5 Version**<br>1.124.0|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
