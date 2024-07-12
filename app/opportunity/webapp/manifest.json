@@ -164,6 +164,22 @@
                     ]
                 },
                 {
+                    "name": "GenieAIMain",
+                    "pattern": "GenieAIMain",
+                    "target": [
+                        "GenieAIMain",
+                        "GenieAIDetail"
+                    ]
+                },
+                {
+                    "name": "GenieAIDetail",
+                    "pattern": "GenieAIDetail/{workshopID}/{layout}",
+                    "target": [
+                        "GenieAIMain",
+                        "GenieAIDetail"
+                    ]
+                },
+                {
                     "name": "TasksReport",
                     "pattern": "TasksReport",
                     "target": [
@@ -223,6 +239,22 @@
                     "transition": "slide",
                     "viewId": "OpportunityDetail",
                     "viewName": "OpportunityDetail",
+                    "controlAggregation": "midColumnPages"
+                },
+                "GenieAIMain": {
+                    "level": 1,
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "GenieAIMain",
+                    "viewName": "GenieAIMain",
+                    "controlAggregation": "beginColumnPages"
+                },
+                "GenieAIDetail": {
+                    "level": 1,
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "GenieAIDetail",
+                    "viewName": "GenieAIDetail",
                     "controlAggregation": "midColumnPages"
                 },
                 "TasksReport": {

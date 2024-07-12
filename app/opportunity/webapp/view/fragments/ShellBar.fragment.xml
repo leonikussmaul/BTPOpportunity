@@ -10,7 +10,60 @@
         homeIconPressed="onHomeIconPressed"
     >
         <additionalContent>
-            <m:Button
+            <m:MenuButton
+                icon="sap-icon://ai"
+                text="Genie AI"
+            >
+                <m:menu>
+                    <m:Menu itemSelected="onMenuAction">
+                        <m:MenuItem
+                            text="Communication"
+                            icon="sap-icon://headset"
+                        >
+                            <m:items>
+                                <m:MenuItem
+                                    text="Teams Channel"
+                                    press="onOpenGenieTeamsChannel"
+                                    icon="sap-icon://meeting-room"
+                                />
+                                <m:MenuItem
+                                    text="Genie AI SharePoint"
+                                    press="onOpenGenieSharePoint"
+                                    icon="sap-icon://jam"
+                                />
+                                <m:MenuItem
+                                    text="Teaser Video"
+                                    press="onOpenGenieTeaserVideo"
+                                    icon="sap-icon://video"
+                                />
+                            </m:items>
+                        </m:MenuItem>
+
+                        <m:MenuItem
+                            text="Ruum"
+                            press="onOpenGenieRuum"
+                            icon="sap-icon://write-new"
+                            key="Ruum"
+                        />
+
+                        <m:MenuItem
+                            text="ChatBot"
+                            press="onOpenGenieChatBot"
+                            icon="sap-icon://da-2"
+                            key="ChatBot"
+                        />
+
+                        <m:MenuItem
+                            text="Technical Guide"
+                            press="onOpenGenieTechnicalGuide"
+                            icon="sap-icon://machine"
+                            key="Walkthrough Guide"
+                        />
+                    </m:Menu>
+                </m:menu>
+            </m:MenuButton>
+
+            <!-- <m:Button
                 press="onOpenServiceCatalog"
                 icon="sap-icon://education"
                 tooltip="{i18n>serviceCatalogTooltip}"
@@ -19,24 +72,53 @@
                 press="onOpenAnalyticsStore"
                 icon="sap-icon://business-objects-experience"
                 tooltip="{i18n>analyticsStoreTooltip}"
-            />
-            <m:Button
-                press="onOpenSharePoint"
-                icon="sap-icon://idea-wall"
-                tooltip="{i18n>sharePointTooltip}"
-            />
-            <m:Button
-                press="onOpenSAPOne"
-                icon="sap-icon://Chart-Tree-Map"
-                tooltip="{i18n>sapOneTooltip}"
-            />
+            /> -->
+
+            <m:MenuButton
+                icon="sap-icon://cloud"
+                text="Our Team"
+            >
+                <m:menu>
+                    <m:Menu itemSelected="onMenuAction">
+                        <m:MenuItem
+                            press="onOpenSharePoint"
+                            text="EMEA BTP Team SharePoint"
+                            icon="sap-icon://pushpin-on"
+                            tooltip="{i18n>sharePointTooltip}"
+                        />
+
+                        <m:MenuItem
+                            press="onOpenAdoptionClassService"
+                            icon="sap-icon://official-service"
+                            tooltip="Adoption Class Service"
+                            text="Adoption Class"
+                        />
+
+                        <m:MenuItem
+                            press="onOpenBTPVideos"
+                            icon="sap-icon://my-view"
+                            tooltip="BTP Video Series - Landing Page"
+                            text="BTP Video Series"
+                        />
+
+                        <m:MenuItem
+                            text="Demand Genius Guide"
+                            press="onOpenDemandGeniusVideo"
+                            icon="sap-icon://video"
+                            key="DemandGeniusVideo"
+                            tooltip="A Guide for this App"
+                        />
+                    </m:Menu>
+                </m:menu>
+            </m:MenuButton>
 
             <m:MenuButton
                 icon="sap-icon://palette"
+                text="Theme"
                 tooltip="Theme Picker"
             >
                 <m:menu>
-                    <m:Menu itemSelected="onThemePicker" >
+                    <m:Menu itemSelected="onThemePicker">
                         <m:MenuItem
                             text="Morning Horizon (Light)"
                             key="MorningHorizon"

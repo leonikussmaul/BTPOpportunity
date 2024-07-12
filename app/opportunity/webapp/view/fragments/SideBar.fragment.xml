@@ -33,6 +33,14 @@
             />
 
             <tnt:NavigationListItem
+                text="Genie AI"
+                key="GenieAI"
+                icon="sap-icon://ai"
+                select="onNavToGenieAIMain"
+                tooltip="Go to the Genie AI Report"
+            />
+
+            <tnt:NavigationListItem
                 text="Team Engagement"
                 key="TeamEngagement"
                 icon="sap-icon://meeting-room"

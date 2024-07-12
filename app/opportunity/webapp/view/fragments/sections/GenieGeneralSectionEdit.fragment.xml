@@ -1,0 +1,133 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <VBox class="sapUiSmallMargin">
+        <f:SimpleForm
+            id="SimpleFormDisplayColumn_twoGroups234"
+            editable="false"
+            layout="ColumnLayout"
+            columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+        >
+            <f:content>
+                <!-- dates -->
+                <core:Title text="Overview" />
+
+                <Label
+                    text="Account name"
+                    required="true"
+                />
+                <Input
+                    value="{editPageModel>/accountName}"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                    liveChange="onChangeValueState"
+                />
+
+                <CheckBox
+                    text="Internal"
+                    selected="{editPageModel>/internal}"
+                />
+
+                <!-- <Label text="Contact name" />
+                <Text text="{contactName}" /> -->
+
+                <Label text="Level" />
+                <Select
+                    id="level"
+                    selectedKey="{editPageModel>/level}"
+                    placeholder="What is their level of experience with AI?"
+                >
+                    <core:Item
+                        key="Beginner"
+                        text="Beginner"
+                    />
+                    <core:Item
+                        key="Intermediate"
+                        text="Intermediate"
+                    />
+                    <core:Item
+                        key="Advanced"
+                        text="Advanced"
+                    />
+                </Select>
+
+                <!-- <Label text="Status" />
+                                <SegmentedButton id="segmentedStatus">
+                                    <items>
+                                        <SegmentedButtonItem
+                                            key="Lead"
+                                            text="Lead"
+                                            icon="sap-icon://flag-2"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Opportunity"
+                                            text="Opportunity"
+                                            icon="sap-icon://overlay"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Paused"
+                                            text="Paused"
+                                            icon="sap-icon://pause"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Delivery"
+                                            text="Delivery"
+                                            icon="sap-icon://activate"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Completed"
+                                            text="Completed"
+                                            icon="sap-icon://checklist-item"
+                                        />
+                                    </items>
+                                </SegmentedButton> -->
+
+                <Label text="Role" />
+                <Input value="{editPageModel>/role}" />
+
+                <Label text="Functional Area" />
+                <Input value="{editPageModel>/functionalArea}" />
+
+                <Label text="Organisational Area" />
+                <Input value="{editPageModel>/orgArea}" />
+
+                <core:Title text="Contact &amp; Logistics" />
+
+                <Label text="Source" />
+                <Input value="{editPageModel>/source}" />
+
+                <Label text="Email" />
+                <Input value="{editPageModel>/email}" />
+
+                <Label text="City" />
+                <Input value="{editPageModel>/city}" />
+
+                <Label text="Workshop Dates" />
+                <DateRangeSelection
+                    id="DRS3"
+                    placeholder="i.e. Jul 8th, 2024 - Jul 9th, 2024"
+                    showCurrentDateButton="true"
+                    showFooter="true"
+                    change="handleChange"
+                    value="{
+                                            'type': 'sap.ui.model.type.DateInterval',
+                                            'parts': [
+                                                {
+                                                    'type': 'sap.ui.model.type.Date',
+                                                    'path': '{editPageModel>/workshopStartDate}'
+                                                },
+                                                {
+                                                    'type': 'sap.ui.model.type.Date',
+                                                   'path': '{editPageModel>/workshopEndDate}'
+                                                }
+                                            ]
+                                        }"
+                />
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>
