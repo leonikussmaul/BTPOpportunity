@@ -112,26 +112,13 @@ sap.ui.define([
 
                 // wait for async calls 
                    Promise.all([
-                // this.onFilterComments(sOpportunityID),
                 this.onFilterLinkList(sWorkshopID),
-                // this.onFilterNextSteps(sOpportunityID),
-                // this.onReadModelData(sWorkshopID),
-                // this.onSetLayout(),
-                // this.onReadTopics(),
-                // this.onReadDeliverables()
                   ]).then(() => {
 
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
-                  this.getGenieCount();
-
-                // var oMaturityTable = this.getView().byId("maturityTableID");
-                // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
-
-                // var oActivitiesTable = this.getView().byId("activitiesTableID");
-                // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
+                this.getGenieCount();
                 // set segmented button text for current status of opportunity
                     this.setSegButtonText();
                 }).catch(err => {
@@ -361,8 +348,10 @@ sap.ui.define([
                         "July", "August", "September", "October", "November", "December"
                     ];
 
-                    var sMonth = monthNames[sStartDate.getMonth()];
-
+                    var sMonth;
+                    if(sStartDate) sMonth = monthNames[sStartDate.getMonth()];
+                    // oData.country = this.getFlagMethod(oData.country.toUpperCase());
+                    oData.country = oData.country.toUpperCase(); 
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
@@ -474,6 +463,7 @@ sap.ui.define([
                     }
                 });
             },
+
 
             /* ------------------------------------------------------------------------------------------------------------
             DIALOG
@@ -691,6 +681,7 @@ sap.ui.define([
                     var sStatus = sap.ui.getCore().byId("segmentedStatusObject").getSelectedKey();
 
 
+                    if(oData.country) oData.country = oData.country.toUpperCase; 
                     oData.workshopStartDate = sStartDate;
                     oData.workshopEndDate = sEndDate;
                     oData.status = sStatus;

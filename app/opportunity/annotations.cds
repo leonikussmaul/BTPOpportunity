@@ -103,6 +103,30 @@ annotate service.opportunityDeliverables with {
     completedOn      @Common.Label: 'Completed On';
 };
 
+
+annotate service.GenieAIWorkshop with {
+    accountName       @Common.Label: 'Account Name';
+    contactName       @Common.Label: 'Contact Name';
+    internal          @Common.Label: 'Internal';
+    email             @Common.Label: 'Email';
+    role              @Common.Label: 'Role';
+    functionalArea    @Common.Label: 'Functional Area';
+    orgArea           @Common.Label: 'Org Area';
+    source            @Common.Label: 'Source';
+    city              @Common.Label: 'City';
+    country           @Common.Label: 'Country';
+    region            @Common.Label: 'Region';
+    month             @Common.Label: 'Month';
+    workshopStartDate @Common.Label: 'Start Date';
+    workshopEndDate   @Common.Label: 'End Date';
+    notes             @Common.Label: 'Notes';
+    level             @Common.Label: 'Level';
+    status            @Common.Label: 'Status';
+    isFavorite        @Common.Label: 'Favorite';
+
+};
+
+
 annotate service.opportunityHeaderCopy with @(
     // Header-level annotations
     Aggregation.ApplySupported                   : {
@@ -411,27 +435,3 @@ annotate service.opportunityMaturityCopy with @(
     );
 
 }
-
-
-annotate service.GenieAIWorkshop with {
-    // @Semantics.aggregate: true
-    accountName       @Common.Label: 'Account Name';
-    contactName       @Common.Label: 'Contact Name';
-    internal          @Common.Label: 'Internal';
-    email             @Common.Label: 'Email';
-    role              @Common.Label: 'Role';
-    functionalArea    @Common.Label: 'Functional Area';
-    orgArea           @Common.Label: 'Org Area';
-    source            @Common.Label: 'Source';
-    city              @Common.Label: 'City';
-    country           @Common.Label: 'Country';
-    region            @Common.Label: 'Region';
-    month             @Common.Label: 'Month';
-    workshopStartDate @Common.Label: 'Start Date';
-    workshopEndDate   @Common.Label: 'End Date';
-    notes             @Common.Label: 'Notes';
-    level             @Common.Label: 'Level';
-    status            @Common.Label: 'Status';
-    isFavorite        @Common.Label: 'Favorite';
-
-};
