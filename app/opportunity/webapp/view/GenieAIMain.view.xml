@@ -168,7 +168,6 @@
                                         </Column> -->
                                             <Column
                                                 hAlign="Center"
-                                                width="30%"
                                             >
                                                 <customData>
                                                     <core:CustomData
@@ -256,7 +255,9 @@
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
                                                     <Text
-                                                        text="{workshopStartDate} to {workshopEndDate}"
+                                                        text="{'path': 'workshopStartDate',
+                                            'type':'sap.ui.model.type.Date'
+                                           }"
                                                         visible="{= ${workshopStartDate} !== null}"
                                                     />
                                                     <ObjectStatus
@@ -346,7 +347,7 @@
 
                                             <Column
                                                 hAlign="Center"
-                                                width="30%"
+                                            
                                             >
                                                 <customData>
                                                     <core:CustomData
@@ -443,8 +444,7 @@
                                                         color="#427cac"
                                                     />
                                                     <ObjectIdentifier
-                                                        title="{accountName}"
-                                                        text="{contactName}"
+                                                        title="{contactName}"
                                                     />
                                                     <Text text="{email}" />
                                                     <Text text="{city}" />

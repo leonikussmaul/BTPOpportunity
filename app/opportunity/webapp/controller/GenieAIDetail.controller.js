@@ -344,20 +344,28 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sStartDate, sEndDate, bInternal;
+    
+                    var sStartDate, sEndDate, bInternal, sTodayDate;
+                    var workshopStartDate, workshopEndDate;
 
-                    //sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    sTodayDate = new Date().toISOString().split("T")[0];
+                    sStartDate = this.getView().byId("DRS3").getDateValue();
+                    sEndDate = this.getView().byId("DRS3").getSecondDateValue();
+                    if (sStartDate) workshopStartDate = new Date(sStartDate).toISOString().split("T")[0];
+                    if (sEndDate) workshopEndDate = new Date(sEndDate).toISOString().split("T")[0];
 
                     if (oData.internal) bInternal = true;
                     else bInternal = false;
 
-                    var sStatus = this.getView().byId("segmentedStatusObject").getSelectedKey();
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ];
 
-                    oData.workshopStartDate = sStartDate;
-                    oData.workshopEndDate = sEndDate;
-                    oData.status = sStatus;
+                    var sMonth = monthNames[sStartDate.getMonth()];
+
+                    oData.workshopStartDate = workshopStartDate;
+                    oData.workshopEndDate = workshopEndDate;
+                    oData.month = sMonth;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
                     oData.notes = this.getView().byId("editRTE").getValue();
@@ -384,9 +392,6 @@ sap.ui.define([
                 } else this.ValueStateMethod();
 
             },
-
-
-
 
             onToggleButtonPressed: function (oEvent) {
                 var oEditModel = this.getView().getModel("editModel");

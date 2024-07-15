@@ -62,7 +62,6 @@
                                             class="sapUiSmallMarginBeginEnd"
                                         /> -->
                                 </VBox>
-
                             </HBox>
                         </u:expandedHeading>
                         <u:snappedHeading>
@@ -130,11 +129,40 @@
                                     />
                                 </VBox> -->
 
-                        <!-- adoption -->
+                        <!-- level -->
+                          <VBox  visible="{= ${level} !== null}"
+                            >
+                                <Title >
+                                    <Label
+                                        text="Level" class="sapUiTinyMarginTop"
+                                    />
+                                </Title>
+                                <ObjectStatus 
+                                    text="{level}"
+                                   state="{path: 'level', formatter:'.formatter.genieLevelFormatter'}"
+                                    class="sapMObjectStatusLarge sapUiTinyMarginTop"
+                                />
+                            </VBox>
+
+                             <!-- level -->
+                          <VBox  visible="{= ${month} !== null}" class="sapUiMediumMarginBeginEnd"
+                            >
+                                <Title >
+                                    <Label
+                                        text="Delivery" class="sapUiTinyMarginTop"
+                                    />
+                                </Title>
+                                <ObjectStatus 
+                                    text="{month}"
+                                    class="sapMObjectStatusLarge sapUiTinyMarginTop"
+                                />
+                            </VBox>
 
                         <l:VerticalLayout class="sapUiResponsiveMargin">
+                          
+
                             <VBox>
-                                <ObjectStatus
+                                <ObjectStatus 
                                     state="Information"
                                     text="{i18n>status}"
                                     icon="sap-icon://message-information"
