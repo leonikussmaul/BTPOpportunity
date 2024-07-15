@@ -1,0 +1,474 @@
+<mvc:View
+    controllerName="opportunity.opportunity.controller.GenieAIMain"
+    id="view1"
+    xmlns:u="sap.uxap"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:table="sap.ui.table"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:tnt="sap.tnt"
+    xmlns:main="sap.ui.webc.main"
+    xmlns:layout="sap.ui.layout"
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:dnd-grid="sap.f.dnd"
+    xmlns:grid="sap.ui.layout.cssgrid"
+>
+    <u:ObjectPageLayout
+        id="ObjectPageLayoutBegin"
+        showTitleInHeaderContent="true"
+        showEditHeaderButton="true"
+        editHeaderButtonPress="handleEditBtnPress"
+        upperCaseAnchorBar="false"
+    >
+        <u:headerTitle>
+            <u:ObjectPageDynamicHeaderTitle>
+                <u:expandedHeading>
+                    <Title
+                        text="Genie AI Report"
+                        id="headerTitle"
+                    />
+                </u:expandedHeading>
+            </u:ObjectPageDynamicHeaderTitle>
+        </u:headerTitle>
+        <u:headerContent>
+            <FlexBox
+                alignItems="Start"
+                justifyContent="SpaceBetween"
+            >
+                <Title
+                    titleStyle="H4"
+                    text="Hi {user>/firstname}, here are all Genie AI Workshop Leads. "
+                    wrapping="true"
+                    class="sapUiSmallMarginBottom"
+                />
+                <Button
+                    text="Create"
+                    icon="sap-icon://ai"
+                    type="Accept"
+                    id="createBtn"
+                    class="sapUiSmallMarginBegin"
+                    press="onCreateGenieLead"
+                    tooltip="Create a New Lead in the System"
+                />
+            </FlexBox>
+        </u:headerContent>
+        <u:sections>
+            <u:ObjectPageSection showTitle="false">
+                <u:ObjectPageSubSection>
+                    <IconTabBar
+                        id="idIconTabBar"
+                        select=".onFilterSelect"
+                        class="sapUiResponsiveContentPadding"
+                    >
+                        <items>
+                            <!-- <IconTabFilter
+				showAll="true"
+                
+                 count="{genieModel>/countAll}"
+				text="All"
+				key="All" />
+			<IconTabSeparator /> -->
+                            <IconTabFilter
+                                icon="sap-icon://da-2"
+                                iconColor="Default"
+                                count="{genieModel>/countCustomer}"
+                                text="Customer"
+                                key="Customer"
+                            >
+                                <smartTable:SmartTable
+                                    id="mySmartTable"
+                                    persistencyKey="persistencyKey"
+                                    entitySet="GenieAIWorkshop"
+                                    beforeRebindTable="onBeforeRebindTableCustomer"
+                                    tableType="ResponsiveTable"
+                                    useVariantManagement="false"
+                                    useTablePersonalisation="true"
+                                    header="{i18n>mySmartTableHeader}"
+                                    showRowCount="true"
+                                    enableAutoBinding="true"
+                                    demandPopin="true"
+                                    class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
+                                    showFullScreenButton="true"
+                                    initiallyVisibleFields="contactName,workshopStartDate,city,status,isFavorite"
+                                    requestAtLeastFields="accountName,contactName,role,orgArea,city,status,isFavorite,workshopStartDate,workshopEndDate"
+                                    ignoreFromPersonalisation="workshopID"
+                                    enableCopy="false"
+                                >
+                                    <smartTable:customToolbar>
+                                        <OverflowToolbar design="Transparent">
+                                            <ToolbarSpacer />
+                                            <SearchField
+                                                width="30%"
+                                                liveChange="onSearch"
+                                                class="sapUiSizeCompact"
+                                            />
+                                            <ToggleButton
+                                                icon="sap-icon://edit"
+                                                id="editButton"
+                                                text="Edit"
+                                                tooltip="Go into Edit Mode to Delete items"
+                                                press="onEditTable"
+                                            />
+                                            <ToggleButton
+                                                id="favoriteToggle"
+                                                icon="sap-icon://unfavorite"
+                                                tooltip="Show Favorite Items"
+                                                press="onFavoriteToolbarPress"
+                                            />
+                                        </OverflowToolbar>
+                                    </smartTable:customToolbar>
+                                    <Table
+                                        inset="false"
+                                        growing="true"
+                                        growingScrollToLoad="true"
+                                        mode="None"
+                                        sticky="ColumnHeaders,HeaderToolbar"
+                                        noDataText="Nothing here. Please adjust your search critera."
+                                        delete="onDeleteTableItem"
+                                    >
+                                        <columns>
+                                            <Column
+                                                width="2.5em"
+                                                hAlign="Center"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "isFavorite", "columnIndex" : "0", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
+                                                    />
+                                                </customData>
+                                                <Label text="" />
+                                            </Column>
+                                            <!-- <Column
+                                            width="10em"
+                                            demandPopin="false"
+                                        >
+                                            <customData>
+                                                <core:CustomData
+                                                    key="p13nData"
+                                                    value='\{"columnKey": "accountName", "columnIndex" : "1", "leadingProperty": "accountName", "sortProperty": "accountName", "filterProperty": "accountName ", "type":"string"}'
+                                                />
+                                            </customData>
+                                            <Label
+                                                text="Customer"
+                                                tooltip="Customer"
+                                            />
+                                        </Column> -->
+                                            <Column
+                                                hAlign="Center"
+                                                width="30%"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "contactName", "columnIndex" : "2", "leadingProperty": "contactName", "filterProperty": "contactName", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Name" />
+                                            </Column>
+
+                                            <Column hAlign="Center">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="City" />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                visible="{global>/columnsExpanded}"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "4", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="Dates"
+                                                    tooltip="Workshop Dates"
+                                                />
+                                            </Column>
+
+                                            <!-- <Column
+                                            hAlign="Center"
+                                            visible="{global>/columnsExpanded}"
+                                        >
+                                            <customData>
+                                                <core:CustomData
+                                                    key="p13nData"
+                                                    value='\{"columnKey": "orgArea", "columnIndex" : "4", "leadingProperty": "orgArea", "sortProperty": "orgArea", "filterProperty": "orgArea", "type":"string"}'
+                                                />
+                                            </customData>
+                                            <Label text="Org Area" />
+                                        </Column> -->
+
+                                            <Column
+                                                hAlign="Center"
+                                                width="15%"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "status", "columnIndex" : "5", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="{i18n>status}" />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem
+                                                class="myCustomListItem"
+                                                type="Navigation"
+                                                vAlign="Middle"
+                                                press="onListItemPress"
+                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
+                                            >
+                                                <cells>
+                                                    <core:Icon
+                                                        press="onFavoritePress"
+                                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                        size="1.2rem"
+                                                        color="#427cac"
+                                                    />
+                                                    <ObjectIdentifier
+                                                        title="{accountName}"
+                                                        text="{contactName}"
+                                                    />
+
+                                                    <Text text="{city}" />
+                                                    <!-- <Text text="{role}" />
+                                                <Text text="{orgArea}" /> -->
+                                                    <Text
+                                                        text="{workshopStartDate} to {workshopEndDate}"
+                                                        visible="{= ${workshopStartDate} !== null}"
+                                                    />
+                                                    <ObjectStatus
+                                                        text="{status}"
+                                                        state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
+                                                        visible="{= ${status} !== null}"
+                                                        icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}"
+                                                        iconDensityAware="true"
+                                                    />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </smartTable:SmartTable>
+                            </IconTabFilter>
+                            <IconTabFilter
+                                icon="sap-icon://education"
+                                iconColor="Positive"
+                                count="{genieModel>/countInternal}"
+                                text="Internal"
+                                key="Internal"
+                            >
+                                <smartTable:SmartTable
+                                    id="mySmartTableInternal"
+                                    persistencyKey="persistencyKey"
+                                    entitySet="GenieAIWorkshop"
+                                    beforeRebindTable="onBeforeRebindTableInternal"
+                                    tableType="ResponsiveTable"
+                                    useVariantManagement="false"
+                                    useTablePersonalisation="true"
+                                    header="{i18n>mySmartTableHeader}"
+                                    showRowCount="true"
+                                    enableAutoBinding="true"
+                                    demandPopin="true"
+                                    class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
+                                    showFullScreenButton="true"
+                                    initiallyVisibleFields="contactName,email,role,orgArea,city,status,isFavorite"
+                                    requestAtLeastFields="accountName,email,contactName,role,orgArea,city,status,isFavorite"
+                                    ignoreFromPersonalisation="workshopID"
+                                    enableCopy="false"
+                                >
+                                    <smartTable:customToolbar>
+                                        <OverflowToolbar design="Transparent">
+                                            <ToolbarSpacer />
+                                            <SearchField
+                                                width="30%"
+                                                liveChange="onSearch"
+                                                class="sapUiSizeCompact"
+                                            />
+                                            <ToggleButton
+                                                icon="sap-icon://edit"
+                                                id="editButtonInternal"
+                                                text="Edit"
+                                                tooltip="Go into Edit Mode to Delete items"
+                                                press="onEditTable"
+                                            />
+                                            <ToggleButton
+                                                id="favoriteToggleInternal"
+                                                icon="sap-icon://unfavorite"
+                                                tooltip="Show Favorite Items"
+                                                press="onFavoriteToolbarPress"
+                                            />
+                                        </OverflowToolbar>
+                                    </smartTable:customToolbar>
+                                    <Table
+                                        inset="false"
+                                        growing="true"
+                                        growingScrollToLoad="true"
+                                        mode="None"
+                                        sticky="ColumnHeaders,HeaderToolbar"
+                                        noDataText="Nothing here. Please adjust your search critera."
+                                        delete="onDeleteTableItem"
+                                    >
+                                        <columns>
+                                            <Column
+                                                width="2.5em"
+                                                hAlign="Center"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "isFavorite", "columnIndex" : "0", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
+                                                    />
+                                                </customData>
+                                                <Label text="" />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                width="30%"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "contactName", "columnIndex" : "1", "leadingProperty": "contactName", "filterProperty": "contactName", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Name" />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                visible="{global>/columnsExpanded}"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "email", "columnIndex" : "2", "leadingProperty": "email", "filterProperty": "email", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Email" />
+                                            </Column>
+
+                                            <Column hAlign="Center">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="City" />
+                                            </Column>
+
+                                            <Column
+                                                visible="{global>/columnsExpanded}"
+                                                width="10em"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "role", "columnIndex" : "4", "leadingProperty": "role", "sortProperty": "role", "filterProperty": "role ", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="Role"
+                                                    tooltip="i.e. Services Sales, Delivery, TQM,.."
+                                                />
+                                            </Column>
+
+                                            <Column
+                                                visible="{global>/columnsExpanded}"
+                                                hAlign="Center"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "orgArea", "columnIndex" : "5", "leadingProperty": "orgArea", "sortProperty": "orgArea", "filterProperty": "orgArea", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="Org Area"
+                                                    tooltip="i.e. CS&amp;D, CS.."
+                                                />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                width="15%"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "status", "columnIndex" : "6", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="{i18n>status}" />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem
+                                                class="myCustomListItem"
+                                                type="Navigation"
+                                                vAlign="Middle"
+                                                press="onListItemPress"
+                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
+                                            >
+                                                <cells>
+                                                    <core:Icon
+                                                        press="onFavoritePress"
+                                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                        size="1.2rem"
+                                                        color="#427cac"
+                                                    />
+                                                    <ObjectIdentifier
+                                                        title="{accountName}"
+                                                        text="{contactName}"
+                                                    />
+                                                    <Text text="{email}" />
+                                                    <Text text="{city}" />
+                                                    <Text text="{role}" />
+                                                    <Text
+                                                        text="{orgArea}  {functionalArea}"
+                                                    />
+                                                    <ObjectStatus
+                                                        text="{status}"
+                                                        state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
+                                                        visible="{= ${status} !== null}"
+                                                        icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}"
+                                                        iconDensityAware="true"
+                                                    />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </smartTable:SmartTable>
+                            </IconTabFilter>
+                        </items>
+                    </IconTabBar>
+                </u:ObjectPageSubSection>
+            </u:ObjectPageSection>
+        </u:sections>
+    </u:ObjectPageLayout>
+</mvc:View>

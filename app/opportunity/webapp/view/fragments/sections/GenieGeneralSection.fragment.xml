@@ -1,0 +1,76 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <VBox class="sapUiSmallMargin">
+        <f:SimpleForm
+            id="SimpleFormDisplayColumn_twoGroups234"
+            editable="false"
+            layout="ColumnLayout"
+            columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+        >
+            <f:content>
+                <!-- dates -->
+                <core:Title text="Overview" />
+                <!-- <Label text="Account name" />
+                <Text text="{accountName}" /> -->
+
+                <!-- <Label text="Internal" />
+                <Text text="{internal}" /> -->
+
+                <!-- <Label text="Contact name" />
+                <Text text="{contactName}" /> -->
+
+                <Label text="Level" />
+                <Text text="{level}" />
+
+                <!-- <Label text="Status" />
+                <Text text="{status}" /> -->
+
+                <Label text="Role" />
+                <Text text="{role}" />
+
+                <Label text="Functional Area" />
+                <Text text="{functionalArea}" />
+
+                <Label text="Organisational Area" />
+                <Text text="{orgArea}" />
+
+                <core:Title text="Contact &amp; Logistics" />
+
+                <Label text="Source" />
+                <Text text="{source}" />
+
+                <Label text="Email" />
+                <Text text="{email}" />
+
+                <Label text="Location" />
+                <Text text="{city} " />   <Text text="{country}" />
+
+                <Label text="Dates" />
+                <Text
+                    text="{ path: 'workshopStartDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}} - { path: 'workshopEndDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                />
+                <!-- <Label text="End Date" />
+                <Text
+                    text="{ path: 'workshopEndDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
+						}}"
+                /> -->
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

@@ -50,16 +50,63 @@ sap.ui.define(
         library.URLHelper.redirect(sUrlSharePoint, true);
       },
 
-      onOpenServiceCatalog: function () {
-        var sUrlServiceCatalog = 'https://servicescatalog.cvdp3eof-dbsservic1-p1-public.model-t.cc.commerce.ondemand.com/';
-        library.URLHelper.redirect(sUrlServiceCatalog, true);
-      },
+      // onOpenServiceCatalog: function () {
+      //   var sUrlServiceCatalog = 'https://servicescatalog.cvdp3eof-dbsservic1-p1-public.model-t.cc.commerce.ondemand.com/';
+      //   library.URLHelper.redirect(sUrlServiceCatalog, true);
+      // },
 
-      onOpenAnalyticsStore: function () {
-        var sUrlAnalyticsStore = 'https://eas.sap.com/astore/ui/index.html#assets';
-        library.URLHelper.redirect(sUrlAnalyticsStore, true);
-      },
+      // onOpenAnalyticsStore: function () {
+      //   var sUrlAnalyticsStore = 'https://eas.sap.com/astore/ui/index.html#assets';
+      //   library.URLHelper.redirect(sUrlAnalyticsStore, true);
+      // },
 
+      onOpenGenieTeamsChannel: function () {
+          var sUrlServiceCatalog = 'https://teams.microsoft.com/l/team/19%3ACQux_k8zte78DMIFtUzI3sh5tRp8NiEEZTndqMLHPfk1%40thread.tacv2/conversations?groupId=373d5920-56b1-4d41-9c32-030a71e9592c&tenantId=42f7676c-f455-423c-82f6-dc2d99791af7';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+      onOpenGenieRuum: function () {
+          var sUrlServiceCatalog = 'https://open.ruumapp.com/projects/ruum_1715765401349_ajisgz361d/canvas';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+  
+        onOpenGenieSharePoint: function () {
+          var sUrlServiceCatalog = 'https://sap.sharepoint.com/:u:/r/sites/209083/SitePages/Home.aspx?csf=1&web=1&share=EZ1yRiAQnBNJkbFmc0bwN_IBq0xK5oDx0XMUDpZ7tVYOJw&e=Btpi61';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+        onOpenGenieTeaserVideo: function () {
+          var sUrlServiceCatalog = 'https://video.sap.com/media/t/1_9zd8rqi2';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+        onOpenGenieChatBot: function () {
+          var sUrlServiceCatalog = 'https://chatbot-genie.launchpad.cfapps.eu10.hana.ondemand.com/38bdd9f7-c0ba-42e8-b084-bde5c4569a4e.genieai.genieai-0.0.1/index.html';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+        onOpenGenieTechnicalGuide: function () {
+          var sUrlServiceCatalog = 'https://sap.sharepoint.com/:u:/r/sites/209083/SitePages/Day-3.aspx?csf=1&web=1&share=EQljQD7_dWpLhKKMJb2Pr44BjQmKzBh0my8YcwB_5mQQ_A&e=SKzcij';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+  
+
+        //Team
+        onOpenDemandGeniusVideo: function () {
+          var sUrlServiceCatalog = 'https://sapvideoa35699dc5.hana.ondemand.com/?entry_id=1_rsm9ii1n';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+        onOpenBTPVideos: function () {
+          var sUrlServiceCatalog = 'https://www.sap.com/cmp/oth/business-technology-platform-video-series/index.html';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+        onOpenAdoptionClassService: function () {
+          var sUrlServiceCatalog = 'https://servicescatalog.cvdp3eof-dbsservic1-p1-public.model-t.cc.commerce.ondemand.com/Solution-Area-Hierarchy-2024/Business-Technology-Platform/AppDev-Automation-and-Integration/AppDev-and-Automation/AppDev-and-Automation-Services/SAP-Build-Code/SAP-BTP-Adoption-Class/p/000000000050159444';
+          library.URLHelper.redirect(sUrlServiceCatalog, true);
+        },
+
+        
 
       onNavToTasksPage: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -82,6 +129,12 @@ sap.ui.define(
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("OpportunityReport");
       },
+
+      onNavToGenieAIMain: function (oEvent) {
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("GenieAIMain");
+      },
+
 
       onNavToTeamEngagement: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

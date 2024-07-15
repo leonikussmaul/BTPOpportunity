@@ -79,11 +79,11 @@ entity opportunitySubTasks {
 
 @cds.autoexpose
 entity opportunityTopics {
-    key ID      : UUID;
-        opptID  : Association to opportunityHeader;
-        topic   : String(255);
-        comment : String(5000);
-        sortOrder: Integer; 
+    key ID        : UUID;
+        opptID    : Association to opportunityHeader;
+        topic     : String(255);
+        comment   : String(5000);
+        sortOrder : Integer;
 };
 
 
@@ -294,9 +294,9 @@ entity userFeedback {
 
 @cds.autoexpose
 entity opportunityTopicsVH {
-    key ID    : UUID;
-        topic : String(255);
-        sortOrder: Integer; 
+    key ID        : UUID;
+        topic     : String(255);
+        sortOrder : Integer;
 };
 
 @cds.autoexpose
@@ -344,7 +344,7 @@ entity opportunityStatusVH {
 entity opportunityMarketUnitVH {
     key ID         : UUID;
         marketUnit : String(25);
-        region : String;
+        region     : String;
 };
 
 @cds.autoexpose
@@ -363,4 +363,39 @@ entity opportunitySSAVH {
 entity opportunitySubTaskStatus {
     key ID            : UUID;
         subTaskStatus : String(50);
+};
+
+@cds.autoexpose
+entity GenieAIWorkshop {
+    key workshopID        : UUID;
+        accountName       : String(255);
+        contactName       : String(255);
+        internal          : Boolean;
+        email             : String(255);
+        role              : String(255);
+        functionalArea    : String(255);
+        orgArea           : String(255);
+        source            : String(255);
+        city              : String(255);
+        country           : String(255);
+        region            : String(255);
+        month             : String(50);
+        workshopStartDate : Date;
+        workshopEndDate   : Date;
+        notes             : String(5000);
+        level             : String(50); // beginner, intermediate, advanced
+        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite        : Boolean;
+        links             : Composition of many GenieAILinks
+                                on links.linkID = $self;
+
+}
+
+@cds.autoexpose
+entity GenieAILinks {
+    key ID              : UUID;
+        linkID          : Association to GenieAIWorkshop;
+        link            : String(2000);
+        linkDescription : String(1000);
+        linkName        : String(200);
 };

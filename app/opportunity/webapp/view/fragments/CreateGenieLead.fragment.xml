@@ -1,0 +1,240 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified"
+    xmlns:c="sap.ui.comp"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:rte="sap.ui.richtexteditor"
+    xmlns:micro="sap.suite.ui.microchart"
+>
+    <Dialog
+        id="myCreateWizard"
+        resizable="true"
+        draggable="true"
+        verticalScrolling="false"
+        contentHeight="700px"
+        contentWidth="1000px"
+    >
+        <customHeader>
+            <Bar>
+                <contentRight>
+                    <ToggleButton
+                        icon="sap-icon://full-screen"
+                        press="onFullScreenButtonPress"
+                    />
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <f:DynamicPage
+            stickySubheaderProvider="CreateWizard"
+            toggleHeaderOnTitleClick="false"
+            class="sapUiNoContentPadding"
+            showFooter="true"
+        >
+            <f:title>
+                <f:DynamicPageTitle>
+                    <f:heading>
+                        <Title text="Create a Genie AI Lead" />
+                    </f:heading>
+                </f:DynamicPageTitle>
+            </f:title>
+            <f:content>
+                <Wizard
+                    complete="onCreateNewItem"
+                    id="CreateWizard"
+                    renderMode="Page"
+                >
+                    <steps>
+                        <!-- Step 1 -->
+                        <WizardStep
+                            id="WizardStep1"
+                            title="{i18n>step1Title}"
+                            validated="true"
+                        >
+                            <form:SimpleForm editable="true">
+                                <Label
+                                    text="Account Name"
+                                    required="true"
+                                />
+                                <Input
+                                    value="{viewModel>/accountName}"
+                                    valueState="{valueState>/valueState}"
+                                    valueStateText="{valueState>/valueStateText}"
+                                    id="accountName"
+                                    placeholder="Enter the customer name or internal SAP Region"
+                                />
+
+                                <CheckBox
+                                    text="Internal"
+                                    selected="{viewModel>/internal}"
+                                    id="internal"
+                                />
+
+                                <Label text="Contact Name" />
+                                <Input
+                                    value="{viewModel>/contactName}"
+                                    id="contactName"
+                                    placeholder="Enter the participant first and last name"
+                                />
+
+                                <Label text="Level" />
+                                <Select
+                                    id="level"
+                                    selectedKey="{viewModel>/level}"
+                                    placeholder="What is their level of experience with AI?"
+                                >
+                                    <core:Item
+                                        key="Beginner"
+                                        text="Beginner"
+                                    />
+                                    <core:Item
+                                        key="Intermediate"
+                                        text="Intermediate"
+                                    />
+                                    <core:Item
+                                        key="Advanced"
+                                        text="Advanced"
+                                    />
+                                </Select>
+                                <Label text="Status" />
+                                <SegmentedButton id="segmentedStatus">
+                                    <items>
+                                        <SegmentedButtonItem
+                                            key="Lead"
+                                            text="Lead"
+                                            icon="sap-icon://flag-2"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Opportunity"
+                                            text="Opportunity"
+                                            icon="sap-icon://overlay"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Paused"
+                                            text="Paused"
+                                            icon="sap-icon://pause"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Delivery"
+                                            text="Delivery"
+                                            icon="sap-icon://activate"
+                                        />
+                                        <SegmentedButtonItem
+                                            key="Completed"
+                                            text="Completed"
+                                            icon="sap-icon://checklist-item"
+                                        />
+                                    </items>
+                                </SegmentedButton>
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <!-- Step 2 -->
+                        <WizardStep
+                            id="WizardStep2"
+                            title="Contact &amp; Logistics"
+                        >
+                            <form:SimpleForm editable="true">
+                                <Label text="Source" />
+                                <Input
+                                    value="{viewModel>/source}"
+                                    id="source"
+                                    placeholder="Where did the lead come from?"
+                                />
+                                <Label text="Email" />
+                                <Input
+                                    value="{viewModel>/email}"
+                                    id="email"
+                                    placeholder="How can we contact them?"
+                                />
+                                <Label text="Role" />
+                                <Input
+                                    value="{viewModel>/role}"
+                                    id="role"
+                                    placeholder="What is their job role?"
+                                />
+                                <Label text="Functional Area" />
+                                <Input
+                                    value="{viewModel>/functionalArea}"
+                                    id="functionalArea"
+                                    placeholder="i.e. Services, Sales &amp; Presales.."
+                                />
+                                <Label text="Org Area" />
+                                <Input
+                                    value="{viewModel>/orgArea}"
+                                    id="orgArea"
+                                    placeholder="i.e. CS&amp;D, CS.."
+                                />
+
+                                <Label text="City" />
+                                <Input
+                                    value="{viewModel>/city}"
+                                    id="city"
+                                    placeholder="Where are they based?"
+                                />
+
+                                <Label text="Workshop Dates" />
+                                <DateRangeSelection
+                                    id="DRS3"
+                                    placeholder="i.e. Jul 8th, 2024 - Jul 9th, 2024"
+                                    showCurrentDateButton="true"
+                                    showFooter="true"
+                                    change="handleChange"
+                                    value="{
+                                            'type': 'sap.ui.model.type.DateInterval',
+                                            'parts': [
+                                                {
+                                                    'type': 'sap.ui.model.type.Date',
+                                                    'path': '{viewModel>/workshopStartDate}'
+                                                },
+                                                {
+                                                    'type': 'sap.ui.model.type.Date',
+                                                   'path': '{viewModel>/workshopEndDate}'
+                                                }
+                                            ]
+                                        }"
+                                />
+                            </form:SimpleForm>
+                        </WizardStep>
+                        <!-- Step 3 -->
+                        <WizardStep
+                            id="WizardStep3"
+                            title="Notes"
+                        >
+                            <form:SimpleForm editable="true">
+                                <Label text="Notes" />
+                                <rte:RichTextEditor
+                                    id="notesEditor"
+                                    value="{viewModel>/notes}"
+                                    width="100%"
+                                    height="350px"
+                                    showGroupFont="true"
+                                    showGroupLink="true"
+                                    showGroupUndo="true"
+                                />
+                            </form:SimpleForm>
+                        </WizardStep>
+                    </steps>
+                </Wizard>
+            </f:content>
+            <f:footer>
+                <Toolbar>
+                    <content>
+                        <ToolbarSpacer />
+                        <Button
+                            text="{i18n>cancel}"
+                            press="onCloseWizardPress"
+                        />
+                        <Button
+                            type="Accept"
+                            text="{i18n>save}"
+                            press="onSaveWizardPress"
+                        />
+                    </content>
+                </Toolbar>
+            </f:footer>
+        </f:DynamicPage>
+    </Dialog>
+</core:FragmentDefinition>
