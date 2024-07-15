@@ -256,6 +256,17 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
 
     },
 
+    genieLevelFormatter: function (sLevel) {
+      if (sLevel === 'Advanced') {
+        return 'Error';
+      } else if (sLevel === 'Intermediate') {
+        return 'Warning';
+      } else if (sLevel === 'Beginner') {
+        return 'Success';
+      }
+
+    },
+
     piorityStatusFormatter: function (sPriority) {
       if (sPriority === 'High') {
         return 'Indication02';
