@@ -63,33 +63,6 @@
                                         /> -->
                                 </VBox>
 
-                                <HBox
-                                    width="600px"
-                                    alignItems="Start"
-                                >
-                                    <l:HorizontalLayout
-                                        id="topicsID"
-                                        allowWrapping="true"
-                                        class="sapUiLargeMarginBegin"
-                                        content="{}"
-                                    >
-                                        <tnt:InfoLabel
-                                            text="{ path: 'pageModel>topic' }"
-                                            renderMode="Narrow"
-                                            class="sapUiTinyMarginEnd sapUiTinyMarginTopBottom"
-                                            colorScheme="{path:'pageModel>topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${pageModel>topic} !== null &amp;&amp; ${pageModel>topic} !== '' }"
-                                        >
-                                            <tnt:customData>
-                                                <core:CustomData
-                                                    key="topic"
-                                                    value="{pageModel>topic}"
-                                                    class="sapUiNoMarginTop sapUiNoMarginBottom"
-                                                />
-                                            </tnt:customData>
-                                        </tnt:InfoLabel>
-                                    </l:HorizontalLayout>
-                                </HBox>
                             </HBox>
                         </u:expandedHeading>
                         <u:snappedHeading>
@@ -173,7 +146,7 @@
                                 >
                                     <SegmentedButton
                                         selectionChange="onSegmentPressed"
-                                        id="segmentedStatus"
+                                        id="segmentedStatusObject"
                                         width="300px"
                                         class="sapUiTinyMarginBeginEnd"
                                         selectedKey="{status}"
@@ -258,7 +231,7 @@
                         <u:ObjectPageSubSection id="idSubSectionNotes">
                             <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
                             <rte:RichTextEditor
-                                value="{noteText}"
+                                value="{notes}"
                                 id="editRTE"
                                 height="400px"
                                 width="100%"
@@ -313,7 +286,6 @@
                                     iconInset="true"
                                 />
                                 <noData>
-                                    <!-- Illustrated message when there is no data -->
                                     <IllustratedMessage
                                         enableVerticalResponsiveness="true"
                                         illustrationType="sapIllus-SearchFolder"

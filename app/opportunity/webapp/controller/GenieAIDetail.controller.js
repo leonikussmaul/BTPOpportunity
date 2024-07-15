@@ -40,8 +40,6 @@ sap.ui.define([
                 });
                 this.getView().setModel(oEditModel, "editModel");
 
-                var AddTaskModel = new JSONModel({});
-                this.getView().setModel(AddTaskModel, "AddTaskModel");
 
                 var oEditPageModel = new JSONModel({});
                 this.getView().setModel(oEditPageModel, "editPageModel");
@@ -61,7 +59,6 @@ sap.ui.define([
                     "countInternal": 0
                 }), "genieModel");
             },
-
 
 
             getGenieCount: function () {
@@ -102,7 +99,10 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("userModel").setProperty("/workshopID", sWorkshopID);
 
                 this.getView().bindElement({
-                    path: "/GenieAIWorkshop/" + sWorkshopID
+                    path: "/GenieAIWorkshop/" + sWorkshopID,
+                    parameters: {
+                        expand: "links"
+                    }
                 });
 
                 this.sWorkshopID = sWorkshopID;
@@ -111,40 +111,40 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("TwoWay");
 
                 // wait for async calls 
-                Promise.all([
-                    // this.onFilterComments(sOpportunityID),
-                    this.onFilterLinkList(sWorkshopID),
-                    // this.onFilterNextSteps(sOpportunityID),
-                    // this.onReadModelData(sWorkshopID),
-                    // this.onSetLayout(),
-                    // this.onReadTopics(),
-                    // this.onReadDeliverables()
-                ]).then(() => {
+                   Promise.all([
+                // this.onFilterComments(sOpportunityID),
+                this.onFilterLinkList(sWorkshopID),
+                // this.onFilterNextSteps(sOpportunityID),
+                // this.onReadModelData(sWorkshopID),
+                // this.onSetLayout(),
+                // this.onReadTopics(),
+                // this.onReadDeliverables()
+                  ]).then(() => {
 
-                    this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
-                    this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
-                    this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
-                    this.getGenieCount();
+                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
+                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
+                  this.getGenieCount();
 
-                    // var oMaturityTable = this.getView().byId("maturityTableID");
-                    // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
+                // var oMaturityTable = this.getView().byId("maturityTableID");
+                // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
 
-                    // var oActivitiesTable = this.getView().byId("activitiesTableID");
-                    // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+                // var oActivitiesTable = this.getView().byId("activitiesTableID");
+                // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
 
-                    //set segmented button text for current status of opportunity
+                // set segmented button text for current status of opportunity
                     this.setSegButtonText();
                 }).catch(err => {
                     console.error("Error with route:", err);
                 });
             },
 
-            onFilterLinkList: function (sOpportunityID) {
+            onFilterLinkList: function (sWorkshopID) {
                 return new Promise((resolve, reject) => {
                     try {
                         var oTemplate = this.getView().byId("linkListItem");
                         var oSorter = new sap.ui.model.Sorter("linkName", true);
-                        var oFilter = new Filter("linkID_workshopID", FilterOperator.EQ, sOpportunityID);
+                        var oFilter = new Filter("linkID_workshopID", FilterOperator.EQ, sWorkshopID);
                         this.getView().byId("linkList").bindAggregation("items", {
                             template: oTemplate,
                             path: "/GenieAILinks",
@@ -181,9 +181,6 @@ sap.ui.define([
             // },
 
 
-
-
-
             onDeleteLink: function (oEvent) {
                 var that = this;
                 var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
@@ -212,8 +209,6 @@ sap.ui.define([
                     }
                 });
             },
-
-
 
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
@@ -339,48 +334,49 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onSaveObjectPress: function (oEvent) {
-
                 var that = this;
+                var oEditModel = this.getView().getModel("editModel");
+                var oModel = this.getView().getModel();
+
                 var oData = this.getView().getModel("editPageModel").getData();
 
                 if (oData.accountName) {
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sStartDate, sEndDate, bInternal, sTodayDate;
+                    var sStartDate, sEndDate, bInternal;
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.opportunityStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.opportunityDueDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    //sTodayDate = new Date().toISOString().split("T")[0];
+                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
+                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
 
                     if (oData.internal) bInternal = true;
                     else bInternal = false;
 
-                    var sStatus = this.getView().byId("segmentedStatus").getSelectedKey();
-
+                    var sStatus = this.getView().byId("segmentedStatusObject").getSelectedKey();
 
                     oData.workshopStartDate = sStartDate;
                     oData.workshopEndDate = sEndDate;
                     oData.status = sStatus;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
-                    oData.note = this.getView().byId("editRTE").getValue();
-                    oData.status = this.getView().byId("segmentedStatus").getSelectedKey();
+                    oData.notes = this.getView().byId("editRTE").getValue();
+                    oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
+                   delete oData.links
 
-
-                    var oModel = this.getView().getModel();
-                    oModel.create("/GenieAIWorkshop", oData, {
-                        success: function (oData, response) {
-
+                    var sPath = this.getView().getBindingContext().sPath;
+                    oModel.update(sPath, oData, {
+                        success: function () {
                             MessageToast.show("Changes saved successfully!");
                             oModel.refresh();
                             oEditModel.setProperty("/editMode", false);
-                            that.onReadModelData();
+                            //that.onReadModelData();
+                            that.getView().setBusy(false);
                         },
                         error: function (oError) {
                             var sMessage = JSON.parse(oError.responseText).error.message.value;
                             sap.m.MessageBox.error(sMessage);
-
+                            that.getView().setBusy(false);
 
                         }
                     });
@@ -510,9 +506,9 @@ sap.ui.define([
                     _pDialog.destroy();
                 });
                 this._pDialog = null;
-                var oAddTaskModel = this.getView().getModel("AddTaskModel");
+               // var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oLocalModel = this.getView().getModel("localModel");
-                oAddTaskModel.setData({});
+                //oAddTaskModel.setData({});
                 oLocalModel.setData({});
 
             },
@@ -573,17 +569,17 @@ sap.ui.define([
 
 
             //checkbox
-            onCRMCheckboxSelect: function (oEvent) {
-                this.onSetEditPageModel();
-                var oEditModel = this.getView().getModel("editModel");
-                var oEditPageModel = this.getView().getModel("editPageModel")
-                var oCheckBox = oEvent.getSource();
-                var bSelected = oCheckBox.getSelected();
-                var sText = bSelected ? "Yes" : "No";
-                oCheckBox.setText(sText);
-                oEditModel.setProperty("/editMode", true);
-                oEditPageModel.setProperty("/opportunityInCRM", sText);
-            },
+            // onCRMCheckboxSelect: function (oEvent) {
+            //     this.onSetEditPageModel();
+            //     var oEditModel = this.getView().getModel("editModel");
+            //     var oEditPageModel = this.getView().getModel("editPageModel")
+            //     var oCheckBox = oEvent.getSource();
+            //     var bSelected = oCheckBox.getSelected();
+            //     var sText = bSelected ? "Yes" : "No";
+            //     oCheckBox.setText(sText);
+            //     oEditModel.setProperty("/editMode", true);
+            //     oEditPageModel.setProperty("/opportunityInCRM", sText);
+            // },
 
             onFullScreenButtonPress: function (oEvent) {
                 var oDialog = oEvent.getSource().getParent().getParent();
@@ -667,14 +663,6 @@ sap.ui.define([
 
             },
 
-            onSidePanelToggle: function (oEvent) {
-                var oGlobalModel = this.getOwnerComponent().getModel("global");
-                var bExpanded = oEvent.getParameter("expanded");
-                if (bExpanded) oGlobalModel.setProperty("/layout", "MidColumnFullScreen");
-                else oGlobalModel.setProperty("/layout", "TwoColumnsMidExpanded");
-
-            },
-
 
             onSaveWizardPress: function (oEvent) {
 
@@ -695,7 +683,7 @@ sap.ui.define([
                     if (oData.internal) bInternal = true;
                     else bInternal = false;
 
-                    var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+                    var sStatus = sap.ui.getCore().byId("segmentedStatusObject").getSelectedKey();
 
 
                     oData.workshopStartDate = sStartDate;
@@ -724,6 +712,11 @@ sap.ui.define([
 
                 } else this.ValueStateMethod();
 
+            },
+
+            onSelectLink: function (oEvent) {
+                var sLink = oEvent.getSource().getBindingContext().getObject().link;
+                library.URLHelper.redirect(sLink, true);
             },
 
 

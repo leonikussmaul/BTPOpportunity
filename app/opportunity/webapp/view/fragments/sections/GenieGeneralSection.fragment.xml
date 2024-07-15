@@ -27,8 +27,8 @@
                 <Label text="Level" />
                 <Text text="{level}" />
 
-                <Label text="Status" />
-                <Text text="{status}" />
+                <!-- <Label text="Status" />
+                <Text text="{status}" /> -->
 
                 <Label text="Role" />
                 <Text text="{role}" />
@@ -47,25 +47,29 @@
                 <Label text="Email" />
                 <Text text="{email}" />
 
-                <Label text="City" />
-                <Text text="{city}" />
+                <Label text="Location" />
+                <Text text="{city} " />   <Text text="{country}" />
 
-                <Label text="Start Date" />
+                <Label text="Dates" />
                 <Text
                     text="{ path: 'workshopStartDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 									style: 'medium'
+						}} - { path: 'workshopEndDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+									style: 'medium'
 						}}"
                 />
-                <Label text="End Date" />
+                <!-- <Label text="End Date" />
                 <Text
                     text="{ path: 'workshopEndDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 									style: 'medium'
 						}}"
-                />
+                /> -->
             </f:content>
         </f:SimpleForm>
     </VBox>
