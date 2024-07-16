@@ -22,6 +22,7 @@
         showFullScreenButton="true"
         requestAtLeastFields="deliverable,status,primaryContact,shortDescription,deliverableDate,primaryContact"
         ignoreFromPersonalisation="ID,opptID_opportunityID"
+         enableCopy="false"
     >
         <smartTable:customToolbar>
             <OverflowToolbar design="Transparent">

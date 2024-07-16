@@ -505,6 +505,7 @@
                                         requestAtLeastFields="topic,maturity,comment"
                                         initiallyVisibleFields="topic,maturity,comment"
                                         ignoreFromPersonalisation="ID,opptID_opportunityID"
+                                        enableCopy="false"
                                     >
                                         <Table
                                             id="maturityTable"
@@ -930,14 +931,14 @@
                                     </OverflowToolbar>
                                 </VBox>
                             </f:GridListItem>
-                              <f:noData>
-        <IllustratedMessage
-            enableVerticalResponsiveness="true"
-            illustrationType="sapIllus-BalloonSky"
-            title="No Tasks Found"
-            description="Start by adding one"
-        />
-    </f:noData>
+                            <f:noData>
+                                <IllustratedMessage
+                                    enableVerticalResponsiveness="true"
+                                    illustrationType="sapIllus-BalloonSky"
+                                    title="No Tasks Found"
+                                    description="Start by adding one"
+                                />
+                            </f:noData>
                         </f:GridList>
                     </f:SidePanelItem>
 
@@ -961,7 +962,7 @@
 											title="{account}"
 											text="{account}"
 											userName="{account} {account}"
-											filterValue="{account}">
+											filterValue="{account}"
 										</commons:TimelineItem>
 									</commons:content>
 									<commons:filterList>

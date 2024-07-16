@@ -21,7 +21,6 @@ sap.ui.define([
                 valueState: ValueState.None,
                 valueStateText: ""
             };
-        var _bInitialLoad = true;
 
 
         return Controller.extend("opportunity.opportunity.controller.GenieAIMain", {
@@ -43,11 +42,11 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
 
-                oView.setModel(new sap.ui.model.json.JSONModel({
-                    // "countAll": 0,
-                    // "countCustomer": 0,
-                    // "countInternal": 0
-                }), "genieModel");
+                // oView.setModel(new sap.ui.model.json.JSONModel({
+                //     // "countAll": 0,
+                //     // "countCustomer": 0,
+                //     // "countInternal": 0
+                // }), "genieModel");
 
             },
 
@@ -63,7 +62,7 @@ sap.ui.define([
 
             getGenieCount: function () {
                 var oModel = this.getView().getModel();
-                var oGenieModel = this.getView().getModel("genieModel");
+                var oGenieModel = this.getOwnerComponent().getModel("genieModel");
                 var oEntitySet = "/GenieAIWorkshop";
                 oModel.read(oEntitySet, {
                     success: function (oData) {
@@ -95,7 +94,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
-                oGlobalModel.setProperty("/selectedKey", "Genie AI");
+                oGlobalModel.setProperty("/selectedKey", "GenieAI");
 
                 this.getGenieCount();
             },
@@ -103,38 +102,45 @@ sap.ui.define([
             /* ------------------------------------------------------------------------------------------------------------
            TABLE
            --------------------------------------------------------------------------------------------------------------*/
+
+
             onSearch: function (oEvent) {
                 var aFilters = [];
 
                 // Get the selected key from the filter tab bar
                 var sSelectedKey = this.byId("idIconTabBar").getSelectedKey();
-                var bInternalValue = false;
-                if (sSelectedKey === "Internal") bInternalValue = true;
+                var bInternalValue = sSelectedKey === "Internal";
 
-
-                aFilters.push(new Filter({ path: "internal", operator: FilterOperator.EQ, value1: bInternalValue }));
-
+                // Add filter for internal/customer mode
+                aFilters.push(new Filter({
+                    path: "internal",
+                    operator: FilterOperator.EQ,
+                    value1: bInternalValue
+                }));
 
                 var sQuery = oEvent.getSource().getValue();
                 if (sQuery && sQuery.length > 0) {
-                    var aFilters = [
-                        new Filter({
-                            filters: [
-                                new Filter({ path: "accountName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "contactName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "location", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
-                            ],
-                            and: false
-                        })
+                    // Create filters for multiple fields with OR condition
+                    var aSearchFilters = [
+                        new Filter({ path: "accountName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "contactName", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "city", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "country", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
                     ];
+
+                    // Combine search filters with OR condition
+                    aFilters.push(new Filter({
+                        filters: aSearchFilters,
+                        and: false
+                    }));
                 }
 
                 var oList = oEvent.getSource().getParent().getParent().getTable();
                 var oBinding = oList.getBinding("items")
-                oBinding.filter(aFilters, FilterType.Application);
-
+                oBinding.filter(aFilters.length > 1 ? new Filter({ filters: aFilters, and: true }) : aFilters[0], FilterType.Application);
             },
+
 
             /* ------------------------------------------------------------------------------------------------------------
             Object Page FCL Implementation
@@ -221,6 +227,7 @@ sap.ui.define([
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
 
+                    if (oData.country) oData.country = oData.country.toUpperCase;
                     oData.workshopStartDate = sStartDate;
                     oData.workshopEndDate = sEndDate;
                     oData.status = sStatus;
@@ -406,40 +413,40 @@ sap.ui.define([
             /* ------------------------------------------------------------------------------------------------------------
             FAVOURITE
             --------------------------------------------------------------------------------------------------------------*/
-
-            onFavoriteToolbarPress: function (oEvent) {
+            onFavoriteToolbarPress: function(oEvent) {
                 var oBtn = oEvent.getSource();
-                var sKey = this.getView().byId("idIconTabBar").getSelectedKey();
-                var bInternal;
-                if (sKey === "Internal") bInternal = true;
-                else bInternal = false;
-
-
-                var bToggle = oBtn.getPressed()
+                var bInternal = this.getOwnerComponent().getModel("genieModel").getProperty("/internalMode");
+                var bToggle = oBtn.getPressed();
+            
                 if (bToggle) {
-                    oBtn.setIcon('sap-icon://favorite')
-                } else oBtn.setIcon('sap-icon://unfavorite')
-
-                var aFilters = [];
-                var bFavorite = oEvent.getSource().getPressed();
-                if (bFavorite) {
-                    var aFilters = [
-                        new Filter({
-                            filters: [
-                                new Filter({ path: "isFavorite", operator: FilterOperator.EQ, value1: true, }),
-                                new Filter({ path: "internal", operator: FilterOperator.EQ, value1: bInternal, }),
-                            ],
-                            and: false
-                        })
-                    ];
+                    oBtn.setIcon('sap-icon://favorite');
+                } else {
+                    oBtn.setIcon('sap-icon://unfavorite');
                 }
+            
+                var aFilters = [];
+            
+                // Always include internal filter
+                aFilters.push(new sap.ui.model.Filter({
+                    path: "internal",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: bInternal
+                }));
+            
+                // Only include isFavorite filter when toggle is pressed (on)
+                if (bToggle) {
+                    aFilters.push(new sap.ui.model.Filter({
+                        path: "isFavorite",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: true
+                    }));
+                }
+            
                 var oList = oEvent.getSource().getParent().getParent().getTable();
-                var oBinding = oList.getBinding("items")
-                oBinding.filter(aFilters, FilterType.Application);
-
-
-
+                var oBinding = oList.getBinding("items");
+                oBinding.filter(aFilters);
             },
+            
 
             onFavoritePress: function (oEvent) {
                 var that = this;
@@ -464,20 +471,26 @@ sap.ui.define([
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 //post isFavorite 
                 var that = this;
+                var sName;
                 if (isFavorite === true) {
                     oContext.isFavorite = true;
                 } else {
                     oContext.isFavorite = false;
                 }
 
+                delete oContext.links; 
+
+                var bInternal = this.getOwnerComponent().getModel("genieModel").getProperty("/internalMode");
+                if (bInternal) sName = oContext.contactName;
+                else sName = oContext.accountName;
                 var oModel = this.getView().getModel();
                 oModel.update(sPath, oContext, {
                     success: function () {
                         var sMessage = "";
                         if (isFavorite === true) {
-                            sMessage = "'" + oContext.account + "' added to favorites";
+                            sMessage = "'" + sName + "' added to favorites";
                         } else {
-                            sMessage = "'" + oContext.account + "' removed from favorites";
+                            sMessage = "'" + sName + "' removed from favorites";
                         }
                         MessageToast.show(sMessage);
                     },
@@ -523,8 +536,10 @@ sap.ui.define([
 
                 if (sKey === "Internal") {
                     aFilters.push(new Filter("internal", FilterOperator.EQ, true));
+                    this.getOwnerComponent().getModel("genieModel").setProperty("/internalMode", true);
                 } else if (sKey === "Customer") {
                     aFilters.push(new Filter("internal", FilterOperator.EQ, false));
+                    this.getOwnerComponent().getModel("genieModel").setProperty("/internalMode", false)
                 } else aFilters = [];
 
                 oBinding.filter(aFilters);

@@ -190,7 +190,7 @@ sap.ui.define(
 
       onCancelDialogPress: function (oEvent) {
         this.editDialog = false;
-        this._pDialog.then(function (_pDialog) {
+        this._currentDialog.then(function (_pDialog) {
           _pDialog.close();
           _pDialog.destroy();
         });
@@ -205,30 +205,52 @@ sap.ui.define(
     },
     
     onDialogOpen: function (fragmentName) {
-        var that = this;
-        if (!this._pDialog) {
-            this._pDialog = Fragment.load({
-                name: fragmentName,
-                controller: this
-            }).then(function (oDialog) {
-                that.getView().addDependent(oDialog);
-                oDialog.setEscapeHandler(function () {
-                    that.onCloseDialog();
-                });
-                return oDialog;
-            });
-        }
-        this._pDialog.then(function (oDialog) {
-            oDialog.open();
-        });
-    },
+      var that = this;
+  
+      if (!this._dialogs) {
+          this._dialogs = {};
+      }
+  
+      if (!this._dialogs[fragmentName]) {
+          this._dialogs[fragmentName] = Fragment.load({
+              name: fragmentName,
+              controller: this
+          }).then(function (oDialog) {
+              that.getView().addDependent(oDialog);
+              oDialog.setEscapeHandler(function () {
+                  that.onCloseDialog();
+              });
+              return oDialog;
+          });
+      }
+  
+      this._currentDialog = this._dialogs[fragmentName];
+  
+      this._currentDialog.then(function (oDialog) {
+          oDialog.open();
+      }).catch(function (error) {
+          console.error("Error opening dialog: ", error);
+      });
+  },
+  
+  
     
-    onCloseDialog: function () {
-        this._pDialog.then(function (oDialog) {
+  onCloseDialog: function () {
+    var that = this;
+
+    // Ensure the correct dialog is referenced
+    if (this._currentDialog) {
+        this._currentDialog.then(function (oDialog) {
             oDialog.close();
+        }).catch(function (error) {
+            console.error("Error closing dialog: ", error);
         });
-        this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
-    },
+    }
+    
+    // Clear the selected key
+    this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
+},
+
     
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

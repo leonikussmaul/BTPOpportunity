@@ -487,7 +487,49 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       else if (sValue > 30 && sValue <= 60) return "Critical";
       else return "Good";
 
-    }
+    },
+
+    getFlagMethod: function(sCountry) {
+      if(sCountry) sCountry = sCountry.toUpperCase(); 
+      switch (sCountry) {
+        case "FRANCE":
+          return "🇫🇷";
+        case "DENMARK":
+          return "🇩🇰";
+        case "NETHERLANDS":
+          return "🇳🇱";
+        case "SWEDEN":
+          return "🇸🇪";
+        case "UK":
+          return "🇬🇧";
+        case "IRELAND":
+          return "🇮🇪";
+        case "SPAIN":
+          return "🇪🇸";
+        case "ITALY":
+          return "🇮🇹";
+        case "GERMANY":
+          return "🇩🇪";
+        case "ISRAEL":
+          return "🇮🇱";
+        case "SOUTH AFRICA":
+          return "🇿🇦";
+        case "SAUDI ARABIA":
+          return "🇸🇦";
+        case "UAE":
+          return "🇦🇪";
+        case "BELGIUM":
+          return "🇧🇪";
+        case "PORTUGAL":
+          return "🇵🇹";
+        case "FINLAND":
+          return "🇫🇮";
+        case "NORWAY":
+          return "🇳🇴";
+        default:
+          return; 
+      }
+    },
 
 
 

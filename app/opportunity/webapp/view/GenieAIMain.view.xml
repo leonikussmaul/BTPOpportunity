@@ -185,7 +185,7 @@
                                                         value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
                                                     />
                                                 </customData>
-                                                <Label text="City" />
+                                                <Label text="Location" />
                                             </Column>
 
                                             <Column
@@ -251,7 +251,8 @@
                                                         text="{contactName}"
                                                     />
 
-                                                    <Text text="{city}" />
+                                                    <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
+                                                  
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
                                                     <Text
@@ -378,7 +379,7 @@
                                                         value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
                                                     />
                                                 </customData>
-                                                <Label text="City" />
+                                                <Label text="Location" />
                                             </Column>
 
                                             <Column
@@ -444,10 +445,10 @@
                                                         color="#427cac"
                                                     />
                                                     <ObjectIdentifier
-                                                        title="{contactName}"
+                                                        title="{contactName}" 
                                                     />
                                                     <Text text="{email}" />
-                                                    <Text text="{city}" />
+                                                     <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
                                                     <Text text="{role}" />
                                                     <Text
                                                         text="{orgArea}  {functionalArea}"
