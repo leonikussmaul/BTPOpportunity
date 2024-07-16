@@ -107,7 +107,7 @@ sap.ui.define([
 
                 this.sWorkshopID = sWorkshopID;
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
-                oGlobalModel.setProperty("/selectedKey", "Opportunities");
+                oGlobalModel.setProperty("/selectedKey", "GenieAI");
                 oModel.setDefaultBindingMode("TwoWay");
 
                 // wait for async calls 

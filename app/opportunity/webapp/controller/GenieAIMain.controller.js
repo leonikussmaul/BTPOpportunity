@@ -94,7 +94,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
-                oGlobalModel.setProperty("/selectedKey", "Genie AI");
+                oGlobalModel.setProperty("/selectedKey", "GenieAI");
 
                 this.getGenieCount();
             },

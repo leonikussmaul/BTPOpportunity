@@ -52,7 +52,8 @@
                     />
                     <Button
                         text="Add Task"
-                        type="Accept" class="sapUiSmallMarginBeginEnd"
+                        type="Accept"
+                        class="sapUiSmallMarginBeginEnd"
                         icon="sap-icon://add"
                         tooltip="{i18n>addTableItem}"
                         press="onAddToDoTablePress"
@@ -76,6 +77,7 @@
                 showRowCount="true"
                 enableAutoBinding="true"
                 demandPopin="true"
+                enableCopy="false"
                 class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                 showFullScreenButton="true"
                 initiallyVisibleFields="actionTitle,actionTask,actionOwner,actionProgress,actionTopic,actionDueDate"
@@ -255,14 +257,13 @@
                         </ColumnListItem>
                     </items>
                     <noData>
-                                    <IllustratedMessage
-                                        enableVerticalResponsiveness="true"
-                                        illustrationType="sapIllus-NoTasks"
-                                        title="No Tasks Found"
-                                        description="Start by creating one"
-                                    >
-                                    </IllustratedMessage>
-                                </noData>
+                        <IllustratedMessage
+                            enableVerticalResponsiveness="true"
+                            illustrationType="sapIllus-NoTasks"
+                            title="No Tasks Found"
+                            description="Start by creating one"
+                        />
+                    </noData>
                 </Table>
             </smartTable:SmartTable>
         </f:content>
