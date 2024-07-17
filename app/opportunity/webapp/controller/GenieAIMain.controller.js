@@ -227,7 +227,7 @@ sap.ui.define([
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
 
-                    if (oData.country) oData.country = oData.country.toUpperCase;
+                    if (oData.country) oData.country = oData.country.toUpperCase();
                     oData.workshopStartDate = sStartDate;
                     oData.workshopEndDate = sEndDate;
                     oData.status = sStatus;

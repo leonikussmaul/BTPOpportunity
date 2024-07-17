@@ -80,6 +80,13 @@
                                     placeholder="Enter the participant first and last name"
                                 />
 
+                                   <Label text="Region" />
+                                <Input
+                                    value="{viewModel>/region}"
+                                    id="region" 
+                                    placeholder="Which Region are they part of?"
+                                />
+
                                 <Label text="Level" />
                                 <Select
                                     id="level"
@@ -167,13 +174,23 @@
                                     id="orgArea"
                                     placeholder="i.e. CS&amp;D, CS.."
                                 />
+                               
 
                                 <Label text="City" />
                                 <Input
                                     value="{viewModel>/city}"
                                     id="city"
-                                    placeholder="Where are they based?"
+                                    placeholder="What city are they based in?"
                                 />
+
+                                  <Label text="Country" />
+                                <Input
+                                    value="{viewModel>/country}"
+                                    id="country"
+                                    placeholder="What country are they based in?"
+                                />
+
+                                
 
                                 <Label text="Workshop Dates" />
                                 <DateRangeSelection
