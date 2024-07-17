@@ -27,6 +27,9 @@
                 <Label text="Level" />
                 <Text text="{level}" />
 
+                <Label text="Region" />
+                <Text text="{region}" />
+
                 <!-- <Label text="Status" />
                 <Text text="{status}" /> -->
 
@@ -48,7 +51,8 @@
                 <Text text="{email}" />
 
                 <Label text="Location" />
-                <Text text="{city} " />   <Text text="{country}" />
+                <Text text="{city} " />
+                <Text text="{country}" />
 
                 <Label text="Dates" />
                 <Text

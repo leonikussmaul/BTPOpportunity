@@ -351,7 +351,7 @@ sap.ui.define([
                     var sMonth;
                     if(sStartDate) sMonth = monthNames[sStartDate.getMonth()];
                     // oData.country = this.getFlagMethod(oData.country.toUpperCase());
-                    oData.country = oData.country.toUpperCase(); 
+                    if(oData.country) oData.country = oData.country.toUpperCase(); 
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
@@ -359,7 +359,8 @@ sap.ui.define([
                     oData.internal = bInternal;
                     oData.notes = this.getView().byId("editRTE").getValue();
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
-                   delete oData.links
+                   delete oData.links;
+                   delete oData.__metadata;
 
                     var sPath = this.getView().getBindingContext().sPath;
                     oModel.update(sPath, oData, {
