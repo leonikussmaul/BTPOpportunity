@@ -45,8 +45,11 @@ service OpportunityService {
 
     entity teamForecastMonthVH         as projection on opportunities.teamForecastMonthVH;
     entity userFeedback                as projection on opportunities.userFeedback;
-    entity GenieAIWorkshop             as projection on opportunities.GenieAIWorkshop;
-    entity GenieAILinks             as projection on opportunities.GenieAILinks;
+    entity GenieAIInteral              as projection on opportunities.GenieAIInteral;
+    entity GenieAICustomer             as projection on opportunities.GenieAICustomer;
+    entity GenieAIPartner              as projection on opportunities.GenieAIPartner;
+    entity GenieAICustomerLinks        as projection on opportunities.GenieAICustomerLinks;
+    entity GenieAIPartnerLinks         as projection on opportunities.GenieAIPartnerLinks;
 //entity CurrentUser                 as projection on opportunities.CurrentUser;
 
 

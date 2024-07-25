@@ -366,10 +366,9 @@ entity opportunitySubTaskStatus {
 };
 
 @cds.autoexpose
-entity GenieAIWorkshop {
+entity GenieAIInteral {
     key workshopID        : UUID;
-        accountName       : String(255);
-        contactName       : String(255);
+        name              : String(255);
         internal          : Boolean;
         email             : String(255);
         role              : String(255);
@@ -386,16 +385,62 @@ entity GenieAIWorkshop {
         level             : String(50); // beginner, intermediate, advanced
         status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
         isFavorite        : Boolean;
-        links             : Composition of many GenieAILinks
+}
+@cds.autoexpose
+entity GenieAICustomer {
+    key workshopID        : UUID;
+        name              : String(255);
+        internal          : Boolean;
+        email             : String(255);
+        source            : String(255);
+        city              : String(255);
+        country           : String(255);
+        region            : String(255);
+        month             : String(50);
+        workshopStartDate : Date;
+        workshopEndDate   : Date;
+        notes             : String(5000);
+        level             : String(50); // beginner, intermediate, advanced
+        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite        : Boolean;
+        links             : Composition of many GenieAICustomerLinks
                                 on links.linkID = $self;
-
+}
+@cds.autoexpose
+entity GenieAIPartner {
+    key workshopID        : UUID;
+        name              : String(255);
+        internal          : Boolean;
+        email             : String(255);
+        source            : String(255);
+        city              : String(255);
+        country           : String(255);
+        region            : String(255);
+        month             : String(50);
+        workshopStartDate : Date;
+        workshopEndDate   : Date;
+        notes             : String(5000);
+        level             : String(50); // beginner, intermediate, advanced
+        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite        : Boolean;
+        links             : Composition of many GenieAIPartnerLinks
+                                on links.linkID = $self;
 }
 
 @cds.autoexpose
-entity GenieAILinks {
+entity GenieAICustomerLinks {
     key ID              : UUID;
-        linkID          : Association to GenieAIWorkshop;
+        linkID          : Association to GenieAICustomer;
         link            : String(2000);
         linkDescription : String(1000);
         linkName        : String(200);
 };
+@cds.autoexpose
+entity GenieAIPartnerLinks {
+    key ID              : UUID;
+        linkID          : Association to GenieAIPartner;
+        link            : String(2000);
+        linkDescription : String(1000);
+        linkName        : String(200);
+};
+
