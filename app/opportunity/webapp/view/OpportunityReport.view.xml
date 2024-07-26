@@ -89,6 +89,7 @@
                                 showSelectAll="true"
                                 items="{
                                             path: '/opportunityMarketUnitVH',
+                                            templateShareable: true,
                                             sorter: {
                                                 path: 'region',
                                                 descending: false,
@@ -96,6 +97,7 @@
                                             },
                                             groupHeaderFactory: '.getGroupHeader'
                                         }"
+
                             >
                                 <core:Item
                                     key="marketUnit"
@@ -148,6 +150,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityTopicsVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false
@@ -174,6 +177,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityPrimaryContactVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'primaryContact',
                                                 descending: false
@@ -199,6 +203,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                 sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -231,6 +236,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                 sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -264,6 +270,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunitySSAVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'SSA',
                                                 descending: false
@@ -291,6 +298,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityStatusVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'status',
                                                 descending: true
@@ -435,7 +443,7 @@
                             inset="false"
                             growing="true"
                             growingScrollToLoad="true"
-                            mode="None"
+                           mode="SingleSelectMaster" itemPress="onListItemPress"
                             sticky="ColumnHeaders,HeaderToolbar"
                             noDataText="Nothing here. Please adjust your search critera."
                             delete="onDeleteTableItem"
@@ -539,7 +547,6 @@
                                     class="myCustomListItem"
                                     type="Navigation"
                                     vAlign="Middle"
-                                    press="onListItemPress"
                                     highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                 >
                                     <cells>

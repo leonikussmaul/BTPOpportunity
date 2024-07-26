@@ -71,6 +71,7 @@
                         id="idIconTabBar"
                         select=".onFilterSelect"
                         class="sapUiResponsiveContentPadding"
+                        selectedKey="{genieModel>/genieType}"
                     >
                         <items>
                             <!-- <IconTabFilter
@@ -83,28 +84,29 @@
                             <IconTabFilter
                                 icon="sap-icon://da-2"
                                 iconColor="Default"
-                                count="{genieModel>/countCustomer}"
+                                count="{genieModel>/Customer}"
                                 text="Customer"
                                 key="Customer"
                             >
                                 <smartTable:SmartTable
                                     id="mySmartTable"
                                     persistencyKey="persistencyKey"
-                                    entitySet="GenieAIWorkshop"
+                                    entitySet="GenieAICustomer"
                                     beforeRebindTable="onBeforeRebindTableCustomer"
                                     tableType="ResponsiveTable"
                                     useVariantManagement="false"
                                     useTablePersonalisation="true"
-                                    header="{i18n>mySmartTableHeader}"
+                                    header="Customers"
                                     showRowCount="true"
                                     enableAutoBinding="true"
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="contactName,workshopStartDate,city,status,isFavorite"
-                                    requestAtLeastFields="accountName,contactName,role,orgArea,city,status,isFavorite,workshopStartDate,workshopEndDate"
+                                    initiallyVisibleFields="name,workshopStartDate,city,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
+                                    beforeExport="onBeforeExport"
                                 >
                                     <smartTable:customToolbar>
                                         <OverflowToolbar design="Transparent">
@@ -133,7 +135,8 @@
                                         inset="false"
                                         growing="true"
                                         growingScrollToLoad="true"
-                                        mode="None"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
@@ -166,13 +169,11 @@
                                                 tooltip="Customer"
                                             />
                                         </Column> -->
-                                            <Column
-                                                hAlign="Center"
-                                            >
+                                            <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "contactName", "columnIndex" : "2", "leadingProperty": "contactName", "filterProperty": "contactName", "type":"string"}'
+                                                        value='\{"columnKey": "name", "columnIndex" : "2", "leadingProperty": "name", "filterProperty": "name", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="Name" />
@@ -236,8 +237,6 @@
                                                 class="myCustomListItem"
                                                 type="Navigation"
                                                 vAlign="Middle"
-                                                press="onListItemPress"
-                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                             >
                                                 <cells>
                                                     <core:Icon
@@ -247,12 +246,14 @@
                                                         color="#427cac"
                                                     />
                                                     <ObjectIdentifier
-                                                        title="{accountName}"
-                                                        text="{contactName}"
+                                                        title="{name}"
                                                     />
 
-                                                    <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
-                                                  
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
+
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
                                                     <Text
@@ -274,31 +275,198 @@
                                     </Table>
                                 </smartTable:SmartTable>
                             </IconTabFilter>
+
+                            <IconTabFilter
+                                icon="sap-icon://decision"
+                                iconColor="Critical"
+                                count="{genieModel>/Partner}"
+                                text="Partner"
+                                key="Partner"
+                            >
+                                <smartTable:SmartTable
+                                    id="myPartnerTable"
+                                    persistencyKey="persistencyKey"
+                                    entitySet="GenieAIPartner"
+                                    beforeRebindTable="onBeforeRebindTablePartner"
+                                    tableType="ResponsiveTable"
+                                    useVariantManagement="false"
+                                    useTablePersonalisation="true"
+                                    header="Partners"
+                                    showRowCount="true"
+                                    enableAutoBinding="true"
+                                    demandPopin="true"
+                                    class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
+                                    showFullScreenButton="true"
+                                    initiallyVisibleFields="name,workshopStartDate,city,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
+                                    ignoreFromPersonalisation="workshopID"
+                                    enableCopy="false"
+                                    beforeExport="onBeforeExport"
+                                >
+                                    <smartTable:customToolbar>
+                                        <OverflowToolbar design="Transparent">
+                                            <ToolbarSpacer />
+                                            <SearchField
+                                                width="30%"
+                                                liveChange="onSearch"
+                                                class="sapUiSizeCompact"
+                                            />
+                                            <ToggleButton
+                                                icon="sap-icon://edit"
+                                                text="Edit"
+                                                tooltip="Go into Edit Mode to Delete items"
+                                                press="onEditTable"
+                                            />
+                                            <ToggleButton
+                                                icon="sap-icon://unfavorite"
+                                                tooltip="Show Favorite Items"
+                                                press="onFavoriteToolbarPress"
+                                            />
+                                        </OverflowToolbar>
+                                    </smartTable:customToolbar>
+                                    <Table
+                                        inset="false"
+                                        growing="true"
+                                        growingScrollToLoad="true"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
+                                        sticky="ColumnHeaders,HeaderToolbar"
+                                        noDataText="Nothing here. Please adjust your search critera."
+                                        delete="onDeleteTableItem"
+                                    >
+                                        <columns>
+                                            <Column
+                                                width="2.5em"
+                                                hAlign="Center"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "isFavorite", "columnIndex" : "0", "leadingProperty": "isFavorite", "sortProperty": "isFavorite", "filterProperty": "isFavorite", "type":"boolean"}'
+                                                    />
+                                                </customData>
+                                                <Label text="" />
+                                            </Column>
+                                            <Column hAlign="Center">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "name", "columnIndex" : "2", "leadingProperty": "name", "filterProperty": "name", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Name" />
+                                            </Column>
+
+                                            <Column hAlign="Center">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Location" />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                visible="{global>/columnsExpanded}"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "4", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="Dates"
+                                                    tooltip="Workshop Dates"
+                                                />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                width="15%"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "status", "columnIndex" : "5", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="{i18n>status}" />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem
+                                                class="myCustomListItem"
+                                                type="Navigation"
+                                                vAlign="Middle"
+                                            >
+                                                <cells>
+                                                    <core:Icon
+                                                        press="onFavoritePress"
+                                                        src="{path: 'isFavorite', formatter: '.formatter.favoriteIconFormatter'}"
+                                                        size="1.2rem"
+                                                        color="#427cac"
+                                                    />
+                                                    <ObjectIdentifier
+                                                        title="{name}"
+                                                    />
+
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
+
+                                                    <!-- <Text text="{role}" />
+                                                <Text text="{orgArea}" /> -->
+                                                    <Text
+                                                        text="{'path': 'workshopStartDate',
+                                            'type':'sap.ui.model.type.Date'
+                                           }"
+                                                        visible="{= ${workshopStartDate} !== null}"
+                                                    />
+                                                    <ObjectStatus
+                                                        text="{status}"
+                                                        state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
+                                                        visible="{= ${status} !== null}"
+                                                        icon="{path: 'status', formatter:'.formatter.formatStatusIcon'}"
+                                                        iconDensityAware="true"
+                                                    />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </smartTable:SmartTable>
+                            </IconTabFilter>
+
                             <IconTabFilter
                                 icon="sap-icon://education"
                                 iconColor="Positive"
-                                count="{genieModel>/countInternal}"
+                                count="{genieModel>/Internal}"
                                 text="Internal"
                                 key="Internal"
                             >
                                 <smartTable:SmartTable
                                     id="mySmartTableInternal"
                                     persistencyKey="persistencyKey"
-                                    entitySet="GenieAIWorkshop"
+                                    entitySet="GenieAIInternal"
                                     beforeRebindTable="onBeforeRebindTableInternal"
                                     tableType="ResponsiveTable"
                                     useVariantManagement="false"
                                     useTablePersonalisation="true"
-                                    header="{i18n>mySmartTableHeader}"
+                                    header="Internal Contacts"
                                     showRowCount="true"
                                     enableAutoBinding="true"
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="contactName,email,role,orgArea,city,status,isFavorite"
-                                    requestAtLeastFields="accountName,email,contactName,role,orgArea,city,status,isFavorite"
+                                    initiallyVisibleFields="name,email,role,orgArea,city,status,isFavorite"
+                                    requestAtLeastFields="name,email,role,orgArea,city,status,isFavorite"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
+                                    beforeExport="onBeforeExport"
                                 >
                                     <smartTable:customToolbar>
                                         <OverflowToolbar design="Transparent">
@@ -327,7 +495,8 @@
                                         inset="false"
                                         growing="true"
                                         growingScrollToLoad="true"
-                                        mode="None"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
@@ -346,14 +515,11 @@
                                                 <Label text="" />
                                             </Column>
 
-                                            <Column
-                                                hAlign="Center"
-                                            
-                                            >
+                                            <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "contactName", "columnIndex" : "1", "leadingProperty": "contactName", "filterProperty": "contactName", "type":"string"}'
+                                                        value='\{"columnKey": "name", "columnIndex" : "1", "leadingProperty": "name", "filterProperty": "name", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="Name" />
@@ -434,8 +600,6 @@
                                                 class="myCustomListItem"
                                                 type="Navigation"
                                                 vAlign="Middle"
-                                                press="onListItemPress"
-                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                             >
                                                 <cells>
                                                     <core:Icon
@@ -445,10 +609,13 @@
                                                         color="#427cac"
                                                     />
                                                     <ObjectIdentifier
-                                                        title="{contactName}" 
+                                                        title="{name}"
                                                     />
                                                     <Text text="{email}" />
-                                                     <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
                                                     <Text text="{role}" />
                                                     <Text
                                                         text="{orgArea}  {functionalArea}"

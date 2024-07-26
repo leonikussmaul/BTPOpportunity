@@ -18,6 +18,7 @@
                     id="teamMemberList"
                     items="{
                         path:'/teamMembers',
+                          templateShareable: true,
                         sorter: {
                             path: 'firstName',
                             descending: false

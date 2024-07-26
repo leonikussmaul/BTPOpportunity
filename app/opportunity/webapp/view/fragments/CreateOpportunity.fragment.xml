@@ -79,6 +79,7 @@
                                     placeholder="{i18n>marketUnitPlaceholder}" selectionChange="resetValueState"
                                     items="{
                                     path: '/opportunityMarketUnitVH',
+                                      templateShareable: true,
                                    	sorter: {
 						path: 'region',
 						descending: false,
@@ -99,6 +100,7 @@
                                     placeholder="{i18n>topicInterestPlaceholder}"
                                     items="{
                                     path: '/opportunityTopicsVH', 
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false
@@ -200,6 +202,7 @@
                                     placeholder="{i18n>createdPlaceholder}"
                                     items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -224,6 +227,7 @@
                                     placeholder="{i18n>closedPlaceholder}"
                                     items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -376,6 +380,7 @@
                                     value="{viewModel>/primaryContact}"
                                     items="{
                                     path: '/opportunityPrimaryContactVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'primaryContact',
                                                 descending: false
@@ -402,6 +407,7 @@
                                     value="{viewModel>/ssa}"
                                     items="{
                                     path: '/opportunitySSAVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'SSA',
                                                 descending: false

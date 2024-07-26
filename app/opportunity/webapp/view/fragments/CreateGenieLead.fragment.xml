@@ -55,37 +55,82 @@
                             validated="true"
                         >
                             <form:SimpleForm editable="true">
+                                <HBox
+                                    alignItems="Start"
+                                    justifyContent="Center"
+                                >
+                                    <SegmentedButton
+                                        id="segmentedWorkshopBtn"
+                                        selectedKey="{genieModel>/genieType}"
+                                    >
+                                        <items>
+                                            <SegmentedButtonItem
+                                                key="Customer"
+                                                width="200px"
+                                                text="Customer"
+                                                icon="sap-icon://da-2"
+                                            />
+                                            <SegmentedButtonItem
+                                                width="200px"
+                                                key="Partner"
+                                                text="Partner"
+                                                icon="sap-icon://decision"
+                                            />
+                                            <SegmentedButtonItem
+                                                width="200px"
+                                                key="Internal"
+                                                text="Internal"
+                                                icon="sap-icon://education"
+                                            />
+                                        </items>
+                                    </SegmentedButton>
+                                </HBox>
+
                                 <Label
-                                    text="Account Name"
+                                    text="Name"
                                     required="true"
                                 />
                                 <Input
-                                    value="{viewModel>/accountName}"
+                                    value="{viewModel>/name}"
+                                    id="name"
                                     valueState="{valueState>/valueState}"
                                     valueStateText="{valueState>/valueStateText}"
-                                    id="accountName"
-                                    placeholder="Enter the customer name or internal SAP Region"
+                                    placeholder="Enter the customer name or participant first and last name"
                                 />
 
-                                <CheckBox
-                                    text="Internal"
-                                    selected="{viewModel>/internal}"
-                                    id="internal"
-                                />
-
-                                <Label text="Contact Name" />
+                                <Label text="Source" />
                                 <Input
-                                    value="{viewModel>/contactName}"
-                                    id="contactName"
-                                    placeholder="Enter the participant first and last name"
+                                    value="{viewModel>/source}"
+                                    id="source"
+                                    placeholder="Where did the lead come from?"
                                 />
-
-                                   <Label text="Region" />
                                 <Input
                                     value="{viewModel>/region}"
-                                    id="region" 
+                                    id="region"
                                     placeholder="Which Region are they part of?"
                                 />
+
+                                <!-- <MultiComboBox
+                                    id="marketUnitFilter"
+                                    placeholder="Which Region are they part of?"
+                                    selectionChange="customFieldChange"
+                                    value="{viewModel>/region}"
+                                    showSelectAll="true"
+                                    items="{
+                                            path: '/opportunityMarketUnitVH',
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
+                                >
+                                    <core:Item
+                                        key="marketUnit"
+                                        text="{marketUnit}"
+                                    />
+                                </MultiComboBox> -->
 
                                 <Label text="Level" />
                                 <Select
@@ -144,53 +189,70 @@
                             title="Contact &amp; Logistics"
                         >
                             <form:SimpleForm editable="true">
-                                <Label text="Source" />
-                                <Input
-                                    value="{viewModel>/source}"
-                                    id="source"
-                                    placeholder="Where did the lead come from?"
-                                />
                                 <Label text="Email" />
                                 <Input
                                     value="{viewModel>/email}"
                                     id="email"
                                     placeholder="How can we contact them?"
                                 />
-                                <Label text="Role" />
+                                <Label
+                                    text="Role"
+                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                                />
                                 <Input
                                     value="{viewModel>/role}"
                                     id="role"
                                     placeholder="What is their job role?"
+                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
                                 />
-                                <Label text="Functional Area" />
+                                <Label
+                                    text="Organisation"
+                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                                />
                                 <Input
                                     value="{viewModel>/functionalArea}"
                                     id="functionalArea"
-                                    placeholder="i.e. Services, Sales &amp; Presales.."
+                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                                    placeholder="Functional i.e. Services, Sales &amp; Presales.."
                                 />
-                                <Label text="Org Area" />
+                                <!-- <Label text="Org Area" /> -->
                                 <Input
                                     value="{viewModel>/orgArea}"
                                     id="orgArea"
-                                    placeholder="i.e. CS&amp;D, CS.."
+                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                                    placeholder="Organisation i.e. CS&amp;D, CS.."
                                 />
-                               
 
-                                <Label text="City" />
+                                <Label text="Location" />
                                 <Input
                                     value="{viewModel>/city}"
                                     id="city"
                                     placeholder="What city are they based in?"
                                 />
 
-                                  <Label text="Country" />
+                                <!-- <Label text="Country" /> -->
                                 <Input
                                     value="{viewModel>/country}"
                                     id="country"
                                     placeholder="What country are they based in?"
                                 />
 
-                                
+                                <!-- <Input
+                                    id="countryInput"
+                                    showSuggestion="true"
+                                    placeholder="Type a country"
+                                    suggestionItems="{countryModel>/countries}"
+                                    suggest="onSuggest"
+                                    value="{viewModel>/country}"
+                                    width="100%"
+                                >
+                                    <suggestionItems>
+                                        <core:Item
+                                            key="{countryModel>country}"
+                                            text="{countryModel>country}"
+                                        />
+                                    </suggestionItems>
+                                </Input> -->
 
                                 <Label text="Workshop Dates" />
                                 <DateRangeSelection

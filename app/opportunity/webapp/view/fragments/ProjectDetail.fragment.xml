@@ -305,6 +305,7 @@
                                 placeholder="Which market unit?"
                                 items="{
                                     path: '/opportunityMarketUnitVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'marketUnit',
                                                 descending: false
@@ -324,6 +325,7 @@
                                 placeholder="Is there a main topic?"
                                 items="{
                                     path: '/opportunityTopicsVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false
