@@ -42,16 +42,6 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
 
-                // oView.setModel(new sap.ui.model.json.JSONModel({
-                //     "countAll": 0,
-                //     "countCustomer": 0,
-                //     "countInternal": 0,
-                //     "countPartner": 0,
-                //     "customerSelected": false,
-                //     "partnerSelected": false,
-                //     "internalSelected": false
-                // }), "genieModel");
-
             },
 
             _getText: function (sTextId, aArgs) {
@@ -553,35 +543,6 @@ sap.ui.define([
                     type: sKey
                 });
             }
-
-            // onFilterSelect: function (oEvent) {
-            //     var sKey = oEvent.getParameter("key");
-            //     var oTable = this.byId("mySmartTable").getTable(); // Get the inner table
-            //     var oBinding = oTable.getBinding("items"); // Get the binding of the table
-            //     var aFilters = [];
-
-            //     if (sKey === "Internal") {
-            //         aFilters.push(new Filter("internal", FilterOperator.EQ, true));
-            //         this.getOwnerComponent().getModel("genieModel").setProperty("/internalMode", true);
-            //     } else if (sKey === "Customer") {
-            //         aFilters.push(new Filter("internal", FilterOperator.EQ, false));
-            //         this.getOwnerComponent().getModel("genieModel").setProperty("/internalMode", false)
-            //     } else aFilters = [];
-
-            //     oBinding.filter(aFilters);
-            // },
-
-            // onBeforeRebindTableCustomer: function (oEvent) {
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     oBindingParams.filters.push(new Filter("internal", sap.ui.model.FilterOperator.EQ, false));
-            // },
-
-            // onBeforeRebindTableInternal: function (oEvent) {
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     oBindingParams.filters.push(new Filter("internal", sap.ui.model.FilterOperator.EQ, true));
-
-            // },
-
 
 
         });

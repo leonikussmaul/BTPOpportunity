@@ -40,7 +40,6 @@ sap.ui.define([
                 })
 
                 this.setModel(new JSONModel(), "genieModel");
-                this.getModel("genieModel").setProperty("/internalMode", false);
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");

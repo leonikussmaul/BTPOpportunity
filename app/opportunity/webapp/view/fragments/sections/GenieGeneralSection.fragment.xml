@@ -43,18 +43,18 @@
 
                 <core:Title text="Contact &amp; Logistics" />
 
-                 <Label text="Email" />
-                <Text text="{email}" />
+                <Label text="Email" />
+<Text text="{email}" />
 
 
-                  <Label text="Role" />
-                <Text text="{role}" />
+                  <Label text="Role" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
+                <Text text="{role}" visible="{= ${genieModel>/genieType} === 'Internal' }" />
 
-                <Label text="Organisation" />
-                <Text text="{functionalArea}" />
+                <Label text="Organisation" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
+                <Text text="{functionalArea}"  visible="{= ${genieModel>/genieType} === 'Internal' }"/>
 
                 <!-- <Label text="Organisational Area" /> -->
-                <Text text="{orgArea}" />
+                <Text text="{orgArea}" visible="{= ${genieModel>/genieType} === 'Internal' }" />
 
 
                

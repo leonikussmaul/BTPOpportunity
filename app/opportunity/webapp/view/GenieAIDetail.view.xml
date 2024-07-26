@@ -274,7 +274,7 @@
                         titleUppercase="false"
                         title="{i18n>Links}"
                     >
-                        <u:ObjectPageSubSection id="idSubSectionLinks" visible="{= ${genieModel>/genieType} !== 'Internal' }">
+                        <u:ObjectPageSubSection id="idSubSectionLinks" >
                             <List
                                 id="linkList"
                                 items="{}"

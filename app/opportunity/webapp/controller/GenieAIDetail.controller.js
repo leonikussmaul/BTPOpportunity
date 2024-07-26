@@ -53,11 +53,6 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
-                // oView.setModel(new sap.ui.model.json.JSONModel({
-                //     // "countAll": 0,
-                //     // "countCustomer": 0,
-                //     // "countInternal": 0
-                // }), "genieModel");
             },
 
             getGenieCount: function () {

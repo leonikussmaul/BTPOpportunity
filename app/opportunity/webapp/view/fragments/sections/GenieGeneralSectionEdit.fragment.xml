@@ -115,14 +115,14 @@
                 <Label text="Email" />
                 <Input value="{editPageModel>/email}"   placeholder="How can we contact them?"/>
 
-                   <Label text="Role" />
-                <Input value="{editPageModel>/role}"   placeholder="What is their job role?" />
+                   <Label text="Role" visible="{= ${genieModel>/genieType} === 'Internal' }" />
+                <Input value="{editPageModel>/role}"   placeholder="What is their job role?"  visible="{= ${genieModel>/genieType} === 'Internal' }"/>
 
-                <Label text="Organisation" />
-                <Input value="{editPageModel>/functionalArea}"  placeholder="Functional i.e. Services, Sales &amp; Presales.." />
+                <Label text="Organisation" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
+                <Input value="{editPageModel>/functionalArea}"  placeholder="Functional i.e. Services, Sales &amp; Presales.." visible="{= ${genieModel>/genieType} === 'Internal' }" />
 
              
-                <Input value="{editPageModel>/orgArea}"  placeholder="Organisation i.e. CS&amp;D, CS.." />
+                <Input value="{editPageModel>/orgArea}"  placeholder="Organisation i.e. CS&amp;D, CS.." visible="{= ${genieModel>/genieType} === 'Internal' }" />
 
                 <Label text="Location" />
                 <Input value="{editPageModel>/city}"  placeholder="City" />
