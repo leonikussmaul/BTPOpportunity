@@ -237,6 +237,23 @@
                                     placeholder="What country are they based in?"
                                 />
 
+                                <!-- <Input
+                                    id="countryInput"
+                                    showSuggestion="true"
+                                    placeholder="Type a country"
+                                    suggestionItems="{countryModel>/countries}"
+                                    suggest="onSuggest"
+                                    value="{viewModel>/country}"
+                                    width="100%"
+                                >
+                                    <suggestionItems>
+                                        <core:Item
+                                            key="{countryModel>country}"
+                                            text="{countryModel>country}"
+                                        />
+                                    </suggestionItems>
+                                </Input> -->
+
                                 <Label text="Workshop Dates" />
                                 <DateRangeSelection
                                     id="DRS3"

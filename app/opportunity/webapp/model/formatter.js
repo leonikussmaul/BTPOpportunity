@@ -526,6 +526,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "🇫🇮";
         case "NORWAY":
           return "🇳🇴";
+          case "EGYPT":
+            return "🇪🇬";
         default:
           return; 
       }

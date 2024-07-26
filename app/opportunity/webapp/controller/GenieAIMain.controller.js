@@ -38,14 +38,9 @@ sap.ui.define([
                     "internal": false
                 }), "viewModel");
 
-
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
 
-            },
-
-            _getText: function (sTextId, aArgs) {
-                return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
             },
 
             getGroupHeader: function (oGroup) {
@@ -108,26 +103,26 @@ sap.ui.define([
            --------------------------------------------------------------------------------------------------------------*/
 
 
-           onSearch: function (oEvent) {
-            var sQuery = oEvent.getSource().getValue();
-            var aFilters = [];
-        
-            if (sQuery) {
-                aFilters = [
-                    new Filter({ path: "name", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                    new Filter({ path: "city", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                    new Filter({ path: "country", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                    new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
-                ];
-        
-                aFilters = [new Filter({ filters: aFilters, and: false })];
-            }
-        
-            var oList = oEvent.getSource().getParent().getParent().getTable();
-            var oBinding = oList.getBinding("items");
-            oBinding.filter(aFilters, FilterType.Application);
-        },
-        
+            onSearch: function (oEvent) {
+                var sQuery = oEvent.getSource().getValue();
+                var aFilters = [];
+
+                if (sQuery) {
+                    aFilters = [
+                        new Filter({ path: "name", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "city", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "country", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                        new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
+                    ];
+
+                    aFilters = [new Filter({ filters: aFilters, and: false })];
+                }
+
+                var oList = oEvent.getSource().getParent().getParent().getTable();
+                var oBinding = oList.getBinding("items");
+                oBinding.filter(aFilters, FilterType.Application);
+            },
+
 
 
             /* ------------------------------------------------------------------------------------------------------------
