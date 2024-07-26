@@ -496,7 +496,15 @@ sap.ui.define([
                 oRouter.navTo("GenieAIMain", {
                     type: sKey
                 });
-            }
+            },
+
+            onBeforeExport: function (oEvent) {
+
+                var oWorkbook = oEvent.getParameter("exportSettings").workbook;
+                delete oWorkbook.columns[0];
+
+
+            },
 
 
         });

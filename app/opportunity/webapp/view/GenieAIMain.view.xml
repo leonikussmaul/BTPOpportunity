@@ -106,6 +106,7 @@
                                     requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
+                                    beforeExport="onBeforeExport"
                                 >
                                     <smartTable:customToolbar>
                                         <OverflowToolbar design="Transparent">
@@ -300,6 +301,7 @@
                                     requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
+                                    beforeExport="onBeforeExport"
                                 >
                                     <smartTable:customToolbar>
                                         <OverflowToolbar design="Transparent">
@@ -464,6 +466,7 @@
                                     requestAtLeastFields="name,email,role,orgArea,city,status,isFavorite"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
+                                    beforeExport="onBeforeExport"
                                 >
                                     <smartTable:customToolbar>
                                         <OverflowToolbar design="Transparent">

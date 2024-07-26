@@ -807,10 +807,23 @@ sap.ui.define([
 
             onBeforeExportOpportunities: function (oEvent) {
                 var oWorkbook = oEvent.getParameter("exportSettings").workbook;
-                oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" })
-
-
+                
+                // Find and remove the 'account' column if it already exists
+                var accountColumnIndex = oWorkbook.columns.findIndex(function(column) {
+                    return column.property === 'account';
+                });
+                if (accountColumnIndex !== -1) {
+                    oWorkbook.columns.splice(accountColumnIndex, 1);
+                }
+            
+                // Remove the first column
+                delete oWorkbook.columns[0];
+            
+                // Add 'account' and 'marketUnit' columns at the beginning
+                oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" });
+                oWorkbook.columns.unshift({ property: 'account', label: "Account", width: "30%" });
             },
+            
 
             /* ------------------------------------------------------------------------------------------------------------
            VALUE STATE
