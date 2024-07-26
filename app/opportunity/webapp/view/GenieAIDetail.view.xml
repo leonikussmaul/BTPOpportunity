@@ -43,12 +43,7 @@
                                 />
                                 <VBox>
                                     <Title
-                                        text="{accountName}"
-                                        visible="{= ${internal} !== true}"
-                                    />
-                                    <Title
-                                        text="{contactName}"
-                                        visible="{= ${internal} === true}"
+                                        text="{name}"
                                     />
                                     <Text
                                         text="{email}"
@@ -74,7 +69,7 @@
                                     initials="{path: 'orgArea'}"
                                 />
                                 <Title
-                                    text="{accountName}"
+                                    text="{name}"
                                     wrapping="true"
                                 />
                             </FlexBox>
@@ -273,12 +268,13 @@
 
                     <!-- links -->
 
-                    <u:ObjectPageSection
+                    <u:ObjectPageSection visible="{= ${genieModel>/genieType} !== 'Internal' }"
+
                         id="idSectionLinks"
                         titleUppercase="false"
                         title="{i18n>Links}"
                     >
-                        <u:ObjectPageSubSection id="idSubSectionLinks">
+                        <u:ObjectPageSubSection id="idSubSectionLinks" visible="{= ${genieModel>/genieType} !== 'Internal' }">
                             <List
                                 id="linkList"
                                 items="{}"

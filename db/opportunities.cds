@@ -366,7 +366,7 @@ entity opportunitySubTaskStatus {
 };
 
 @cds.autoexpose
-entity GenieAIInteral {
+entity GenieAIInternal {
     key workshopID        : UUID;
         name              : String(255);
         internal          : Boolean;

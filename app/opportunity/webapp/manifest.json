@@ -165,7 +165,7 @@
                 },
                 {
                     "name": "GenieAIMain",
-                    "pattern": "GenieAIMain",
+                    "pattern": "GenieAIMain/{type}",
                     "target": [
                         "GenieAIMain",
                         "GenieAIDetail"
@@ -173,7 +173,7 @@
                 },
                 {
                     "name": "GenieAIDetail",
-                    "pattern": "GenieAIDetail/{workshopID}/{layout}",
+                    "pattern": "GenieAIDetail/{type}/{workshopID}/{layout}",
                     "target": [
                         "GenieAIMain",
                         "GenieAIDetail"

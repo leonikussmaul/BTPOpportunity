@@ -17,25 +17,48 @@
                 <core:Title text="Overview" />
 
                 <Label
-                    text="Account name"
+                    text="Name"
                     required="true"
                 />
+                
                 <Input
-                    value="{editPageModel>/accountName}"
+                    value="{editPageModel>/name}"
                     valueState="{valueState>/valueState}"
                     valueStateText="{valueState>/valueStateText}"
-                    liveChange="onChangeValueState"
+                    liveChange="onChangeValueState" placeholder="Enter the customer name or participant first and last name"
                 />
 
-                <CheckBox
-                    text="Internal"
-                    selected="{editPageModel>/internal}"
-                />
+   <Label text="Source" />
+                <Input value="{editPageModel>/source}"  placeholder="Where did the lead come from?" />
 
-                <!-- <Label text="Contact name" />
-                <Text text="{contactName}" /> -->
+               
 
-                <Label text="Level" />
+               <!-- <Label text="Region" />
+                <Input value="{editPageModel>/region}" /> -->
+
+                  <MultiComboBox
+                                    id="marketUnitFilter"
+                                    placeholder="Which Region are they part of?"
+                                    selectionChange="customFieldChange"
+                                    value="{viewModel>/region}"
+                                    showSelectAll="true"
+                                    items="{
+                                            path: '/opportunityMarketUnitVH',
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
+                                >
+                                    <core:Item
+                                        key="marketUnit"
+                                        text="{marketUnit}"
+                                    />
+                                </MultiComboBox>
+
+                                 <Label text="Level" />
                 <Select
                     id="level"
                     selectedKey="{editPageModel>/level}"
@@ -53,9 +76,6 @@
                         text="Advanced"
                     />
                 </Select>
-
-               <Label text="Region" />
-                <Input value="{editPageModel>/region}" />
 
                 <!-- <Label text="Status" />
                                 <SegmentedButton id="segmentedStatus">
@@ -88,28 +108,25 @@
                                     </items>
                                 </SegmentedButton> -->
 
-                <Label text="Role" />
-                <Input value="{editPageModel>/role}" />
-
-                <Label text="Functional Area" />
-                <Input value="{editPageModel>/functionalArea}" />
-
-                <Label text="Organisational Area" />
-                <Input value="{editPageModel>/orgArea}" />
+             
 
                 <core:Title text="Contact &amp; Logistics" />
 
-                <Label text="Source" />
-                <Input value="{editPageModel>/source}" />
-
                 <Label text="Email" />
-                <Input value="{editPageModel>/email}" />
+                <Input value="{editPageModel>/email}"   placeholder="How can we contact them?"/>
 
-                <Label text="City" />
-                <Input value="{editPageModel>/city}" />
+                   <Label text="Role" />
+                <Input value="{editPageModel>/role}"   placeholder="What is their job role?" />
 
-                <Label text="Country" />
-                <Input value="{editPageModel>/country}" />
+                <Label text="Organisation" />
+                <Input value="{editPageModel>/functionalArea}"  placeholder="Functional i.e. Services, Sales &amp; Presales.." />
+
+             
+                <Input value="{editPageModel>/orgArea}"  placeholder="Organisation i.e. CS&amp;D, CS.." />
+
+                <Label text="Location" />
+                <Input value="{editPageModel>/city}"  placeholder="City" />
+                <Input value="{editPageModel>/country}"  placeholder="Country" />
 
                 <Label text="Workshop Dates" />
                 <DateRangeSelection

@@ -24,32 +24,40 @@
                 <!-- <Label text="Contact name" />
                 <Text text="{contactName}" /> -->
 
-                <Label text="Level" />
-                <Text text="{level}" />
-
-                <Label text="Region" />
-                <Text text="{region}" />
-
-                <!-- <Label text="Status" />
-                <Text text="{status}" /> -->
-
-                <Label text="Role" />
-                <Text text="{role}" />
-
-                <Label text="Functional Area" />
-                <Text text="{functionalArea}" />
-
-                <Label text="Organisational Area" />
-                <Text text="{orgArea}" />
-
-                <core:Title text="Contact &amp; Logistics" />
 
                 <Label text="Source" />
                 <Text text="{source}" />
 
-                <Label text="Email" />
+            
+
+                <Label text="Region" />
+                <Text text="{region}" />
+                
+                 <Label text="Level" />
+                <Text text="{level}" />
+
+                <!-- <Label text="Status" />
+                <Text text="{status}" /> -->
+
+              
+
+                <core:Title text="Contact &amp; Logistics" />
+
+                 <Label text="Email" />
                 <Text text="{email}" />
 
+
+                  <Label text="Role" />
+                <Text text="{role}" />
+
+                <Label text="Organisation" />
+                <Text text="{functionalArea}" />
+
+                <!-- <Label text="Organisational Area" /> -->
+                <Text text="{orgArea}" />
+
+
+               
                 <Label text="Location" />
                 <Text text="{city} " />
                 <Text text="{country}" />
