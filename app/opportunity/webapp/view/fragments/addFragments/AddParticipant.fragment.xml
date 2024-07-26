@@ -1,0 +1,85 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Add a new Participant to '{name}'"
+        contentWidth="570px"
+    >
+        <beginButton>
+            <Button
+                text="Cancel"
+                press="onCancelDialogPress"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Submit"
+                type="Accept"
+                press="onSubmitNewParticipant"
+            />
+        </endButton>
+        <l:VerticalLayout
+            class="sapUiContentPadding"
+            width="100%"
+        >
+            <f:SimpleForm
+                id="vacationForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+            >
+                <SegmentedButton
+                    id="segmentedWorkshopBtn"
+                    selectedKey="Internal"
+                >
+                    <items>
+                        <SegmentedButtonItem
+                            key="Customer"
+                            width="168px"
+                            text="Customer"
+                            icon="sap-icon://da-2"
+                        />
+                        <SegmentedButtonItem
+                            width="168px"
+                            key="Partner"
+                            text="Partner"
+                            icon="sap-icon://decision"
+                        />
+                        <SegmentedButtonItem
+                            width="168px"
+                            key="Internal"
+                            text="Internal"
+                            icon="sap-icon://education"
+                        />
+                    </items>
+                </SegmentedButton>
+
+                <Label
+                    text="Participants"
+                    required="true"
+                />
+                <Select
+                    valueState="{valueState>/valueState}" 
+                valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{editPageModel>/ID_workshopID}"
+                    items="{
+                                    path: '/GenieAIInternal',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'name',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{ID_workshopID}"
+                        text="{name}"
+                    />
+                </Select>
+            </f:SimpleForm>
+        </l:VerticalLayout>
+    </Dialog>
+</core:FragmentDefinition>

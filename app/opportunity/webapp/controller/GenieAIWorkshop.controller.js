@@ -26,11 +26,11 @@ sap.ui.define([
                 valueStateText: ""
             };
 
-        return Controller.extend("opportunity.opportunity.controller.GenieAIDetail", {
+        return Controller.extend("opportunity.opportunity.controller.GenieAIWorkshop", {
             formatter: formatter,
             onInit: function () {
 
-                sap.ui.core.UIComponent.getRouterFor(this).getRoute("GenieAIDetail").attachPatternMatched(this._onRoutePatternMatched, this);
+                sap.ui.core.UIComponent.getRouterFor(this).getRoute("GenieAIWorkshop").attachPatternMatched(this._onRoutePatternMatched, this);
 
                 var oPageModel = new JSONModel({});
                 this.getView().setModel(oPageModel, "pageModel");
@@ -94,34 +94,17 @@ sap.ui.define([
 
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
-
-
                 var sWorkshopID = oEvent.getParameter("arguments").workshopID || this.getOwnerComponent().getModel("userModel").getProperty("/workshopID");
                 this.getOwnerComponent().getModel("userModel").setProperty("/workshopID", sWorkshopID);
 
-                var sBindingPath;
                 var sKey = oEvent.getParameters().arguments.type;
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
-                var bindingPaths = {
-                    "Internal": "/GenieAIInternal/",
-                    "Customer": "/GenieAICustomer/",
-                    "Partner": "/GenieAIPartner/",
-                    "Workshops": "/GenieAIWorkshops/"
-                };
-
-                var expandParameters = {
-                    "Internal": "",
-                    "Customer": "links",
-                    "Partner": "links",
-                    "Workshops": "links,internalAttendees,customerAttendees,partnerAttendees"
-                };
-
-                var sBindingPath = bindingPaths[sKey];
-                var expandParam = expandParameters[sKey];
 
                 this.getView().bindElement({
-                    path: sBindingPath + sWorkshopID,
-                    parameters: expandParam ? { expand: expandParam } : {}
+                    path: "/GenieAIWorkshops/" + sWorkshopID,
+                    parameters: {
+                        expand: "links,internalAttendees,customerAttendees,partnerAttendees"
+                    }
                 });
 
                 this.sWorkshopID = sWorkshopID;
@@ -132,6 +115,7 @@ sap.ui.define([
                 // wait for async calls 
                 Promise.all([
                     this.onFilterLinkList(sWorkshopID),
+                    this.onFilterParticipants(sWorkshopID, sKey),
                 ]).then(() => {
 
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
@@ -164,6 +148,42 @@ sap.ui.define([
                 });
             },
 
+          
+            onFilterParticipants: function (sWorkshopID, sKey) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        // var bindingPaths = {
+                        //     "Internal": "/GenieAIInternal",
+                        //     "Customer": "/GenieAICustomer",
+                        //     "Partner": "/GenieAIPartner"
+                        // };
+                        // var sBindingPath = bindingPaths[sKey];
+            
+                        var oTemplate = new sap.m.ColumnListItem({
+                            type: "Active",
+                           // press: this.onSelectParticipant.bind(this),
+                            cells: [
+                                new sap.m.Text({ text: "{name}" }),
+                                new sap.m.Text({ text: "{type}" })
+                            ]
+                        });
+            
+                        var oSorter = new sap.ui.model.Sorter("name", true);
+                        var oFilter = new sap.ui.model.Filter("ID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);
+            
+                        this.getView().byId("participantTable").bindAggregation("items", {
+                            path: "/GenieAIInternal",
+                            template: oTemplate,
+                            sorter: oSorter,
+                            filters: oFilter
+                        });
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+            
 
             onDeleteLink: function (oEvent) {
                 var that = this;
@@ -196,6 +216,9 @@ sap.ui.define([
 
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
+            },
+            onAddParticipant: function (oEvent) {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddParticipant");
             },
 
             onSubmitNewLink: function (oEvent) {
@@ -236,6 +259,38 @@ sap.ui.define([
                     });
 
                 } else this.ValueStateMethod();
+
+            },
+            onSubmitNewParticipant: function(oEvent){
+                var that = this;
+                // var oEditModel = this.getView().getModel("editModel");
+                // var oModel = this.getView().getModel();
+
+                var oData = this.getView().getModel("editPageModel").getData();
+
+                if (oData.ID_workshopID) {
+                    this.resetValueState();
+                    that.getView().setBusy(true);
+
+                    // oData.ID_workshopID;
+
+                    var sPath = this.getView().getBindingContext().sPath;
+                    oModel.update("/GenieAIInternal", oData, {
+                        success: function () {
+                            MessageToast.show(oData.name + "has been added!");
+                            oModel.refresh();
+                            that.getView().setBusy(false);
+                        },
+                        error: function (oError) {
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+                            that.getView().setBusy(false);
+
+                        }
+                    });
+
+                } else this.ValueStateMethod();
+
 
             },
 
@@ -292,7 +347,7 @@ sap.ui.define([
                     that.getView().setBusy(true);
 
 
-                    var sStartDate, sEndDate, bInternal, sTodayDate;
+                    var sStartDate, sEndDate, sTodayDate;
                     var workshopStartDate, workshopEndDate;
 
                     sTodayDate = new Date().toISOString().split("T")[0];
@@ -300,9 +355,6 @@ sap.ui.define([
                     sEndDate = this.getView().byId("DRS3").getSecondDateValue();
                     if (sStartDate) workshopStartDate = new Date(sStartDate).toISOString().split("T")[0];
                     if (sEndDate) workshopEndDate = new Date(sEndDate).toISOString().split("T")[0];
-
-                    if (oData.internal) bInternal = true;
-                    else bInternal = false;
 
                     const monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"
@@ -315,12 +367,13 @@ sap.ui.define([
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
-                    oData.isFavorite = false;
-                    oData.internal = bInternal;
                     oData.notes = this.getView().byId("editRTE").getValue();
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
                     delete oData.__metadata;
+                    delete oData.customerAttendees; 
+                    delete oData.internalAttendees; 
+                    delete oData.partnerAttendees;
 
                     var sPath = this.getView().getBindingContext().sPath;
                     oModel.update(sPath, oData, {
@@ -466,85 +519,6 @@ sap.ui.define([
                 oLocalModel.setData({});
 
             },
-
-            /* ------------------------------------------------------------------------------------------------------------
-                 FAVORITE
-                 --------------------------------------------------------------------------------------------------------------*/
-
-            onFavoriteToolbarPress: function (oEvent) {
-                var oBtn = oEvent.getSource();
-                var bToggle = oBtn.getPressed();
-
-                if (bToggle) {
-                    oBtn.setIcon('sap-icon://favorite');
-                } else {
-                    oBtn.setIcon('sap-icon://unfavorite');
-                }
-
-                var aFilters = [];
-
-                if (bToggle) {
-                    aFilters.push(new sap.ui.model.Filter({
-                        path: "isFavorite",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: true
-                    }));
-                }
-
-                var oList = oEvent.getSource().getParent().getParent().getTable();
-                var oBinding = oList.getBinding("items");
-                oBinding.filter(aFilters);
-            },
-
-
-            onFavoritePress: function (oEvent) {
-                var that = this;
-                var oIcon = oEvent.getSource();
-                var oBinding = oIcon.getBindingContext();
-                var sPath = oBinding.getPath();
-                var oContext = oIcon.getBindingContext().getObject();
-
-                var isFavorite = oContext.isFavorite;
-
-                if (isFavorite === true) {
-                    isFavorite = false;
-                    // removeFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                } else {
-                    isFavorite = true;
-                    // addFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                }
-            },
-
-            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                //post isFavorite 
-                if (isFavorite === true) {
-                    oContext.isFavorite = true;
-                } else {
-                    oContext.isFavorite = false;
-                }
-                delete oContext.links;
-                delete oContext.__metadata;
-
-                var oModel = this.getView().getModel();
-                oModel.update(sPath, oContext, {
-                    success: function () {
-                        var sMessage = "";
-                        if (isFavorite === true) {
-                            sMessage = "'" + oContext.name + "' added to favorites";
-                        } else {
-                            sMessage = "'" + oContext.name + "' removed from favorites";
-                        }
-                        MessageToast.show(sMessage);
-                    },
-                    error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
-                    }
-                });
-            },
-
 
             onFullScreenButtonPress: function (oEvent) {
                 var oDialog = oEvent.getSource().getParent().getParent();

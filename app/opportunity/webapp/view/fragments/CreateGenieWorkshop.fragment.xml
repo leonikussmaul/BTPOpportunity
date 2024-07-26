@@ -37,7 +37,7 @@
             <f:title>
                 <f:DynamicPageTitle>
                     <f:heading>
-                        <Title text="Create a Genie AI Lead" />
+                        <Title text="Create a Genie AI Workshop" />
                     </f:heading>
                 </f:DynamicPageTitle>
             </f:title>
@@ -51,7 +51,7 @@
                         <!-- Step 1 -->
                         <WizardStep
                             id="WizardStep1"
-                            title="{i18n>step1Title}"
+                            title="Workshop Information"
                             validated="true"
                         >
                             <form:SimpleForm editable="true">
@@ -61,7 +61,7 @@
                                 >
                                     <SegmentedButton
                                         id="segmentedWorkshopBtn"
-                                        selectedKey="{genieModel>/genieType}"
+                                        selectedKey="{viewModel>/workshopType}"
                                     >
                                         <items>
                                             <SegmentedButtonItem
@@ -95,48 +95,22 @@
                                     id="name"
                                     valueState="{valueState>/valueState}"
                                     valueStateText="{valueState>/valueStateText}"
-                                    placeholder="Enter the customer name or participant first and last name"
+                                    placeholder="Enter a name for the workshop"
                                 />
 
-                                <Label text="Source" />
-                                <Input
-                                    value="{viewModel>/source}"
-                                    id="source"
-                                    placeholder="Where did the lead come from?"
+<Label text="Description"/>
+                                <TextArea
+                                    value="{viewModel>/description}"
+                                    placeholder="Enter a workshop description"
                                 />
-                                <Input
-                                    value="{viewModel>/region}"
-                                    id="region"
-                                    placeholder="Which Region are they part of?"
-                                />
-
-                                <!-- <MultiComboBox
-                                    id="marketUnitFilter"
-                                    placeholder="Which Region are they part of?"
-                                    selectionChange="customFieldChange"
-                                    value="{viewModel>/region}"
-                                    showSelectAll="true"
-                                    items="{
-                                            path: '/opportunityMarketUnitVH',
-                                            sorter: {
-                                                path: 'region',
-                                                descending: false,
-                                                group: true
-                                            },
-                                            groupHeaderFactory: '.getGroupHeader'
-                                        }"
-                                >
-                                    <core:Item
-                                        key="marketUnit"
-                                        text="{marketUnit}"
-                                    />
-                                </MultiComboBox> -->
+                              
+                                 
 
                                 <Label text="Level" />
                                 <Select
                                     id="level"
                                     selectedKey="{viewModel>/level}"
-                                    placeholder="What is their level of experience with AI?"
+                                    placeholder="What will be the level of the workshop?"
                                 >
                                     <core:Item
                                         key="Beginner"
@@ -186,43 +160,21 @@
                         <!-- Step 2 -->
                         <WizardStep
                             id="WizardStep2"
-                            title="Contact &amp; Logistics"
+                            title="Logistics"
                         >
                             <form:SimpleForm editable="true">
-                                <Label text="Email" />
-                                <Input
+                             
+                                  <Label text="No. of Participants" />
+                                <!-- <Input
                                     value="{viewModel>/email}"
                                     id="email"
                                     placeholder="How can we contact them?"
-                                />
-                                <Label
-                                    text="Role"
-                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
-                                />
-                                <Input
-                                    value="{viewModel>/role}"
-                                    id="role"
-                                    placeholder="What is their job role?"
-                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
-                                />
-                                <Label
-                                    text="Organisation"
-                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
-                                />
-                                <Input
-                                    value="{viewModel>/functionalArea}"
-                                    id="functionalArea"
-                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
-                                    placeholder="Functional i.e. Services, Sales &amp; Presales.."
-                                />
-                                <!-- <Label text="Org Area" /> -->
-                                <Input
-                                    value="{viewModel>/orgArea}"
-                                    id="orgArea"
-                                    visible="{= ${genieModel>/genieType} === 'Internal' }"
-                                    placeholder="Organisation i.e. CS&amp;D, CS.."
-                                />
-
+                                /> -->
+                                	<StepInput 
+				width="100px"
+				value="{viewModel>/participants}" placeholder="20"/>
+                              
+                              
                                 <Label text="Location" />
                                 <Input
                                     value="{viewModel>/city}"
@@ -253,6 +205,7 @@
                                         />
                                     </suggestionItems>
                                 </Input> -->
+                                
 
                                 <Label text="Workshop Dates" />
                                 <DateRangeSelection
@@ -280,7 +233,8 @@
                         <!-- Step 3 -->
                         <WizardStep
                             id="WizardStep3"
-                            title="Notes"  validated="false"
+                            title="Notes"
+                            validated="false"
                         >
                             <form:SimpleForm editable="true">
                                 <Label text="Notes" />
@@ -309,7 +263,7 @@
                         <Button
                             type="Accept"
                             text="{i18n>save}"
-                            press="onSaveWizardPress"
+                            press="onSaveGeniePress"
                         />
                     </content>
                 </Toolbar>

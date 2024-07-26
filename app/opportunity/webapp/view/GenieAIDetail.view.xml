@@ -39,10 +39,11 @@
                             <HBox>
                                 <Avatar
                                     class="sapUiTinyMarginEnd"
-                                    initials="{path: 'orgArea'}"
+                                 backgroundColor="{path:'type', formatter:'.formatter.genieColorFormatter'}"
+                                    src="{path:'type', formatter:'.formatter.genieTypeFormatter'}"
                                 />
-                                <VBox>
-                                    <Title
+                                <VBox >
+                                    <Title 
                                         text="{name}"
                                     />
                                     <Text
@@ -64,9 +65,10 @@
                                 fitContainer="true"
                                 alignItems="Center"
                             >
-                                <Avatar
+                              <Avatar
                                     class="sapUiTinyMarginEnd"
-                                    initials="{path: 'orgArea'}"
+                                 backgroundColor="{path:'type', formatter:'.formatter.genieColorFormatter'}"
+                                    src="{path:'type', formatter:'.formatter.genieTypeFormatter'}"
                                 />
                                 <Title
                                     text="{name}"
@@ -125,7 +127,7 @@
                                 </VBox> -->
 
                         <!-- level -->
-                          <VBox  visible="{= ${level} !== null}"
+                          <VBox  visible="{= ${level} !== null}" 
                             >
                                 <Title >
                                     <Label
@@ -246,25 +248,7 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
-                    <u:ObjectPageSection
-                        id="idSectionNotes"
-                        titleUppercase="false"
-                        title="{i18n>Notes}"
-                    >
-                        <u:ObjectPageSubSection id="idSubSectionNotes">
-                            <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
-                            <rte:RichTextEditor
-                                value="{notes}"
-                                id="editRTE"
-                                height="400px"
-                                width="100%"
-                                showGroupFont="true"
-                                showGroupLink="true"
-                                showGroupUndo="true"
-                                editable="{editModel>/editMode}"
-                            />
-                        </u:ObjectPageSubSection>
-                    </u:ObjectPageSection>
+                
 
                     <!-- links -->
 
@@ -318,6 +302,26 @@
                                     />
                                 </noData>
                             </List>
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
+
+                        <u:ObjectPageSection
+                        id="idSectionNotes"
+                        titleUppercase="false"
+                        title="{i18n>Notes}"
+                    >
+                        <u:ObjectPageSubSection id="idSubSectionNotes">
+                            <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
+                            <rte:RichTextEditor
+                                value="{notes}"
+                                id="editRTE"
+                                height="400px"
+                                width="100%"
+                                showGroupFont="true"
+                                showGroupLink="true"
+                                showGroupUndo="true"
+                                editable="{editModel>/editMode}"
+                            />
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
                     <!-- 

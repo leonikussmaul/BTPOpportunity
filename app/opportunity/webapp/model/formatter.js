@@ -489,8 +489,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
 
     },
 
-    getFlagMethod: function(sCountry) {
-      if(sCountry) sCountry = sCountry.toUpperCase(); 
+    getFlagMethod: function (sCountry) {
+      if (sCountry) sCountry = sCountry.toUpperCase();
       switch (sCountry) {
         case "FRANCE":
           return "🇫🇷";
@@ -526,13 +526,43 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "🇫🇮";
         case "NORWAY":
           return "🇳🇴";
-          case "EGYPT":
-            return "🇪🇬";
+        case "EGYPT":
+          return "🇪🇬";
+        case "TURKEY":
+          return "🇹🇷";
+        case "INDIA":
+          return "🇮🇳";
         default:
-          return; 
+          return;
       }
     },
 
+    genieTypeFormatter: function (sType) {
+      switch (sType) {
+        case "Customer":
+          return "sap-icon://da-2";
+        case "Internal":
+          return "sap-icon://education";
+        case "Partner":
+          return "sap-icon://decision";
+        default:
+          return "sap-icon://idea-wall";;
+      }
+
+    },
+    genieColorFormatter: function (sType) {
+      switch (sType) {
+        case "Customer":
+          return "Accent6";
+        case "Internal":
+          return "Accent8";
+        case "Partner":
+          return "Accent1";
+        default:
+          return "Accent5";;
+      }
+
+    }
 
 
   };

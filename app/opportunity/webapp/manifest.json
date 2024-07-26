@@ -180,6 +180,14 @@
                     ]
                 },
                 {
+                    "name": "GenieAIWorkshop",
+                    "pattern": "GenieAIWorkshop/{type}/{workshopID}/{layout}",
+                    "target": [
+                        "GenieAIMain",
+                        "GenieAIWorkshop"
+                    ]
+                },
+                {
                     "name": "TasksReport",
                     "pattern": "TasksReport",
                     "target": [
@@ -255,6 +263,14 @@
                     "transition": "slide",
                     "viewId": "GenieAIDetail",
                     "viewName": "GenieAIDetail",
+                    "controlAggregation": "midColumnPages"
+                },
+                "GenieAIWorkshop": {
+                    "level": 1,
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewId": "GenieAIWorkshop",
+                    "viewName": "GenieAIWorkshop",
                     "controlAggregation": "midColumnPages"
                 },
                 "TasksReport": {

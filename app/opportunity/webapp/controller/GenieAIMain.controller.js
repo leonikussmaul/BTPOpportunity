@@ -35,7 +35,7 @@ sap.ui.define([
 
                 var oView = this.getView();
                 oView.setModel(new JSONModel({
-                    "internal": false
+                    //"internal": false
                 }), "viewModel");
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
@@ -54,6 +54,7 @@ sap.ui.define([
                 var oGenieModel = this.getOwnerComponent().getModel("genieModel");
 
                 var aEndpoints = [
+                    { key: "Workshops", endpoint: "/GenieAIWorkshops" },
                     { key: "Customer", endpoint: "/GenieAICustomer" },
                     { key: "Internal", endpoint: "/GenieAIInternal" },
                     { key: "Partner", endpoint: "/GenieAIPartner" }
@@ -135,13 +136,19 @@ sap.ui.define([
 
                 var sKey = this.getView().byId("idIconTabBar").getSelectedKey();
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
+                var sView; 
+                if (sKey === "Workshops") sView = "GenieAIWorkshop";
+                else sView = "GenieAIDetail";
+
+                  
+                    oRouter.navTo(sView, {
+                        type: sKey,
+                        workshopID: selectedItem.workshopID,
+                        layout: "TwoColumnsMidExpanded"
+                    });
+                
 
 
-                oRouter.navTo("GenieAIDetail", {
-                    type: sKey,
-                    workshopID: selectedItem.workshopID,
-                    layout: "TwoColumnsMidExpanded"
-                });
 
                 var userModel = this.getOwnerComponent().getModel("userModel");
                 userModel.setProperty("/workshopID", selectedItem.workshopID);
@@ -194,6 +201,20 @@ sap.ui.define([
                 });
             },
 
+            onCreateNewWorkshop: function (oEvent) {
+                this.resetValueState();
+                var oController = this;
+                oController.getView().setBusy(true);
+                if (!this._oDialog) {
+                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.CreateGenieWorkshop", controller: this });
+                }
+                this._oDialog.then(function (_oDialog) {
+                    oController.getView().addDependent(_oDialog);
+                    _oDialog.open();
+                });
+
+            },
+
             onSaveWizardPress: function (oEvent) {
 
                 var that = this;
@@ -209,15 +230,18 @@ sap.ui.define([
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
                         oData.internal = true;
+                        oData.type = "Internal"
                         sEndPoint = "/GenieAIInternal";
                     } else if (sKey === "Customer") {
                         oData.internal = false;
                         sEndPoint = "/GenieAICustomer";
+                        oData.type = "Customer"
                         delete oData.functionalArea;
                         delete oData.orgArea;
                         delete oData.role;
                     } else if (sKey === "Partner") {
                         oData.internal = false;
+                        oData.type = "Partner"
                         sEndPoint = "/GenieAIPartner";
                         delete oData.functionalArea;
                         delete oData.orgArea;
@@ -225,8 +249,8 @@ sap.ui.define([
                     }
 
                     sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.opportunityStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.opportunityDueDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
+                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
@@ -243,6 +267,58 @@ sap.ui.define([
                         success: function (oData, response) {
 
                             MessageToast.show("New Genie AI Lead created!");
+                            that.getGenieCount();
+                            that.onCloseWizardPress(oEvent);
+                            that.getView().setBusy(false);
+                        },
+                        error: function (oError) {
+                            that.getView().setBusy(false);
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+
+                        }
+                    });
+
+                } else this.ValueStateMethod();
+
+            },
+
+            onSaveGeniePress: function (oEvent) {
+                var that = this;
+                var oViewModel = this.getView().getModel("viewModel");
+                var oData = oViewModel.getData();
+
+                if (oData.name) {
+                    this.resetValueState();
+                    that.getView().setBusy(true);
+
+                    var sStartDate, sEndDate, sTodayDate;
+
+                    var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
+                    if (sKey === "Internal") {
+                        oData.workshopType = "Internal"
+                    } else if (sKey === "Customer") {
+                        oData.workshopType = "Customer";
+                    } else if (sKey === "Partner") {
+                        oData.workshopType = "Partner"
+                    }
+
+                    sTodayDate = new Date().toISOString().split("T")[0];
+                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
+                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+
+                    var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+
+                    if (oData.country) oData.country = oData.country.toUpperCase();
+                    oData.workshopStartDate = sStartDate;
+                    oData.workshopEndDate = sEndDate;
+                    oData.status = sStatus;
+
+                    //  delete oData.internal;
+                    var oModel = this.getView().getModel();
+                    oModel.create("/GenieAIWorkshops", oData, {
+                        success: function (oData, response) {
+                            MessageToast.show("New Genie AI Workshop created!");
                             that.getGenieCount();
                             that.onCloseWizardPress(oEvent);
                             that.getView().setBusy(false);
@@ -500,6 +576,16 @@ sap.ui.define([
 
 
             },
+
+
+
+            // onBeforeRebindTable: function (oEvent) {
+
+            //     var oBindingParams = oEvent.getParameter("bindingParams");
+            //     var oSorter = new sap.ui.model.Sorter("name", true);
+            //     oBindingParams.sorter.push(oSorter);
+
+            // },
 
 
         });

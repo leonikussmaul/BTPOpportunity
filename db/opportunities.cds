@@ -368,7 +368,9 @@ entity opportunitySubTaskStatus {
 @cds.autoexpose
 entity GenieAIInternal {
     key workshopID        : UUID;
+      ID          : Association to GenieAIWorkshops;
         name              : String(255);
+        type              : String(255);
         internal          : Boolean;
         email             : String(255);
         role              : String(255);
@@ -386,10 +388,13 @@ entity GenieAIInternal {
         status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
         isFavorite        : Boolean;
 }
+
 @cds.autoexpose
 entity GenieAICustomer {
     key workshopID        : UUID;
+      ID          : Association to GenieAIWorkshops;
         name              : String(255);
+        type              : String(255);
         internal          : Boolean;
         email             : String(255);
         source            : String(255);
@@ -406,10 +411,13 @@ entity GenieAICustomer {
         links             : Composition of many GenieAICustomerLinks
                                 on links.linkID = $self;
 }
+
 @cds.autoexpose
 entity GenieAIPartner {
     key workshopID        : UUID;
+     ID          : Association to GenieAIWorkshops;
         name              : String(255);
+        type              : String(255);
         internal          : Boolean;
         email             : String(255);
         source            : String(255);
@@ -435,6 +443,7 @@ entity GenieAICustomerLinks {
         linkDescription : String(1000);
         linkName        : String(200);
 };
+
 @cds.autoexpose
 entity GenieAIPartnerLinks {
     key ID              : UUID;
@@ -444,3 +453,38 @@ entity GenieAIPartnerLinks {
         linkName        : String(200);
 };
 
+@cds.autoexpose
+entity GenieAIWorkshopLinks {
+    key ID              : UUID;
+        linkID          : Association to GenieAIWorkshops;
+        link            : String(2000);
+        linkDescription : String(1000);
+        linkName        : String(200);
+};
+
+@cds.autoexpose
+entity GenieAIWorkshops {
+    key workshopID        : UUID;
+        workshopType      : String(255);
+        number            : Integer;
+        participants      : Integer;
+        name              : String(255);
+        description       : String(1000);
+        workshopStartDate : Date;
+        workshopEndDate   : Date;
+        city              : String(255);
+        country           : String(255);
+        status            : String(255);
+        month             : String(255);
+        level             : String(255);
+        notes             : String(5000);
+        links             : Composition of many GenieAIWorkshopLinks
+                                on links.linkID = $self;
+
+        internalAttendees : Composition of many GenieAIInternal
+                                on internalAttendees.workshopID = $self.workshopID;
+        customerAttendees : Composition of many GenieAICustomer
+                                on customerAttendees.workshopID = $self.workshopID;
+        partnerAttendees  : Composition of many GenieAIPartner
+                                on partnerAttendees.workshopID = $self.workshopID;
+}

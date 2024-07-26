@@ -142,7 +142,7 @@ annotate service.GenieAICustomer with {
 };
 
 annotate service.GenieAIPartner with {
-    name              @Common.Label: ' Name';
+    name              @Common.Label: 'Name';
     internal          @Common.Label: 'Internal';
     email             @Common.Label: 'Email';
     source            @Common.Label: 'Source';
@@ -156,6 +156,21 @@ annotate service.GenieAIPartner with {
     level             @Common.Label: 'Level';
     status            @Common.Label: 'Status';
     isFavorite        @Common.Label: 'Favorite';
+};
+
+annotate service.GenieAIWorkshops with {
+    name              @Common.Label: 'Name';
+    city              @Common.Label: 'City';
+    country           @Common.Label: 'Country';
+    month             @Common.Label: 'Month';
+    workshopStartDate @Common.Label: 'Start Date';
+    workshopEndDate   @Common.Label: 'End Date';
+    notes             @Common.Label: 'Notes';
+    level             @Common.Label: 'Level';
+    status            @Common.Label: 'Status';
+    number            @Common.Label: 'Number';
+    participants            @Common.Label: 'Participants';
+    workshopType            @Common.Label: 'Type';
 };
 
 annotate service.opportunityHeaderCopy with @(

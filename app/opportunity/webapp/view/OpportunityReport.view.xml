@@ -408,13 +408,13 @@
                         header="{i18n>mySmartTableHeader}"
                         showRowCount="true"
                         enableAutoBinding="true"
-                        demandPopin="true"
+                        demandPopin="true" 
                         class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                         enableCopy="false"
                         showFullScreenButton="true"
                         initiallyVisibleFields="account,topics,status,primaryContact,opportunityDueDate,opportunityValue,isFavorite"
                         requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityDueDate,opportunityValue,priority,opportunityID"
-                        ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
+                        ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity,isFavorite"
                     >
                         <smartTable:customToolbar>
                             <OverflowToolbar design="Transparent">
@@ -441,7 +441,7 @@
                         </smartTable:customToolbar>
                         <Table
                             inset="false"
-                            growing="true"
+                            growing="true" 
                             growingScrollToLoad="true"
                            mode="SingleSelectMaster" itemPress="onListItemPress"
                             sticky="ColumnHeaders,HeaderToolbar"
