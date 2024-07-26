@@ -58,13 +58,13 @@ sap.ui.define([
             getGenieCount: function () {
                 var oModel = this.getView().getModel();
                 var oGenieModel = this.getOwnerComponent().getModel("genieModel");
-            
+
                 var aEndpoints = [
                     { key: "Customer", endpoint: "/GenieAICustomer" },
                     { key: "Internal", endpoint: "/GenieAIInternal" },
                     { key: "Partner", endpoint: "/GenieAIPartner" }
                 ];
-            
+
                 var aPromises = aEndpoints.map(function (oEndpoint) {
                     return new Promise(function (resolve, reject) {
                         oModel.read(oEndpoint.endpoint, {
@@ -77,7 +77,7 @@ sap.ui.define([
                         });
                     });
                 });
-            
+
                 Promise.all(aPromises).then(function (aResults) {
                     aResults.forEach(function (oResult) {
                         oGenieModel.setProperty("/" + oResult.key, oResult.data.results.length);
@@ -86,7 +86,7 @@ sap.ui.define([
                     console.error("Error reading entities: ", oError);
                 });
             },
-            
+
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
             --------------------------------------------------------------------------------------------------------------*/
@@ -99,13 +99,13 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("userModel").setProperty("/workshopID", sWorkshopID);
 
                 var sBindingPath;
-                var sKey = oEvent.getParameters().arguments.type; 
+                var sKey = oEvent.getParameters().arguments.type;
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
 
-               if(sKey === "Customer") sBindingPath = "/GenieAICustomer/";
-               else if(sKey === "Partner") sBindingPath = "/GenieAIPartner/";
-               else if(sKey === "Internal") sBindingPath = "/GenieAIInternal/";
-             
+                if (sKey === "Customer") sBindingPath = "/GenieAICustomer/";
+                else if (sKey === "Partner") sBindingPath = "/GenieAIPartner/";
+                else if (sKey === "Internal") sBindingPath = "/GenieAIInternal/";
+
 
                 this.getView().bindElement({
                     path: sBindingPath + sWorkshopID,
@@ -120,15 +120,15 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("TwoWay");
 
                 // wait for async calls 
-                   Promise.all([
-                this.onFilterLinkList(sWorkshopID),
-                  ]).then(() => {
+                Promise.all([
+                    this.onFilterLinkList(sWorkshopID),
+                ]).then(() => {
 
-                this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
-                this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
-                this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
-              this.getGenieCount();
-                // set segmented button text for current status of opportunity
+                    this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
+                    this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
+                    this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
+                    this.getGenieCount();
+                    // set segmented button text for current status of opportunity
                     this.setSegButtonText();
                 }).catch(err => {
                     console.error("Error with route:", err);
@@ -349,7 +349,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-    
+
                     var sStartDate, sEndDate, bInternal, sTodayDate;
                     var workshopStartDate, workshopEndDate;
 
@@ -367,9 +367,9 @@ sap.ui.define([
                     ];
 
                     var sMonth;
-                    if(sStartDate) sMonth = monthNames[sStartDate.getMonth()];
+                    if (sStartDate) sMonth = monthNames[sStartDate.getMonth()];
                     // oData.country = this.getFlagMethod(oData.country.toUpperCase());
-                    if(oData.country) oData.country = oData.country.toUpperCase(); 
+                    if (oData.country) oData.country = oData.country.toUpperCase();
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
@@ -377,8 +377,8 @@ sap.ui.define([
                     oData.internal = bInternal;
                     oData.notes = this.getView().byId("editRTE").getValue();
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
-                   delete oData.links;
-                   delete oData.__metadata;
+                    delete oData.links;
+                    delete oData.__metadata;
 
                     var sPath = this.getView().getBindingContext().sPath;
                     oModel.update(sPath, oData, {
@@ -520,7 +520,7 @@ sap.ui.define([
                     _pDialog.destroy();
                 });
                 this._pDialog = null;
-               // var oAddTaskModel = this.getView().getModel("AddTaskModel");
+                // var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oLocalModel = this.getView().getModel("localModel");
                 //oAddTaskModel.setData({});
                 oLocalModel.setData({});
@@ -531,79 +531,79 @@ sap.ui.define([
                  FAVORITE
                  --------------------------------------------------------------------------------------------------------------*/
 
-                 onFavoriteToolbarPress: function (oEvent) {
-                    var oBtn = oEvent.getSource();
-                    var bToggle = oBtn.getPressed();
-    
-                    if (bToggle) {
-                        oBtn.setIcon('sap-icon://favorite');
-                    } else {
-                        oBtn.setIcon('sap-icon://unfavorite');
-                    }
-    
-                    var aFilters = [];
-    
-                    if (bToggle) {
-                        aFilters.push(new sap.ui.model.Filter({
-                            path: "isFavorite",
-                            operator: sap.ui.model.FilterOperator.EQ,
-                            value1: true
-                        }));
-                    }
-    
-                    var oList = oEvent.getSource().getParent().getParent().getTable();
-                    var oBinding = oList.getBinding("items");
-                    oBinding.filter(aFilters);
-                },
-    
-    
-                onFavoritePress: function (oEvent) {
-                    var that = this;
-                    var oIcon = oEvent.getSource();
-                    var oBinding = oIcon.getBindingContext();
-                    var sPath = oBinding.getPath();
-                    var oContext = oIcon.getBindingContext().getObject();
-    
-                    var isFavorite = oContext.isFavorite;
-    
-                    if (isFavorite === true) {
-                        isFavorite = false;
-                        // removeFavourite
-                        that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                    } else {
-                        isFavorite = true;
-                        // addFavourite
-                        that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                    }
-                },
-    
-                postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                    //post isFavorite 
-                    if (isFavorite === true) {
-                        oContext.isFavorite = true;
-                    } else {
-                        oContext.isFavorite = false;
-                    }
-                    delete oContext.links;
-                    delete oContext.__metadata;
-    
-                    var oModel = this.getView().getModel();
-                    oModel.update(sPath, oContext, {
-                        success: function () {
-                            var sMessage = "";
-                            if (isFavorite === true) {
-                                sMessage = "'" + oContext.name + "' added to favorites";
-                            } else {
-                                sMessage = "'" + oContext.name + "' removed from favorites";
-                            }
-                            MessageToast.show(sMessage);
-                        },
-                        error: function (oError) {
-                            var sMessage = JSON.parse(oError.responseText).error.message.value;
-                            sap.m.MessageToast.show(sMessage);
+            onFavoriteToolbarPress: function (oEvent) {
+                var oBtn = oEvent.getSource();
+                var bToggle = oBtn.getPressed();
+
+                if (bToggle) {
+                    oBtn.setIcon('sap-icon://favorite');
+                } else {
+                    oBtn.setIcon('sap-icon://unfavorite');
+                }
+
+                var aFilters = [];
+
+                if (bToggle) {
+                    aFilters.push(new sap.ui.model.Filter({
+                        path: "isFavorite",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: true
+                    }));
+                }
+
+                var oList = oEvent.getSource().getParent().getParent().getTable();
+                var oBinding = oList.getBinding("items");
+                oBinding.filter(aFilters);
+            },
+
+
+            onFavoritePress: function (oEvent) {
+                var that = this;
+                var oIcon = oEvent.getSource();
+                var oBinding = oIcon.getBindingContext();
+                var sPath = oBinding.getPath();
+                var oContext = oIcon.getBindingContext().getObject();
+
+                var isFavorite = oContext.isFavorite;
+
+                if (isFavorite === true) {
+                    isFavorite = false;
+                    // removeFavourite
+                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                } else {
+                    isFavorite = true;
+                    // addFavourite
+                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                }
+            },
+
+            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
+                //post isFavorite 
+                if (isFavorite === true) {
+                    oContext.isFavorite = true;
+                } else {
+                    oContext.isFavorite = false;
+                }
+                delete oContext.links;
+                delete oContext.__metadata;
+
+                var oModel = this.getView().getModel();
+                oModel.update(sPath, oContext, {
+                    success: function () {
+                        var sMessage = "";
+                        if (isFavorite === true) {
+                            sMessage = "'" + oContext.name + "' added to favorites";
+                        } else {
+                            sMessage = "'" + oContext.name + "' removed from favorites";
                         }
-                    });
-                },
+                        MessageToast.show(sMessage);
+                    },
+                    error: function (oError) {
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sMessage);
+                    }
+                });
+            },
 
 
             onFullScreenButtonPress: function (oEvent) {

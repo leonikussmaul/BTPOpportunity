@@ -19,8 +19,12 @@
                     text="{i18n>account}"
                     required="true"
                 />
-                <Input value="{editPageModel>/account}" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
-                liveChange="onChangeValueState" />
+                <Input
+                    value="{editPageModel>/account}"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                    liveChange="onChangeValueState"
+                />
                 <Label
                     text="{i18n>marketUnit}"
                     required="true"
@@ -30,6 +34,7 @@
                     selectedKey="{editPageModel>/marketUnit}"
                     items="{
                                     path: '/opportunityMarketUnitVH',
+                                      templateShareable: true,
                                     	sorter: {
 						path: 'region',
 						descending: false,
@@ -48,6 +53,7 @@
                     selectedKey="{editPageModel>/topic}"
                     items="{
                                     path: '/opportunityTopicsVH',
+                                      templateShareable: true,
                                    sorter: 
                                             {
                                                 path: 'topic',
@@ -67,6 +73,7 @@
                     selectedKey="{editPageModel>/priority}"
                     items="{
                                     path: '/opportunityPriorityVH',
+                                      templateShareable: true,
                                    sorter: 
                                             {
                                                 path: 'priority',
@@ -89,6 +96,7 @@
                     selectedKey="{editPageModel>/opportunityCreatedQuarter}"
                     items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -115,6 +123,7 @@
                     selectedKey="{editPageModel>/opportunityClosedQuarter}"
                     items="{
                                     path: '/opportunityQuartersVH',
+                                      templateShareable: true,
                                    sorter: [
                                             {
                                                 path: 'opportunityYear',
@@ -162,6 +171,7 @@
                     selectedKey="{editPageModel>/primaryContact}"
                     items="{
                                     path: '/opportunityPrimaryContactVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'primaryContact',
                                                 descending: false

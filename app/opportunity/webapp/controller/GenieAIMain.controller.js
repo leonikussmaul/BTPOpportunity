@@ -57,13 +57,13 @@ sap.ui.define([
             getGenieCount: function () {
                 var oModel = this.getView().getModel();
                 var oGenieModel = this.getOwnerComponent().getModel("genieModel");
-            
+
                 var aEndpoints = [
                     { key: "Customer", endpoint: "/GenieAICustomer" },
                     { key: "Internal", endpoint: "/GenieAIInternal" },
                     { key: "Partner", endpoint: "/GenieAIPartner" }
                 ];
-            
+
                 var aPromises = aEndpoints.map(function (oEndpoint) {
                     return new Promise(function (resolve, reject) {
                         oModel.read(oEndpoint.endpoint, {
@@ -76,7 +76,7 @@ sap.ui.define([
                         });
                     });
                 });
-            
+
                 Promise.all(aPromises).then(function (aResults) {
                     aResults.forEach(function (oResult) {
                         oGenieModel.setProperty("/" + oResult.key, oResult.data.results.length);
@@ -85,7 +85,7 @@ sap.ui.define([
                     console.error("Error reading entities: ", oError);
                 });
             },
-            
+
 
             _onRoutePatternMatched: function (oEvent) {
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
@@ -150,7 +150,7 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
 
             onListItemPress: function (oEvent) {
-                var selectedItem = oEvent.getSource().getBindingContext().getObject();
+                var selectedItem = oEvent.getParameters().listItem.getBindingContext().getObject();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
                 var sKey = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -535,7 +535,7 @@ sap.ui.define([
             },
 
 
-            onFilterSelect: function(oEvent){
+            onFilterSelect: function (oEvent) {
                 var sKey = oEvent.getParameter("key");
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

@@ -85,7 +85,7 @@
                                 icon="sap-icon://da-2"
                                 iconColor="Default"
                                 count="{genieModel>/Customer}"
-                                text="Customer" 
+                                text="Customer"
                                 key="Customer"
                             >
                                 <smartTable:SmartTable
@@ -134,7 +134,8 @@
                                         inset="false"
                                         growing="true"
                                         growingScrollToLoad="true"
-                                        mode="None"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
@@ -167,9 +168,7 @@
                                                 tooltip="Customer"
                                             />
                                         </Column> -->
-                                            <Column
-                                                hAlign="Center"
-                                            >
+                                            <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
@@ -237,8 +236,6 @@
                                                 class="myCustomListItem"
                                                 type="Navigation"
                                                 vAlign="Middle"
-                                                press="onListItemPress" 
-                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                             >
                                                 <cells>
                                                     <core:Icon
@@ -251,8 +248,11 @@
                                                         title="{name}"
                                                     />
 
-                                                    <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
-                                                  
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
+
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
                                                     <Text
@@ -275,7 +275,7 @@
                                 </smartTable:SmartTable>
                             </IconTabFilter>
 
-                             <IconTabFilter
+                            <IconTabFilter
                                 icon="sap-icon://decision"
                                 iconColor="Critical"
                                 count="{genieModel>/Partner}"
@@ -326,7 +326,8 @@
                                         inset="false"
                                         growing="true"
                                         growingScrollToLoad="true"
-                                        mode="None"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
@@ -344,9 +345,7 @@
                                                 </customData>
                                                 <Label text="" />
                                             </Column>
-                                            <Column
-                                                hAlign="Center"
-                                            >
+                                            <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
@@ -401,8 +400,6 @@
                                                 class="myCustomListItem"
                                                 type="Navigation"
                                                 vAlign="Middle"
-                                                press="onListItemPress"
-                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                             >
                                                 <cells>
                                                     <core:Icon
@@ -415,8 +412,11 @@
                                                         title="{name}"
                                                     />
 
-                                                    <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
-                                                  
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
+
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
                                                     <Text
@@ -438,7 +438,6 @@
                                     </Table>
                                 </smartTable:SmartTable>
                             </IconTabFilter>
-
 
                             <IconTabFilter
                                 icon="sap-icon://education"
@@ -493,7 +492,8 @@
                                         inset="false"
                                         growing="true"
                                         growingScrollToLoad="true"
-                                        mode="None"
+                                        mode="SingleSelectMaster"
+                                        itemPress="onListItemPress"
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
@@ -512,10 +512,7 @@
                                                 <Label text="" />
                                             </Column>
 
-                                            <Column
-                                                hAlign="Center"
-                                            
-                                            >
+                                            <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
@@ -600,8 +597,6 @@
                                                 class="myCustomListItem"
                                                 type="Navigation"
                                                 vAlign="Middle"
-                                                press="onListItemPress"
-                                                highlight="{path:'priority', formatter:'.formatter.formatRowHighlight'}"
                                             >
                                                 <cells>
                                                     <core:Icon
@@ -611,10 +606,13 @@
                                                         color="#427cac"
                                                     />
                                                     <ObjectIdentifier
-                                                        title="{name}" 
+                                                        title="{name}"
                                                     />
                                                     <Text text="{email}" />
-                                                     <Text text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}" tooltip="{country}" />
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
                                                     <Text text="{role}" />
                                                     <Text
                                                         text="{orgArea}  {functionalArea}"

@@ -33,10 +33,10 @@
 
                
 
-               <!-- <Label text="Region" />
-                <Input value="{editPageModel>/region}" /> -->
+               <!-- <Label text="Region" /> -->
+                <Input value="{editPageModel>/region}"   placeholder="Which Region are they part of?" />
 
-                  <MultiComboBox
+                  <!-- <MultiComboBox
                                     id="marketUnitFilter"
                                     placeholder="Which Region are they part of?"
                                     selectionChange="customFieldChange"
@@ -44,6 +44,7 @@
                                     showSelectAll="true"
                                     items="{
                                             path: '/opportunityMarketUnitVH',
+                                              templateShareable: true,
                                             sorter: {
                                                 path: 'region',
                                                 descending: false,
@@ -56,7 +57,7 @@
                                         key="marketUnit"
                                         text="{marketUnit}"
                                     />
-                                </MultiComboBox>
+                                </MultiComboBox> -->
 
                                  <Label text="Level" />
                 <Select

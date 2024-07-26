@@ -24,40 +24,47 @@
                 <!-- <Label text="Contact name" />
                 <Text text="{contactName}" /> -->
 
-
                 <Label text="Source" />
                 <Text text="{source}" />
 
-            
-
                 <Label text="Region" />
                 <Text text="{region}" />
-                
-                 <Label text="Level" />
+
+                <Label text="Level" />
                 <Text text="{level}" />
 
                 <!-- <Label text="Status" />
                 <Text text="{status}" /> -->
 
-              
-
                 <core:Title text="Contact &amp; Logistics" />
 
                 <Label text="Email" />
-<Text text="{email}" />
+                <Text text="{email}" />
 
+                <Label
+                    text="Role"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
+                <Text
+                    text="{role}"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
-                  <Label text="Role" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
-                <Text text="{role}" visible="{= ${genieModel>/genieType} === 'Internal' }" />
-
-                <Label text="Organisation" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
-                <Text text="{functionalArea}"  visible="{= ${genieModel>/genieType} === 'Internal' }"/>
+                <Label
+                    text="Organisation"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
+                <Text
+                    text="{functionalArea}"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
                 <!-- <Label text="Organisational Area" /> -->
-                <Text text="{orgArea}" visible="{= ${genieModel>/genieType} === 'Internal' }" />
+                <Text
+                    text="{orgArea}"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
-
-               
                 <Label text="Location" />
                 <Text text="{city} " />
                 <Text text="{country}" />

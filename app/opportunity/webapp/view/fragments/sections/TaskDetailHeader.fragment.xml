@@ -23,6 +23,7 @@
                     selectedKey="{editPageModel>/actionOwner}"
                     items="{
                                     path: '/opportunityPrimaryContactVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'primaryContact',
                                                 descending: false
@@ -40,6 +41,7 @@
                     selectedKey="{editPageModel>/actionPriority}"
                     items="{
                                     path: '/opportunityPriorityVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'priority',
                                                 descending: false
@@ -69,6 +71,7 @@
                     selectedKey="{editPageModel>/actionTopic}"
                     items="{
                                     path: '/opportunityTopicsVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false
@@ -86,6 +89,7 @@
                     selectedKey="{editPageModel>/actionTopic}"
                     items="{
                                     path: '/opportunityTopicsVH',
+                                      templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false

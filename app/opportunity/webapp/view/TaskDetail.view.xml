@@ -265,7 +265,7 @@
                             <Table
                                 id="subTaskTable"
                                 items="{
-			path : 'subTaskModel>/subtasks', templateShareable:false,
+			path : 'subTaskModel>/subtasks', templateShareable:true,
 			 sorter:
                                   {
                                                 path: 'subTaskOrder',
@@ -438,7 +438,7 @@
                                                 <menu>
                                                     <Menu
                                                         itemSelected="onMenuAction"
-                                                        items="{path: '/opportunitySubTaskStatus', templateShareable:false}"
+                                                        items="{path: '/opportunitySubTaskStatus', templateShareable:true}"
                                                     >
                                                         <MenuItem
                                                             press="onSubTaskStatusChange"

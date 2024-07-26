@@ -799,6 +799,7 @@
                             mode="Delete"
                             items="{
 		path: 'pageModel>/actionItems',
+          templateShareable: true,
 		sorter: {
 					path: 'actionPriority',
 					descending: false,
