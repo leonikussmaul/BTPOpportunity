@@ -108,41 +108,26 @@ sap.ui.define([
            --------------------------------------------------------------------------------------------------------------*/
 
 
-            onSearch: function (oEvent) {
-                var aFilters = [];
-
-                // Get the selected key from the filter tab bar
-                var sSelectedKey = this.byId("idIconTabBar").getSelectedKey();
-                var bInternalValue = sSelectedKey === "Internal";
-
-                // Add filter for internal/customer mode
-                aFilters.push(new Filter({
-                    path: "internal",
-                    operator: FilterOperator.EQ,
-                    value1: bInternalValue
-                }));
-
-                var sQuery = oEvent.getSource().getValue();
-                if (sQuery && sQuery.length > 0) {
-                    // Create filters for multiple fields with OR condition
-                    var aSearchFilters = [
-                        new Filter({ path: "name", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                        new Filter({ path: "city", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                        new Filter({ path: "country", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                        new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
-                    ];
-
-                    // Combine search filters with OR condition
-                    aFilters.push(new Filter({
-                        filters: aSearchFilters,
-                        and: false
-                    }));
-                }
-
-                var oList = oEvent.getSource().getParent().getParent().getTable();
-                var oBinding = oList.getBinding("items")
-                oBinding.filter(aFilters.length > 1 ? new Filter({ filters: aFilters, and: true }) : aFilters[0], FilterType.Application);
-            },
+           onSearch: function (oEvent) {
+            var sQuery = oEvent.getSource().getValue();
+            var aFilters = [];
+        
+            if (sQuery) {
+                aFilters = [
+                    new Filter({ path: "name", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                    new Filter({ path: "city", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                    new Filter({ path: "country", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                    new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
+                ];
+        
+                aFilters = [new Filter({ filters: aFilters, and: false })];
+            }
+        
+            var oList = oEvent.getSource().getParent().getParent().getTable();
+            var oBinding = oList.getBinding("items");
+            oBinding.filter(aFilters, FilterType.Application);
+        },
+        
 
 
             /* ------------------------------------------------------------------------------------------------------------
@@ -362,37 +347,6 @@ sap.ui.define([
                     }
                 });
             },
-
-            /* ------------------------------------------------------------------------------------------------------------
-            SMARTFILTERBAR
-            --------------------------------------------------------------------------------------------------------------*/
-
-
-
-
-            // addFiltersForSelectedItems: function (oEvent, filterKey) {
-            //     var oSmartFilterBar = this.getView().byId("smartFilterBar");
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     var selectedItems = oSmartFilterBar.getControlByKey(filterKey)?.getSelectedItems() || [];
-            //     selectedItems.forEach(function (oToken) {
-            //         oBindingParams.filters.push(new Filter(filterKey, sap.ui.model.FilterOperator.EQ, oToken.getText()));
-            //     })
-            // },
-
-
-            // onClearSmartFilterBar: function (oEvent) {
-            //     var oSmartFilterBar = oEvent.getSource();
-            //     oEvent.getParameters()[0].selectionSet.forEach(oSelect => {
-            //         if (oSelect.removeAllSelectedItems) {
-            //             oSelect.removeAllSelectedItems(true);
-
-            //         }
-            //     })
-            //     oSmartFilterBar.getControlByKey("opportunityInCRM").setState(false);
-            //     MessageToast.show("All Cleared!");
-
-            // },
-
 
             /* ------------------------------------------------------------------------------------------------------------
                 Dialogs

@@ -155,28 +155,6 @@ sap.ui.define([
             },
 
 
-            // onReadModelData: function (sOppID) {
-            //     return new Promise((resolve, reject) => {
-            //         var oModel = this.getView().getModel();
-            //         var sWorkshopID = sOppID || this.getView().getBindingContext().getObject().workshopID;
-            //         var aFilters = [new Filter("workshopID", FilterOperator.EQ, sWorkshopID)];
-            //         var oPageModel = this.getView().getModel("pageModel");
-
-            //         oModel.read("/GenieAIWorkshop", {
-            //             filters: aFilters,
-            //             success: function (oResponse) {
-
-            //                 resolve();
-            //             }.bind(this),
-            //             error: function (oError) {
-            //                 console.log(oError);
-            //                 reject(oError);
-            //             }
-            //         });
-            //     });
-            // },
-
-
             onDeleteLink: function (oEvent) {
                 var that = this;
                 var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
@@ -250,52 +228,6 @@ sap.ui.define([
                 } else this.ValueStateMethod();
 
             },
-
-
-            // onNavBackPress: function (oEvent) {
-
-            //     // this.oRichTextEditor.destroy();
-            //     var oModel = this.getView().getModel();
-            //     var oHistory = History.getInstance();
-            //     var sPreviousHash = oHistory.getPreviousHash();
-
-            //     var oEditModel = this.getView().getModel("editModel");
-            //     var bEditMode = oEditModel.getProperty("/editMode");
-            //     if (bEditMode) {
-            //         MessageBox.confirm("Discard changes and navigate back?", {
-            //             onClose: function (oAction) {
-            //                 if (oAction === MessageBox.Action.OK) {
-            //                     // If user confirms, navigate back
-            //                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //                     if (sPreviousHash !== undefined) window.history.go(-1);
-            //                    // else oRouter.navTo("GenieAIMain");
-            //                     else oRouter.navTo("GenieAIMain", {
-            //                         type: "Customer"
-            //                     });
-            //                     oEditModel.setProperty("/editMode", false);
-
-            //                     if (oModel.hasPendingChanges()) {
-            //                         oModel.resetChanges();
-            //                         oModel.updateBindings();
-            //                     }
-            //                 }
-            //             }.bind(this)
-            //         });
-            //     } else {
-            //         // If edit mode is disabled, directly navigate back
-            //         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //         if (sPreviousHash !== undefined) window.history.go(-1);
-            //         //else oRouter.navTo("GenieAIMain");
-            //         else oRouter.navTo("GenieAIMain", {
-            //             type: "Customer"
-            //         });
-            //     }
-
-            //     // this.destroyRichTextEditor(); 
-
-            // },
-
-
 
             /* ------------------------------------------------------------------------------------------------------------
             DELETE
@@ -520,9 +452,7 @@ sap.ui.define([
                     _pDialog.destroy();
                 });
                 this._pDialog = null;
-                // var oAddTaskModel = this.getView().getModel("AddTaskModel");
                 var oLocalModel = this.getView().getModel("localModel");
-                //oAddTaskModel.setData({});
                 oLocalModel.setData({});
 
             },
