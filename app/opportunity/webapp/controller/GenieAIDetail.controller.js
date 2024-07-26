@@ -53,40 +53,45 @@ sap.ui.define([
 
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
-                oView.setModel(new sap.ui.model.json.JSONModel({
-                    "countAll": 0,
-                    "countCustomer": 0,
-                    "countInternal": 0
-                }), "genieModel");
+                // oView.setModel(new sap.ui.model.json.JSONModel({
+                //     // "countAll": 0,
+                //     // "countCustomer": 0,
+                //     // "countInternal": 0
+                // }), "genieModel");
             },
 
-
-            // getGenieCount: function () {
-            //     var oModel = this.getView().getModel();
-            //     var oGenieModel = this.getView().getModel("genieModel");
-            //     var oEntitySet = "/GenieAIWorkshop";
-            //     oModel.read(oEntitySet, {
-            //         success: function (oData) {
-
-
-            //             var countCustomer = oData.results.filter(function (item) {
-            //                 return item.internal === false;
-            //             }).length;
-            //             var countInternal = oData.results.filter(function (item) {
-            //                 return item.internal === true;
-            //             }).length;
-
-            //             oGenieModel.setProperty("/countAll", oData.results.length);
-            //             oGenieModel.setProperty("/countCustomer", countCustomer);
-            //             oGenieModel.setProperty("/countInternal", countInternal);
-
-            //         },
-            //         error: function (oError) {
-            //             console.error("Error reading entities: ", oError);
-            //         }
-            //     });
-
-            // },
+            getGenieCount: function () {
+                var oModel = this.getView().getModel();
+                var oGenieModel = this.getOwnerComponent().getModel("genieModel");
+            
+                var aEndpoints = [
+                    { key: "Customer", endpoint: "/GenieAICustomer" },
+                    { key: "Internal", endpoint: "/GenieAIInternal" },
+                    { key: "Partner", endpoint: "/GenieAIPartner" }
+                ];
+            
+                var aPromises = aEndpoints.map(function (oEndpoint) {
+                    return new Promise(function (resolve, reject) {
+                        oModel.read(oEndpoint.endpoint, {
+                            success: function (oData) {
+                                resolve({ key: oEndpoint.key, data: oData });
+                            },
+                            error: function (oError) {
+                                reject(oError);
+                            }
+                        });
+                    });
+                });
+            
+                Promise.all(aPromises).then(function (aResults) {
+                    aResults.forEach(function (oResult) {
+                        oGenieModel.setProperty("/" + oResult.key, oResult.data.results.length);
+                    });
+                }).catch(function (oError) {
+                    console.error("Error reading entities: ", oError);
+                });
+            },
+            
             /* ------------------------------------------------------------------------------------------------------------
             ROUTE MATCHED
             --------------------------------------------------------------------------------------------------------------*/
@@ -127,7 +132,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
-              //  this.getGenieCount();
+              this.getGenieCount();
                 // set segmented button text for current status of opportunity
                     this.setSegButtonText();
                 }).catch(err => {
@@ -531,69 +536,80 @@ sap.ui.define([
                  FAVORITE
                  --------------------------------------------------------------------------------------------------------------*/
 
-            onFavoriteObjectPress: function (oEvent) {
-                var that = this;
-                var oView = this.getView();
-                var oBinding = oView.getBindingContext();
-                var sPath = oBinding.getPath();
-                var oContext = oView.getBindingContext().getObject();
-
-                var isFavorite = oContext.isFavorite;
-
-                if (isFavorite === true) {
-                    isFavorite = false;
-                    // removeFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                } else {
-                    isFavorite = true;
-                    // addFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                }
-            },
-
-            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                //post isFavorite 
-                var that = this;
-                if (isFavorite === true) {
-                    oContext.isFavorite = true;
-                } else {
-                    oContext.isFavorite = false;
-                }
-
-                var oPayload = { "isFavorite": oContext.isFavorite };
-
-                var oModel = this.getView().getModel();
-                oModel.update(sPath, oPayload, {
-                    success: function () {
-                        var sMessage = "";
-                        if (isFavorite === true) {
-                            sMessage = "'" + oContext.account + "' added to favorites";
-                        } else {
-                            sMessage = "'" + oContext.account + "' removed from favorites";
-                        }
-                        MessageToast.show(sMessage);
-                    },
-                    error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
+                 onFavoriteToolbarPress: function (oEvent) {
+                    var oBtn = oEvent.getSource();
+                    var bToggle = oBtn.getPressed();
+    
+                    if (bToggle) {
+                        oBtn.setIcon('sap-icon://favorite');
+                    } else {
+                        oBtn.setIcon('sap-icon://unfavorite');
                     }
-                });
+    
+                    var aFilters = [];
+    
+                    if (bToggle) {
+                        aFilters.push(new sap.ui.model.Filter({
+                            path: "isFavorite",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: true
+                        }));
+                    }
+    
+                    var oList = oEvent.getSource().getParent().getParent().getTable();
+                    var oBinding = oList.getBinding("items");
+                    oBinding.filter(aFilters);
+                },
+    
+    
+                onFavoritePress: function (oEvent) {
+                    var that = this;
+                    var oIcon = oEvent.getSource();
+                    var oBinding = oIcon.getBindingContext();
+                    var sPath = oBinding.getPath();
+                    var oContext = oIcon.getBindingContext().getObject();
+    
+                    var isFavorite = oContext.isFavorite;
+    
+                    if (isFavorite === true) {
+                        isFavorite = false;
+                        // removeFavourite
+                        that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                    } else {
+                        isFavorite = true;
+                        // addFavourite
+                        that.postFavouriteCustomer(isFavorite, oContext, sPath);
+                    }
+                },
+    
+                postFavouriteCustomer: function (isFavorite, oContext, sPath) {
+                    //post isFavorite 
+                    if (isFavorite === true) {
+                        oContext.isFavorite = true;
+                    } else {
+                        oContext.isFavorite = false;
+                    }
+                    delete oContext.links;
+                    delete oContext.__metadata;
+    
+                    var oModel = this.getView().getModel();
+                    oModel.update(sPath, oContext, {
+                        success: function () {
+                            var sMessage = "";
+                            if (isFavorite === true) {
+                                sMessage = "'" + oContext.name + "' added to favorites";
+                            } else {
+                                sMessage = "'" + oContext.name + "' removed from favorites";
+                            }
+                            MessageToast.show(sMessage);
+                        },
+                        error: function (oError) {
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageToast.show(sMessage);
+                        }
+                    });
+                },
 
-            },
-
-
-            //checkbox
-            // onCRMCheckboxSelect: function (oEvent) {
-            //     this.onSetEditPageModel();
-            //     var oEditModel = this.getView().getModel("editModel");
-            //     var oEditPageModel = this.getView().getModel("editPageModel")
-            //     var oCheckBox = oEvent.getSource();
-            //     var bSelected = oCheckBox.getSelected();
-            //     var sText = bSelected ? "Yes" : "No";
-            //     oCheckBox.setText(sText);
-            //     oEditModel.setProperty("/editMode", true);
-            //     oEditPageModel.setProperty("/opportunityInCRM", sText);
-            // },
 
             onFullScreenButtonPress: function (oEvent) {
                 var oDialog = oEvent.getSource().getParent().getParent();
@@ -728,7 +744,7 @@ sap.ui.define([
                         success: function (oData, response) {
 
                             MessageToast.show("New Genie AI Lead created!");
-                            //that.getGenieCount();
+                            that.getGenieCount();
                             that.onCloseWizardPress(oEvent);
                             that.getView().setBusy(false);
                         },

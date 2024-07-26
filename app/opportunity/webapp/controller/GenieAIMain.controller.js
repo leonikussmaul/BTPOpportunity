@@ -42,15 +42,15 @@ sap.ui.define([
                 oView.setModel(new sap.ui.model.json.JSONModel(oValueState), "valueState");
 
 
-                oView.setModel(new sap.ui.model.json.JSONModel({
-                    "countAll": 0,
-                    "countCustomer": 0,
-                    "countInternal": 0,
-                    "countPartner": 0,
-                    "customerSelected": false,
-                    "partnerSelected": false,
-                    "internalSelected": false
-                }), "genieModel");
+                // oView.setModel(new sap.ui.model.json.JSONModel({
+                //     "countAll": 0,
+                //     "countCustomer": 0,
+                //     "countInternal": 0,
+                //     "countPartner": 0,
+                //     "customerSelected": false,
+                //     "partnerSelected": false,
+                //     "internalSelected": false
+                // }), "genieModel");
 
             },
 
@@ -64,32 +64,38 @@ sap.ui.define([
                 });
             },
 
-            // getGenieCount: function () {
-            //     var oModel = this.getView().getModel();
-            //     var oGenieModel = this.getOwnerComponent().getModel("genieModel");
-            //     var oEntitySet = "/GenieAIWorkshop";
-            //     oModel.read(oEntitySet, {
-            //         success: function (oData) {
-
-
-            //             var countCustomer = oData.results.filter(function (item) {
-            //                 return item.internal === false;
-            //             }).length;
-            //             var countInternal = oData.results.filter(function (item) {
-            //                 return item.internal === true;
-            //             }).length;
-
-            //             oGenieModel.setProperty("/countAll", oData.results.length);
-            //             oGenieModel.setProperty("/countCustomer", countCustomer);
-            //             oGenieModel.setProperty("/countInternal", countInternal);
-
-            //         },
-            //         error: function (oError) {
-            //             console.error("Error reading entities: ", oError);
-            //         }
-            //     });
-
-            // },
+            getGenieCount: function () {
+                var oModel = this.getView().getModel();
+                var oGenieModel = this.getOwnerComponent().getModel("genieModel");
+            
+                var aEndpoints = [
+                    { key: "Customer", endpoint: "/GenieAICustomer" },
+                    { key: "Internal", endpoint: "/GenieAIInternal" },
+                    { key: "Partner", endpoint: "/GenieAIPartner" }
+                ];
+            
+                var aPromises = aEndpoints.map(function (oEndpoint) {
+                    return new Promise(function (resolve, reject) {
+                        oModel.read(oEndpoint.endpoint, {
+                            success: function (oData) {
+                                resolve({ key: oEndpoint.key, data: oData });
+                            },
+                            error: function (oError) {
+                                reject(oError);
+                            }
+                        });
+                    });
+                });
+            
+                Promise.all(aPromises).then(function (aResults) {
+                    aResults.forEach(function (oResult) {
+                        oGenieModel.setProperty("/" + oResult.key, oResult.data.results.length);
+                    });
+                }).catch(function (oError) {
+                    console.error("Error reading entities: ", oError);
+                });
+            },
+            
 
             _onRoutePatternMatched: function (oEvent) {
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
@@ -104,7 +110,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
                 this.getView().byId("idIconTabBar").setSelectedKey(sKey);
 
-                //this.getGenieCount();
+                this.getGenieCount();
             },
 
             /* ------------------------------------------------------------------------------------------------------------
@@ -267,7 +273,7 @@ sap.ui.define([
                         success: function (oData, response) {
 
                             MessageToast.show("New Genie AI Lead created!");
-                            //that.getGenieCount();
+                            that.getGenieCount();
                             that.onCloseWizardPress(oEvent);
                             that.getView().setBusy(false);
                         },
@@ -355,7 +361,7 @@ sap.ui.define([
                             oModel.remove(sPath, {
                                 success: function () {
                                     sap.m.MessageToast.show("Item deleted successfully.");
-                                    // that.getGenieCount();
+                                    that.getGenieCount();
                                 },
                                 error: function (oError) {
                                     var sMessage = JSON.parse(oError.responseText).error.message.value;
@@ -442,7 +448,6 @@ sap.ui.define([
             --------------------------------------------------------------------------------------------------------------*/
             onFavoriteToolbarPress: function (oEvent) {
                 var oBtn = oEvent.getSource();
-                var bInternal = this.getOwnerComponent().getModel("genieModel").getProperty("/internalMode");
                 var bToggle = oBtn.getPressed();
 
                 if (bToggle) {
@@ -453,14 +458,6 @@ sap.ui.define([
 
                 var aFilters = [];
 
-                // Always include internal filter
-                aFilters.push(new sap.ui.model.Filter({
-                    path: "internal",
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    value1: bInternal
-                }));
-
-                // Only include isFavorite filter when toggle is pressed (on)
                 if (bToggle) {
                     aFilters.push(new sap.ui.model.Filter({
                         path: "isFavorite",
@@ -497,27 +494,22 @@ sap.ui.define([
 
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 //post isFavorite 
-                var that = this;
-                var sName;
                 if (isFavorite === true) {
                     oContext.isFavorite = true;
                 } else {
                     oContext.isFavorite = false;
                 }
-
                 delete oContext.links;
+                delete oContext.__metadata;
 
-                var bInternal = this.getOwnerComponent().getModel("genieModel").getProperty("/internalMode");
-                if (bInternal) sName = oContext.contactName;
-                else sName = oContext.accountName;
                 var oModel = this.getView().getModel();
                 oModel.update(sPath, oContext, {
                     success: function () {
                         var sMessage = "";
                         if (isFavorite === true) {
-                            sMessage = "'" + sName + "' added to favorites";
+                            sMessage = "'" + oContext.name + "' added to favorites";
                         } else {
-                            sMessage = "'" + sName + "' removed from favorites";
+                            sMessage = "'" + oContext.name + "' removed from favorites";
                         }
                         MessageToast.show(sMessage);
                     },
@@ -526,9 +518,7 @@ sap.ui.define([
                         sap.m.MessageToast.show(sMessage);
                     }
                 });
-
             },
-
 
             /* ------------------------------------------------------------------------------------------------------------
            VALUE STATE

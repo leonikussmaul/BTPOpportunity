@@ -84,7 +84,7 @@
                             <IconTabFilter
                                 icon="sap-icon://da-2"
                                 iconColor="Default"
-                                count="{genieModel>/countCustomer}"
+                                count="{genieModel>/Customer}"
                                 text="Customer" 
                                 key="Customer"
                             >
@@ -278,7 +278,7 @@
                              <IconTabFilter
                                 icon="sap-icon://decision"
                                 iconColor="Critical"
-                                count="{genieModel>/countPartner}"
+                                count="{genieModel>/Partner}"
                                 text="Partner"
                                 key="Partner"
                             >
@@ -443,7 +443,7 @@
                             <IconTabFilter
                                 icon="sap-icon://education"
                                 iconColor="Positive"
-                                count="{genieModel>/countInternal}"
+                                count="{genieModel>/Internal}"
                                 text="Internal"
                                 key="Internal"
                             >
