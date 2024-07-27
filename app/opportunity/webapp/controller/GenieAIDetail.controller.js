@@ -321,7 +321,7 @@ sap.ui.define([
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
                     delete oData.__metadata;
-
+                    delete oData.ID; 
                     var sPath = this.getView().getBindingContext().sPath;
                     oModel.update(sPath, oData, {
                         success: function () {
