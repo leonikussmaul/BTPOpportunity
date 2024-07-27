@@ -95,6 +95,7 @@ sap.ui.define([
             _onRoutePatternMatched: function (oEvent) {
                 var oModel = this.getView().getModel();
                 var sWorkshopID = oEvent.getParameter("arguments").workshopID || this.getOwnerComponent().getModel("userModel").getProperty("/workshopID");
+                var sType = oEvent.getParameter("arguments").workshopType;
                 this.getOwnerComponent().getModel("userModel").setProperty("/workshopID", sWorkshopID);
 
                 var sKey = oEvent.getParameters().arguments.type;
@@ -115,7 +116,7 @@ sap.ui.define([
                 // wait for async calls 
                 Promise.all([
                     this.onFilterLinkList(sWorkshopID),
-                    this.onFilterParticipants(sWorkshopID, sKey),
+                    this.onFilterParticipants(sWorkshopID, sType),
                 ]).then(() => {
 
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
@@ -148,31 +149,31 @@ sap.ui.define([
                 });
             },
 
-          
-            onFilterParticipants: function (sWorkshopID, sKey) {
+
+            onFilterParticipants: function (sWorkshopID, sType) {
                 return new Promise((resolve, reject) => {
                     try {
-                        // var bindingPaths = {
-                        //     "Internal": "/GenieAIInternal",
-                        //     "Customer": "/GenieAICustomer",
-                        //     "Partner": "/GenieAIPartner"
-                        // };
-                        // var sBindingPath = bindingPaths[sKey];
-            
+                        var bindingPaths = {
+                            "Internal": "/GenieAIInternal",
+                            "Customer": "/GenieAICustomer",
+                            "Partner": "/GenieAIPartner"
+                        };
+                        var sBindingPath = bindingPaths[sType];
+
                         var oTemplate = new sap.m.ColumnListItem({
                             type: "Active",
-                           // press: this.onSelectParticipant.bind(this),
+                            // press: this.onSelectParticipant.bind(this),
                             cells: [
                                 new sap.m.Text({ text: "{name}" }),
                                 new sap.m.Text({ text: "{type}" })
                             ]
                         });
-            
+
                         var oSorter = new sap.ui.model.Sorter("name", true);
                         var oFilter = new sap.ui.model.Filter("ID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);
-            
+
                         this.getView().byId("participantTable").bindAggregation("items", {
-                            path: "/GenieAIInternal",
+                            path: sBindingPath,
                             template: oTemplate,
                             sorter: oSorter,
                             filters: oFilter
@@ -183,7 +184,44 @@ sap.ui.define([
                     }
                 });
             },
-            
+
+            onDeleteParticipant: function (oEvent) {
+                var that = this;
+                var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
+                var sPath = oBindingContext.getPath();
+                var sName = oBindingContext.getProperty("name");
+
+                MessageBox.warning("Are you sure you want to remove the participant '" + sName + "'?", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            var oData = {
+                                ID_workshopID: null
+                            }
+                            //  oData.ID_workshopID = null; 
+                            oModel.update(sPath, oData, {
+                                success: function () {
+                                    // that.onCancelDialogPress();
+                                    oModel.refresh();
+                                    that.getView().setBusy(false);
+                                    MessageToast.show("Participant removed successfully.");
+                                },
+                                error: function (oError) {
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageBox.error(sMessage);
+                                    that.getView().setBusy(false);
+
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+
+
 
             onDeleteLink: function (oEvent) {
                 var that = this;
@@ -213,6 +251,8 @@ sap.ui.define([
                     }
                 });
             },
+
+
 
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
@@ -261,38 +301,49 @@ sap.ui.define([
                 } else this.ValueStateMethod();
 
             },
-            onSubmitNewParticipant: function(oEvent){
+            onSubmitNewParticipant: function (oEvent) {
                 var that = this;
-                // var oEditModel = this.getView().getModel("editModel");
-                // var oModel = this.getView().getModel();
-
                 var oData = this.getView().getModel("editPageModel").getData();
+                var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
+                var oObject, sPath;
 
-                if (oData.ID_workshopID) {
-                    this.resetValueState();
-                    that.getView().setBusy(true);
+                this.getView().setBusy(true);
 
-                    // oData.ID_workshopID;
+                switch (sKey) {
+                    case "Internal":
+                        oObject = sap.ui.getCore().byId("selectParticipant").getBindingContext().getObject();
+                        oData.ID_workshopID = oObject.workshopID;
+                        sPath = "/GenieAIInternal(guid'" + oData.workshopID + "')";
+                        break;
+                    case "Customer":
+                        oObject = sap.ui.getCore().byId("selectCustomer").getBindingContext().getObject();
+                        oData.ID_workshopID = oObject.workshopID;
+                        sPath = "/GenieAICustomer(guid'" + oData.workshopID + "')";
+                        break;
+                    case "Partner":
+                        oObject = sap.ui.getCore().byId("selectPartner").getBindingContext().getObject();
+                        oData.ID_workshopID = oObject.workshopID;
+                        sPath = "/GenieAIPartner(guid'" + oData.workshopID + "')";
+                        break;
+                }
 
-                    var sPath = this.getView().getBindingContext().sPath;
-                    oModel.update("/GenieAIInternal", oData, {
-                        success: function () {
-                            MessageToast.show(oData.name + "has been added!");
-                            oModel.refresh();
-                            that.getView().setBusy(false);
-                        },
-                        error: function (oError) {
-                            var sMessage = JSON.parse(oError.responseText).error.message.value;
-                            sap.m.MessageBox.error(sMessage);
-                            that.getView().setBusy(false);
+                delete oData.ID;
 
-                        }
-                    });
-
-                } else this.ValueStateMethod();
-
-
+                this.getView().getModel().update(sPath, oData, {
+                    success: function () {
+                        that.onCancelDialogPress();
+                        that.getView().getModel().refresh();
+                        that.getView().setBusy(false);
+                        MessageToast.show("Participant has been added!");
+                    },
+                    error: function (oError) {
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+                        that.getView().setBusy(false);
+                    }
+                });
             },
+
 
             /* ------------------------------------------------------------------------------------------------------------
             DELETE
@@ -371,8 +422,8 @@ sap.ui.define([
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
                     delete oData.__metadata;
-                    delete oData.customerAttendees; 
-                    delete oData.internalAttendees; 
+                    delete oData.customerAttendees;
+                    delete oData.internalAttendees;
                     delete oData.partnerAttendees;
 
                     var sPath = this.getView().getBindingContext().sPath;
@@ -674,6 +725,23 @@ sap.ui.define([
                 library.URLHelper.redirect(sLink, true);
             },
 
+            onTypeSelectionChange: function (oEvent) {
+                var sKey = oEvent.getParameters().item.getKey();
+                if (sKey === "Customer") {
+                    sap.ui.getCore().byId("selectCustomer").setVisible(true);
+                    sap.ui.getCore().byId("selectParticipant").setVisible(false);
+                    sap.ui.getCore().byId("selectPartner").setVisible(false);
+                } else if (sKey === "Partner") {
+                    sap.ui.getCore().byId("selectCustomer").setVisible(false);
+                    sap.ui.getCore().byId("selectParticipant").setVisible(false);
+                    sap.ui.getCore().byId("selectPartner").setVisible(true);
+                } else if (sKey === "Internal") {
+                    sap.ui.getCore().byId("selectCustomer").setVisible(false);
+                    sap.ui.getCore().byId("selectParticipant").setVisible(true);
+                    sap.ui.getCore().byId("selectPartner").setVisible(false);
+                }
+
+            },
 
         });
     });

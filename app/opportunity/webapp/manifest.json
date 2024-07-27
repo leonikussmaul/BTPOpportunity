@@ -181,7 +181,7 @@
                 },
                 {
                     "name": "GenieAIWorkshop",
-                    "pattern": "GenieAIWorkshop/{type}/{workshopID}/{layout}",
+                    "pattern": "GenieAIWorkshop/{type}/{workshopType}/{workshopID}/{layout}",
                     "target": [
                         "GenieAIMain",
                         "GenieAIWorkshop"

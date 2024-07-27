@@ -137,18 +137,23 @@ sap.ui.define([
                 var sKey = this.getView().byId("idIconTabBar").getSelectedKey();
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
                 var sView; 
-                if (sKey === "Workshops") sView = "GenieAIWorkshop";
-                else sView = "GenieAIDetail";
-
-                  
+                if (sKey === "Workshops") {
+                    sView = "GenieAIWorkshop";
+                    oRouter.navTo(sView, {
+                        type: sKey,
+                        workshopType: oEvent.getParameters().listItem.getBindingContext().getObject().workshopType,
+                        workshopID: selectedItem.workshopID,
+                        layout: "TwoColumnsMidExpanded"
+                    });
+                }
+                else {
+                    sView = "GenieAIDetail";
                     oRouter.navTo(sView, {
                         type: sKey,
                         workshopID: selectedItem.workshopID,
                         layout: "TwoColumnsMidExpanded"
                     });
-                
-
-
+                }
 
                 var userModel = this.getOwnerComponent().getModel("userModel");
                 userModel.setProperty("/workshopID", selectedItem.workshopID);

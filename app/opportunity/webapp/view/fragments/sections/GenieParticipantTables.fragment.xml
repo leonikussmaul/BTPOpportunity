@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+>
+    <Table
+        id="participantTable"
+        items="{}"
+        mode="Delete"
+        includeItemInSelection="true"
+        selectionChange="onSelectParticipant"
+        delete="onDeleteParticipant"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <content>
+                    <Title
+                        text="Registered ({participants})"
+                        level="H5"
+                    />
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="Add"
+                        press="onAddParticipant"
+                    />
+                </content>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column>
+                <header>
+                    <Text text="Name" />
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Text text="Type" />
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Text text="Location" />
+                </header>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem
+                type="Active"
+                press="onSelectParticipant"
+            >
+                <cells>
+                    <Text text="{name}" />
+                    <Text text="{type}" />
+
+                    <Text
+                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                        tooltip="{country}"
+                    />
+                </cells>
+            </ColumnListItem>
+        </items>
+        <noData>
+            <IllustratedMessage
+                enableVerticalResponsiveness="true"
+                illustrationType="sapIllus-Tent"
+                title="No Participants Found"
+                description="Start by adding a participant to the workshop"
+            />
+        </noData>
+    </Table>
+</core:FragmentDefinition>

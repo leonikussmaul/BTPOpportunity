@@ -32,8 +32,8 @@
                 singleContainerFullSize="false"
             >
                 <SegmentedButton
-                    id="segmentedWorkshopBtn"
-                    selectedKey="Internal"
+                    id="segmentedWorkshopBtn" enabled="false"
+                    selectedKey="{workshopType}" selectionChange="onTypeSelectionChange"
                 >
                     <items>
                         <SegmentedButtonItem
@@ -62,9 +62,10 @@
                     required="true"
                 />
                 <Select
+                id="selectParticipant"  visible="{= ${workshopType} === 'Internal' ? true : false }" 
                     valueState="{valueState>/valueState}" 
                 valueStateText="{valueState>/valueStateText}"
-                    selectedKey="{editPageModel>/ID_workshopID}"
+                    selectedKey="{editPageModel>/workshopID}"
                     items="{
                                     path: '/GenieAIInternal',
                                       templateShareable: true,
@@ -75,7 +76,47 @@
                                     }"
                 >
                     <core:Item
-                        key="{ID_workshopID}"
+                        key="{workshopID}"
+                        text="{name}"
+                    />
+                </Select>
+
+                   <Select
+                id="selectCustomer" visible="{= ${workshopType} === 'Customer' ? true : false }" 
+                    valueState="{valueState>/valueState}" 
+                valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{editPageModel>/ID}"
+                    items="{
+                                    path: '/GenieAICustomer',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'name',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{workshopID}"
+                        text="{name}"
+                    />
+                </Select>
+
+                   <Select
+                id="selectPartner" visible="{= ${workshopType} === 'Partner' ? true : false }" 
+                    valueState="{valueState>/valueState}" 
+                valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{editPageModel>/ID}"
+                    items="{
+                                    path: '/GenieAIPartner',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'name',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{workshopID}"
                         text="{name}"
                     />
                 </Select>

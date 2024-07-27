@@ -371,7 +371,11 @@
                                 </noData>
                             </List> -->
 
-                            <Table
+ <core:Fragment
+                                fragmentName="opportunity.opportunity.view.fragments.sections.GenieParticipantTables"
+                                type="XML"
+                            />
+                            <!-- <Table
                                 id="participantTable"
                                 items="{}"
                                 mode="Delete"
@@ -383,7 +387,7 @@
                                     <OverflowToolbar>
                                         <content>
                                             <Title
-                                                text="'{name}' Registry"
+                                                text="Registered ({participants})"
                                                 level="H5"
                                             />
                                             <ToolbarSpacer />
@@ -436,7 +440,7 @@
                                         description="Start by adding a participant to the workshop"
                                     />
                                 </noData>
-                            </Table>
+                            </Table> -->
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
