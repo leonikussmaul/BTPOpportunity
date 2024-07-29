@@ -27,20 +27,18 @@ entity opportunityHeader {
         opportunityInCRM          : String(3);
         noteText                  : String(5000);
         noteDate                  : Date;
-        actionItems               : Composition of many opportunityActionItems
-                                        on actionItems.opptID = $self;
         topics                    : Composition of many opportunityTopics
                                         on topics.opptID = $self;
         deliverables              : Composition of many opportunityDeliverables
                                         on deliverables.opptID = $self;
-        comments                  : Composition of many opportunityComments
-                                        on comments.opptID = $self;
         maturity                  : Composition of many opportunityMaturity
                                         on maturity.opptID = $self;
         links                     : Composition of many opportunityLinks
                                         on links.opptID = $self;
         nextSteps                 : Composition of many opportunityNextSteps
                                         on nextSteps.opptID = $self;
+        subTasks               : Composition of many opportunitySubTasks
+                                        on subTasks.opportunityID = $self;
 };
 
 
@@ -57,8 +55,6 @@ entity opportunityActionItems {
         actionTopic          : String(255);
         actionPriority       : String(10);
         actionPriorityNumber : Integer;
-        subTasks             : Composition of many opportunitySubTasks
-                                   on subTasks.opptID = $self;
         comments             : Composition of many opportunityTasksComments
                                    on comments.opptID = $self;
         links                : Composition of many opportunityTasksLinks
@@ -69,7 +65,6 @@ entity opportunityActionItems {
 entity opportunitySubTasks {
     key ID                      : UUID;
         opportunityID           : Association to opportunityHeader;
-        opptID                  : Association to opportunityActionItems;
         subTaskDescription      : String(5000);
         subTask                 : String(5000);
         subTaskDueDate          : Date;
@@ -100,16 +95,6 @@ entity opportunityMaturity {
         topic    : String(255);
         maturity : Integer;
         comment  : String(800);
-};
-
-@cds.autoexpose
-entity opportunityComments {
-    key ID       : UUID;
-        opptID   : Association to opportunityHeader;
-        comment  : String(5000);
-        postedBy : String(20);
-        postedOn : DateTime;
-        imageSrc : String(255);
 };
 
 @cds.autoexpose
