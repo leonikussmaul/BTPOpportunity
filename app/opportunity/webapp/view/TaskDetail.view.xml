@@ -19,6 +19,7 @@
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 >
+<!-- co-author -->
     <Page
         id="TaskDetail"
         showHeader="false"
