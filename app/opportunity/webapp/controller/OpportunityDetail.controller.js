@@ -70,7 +70,7 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: "/opportunityHeader/" + sOpportunityID,
                     parameters: {
-                        expand: "actionItems,comments,deliverables,links"
+                        expand: "deliverables,links"
                     }
                 });
 
@@ -81,7 +81,6 @@ sap.ui.define([
 
                 // wait for async calls 
                 Promise.all([
-                    this.onFilterComments(sOpportunityID),
                     this.onFilterLinkList(sOpportunityID),
                     this.onFilterNextSteps(sOpportunityID),
                     this.onReadModelData(sOpportunityID),
@@ -107,27 +106,6 @@ sap.ui.define([
                 });
             },
 
-            onFilterComments: function (sOpportunityID) {
-                return new Promise((resolve, reject) => {
-                    try {
-                        var oList = this.getView().byId("opportunityComments");
-                        var commentTemp = this.getView().byId("commentItem");
-                        var oSorter = new sap.ui.model.Sorter("postedOn", true);
-
-                        var aCommentFilters = new Filter("opptID_opportunityID", FilterOperator.EQ, sOpportunityID);
-                        oList.bindAggregation("items", {
-                            template: commentTemp,
-                            path: "/opportunityComments",
-                            sorter: oSorter,
-                            filters: aCommentFilters
-                        });
-                        oList.updateBindings();
-                        resolve();
-                    } catch (error) {
-                        reject(error);
-                    }
-                });
-            },
 
             onFilterLinkList: function (sOpportunityID) {
                 return new Promise((resolve, reject) => {
@@ -175,14 +153,15 @@ sap.ui.define([
 
                     oModel.read("/opportunityHeader", {
                         urlParameters: {
-                            "$expand": "actionItems/subTasks,topics,deliverables,maturity"
+                            // "$expand": "actionItems/subTasks,topics,deliverables,maturity"
+                             "$expand": "topics,deliverables,maturity"
                         },
                         filters: aFilters,
                         success: function (oResponse) {
-                            var aTasks = oResponse.results[0].actionItems.results;
+                           // var aTasks = oResponse.results[0].actionItems.results;
                             var aTopics = oResponse.results[0].topics.results;
                             var aDeliverables = oResponse.results[0].deliverables.results;
-                            oPageModel.setProperty("/actionItems", aTasks);
+                           // oPageModel.setProperty("/actionItems", aTasks);
                             oPageModel.setProperty("/topics", aTopics);
                             oPageModel.setProperty("/deliverables", aDeliverables);
                             resolve();
@@ -1395,58 +1374,6 @@ sap.ui.define([
                 oTable.getBinding("items").filter(oFilter);
             },
 
-            /* ------------------------------------------------------------------------------------------------------------
-COMMENTS
-   --------------------------------------------------------------------------------------------------------------*/
-
-
-            onPostComment: function (oEvent) {
-                var that = this;
-                var oValue = oEvent.mParameters.value;
-                this.customerID = this.getView().getBindingContext().getObject().opportunityID;
-                var sPostedBy = this.getOwnerComponent().getModel("user").getProperty("/firstname");
-
-                var oPayload = {
-                    comment: oValue,
-                    postedBy: sPostedBy,
-                    postedOn: UI5Date.getInstance(),
-                    opptID_opportunityID: this.customerID
-                }
-                that.getView().setBusy(true);
-                var oModel = that.getView().getModel();
-                oModel.create("/opportunityComments", oPayload, {
-                    success: function (oData, response) {
-                        MessageToast.show("New comment added!");
-                        that.getView().setBusy(false);
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-
-                    }
-                });
-
-            },
-
-            onDeleteComment: function (oEvent) {
-                var that = this;
-                this.customerID = this.getView().getBindingContext().getObject().opportunityID;
-                var sPath = oEvent.mParameters.listItem.getBindingContext().sPath;
-                that.getView().setBusy(true);
-                var oModel = that.getView().getModel();
-                oModel.remove(sPath, {
-                    success: function () {
-                        sap.m.MessageToast.show("Comment has been deleted");
-                        that.getView().setBusy(false);
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
-                    }
-                });
-            },
 
             onBeforeRebindActivitiesTable: function (oEvent) {
 

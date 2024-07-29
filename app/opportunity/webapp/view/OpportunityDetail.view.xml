@@ -26,14 +26,6 @@
         showHeader="false"
     >
         <content>
-            <f:SidePanel
-                id="mySidePanel"
-                sidePanelResizable="true"
-                sidePanelMinWidth="30rem"
-                sidePanelWidth="20rem"
-                toggle="onSidePanelToggle"
-            >
-                <f:mainContent>
                     <u:ObjectPageLayout
                         id="ObjectPageLayout"
                         showTitleInHeaderContent="true"
@@ -465,7 +457,63 @@
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
 
+
+                            <!-- links -->
+
                             <u:ObjectPageSection
+                                id="idSectionLinks"
+                                titleUppercase="false"
+                                title="{i18n>Links}"
+                            >
+                                <u:ObjectPageSubSection id="idSubSectionLinks">
+                                    <List
+                                        id="linkList"
+                                        items="{}"
+                                        mode="Delete"
+                                        includeItemInSelection="true"
+                                        selectionChange="onSelectLink"
+                                        delete="onDeleteLink"
+                                    >
+                                        <headerToolbar>
+                                            <OverflowToolbar>
+                                                <content>
+                                                    <Title
+                                                        text="Respository"
+                                                        level="H5"
+                                                    />
+                                                    <ToolbarSpacer />
+                                                    <Button
+                                                        type="Accept"
+                                                        text="Add"
+                                                        press="onAddNewLink"
+                                                    />
+                                                </content>
+                                            </OverflowToolbar>
+                                        </headerToolbar>
+                                        <StandardListItem
+                                            press="onSelectLink"
+                                            type="Active"
+                                            id="linkListItem"
+                                            title="{linkName}"
+                                            description="{linkDescription}"
+                                            icon="sap-icon://chain-link"
+                                            iconDensityAware="true"
+                                            iconInset="true"
+                                        />
+                                        <noData>
+                                            <!-- Illustrated message when there is no data -->
+                                            <IllustratedMessage
+                                                enableVerticalResponsiveness="true"
+                                                illustrationType="sapIllus-SearchFolder"
+                                                title="No Links Found"
+                                                description="Start by adding a link to the repository"
+                                            />
+                                        </noData>
+                                    </List>
+                                </u:ObjectPageSubSection>
+                            </u:ObjectPageSection>
+
+                            <!-- <u:ObjectPageSection
                                 id="idSectionActivities"
                                 titleUppercase="false"
                                 title="{i18n>Activities}"
@@ -576,82 +624,8 @@
                                         </Table>
                                     </smartTable:SmartTable>
                                 </u:ObjectPageSubSection>
-                            </u:ObjectPageSection>
+                            </u:ObjectPageSection> -->
 
-                            <u:ObjectPageSection
-                                id="idSectionNotes"
-                                titleUppercase="false"
-                                title="{i18n>Notes}"
-                            >
-                                <u:ObjectPageSubSection id="idSubSectionNotes">
-                                    <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
-                                    <rte:RichTextEditor
-                                        value="{noteText}"
-                                        id="editRTE"
-                                        height="400px"
-                                        width="100%"
-                                        showGroupFont="true"
-                                        showGroupLink="true"
-                                        showGroupUndo="true"
-                                        editable="{editModel>/editMode}"
-                                    />
-                                </u:ObjectPageSubSection>
-                            </u:ObjectPageSection>
-
-                            <!-- links -->
-
-                            <u:ObjectPageSection
-                                id="idSectionLinks"
-                                titleUppercase="false"
-                                title="{i18n>Links}"
-                            >
-                                <u:ObjectPageSubSection id="idSubSectionLinks">
-                                    <List
-                                        id="linkList"
-                                        items="{}"
-                                        mode="Delete"
-                                        includeItemInSelection="true"
-                                        selectionChange="onSelectLink"
-                                        delete="onDeleteLink"
-                                    >
-                                        <headerToolbar>
-                                            <OverflowToolbar>
-                                                <content>
-                                                    <Title
-                                                        text="Respository"
-                                                        level="H5"
-                                                    />
-                                                    <ToolbarSpacer />
-                                                    <Button
-                                                        type="Accept"
-                                                        text="Add"
-                                                        press="onAddNewLink"
-                                                    />
-                                                </content>
-                                            </OverflowToolbar>
-                                        </headerToolbar>
-                                        <StandardListItem
-                                            press="onSelectLink"
-                                            type="Active"
-                                            id="linkListItem"
-                                            title="{linkName}"
-                                            description="{linkDescription}"
-                                            icon="sap-icon://chain-link"
-                                            iconDensityAware="true"
-                                            iconInset="true"
-                                        />
-                                        <noData>
-                                            <!-- Illustrated message when there is no data -->
-                                            <IllustratedMessage
-                                                enableVerticalResponsiveness="true"
-                                                illustrationType="sapIllus-SearchFolder"
-                                                title="No Links Found"
-                                                description="Start by adding a link to the repository"
-                                            />
-                                        </noData>
-                                    </List>
-                                </u:ObjectPageSubSection>
-                            </u:ObjectPageSection>
 
                             <!-- <u:ObjectPageSection
                                                 id="idSmartChartSection"
@@ -786,232 +760,31 @@
                                     </VBox>
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
+
+                              <u:ObjectPageSection
+                                id="idSectionNotes"
+                                titleUppercase="false"
+                                title="{i18n>Notes}"
+                            >
+                                <u:ObjectPageSubSection id="idSubSectionNotes">
+                                    <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
+                                    <rte:RichTextEditor
+                                        value="{noteText}"
+                                        id="editRTE"
+                                        height="1500px"
+                                        width="100%"
+                                        showGroupFont="true"
+                                        showGroupLink="true"
+                                        showGroupUndo="true"
+                                        editable="{editModel>/editMode}"
+                                    />
+                                </u:ObjectPageSubSection>
+                            </u:ObjectPageSection>
+
+
                         </u:sections>
                     </u:ObjectPageLayout>
-                </f:mainContent>
-                <f:items>
-                    <f:SidePanelItem
-                        icon="sap-icon://activities"
-                        text="{i18n>Tasks}"
-                    >
-                        <f:GridList
-                            id="gridList"
-                            mode="Delete"
-                            items="{
-		path: 'pageModel>/actionItems',
-          templateShareable: true,
-		sorter: {
-					path: 'actionPriority',
-					descending: false,
-					group: true
-				}
-		}"
-                            selectionChange="onSelectionChange"
-                            class="sapUiResponsiveContentPadding"
-                            sticky="ColumnHeaders,HeaderToolbar"
-                            delete="onGridListItemDelete"
-                            noDataText="No Tasks Found"
-                        >
-                            <f:dragDropConfig>
-                                <dnd:DragInfo sourceAggregation="items" />
-                                <dnd-grid:GridDropInfo
-                                    targetAggregation="items"
-                                    dropPosition="Between"
-                                    dropLayout="Horizontal"
-                                    drop="onDrop"
-                                />
-                            </f:dragDropConfig>
-                            <f:headerToolbar>
-                                <Toolbar>
-                                    <ToolbarSpacer />
-                                    <Button
-                                        icon="sap-icon://add"
-                                        tooltip="Add To Do Item"
-                                        press="onAddToDoPress"
-                                    />
-                                    <SearchField
-                                        liveChange="onSearchTaskList"
-                                    />
-                                </Toolbar>
-                            </f:headerToolbar>
-                            <f:customLayout>
-                                <grid:GridBasicLayout
-                                    gridTemplateColumns="repeat(auto-fit, minmax(16rem, 1fr))"
-                                    gridGap="0.5rem"
-                                />
-                            </f:customLayout>
-
-                            <f:GridListItem
-                                press="onGridListItemPress"
-                                detailPress="onGridListItemEdit"
-                                type="DetailAndActive"
-                                highlight="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
-                            >
-                                <VBox
-                                    height="100%"
-                                    justifyContent="SpaceBetween"
-                                >
-                                    <layoutData>
-                                        <FlexItemData
-                                            growFactor="1"
-                                            shrinkFactor="0"
-                                        />
-                                    </layoutData>
-                                    <VBox class="sapUiSmallMargin">
-                                        <ObjectStatus
-                                            text="{pageModel>actionPriority}"
-                                            state="{path:'pageModel>actionPriority', formatter:'.formatter.piorityFormatter'}"
-                                            visible="{= ${pageModel>actionPriority} !== null}"
-                                        />
-                                        <HBox justifyContent="SpaceBetween">
-                                            <Title
-                                                text="{pageModel>actionTitle}"
-                                                wrapping="true"
-                                            />
-
-                                            <ObjectStatus
-                                                text="due {path: 'pageModel>actionDueDate',
-								 type: 'sap.ui.model.type.Date',
-                                                    formatOptions: {
-                                                        relative: true,
-                                                        relativeScale: 'auto'
-                                                    }
-								}"
-                                                class="sapUiTinyMarginBottom"
-                                                icon="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatIconDueDate'}"
-                                                state="{path: 'pageModel>actionDueDate', formatter:'.formatter.formatDueDate'}"
-                                                visible="{= ${pageModel>actionDueDate} !== null}"
-                                            />
-                                        </HBox>
-
-                                        <Label
-                                            text="{pageModel>actionTask}"
-                                            class="sapUiSmallMarginBottom sapUiSmallMarginTop"
-                                            width="100%"
-                                            wrapping="true"
-                                        />
-
-                                        <commons:MicroProcessFlow
-                                            renderType="Scrolling"
-                                            class="sapUiSmallMarginTop"
-                                            content="{path: 'pageModel>subTasks/results'}"
-                                        >
-                                            <commons:content>
-                                                <commons:MicroProcessFlowItem
-                                                    state="{path: 'pageModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
-                                                    press="onPopoverPress"
-                                                    icon="{path: 'pageModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
-                                                />
-                                            </commons:content>
-                                        </commons:MicroProcessFlow>
-                                    </VBox>
-                                    <OverflowToolbar height="45px">
-                                        <HBox>
-                                            <Avatar
-                                                src="{path: 'pageModel>actionOwner', formatter: '.formatter.formatterTeamPictures'}"
-                                                displayShape="Circle"
-                                                displaySize="XS"
-                                                class="imageDisplayBlock sapUiTinyMarginBeginEnd"
-                                                visible="{= ${pageModel>actionOwner} !== null &amp;&amp; ${pageModel>actionOwner} !== ''}"
-                                                tooltip="{pageModel>actionOwner}"
-                                            />
-                                            <Label
-                                                text="{pageModel>actionOwner}"
-                                                class="sapUiTinyMarginTop"
-                                                wrapping="true"
-                                            />
-                                        </HBox>
-
-                                        <ToolbarSpacer />
-                                        <tnt:InfoLabel
-                                            text="{pageModel>actionTopic}"
-                                            colorScheme="{path:'pageModel>actionTopic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${pageModel>actionTopic} !== null &amp;&amp; ${pageModel>actionTopic} !== ''}"
-                                            renderMode="Narrow"
-                                        />
-                                    </OverflowToolbar>
-                                </VBox>
-                            </f:GridListItem>
-                            <f:noData>
-                                <IllustratedMessage
-                                    enableVerticalResponsiveness="true"
-                                    illustrationType="sapIllus-BalloonSky"
-                                    title="No Tasks Found"
-                                    description="Start by adding one"
-                                />
-                            </f:noData>
-                        </f:GridList>
-                    </f:SidePanelItem>
-
-                    <f:SidePanelItem
-                        icon="sap-icon://discussion-2"
-                        text="Comments"
-                        id="sidePanel2"
-                    >
-                        <VBox width="100%">
-                            <!-- <commons:Timeline width="100%"
-									id="idTimeline"
-									enableDoubleSided="true"
-									content="{/opportunityHeader}"
-									filterList="{/opportunityHeader}">
-									<commons:content>
-										<commons:TimelineItem
-											id="idTemplateItem"
-											userNameClicked="onUserNameClick"
-											select="onPressItems"
-											dateTime="{opportunityDueDate}"
-											title="{account}"
-											text="{account}"
-											userName="{account} {account}"
-											filterValue="{account}"
-										</commons:TimelineItem>
-									</commons:content>
-									<commons:filterList>
-										<commons:TimelineFilterListItem
-											id="idTimelineFilterListItem"
-											key="{account}"
-											text="{account} {account}">
-										</commons:TimelineFilterListItem>
-									</commons:filterList>
-								</commons:Timeline>
-							 -->
-
-                            <List
-                                items="{}"
-                                id="opportunityComments"
-                                width="100%"
-                                noDataText="Looks like there are no comments yet."
-                                mode="Delete"
-                                delete="onDeleteComment"
-                            >
-                                <FeedListItem
-                                    id="commentItem"
-                                    sender="{postedBy}"
-                                    timestamp="{ path: 'postedOn',
-														type: 'sap.ui.model.type.DateTime',
-                                                        
-		                       
-                                                        
-																		formatOptions: {
-																			style: 'medium'
-																		}
-																	}"
-                                    text="{comment}"
-                                    icon="{path: 'postedBy', formatter: '.formatter.formatterTeamPictures'}"
-                                    iconSize="XS"
-                                />
-                            </List>
-                            <FeedInput
-                                showIcon="false"
-                                placeholder="Add a comment to this task"
-                                id="feedInputObject"
-                                maxLength="5000"
-                                post="onPostComment"
-                            />
-                        </VBox>
-                    </f:SidePanelItem>
-                </f:items>
-            </f:SidePanel>
+               
         </content>
         <footer>
             <Toolbar>
