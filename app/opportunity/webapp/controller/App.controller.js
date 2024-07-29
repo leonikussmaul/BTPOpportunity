@@ -106,25 +106,6 @@ sap.ui.define(
           library.URLHelper.redirect(sUrlServiceCatalog, true);
         },
 
-        
-
-      onNavToTasksPage: function (oEvent) {
-        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-        var oBtn = oEvent.getSource();
-
-        var viewName = window.location.href.split('#')[1];
-        if (viewName != '' && oBtn.getText() != "Go to Tasks") {
-          oRouter.navTo("OpportunityReport");
-          oBtn.setText("Go to Tasks");
-
-        } else {
-          oRouter.navTo("TasksReport");
-          oBtn.setText("Go to Opportunities");
-        }
-
-      },
-
       onNavToOpportunities: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("OpportunityReport");
@@ -141,11 +122,6 @@ sap.ui.define(
       onNavToTeamEngagement: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("TeamEngagement");
-      },
-
-      onNavToTasks: function (oEvent) {
-        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-        oRouter.navTo("TasksReport");
       },
 
       onToggleSideMenu: function (oEvent) {

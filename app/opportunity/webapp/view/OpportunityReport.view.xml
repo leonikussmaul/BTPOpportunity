@@ -16,14 +16,6 @@
     xmlns:table="sap.ui.table"
     xmlns:plugins="sap.ui.table.plugins"
     xmlns:tnt="sap.tnt"
-    xmlns:main="sap.ui.webc.main"
-    xmlns:layout="sap.ui.layout"
-    xmlns:micro="sap.suite.ui.microchart"
-    xmlns:rte="sap.ui.richtexteditor"
-    xmlns:commons="sap.suite.ui.commons"
-    xmlns:dnd="sap.ui.core.dnd"
-    xmlns:dnd-grid="sap.f.dnd"
-    xmlns:grid="sap.ui.layout.cssgrid"
 >
     <u:ObjectPageLayout
         id="ObjectPageLayoutBegin"
@@ -356,7 +348,7 @@
                         visibleInAdvancedArea="false"
                         visible="false"
                     />
-                    <smartFilterBar:ControlConfiguration
+                    <!-- <smartFilterBar:ControlConfiguration
                         key="opportunityInCRM"
                         label="{i18n>opportunityInCRM}"
                         index="20"
@@ -370,7 +362,7 @@
                                 customData:hasValue="false"
                             />
                         </smartFilterBar:customControl>
-                    </smartFilterBar:ControlConfiguration>
+                    </smartFilterBar:ControlConfiguration> -->
                     <smartFilterBar:ControlConfiguration
                         key="isFavorite"
                         label="{i18n>isFavorite}"
@@ -485,7 +477,7 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
-                                            value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topic", "filterProperty": "topics/topic", "type":"string"}'
+                                            value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topics/topic", "type":"string"}'
                                         />
                                     </customData>
                                     <Label text="{i18n>topic}" />
@@ -510,7 +502,7 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
-                                            value='\{"columnKey": "opportunityValue", "columnIndex" : "4", "leadingProperty": "opportunityValue", "sortProperty": "opportunityValue", "filterProperty": "opportunityValue", "type":"string"}'
+                                            value='\{"columnKey": "opportunityValue", "columnIndex" : "4", "leadingProperty": "opportunityValue", "sortProperty": "opportunityValue", "filterProperty": "opportunityValue", "type":"integer"}'
                                         />
                                     </customData>
                                     <Label text="{i18n>opportunityValue}" />
@@ -550,7 +542,7 @@
                                 >
                                     <customData>
                                         <core:CustomData
-                                            key="p13nData"
+                                           key="p13nData"
                                             value='\{"columnKey": "status", "columnIndex" : "6", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
                                         />
                                     </customData>
@@ -601,8 +593,8 @@
                                         /> -->
 
                                         <Text
-                                            text="{'path': 'opportunityDueDate',
-                                            'type':'sap.ui.model.type.Date'
+                                            text="{path: 'opportunityDueDate',
+                                            type:'sap.ui.model.type.Date'
                                            }"
                                         />
 

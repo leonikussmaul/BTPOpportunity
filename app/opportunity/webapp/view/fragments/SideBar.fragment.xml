@@ -25,14 +25,6 @@
             />
 
             <tnt:NavigationListItem
-                text="Tasks"
-                key="Tasks"
-                icon="sap-icon://activities"
-                select="onNavToTasks"
-                tooltip="Go to the Tasks and Sub-Tasks List"
-            />
-
-            <tnt:NavigationListItem
                 text="Genie AI"
                 key="GenieAI"
                 icon="sap-icon://ai"

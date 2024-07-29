@@ -154,10 +154,6 @@ sap.ui.define([
                 oRouter.navTo("OpportunityReport");
             },
 
-            onNavToTasks: function (oEvent) {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("TasksReport");
-            },
 
         });
     });
