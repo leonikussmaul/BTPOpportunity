@@ -476,7 +476,7 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
-                                            value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topic", "sortProperty": "topic", "filterProperty": "topics/topic", "type":"string"}'
+                                            value='\{"columnKey": "topics/topic", "columnIndex" : "2", "leadingProperty": "topics/topic", "type":"string"}'
                                         />
                                     </customData>
                                     <Label text="{i18n>topic}" />

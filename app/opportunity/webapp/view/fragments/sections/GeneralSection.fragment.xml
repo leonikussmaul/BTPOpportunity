@@ -50,7 +50,7 @@
                 <!-- values -->
                 <core:Title text="{i18n>groupValueLabel}" />
                 <Label text="{i18n>Value}" />
-                <Text text="{opportunityValue}k" />
+                <Text text="{opportunityValue}k"  visible="{= ${opportunityValue} !== null}" />
                 <Label text="{i18n>opportunityInCRM}" />
                 <CheckBox
                     id="opportunityInCRMObject"
