@@ -12,7 +12,7 @@
         <customHeader>
             <Bar>
                 <contentMiddle>
-                    <Title text="{i18n>addSubTaskFor} {actionCustomer}" />
+                    <Title text="{i18n>addSubTaskFor} {subTaskCustomer}" />
                 </contentMiddle>
             </Bar>
         </customHeader>

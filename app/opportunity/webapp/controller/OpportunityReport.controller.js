@@ -61,6 +61,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
 
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                this.getView().byId("idOpportunityTable").removeSelections(true);
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/selectedKey", "Opportunities");
@@ -537,6 +538,8 @@ sap.ui.define([
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
 
+                oBindingParams.parameters["expand"] = "subTasks";
+
                 var fnGroupHeaderFormatter = function (oContext) {
                     var sHeader = oContext.getProperty("marketUnit");
                     return {
@@ -682,35 +685,20 @@ sap.ui.define([
             },
 
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                //post isFavourite 
-                var that = this;
-                if (isFavorite === true) {
-                    oContext.isFavorite = true;
-                } else {
-                    oContext.isFavorite = false;
-                }
-
                 var oModel = this.getView().getModel();
-                oModel.update(sPath, oContext, {
+                var sMessage = "'" + oContext.account + (isFavorite ? "' added to favorites" : "' removed from favorites");
+                
+                oModel.update(sPath, { "isFavorite": isFavorite }, {
                     success: function () {
-                        var sMessage = "";
-                        if (isFavorite === true) {
-                            sMessage = "'" + oContext.account + "' added to favorites";
-                        } else {
-                            sMessage = "'" + oContext.account + "' removed from favorites";
-                        }
-                        MessageToast.show(sMessage);
+                        sap.m.MessageToast.show(sMessage);
                     },
                     error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
+                        var sErrorMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sErrorMessage);
                     }
                 });
-
             },
-
-
-
+            
             onDeleteTopic: function () {
 
                 var that = this;

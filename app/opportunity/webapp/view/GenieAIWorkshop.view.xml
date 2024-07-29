@@ -366,7 +366,7 @@
                                         enableVerticalResponsiveness="true"
                                         illustrationType="sapIllus-SearchFolder"
                                         title="No Participants Found"
-                                        description="Start by adding a participant to the workshop"
+                                        description="Start by adding a participant to the workshop."
                                     />
                                 </noData>
                             </List> -->
@@ -437,7 +437,7 @@
                                         enableVerticalResponsiveness="true"
                                         illustrationType="sapIllus-Tent"
                                         title="No Participants Found"
-                                        description="Start by adding a participant to the workshop"
+                                        description="Start by adding a participant to the workshop."
                                     />
                                 </noData>
                             </Table> -->
@@ -494,7 +494,7 @@
                                         enableVerticalResponsiveness="true"
                                         illustrationType="sapIllus-SearchFolder"
                                         title="No Links Found"
-                                        description="Start by adding a link to the repository"
+                                        description="Start by adding a link to the repository."
                                     />
                                 </noData>
                             </List>

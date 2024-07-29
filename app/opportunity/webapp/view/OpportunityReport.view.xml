@@ -404,8 +404,8 @@
                         class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                         enableCopy="false"
                         showFullScreenButton="true"
-                        initiallyVisibleFields="account,topics,status,primaryContact,opportunityDueDate,opportunityValue,isFavorite"
-                        requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityDueDate,opportunityValue,priority,opportunityID"
+                        initiallyVisibleFields="account,topics,status,primaryContact,opportunityDueDate,isFavorite"
+                        requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityDueDate,priority,opportunityID,subTasks"
                         ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
                     >
                         <smartTable:customToolbar>
@@ -435,10 +435,11 @@
                             inset="false"
                             growing="true" 
                             growingScrollToLoad="true"
-                           mode="SingleSelectMaster" itemPress="onListItemPress"
+                            mode="SingleSelectMaster" itemPress="onListItemPress"
                             sticky="ColumnHeaders,HeaderToolbar"
                             noDataText="Nothing here. Please adjust your search critera."
                             delete="onDeleteTableItem"
+                            id="idOpportunityTable"
                         >
                             <columns>
                                 <Column
@@ -494,7 +495,7 @@
                                     />
                                 </Column>
 
-                                <Column
+                                <!-- <Column
                                     hAlign="Center"
                                     visible="{global>/columnsExpanded}"
                                 >
@@ -505,7 +506,8 @@
                                         />
                                     </customData>
                                     <Label text="{i18n>opportunityValue}" />
-                                </Column>
+                                </Column> -->
+                               
 
                                 <Column
                                     hAlign="Center"
@@ -514,10 +516,23 @@
                                     <customData>
                                         <core:CustomData
                                             key="p13nData"
-                                            value='\{"columnKey": "opportunityDueDate", "columnIndex" : "5", "leadingProperty": "opportunityDueDate", "sortProperty": "opportunityDueDate", "filterProperty": "opportunityDueDate", "type":"date"}'
+                                            value='\{"columnKey": "opportunityDueDate", "columnIndex" : "4", "leadingProperty": "opportunityDueDate", "sortProperty": "opportunityDueDate", "filterProperty": "opportunityDueDate", "type":"date"}'
                                         />
                                     </customData>
                                     <Label text="Next Milestone" />
+                                </Column>
+
+                                   <Column
+                                    hAlign="Center"
+                                    
+                                >
+                                    <customData>
+                                        <core:CustomData
+                                            key="p13nData"
+                                            value='\{"columnKey": "subTasks", "columnIndex" : "5", "leadingProperty": "subTasks", "sortProperty": "subTasks", "filterProperty": "subTasks", "type":"string"}'
+                                        />
+                                    </customData>
+                                    <Label text="Tasks" />
                                 </Column>
 
                                 <Column
@@ -571,17 +586,26 @@
                                         </HBox>
                                         <Text text="{primaryContact}" />
 
-                                        <ObjectNumber
+                                        <!-- <ObjectNumber
                                             number="{path: 'opportunityValue', type: 'sap.ui.model.type.Float', formatter: '.formatter.addKAfterNumber', formatOptions: {decimals: 0}}"
                                             unit="EUR"
                                             visible="{= ${opportunityValue} !== null}"
-                                        />
+                                        /> -->
 
                                         <Text
                                             text="{path: 'opportunityDueDate',
                                             type:'sap.ui.model.type.Date'
                                            }"
                                         />
+
+                                         <Button text="Open" visible="{path: 'subTasks', formatter:'.formatter.taskCounterVisible'}">
+                                        	<customData>
+                                                <BadgeCustomData
+                                                    key="badge"
+                                                   value="{path: 'subTasks', formatter:'.formatter.taskCountFormatter'}"
+                                                    visible="true"/>
+                                            </customData>
+                                        </Button>
 
                                         <ObjectStatus
                                             text="{status}"
