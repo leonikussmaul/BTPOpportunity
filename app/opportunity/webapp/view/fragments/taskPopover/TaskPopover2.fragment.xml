@@ -8,8 +8,7 @@
         xmlns="sap.m"
         contentWidth="300px"
         placement="Top"
-        title="{subTaskModel>subTaskStatus}"
-    >
+        title="{subTaskModel>subTaskStatus}">
         <content>
             <HBox class="sapUiTinyMargin">
                 <items>

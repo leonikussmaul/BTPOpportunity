@@ -1265,40 +1265,6 @@ sap.ui.define([
                 }
 
             },
-
-
-            onPopoverPress: function (oEvent) {
-                var oButton = oEvent.getSource(),
-                    oView = this.getView(),
-                    iIndex = oEvent.getSource().getBindingContext("pageModel").sPath;
-
-                this._pPopover = Fragment.load({
-                    id: oView.getId(),
-                    name: "opportunity.opportunity.view.fragments.taskPopover.TaskPopover3",
-                    controller: this
-                }).then(function (oPopover) {
-                    oView.addDependent(oPopover);
-                    oPopover.bindElement({
-                        path: "pageModel>" + iIndex,
-                        events: {
-                            change: function () {
-                                oPopover.invalidate();
-                            }
-                        }
-                    });
-
-                    return oPopover;
-                })
-
-                this._pPopover.then(function (oPopover) {
-                    oPopover.attachAfterClose(function () {
-                        oPopover.destroy();
-                        //this._pPopover = null;
-                    }.bind(this));
-                    oPopover.openBy(oButton);
-                });
-            },
-
         
 
             onCRMCheckboxSelect: function (oEvent) {
