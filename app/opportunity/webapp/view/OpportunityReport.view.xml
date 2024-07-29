@@ -443,10 +443,11 @@
                             inset="false"
                             growing="true" 
                             growingScrollToLoad="true"
-                           mode="SingleSelectMaster" itemPress="onListItemPress"
+                            mode="SingleSelectMaster" itemPress="onListItemPress"
                             sticky="ColumnHeaders,HeaderToolbar"
                             noDataText="Nothing here. Please adjust your search critera."
                             delete="onDeleteTableItem"
+                            id="idOpportunityTable"
                         >
                             <columns>
                                 <Column

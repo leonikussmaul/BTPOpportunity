@@ -61,6 +61,7 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
 
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                this.getView().byId("idOpportunityTable").removeSelections(true);
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/selectedKey", "Opportunities");
