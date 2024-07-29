@@ -137,10 +137,10 @@ sap.ui.define([
                 var that = this;
                 var oLocalModel = that.getView().getModel("localModel");
                 var oModel = that.getView().getModel();
-                oModel.read("/opportunityActionItems", {
+                oModel.read("/opportunitySubTasks", {
                     success: function (oResponse) {
                         var aData = oResponse.results.length;
-                        oLocalModel.setProperty("/opportunityActionItemsLength", aData);
+                        oLocalModel.setProperty("/opportunitySubTasksLength", aData);
 
                     }.bind(this),
                     error: function (oError) {

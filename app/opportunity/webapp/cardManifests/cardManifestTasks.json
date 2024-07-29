@@ -30,12 +30,12 @@
 		"extension": "./SampleExtension",
 		"data": {
 			"request": {
-				"url": "/Opportunity/opportunityActionItems",
+				"url": "/Opportunity/opportunitySubTasks",
 				"method": "GET",
 				"parameters": {
 					"$format": "json",
-					"$orderby": "actionDueDate asc",
-					"$filter": "actionDueDate ne null",
+					"$orderby": "subTaskDueDate asc",
+					"$filter": "subTaskDueDate ne null",
 					"$top": "6",
 					"$count": true
 				}
@@ -52,7 +52,7 @@
 						"translationKey": "i18n>CARD.COUNT_X_OF_Y",
 						"parts": [
 							"parameters>/visibleItems",
-							"localModel>/opportunityActionItemsLength"
+							"localModel>/opportunitySubTasksLength"
 						]
 					}
 				}
@@ -66,28 +66,25 @@
 						"title": "Account",
 						"width": "20%",
 						"identifier": true,
-						"value": "{actionCustomer}"
+						"value": "{subTaskCustomer}"
 					},
 					{
 						"title": "Task",
-						"value": "{actionTitle}",
+						"value": "{subTask}",
 						"width": "30%"
 					},
 					{
 						"title": "Due",
-						"value": "{actionDueDate}",
+						"value": "{subTaskDueDate}",
 						"state": "{= extension.formatters.actionDueDateFormatter(${actionDueDate}) }",
 						"showStateIcon": true,
 						"width": "20%"
 					},
 					{
-						"title": "Progress",
+						"title": "Status",
 						"width": "30%",
-						"progressIndicator": {
-							"percent": "{actionProgress}",
-							"text": "{= format.percent(${actionProgress} / 100)}",
-							"state": "{= ${actionProgress} < 25 ? 'Error' : (${actionProgress} >= 25 && ${actionProgress} < 75 ? 'Warning' : 'Success') }"
-						}
+						"value": "{subTaskStatus}",
+						"state": "{= (${subTaskStatus} === 'Not Started' || ${subTaskStatus} < 'Blocked') ? 'Error' : (${subTaskStatus} === 'In Progress' || ${subTaskStatus} === 'Paused') ? 'Warning' : 'Success' }"
 					}
 				],
 				"actions": [
@@ -95,7 +92,7 @@
 						"type": "Navigation",
 						"target": "_self",
 						"parameters": {
-							"url": "/app/opportunity/webapp/index.html#/TaskReport/{ID}"
+							"url": "index.html#/OpportunityDetail/{opportunityID_opportunityID}/TwoColumnsMidExpanded"
 						}
 					}
 				]

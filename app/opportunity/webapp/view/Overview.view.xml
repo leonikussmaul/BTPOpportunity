@@ -280,7 +280,7 @@
                             </layoutData>
                             <TileContent footer="Open Tasks">
                                 <NumericContent
-                                    value="{localModel>/opportunityActionItemsLength}"
+                                    value="{localModel>/opportunitySubTasksLength}"
                                     icon="sap-icon://multi-select"
                                 />
                             </TileContent>
