@@ -744,7 +744,7 @@
                                                 enableVerticalResponsiveness="true"
                                                 illustrationType="sapIllus-SearchFolder"
                                                 title="No Links Found"
-                                                description="Start by adding a link to the repository"
+                                                description="Start by adding a link to the repository."
                                             />
                                         </noData>
                                     </List>
@@ -929,7 +929,7 @@
                                         </Toolbar>
                                         <commons:Timeline
                                             axisOrientation="Horizontal"
-                                            noDataText="There are no Roadmap Items for this opportunity. Start by adding one"
+                                            noDataText="There are no Roadmap Items for this opportunity. Start by adding one."
                                             width="100%"
                                             id="idTimeline"
                                             content="{/opportunityNextSteps}"

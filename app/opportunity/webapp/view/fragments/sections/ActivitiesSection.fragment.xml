@@ -148,7 +148,7 @@
                             enableVerticalResponsiveness="true"
                             illustrationType="sapIllus-NoActivities"
                             title="Looks like there are no activities"
-                            description="Start by adding some"
+                            description="Start by adding some."
                        />
                       
                     </noData>

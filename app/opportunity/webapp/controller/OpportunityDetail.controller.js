@@ -98,8 +98,8 @@ sap.ui.define([
                     this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", false);
                     this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", false);
 
-                    var oMaturityTable = this.getView().byId("maturityTableID");
-                    if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
+                    // var oMaturityTable = this.getView().byId("maturityTableID");
+                    // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
 
                     var oActivitiesTable = this.getView().byId("activitiesTableID");
                     if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
@@ -297,7 +297,7 @@ sap.ui.define([
                             that.onReadSubTasksData(iOppID);
                             that.getView().setBusy(false);
                             // oDialog.close();
-                            //oAddSubTaskModel.setData({});
+                            oAddSubTaskModel.setData({});
                             that.onCancelDialogPress();
 
                         },
@@ -767,34 +767,6 @@ sap.ui.define([
                 } else this.ValueStateMethod();
 
             },
-
-            // onBeforeRendering: function () {
-            //     var that = this;
-            //     sap.ui.require(["sap/ui/richtexteditor/RichTextEditor", "sap/ui/richtexteditor/library"],
-            //         function (RTE, library) {
-            //             //var EditorType = library.EditorType;
-            //             that.oRichTextEditor = new RTE("myRTE", {
-            //                 // editorType: bIsTinyMCE5 ? EditorType.TinyMCE5 : EditorType.TinyMCE6,
-            //                 width: "100%",
-            //                 value: "{noteText}",
-            //                 height: "400px",
-            //                 showGroupFont: true,
-            //                 showGroupLink: true,
-            //                 showGroupUndo: true,
-            //                 editable: "{editModel>/editMode}",
-            //                 id: "editRTE"
-
-            //             });
-
-            //             that.getView().byId("idSubSectionNotes").addBlock(that.oRichTextEditor);
-            //             //that.oRichTextEditor.placeAt(that.getView().byId("idSubSectionNotes"))
-            //         });
-            // },
-
-            // destroyRichTextEditor: function () {
-
-            //    sap.ui.getCore().byId("editRTE").destroy(); 
-            // },
 
             _getText: function (sTextId, aArgs) {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText(sTextId, aArgs);
@@ -1272,90 +1244,6 @@ sap.ui.define([
 
             },
 
-            // onCreateRTE: function (fragmentName) {
-
-            //     var that = this;
-            //     if (!this._pRTE) {
-            //         this._pRTE = Fragment.load({
-            //             // id:"myDialog",
-            //             name: fragmentName,
-            //             controller: this
-            //         }).then(function (_pRTE) {
-            //             that.getView().addDependent(_pRTE);
-            //             // _pRTE.setEscapeHandler(function () {
-            //             //     that.onCloseDialog();
-            //             // });
-            //             return _pRTE;
-            //         });
-            //     }
-            //     this._pRTE.then(function (_pRTE) {
-            //         _pRTE.open();
-
-            //     })
-            // },
-
-            // onCancelRTEPress: function (oEvent) {
-            //     this._pRTE.then(function (_pRTE) {
-            //         _pRTE.destroy();
-            //     });
-            //     this._pRTE = null;
-            // },
-
-
-            /* ------------------------------------------------------------------------------------------------------------
-                 FAVORITE
-                 --------------------------------------------------------------------------------------------------------------*/
-
-            onFavoriteObjectPress: function (oEvent) {
-                var that = this;
-                var oView = this.getView();
-                var oBinding = oView.getBindingContext();
-                var sPath = oBinding.getPath();
-                var oContext = oView.getBindingContext().getObject();
-
-                var isFavorite = oContext.isFavorite;
-
-                if (isFavorite === true) {
-                    isFavorite = false;
-                    // removeFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                } else {
-                    isFavorite = true;
-                    // addFavourite
-                    that.postFavouriteCustomer(isFavorite, oContext, sPath);
-                }
-            },
-
-            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                //post isFavourite 
-                var that = this;
-                if (isFavorite === true) {
-                    oContext.isFavorite = true;
-                } else {
-                    oContext.isFavorite = false;
-                }
-
-                var oPayload = { "isFavorite": oContext.isFavorite };
-
-                var oModel = this.getView().getModel();
-                oModel.update(sPath, oPayload, {
-                    success: function () {
-                        var sMessage = "";
-                        if (isFavorite === true) {
-                            sMessage = "'" + oContext.account + "' added to favorites";
-                        } else {
-                            sMessage = "'" + oContext.account + "' removed from favorites";
-                        }
-                        MessageToast.show(sMessage);
-                    },
-                    error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
-                    }
-                });
-
-            },
-
 
             /* ------------------------------------------------------------------------------------------------------------
             CHART
@@ -1375,20 +1263,6 @@ sap.ui.define([
                     oBindingParams.filters.push(oFilter);
 
                 }
-
-
-            },
-
-            onGridListItemPress: function (oEvent) {
-                var selectedItem = oEvent.getSource().getBindingContext("pageModel").getObject();
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("TaskDetail", {
-                    ID: selectedItem.ID,
-                    layout: "TwoColumnsMidExpanded"
-                });
-
-                var oGlobalModel = this.getOwnerComponent().getModel("global");
-                oGlobalModel.setProperty("/selectedKey", "Tasks");
 
             },
 
@@ -1425,115 +1299,7 @@ sap.ui.define([
                 });
             },
 
-            onSearchTaskList: function (oEvent) {
-                var aFilters = [];
-                var sQuery = oEvent.getSource().getValue();
-                if (sQuery && sQuery.length > 0) {
-                    var aFilters = [
-                        new Filter({
-                            filters: [
-                                new Filter({ path: "actionTitle", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "actionTask", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "actionCustomer", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "actionTopic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "actionOwner", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-
-
-                            ],
-                            and: false
-                        })
-                    ];
-                }
-
-                var oList = this.byId("gridList");
-                var oBinding = oList.getBinding("items")
-                oBinding.filter(aFilters, FilterType.Application);
-
-            },
-
-
-            onGridListItemEdit: function (oEvent) {
-                this._bEdit = true;
-                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddToDo");
-                var oAddTaskModel = this.getView().getModel("AddTaskModel");
-                var oData = oEvent.getSource().getBindingContext("pageModel").getObject();
-                if (oData.actionDueDate) oData.actionDueDate = new Date(oData.actionDueDate);
-                oAddTaskModel.setData(oData);
-
-            },
-
-            onSubmitEditedTask: function () {
-                var that = this;
-                var oModel = this.getView().getModel();
-                var oAddTaskModel = this.getView().getModel("AddTaskModel");
-                var oData = oAddTaskModel.getData();
-                var sGuid = oData.ID;
-                var sDueDate;
-
-                var oPageModel = this.getView().getModel("pageModel");
-
-                var sPriorityNumber;
-                if (oData.actionPriority === 'High') sPriorityNumber = 1;
-                else if (oData.actionPriority === 'Medium') sPriorityNumber = 2;
-                else if (oData.actionPriority === 'Low') sPriorityNumber = 3;
-
-                if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
-
-                var sUpdatedTask = {
-                    actionDueDate: sDueDate,
-                    actionOwner: oData.actionOwner,
-                    actionPriority: oData.actionPriority,
-                    actionPriorityNumber: sPriorityNumber,
-                    actionProgress: oData.actionProgress,
-                    actionTask: oData.actionTask,
-                    actionTitle: oData.actionTitle,
-                    actionTopic: oData.actionTopic
-                }
-
-                var sPath = "/opportunityActionItems(" + sGuid + ")";
-                oModel.update(sPath, sUpdatedTask, {
-                    success: function () {
-                        MessageToast.show("Task updated successfully");
-                        //close dialog
-                        that.onCancelDialogPress();
-                        oPageModel.updateBindings();
-                    },
-                    error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-
-                    }
-                });
-            },
-
-            onGridListItemDelete: function (oEvent) {
-                var that = this;
-                var oModel = this.getView().getModel();
-                var oContext = oEvent.getParameters().listItem.getBindingContext("pageModel").getObject();
-                MessageBox.warning("Are you sure you want to delete the Task '" + oContext.actionTitle + "'?", {
-                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                    emphasizedAction: MessageBox.Action.OK,
-                    onClose: function (sAction) {
-                        if (sAction === MessageBox.Action.OK) {
-
-                            that.getView().setBusy(true);
-                            var sGuid = oContext.ID;
-                            var sDeletePath = "/opportunityActionItems(" + sGuid + ")";
-
-                            oModel.remove(sDeletePath, {
-                                success: function (oData) {
-                                    MessageToast.show("Task deleted");
-                                    that.onReadModelData();
-                                    that.getView().setBusy(false);
-                                },
-                                error: function (oError) {
-                                    that.getView().setBusy(false);
-                                }
-                            });
-                        }
-                    }
-                });
-            },
+        
 
             onCRMCheckboxSelect: function (oEvent) {
                 this.onSetEditPageModel();
@@ -1545,124 +1311,6 @@ sap.ui.define([
                 oCheckBox.setText(sText);
                 oEditModel.setProperty("/editMode", true);
                 oEditPageModel.setProperty("/opportunityInCRM", sText);
-            },
-            /* ------------------------------------------------------------------------------------------------------------
-            WIZARD
-            --------------------------------------------------------------------------------------------------------------*/
-
-            onCreateOpportunityPress: function (oEvent) {
-                var oController = this;
-                oController.getView().setBusy(true);
-                if (!this._oDialog) {
-                    this._oDialog = Fragment.load({ name: "opportunity.opportunity.view.fragments.CreateOpportunity", controller: this });
-                }
-                this._oDialog.then(function (_oDialog) {
-                    oController.getView().addDependent(_oDialog);
-                    _oDialog.open();
-
-                    oController.onReadTopics();
-                    oController.onReadDeliverables();
-
-                    var oLayout1 = sap.ui.getCore().byId("TopicFilters");
-                    var oTemplate1 = oLayout1.getBindingInfo("content").template;
-                    oLayout1.bindAggregation("content", {
-                        path: '/opportunityTopicsVH',
-                        template: oTemplate1,
-                        sorter: new sap.ui.model.Sorter('topic', false)
-                    });
-                    oLayout1.getBindingInfo('content').binding.refresh();
-
-                    var oLayout2 = sap.ui.getCore().byId("DeliverablesFilters");
-                    var oTemplate2 = oLayout2.getBindingInfo("content").template;
-                    oLayout2.bindAggregation("content", {
-                        path: '/opportunityDeliverablesVH',
-                        template: oTemplate2,
-                        sorter: new sap.ui.model.Sorter('deliverable', false)
-                    });
-                    oLayout2.getBindingInfo('content').binding.refresh();
-                });
-            },
-
-            onSaveWizardPress: function (oEvent) {
-
-                var that = this;
-                that.getView().setBusy(true);
-                var oViewModel = this.getView().getModel("viewModel");
-                var oData = oViewModel.getData();
-
-                var sDate, sDueDate, bCRM, sTodayDate;
-
-                sTodayDate = new Date().toISOString().split("T")[0];
-                if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
-                if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
-
-                if (oData.opportunityInCRM) bCRM = "Yes"
-                else bCRM = "No"
-
-                var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
-
-                var aTopics = [];
-                var aTopicFilters = sap.ui.getCore().byId("TopicFilters").getContent();
-                aTopicFilters.forEach(oItem => {
-                    if (oItem.getPressed()) {
-                        var oTopic = {
-                            topic: oItem.getText()
-                        };
-                        aTopics.push(oTopic);
-                    }
-                });
-                var aDeliverables = [];
-                var aDeliverablesFilters = sap.ui.getCore().byId("DeliverablesFilters").getContent();
-                aDeliverablesFilters.forEach(oItem => {
-                    if (oItem.getPressed()) {
-                        var oDeliverable = {
-                            deliverable: oItem.getText()
-                        };
-                        aDeliverables.push(oDeliverable);
-                    }
-                })
-
-                //add deliverable field to odata
-                var oNewItem = {
-                    account: oData.account,
-                    topic: oData.topic,
-                    marketUnit: oData.marketUnit,
-                    opportunityStartDate: sDate,
-                    opportunityStartDate: sDueDate,
-                    opportunityValue: oData.opportunityValue,
-                    opportunityInCRM: bCRM,
-                    source: oData.source,
-                    ssa: oData.ssa,
-                    clientContactPerson: oData.clientContactPerson,
-                    status: sStatus,
-                    primaryContact: oData.primaryContact,
-                    opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
-                    opportunityClosedQuarter: oData.opportunityClosedQuarter,
-                    priority: oData.priority,
-                    noteDate: sTodayDate,
-                    noteText: oData.noteText,
-                    progress: oData.progress,
-                    topics: aTopics,
-                    deliverables: aDeliverables
-                };
-
-                // 3. Use the `create` method of the OData model to create a new item in your service
-                var oModel = this.getView().getModel();
-                oModel.create("/opportunityHeader", oNewItem, {
-                    success: function (oData, response) {
-
-                        MessageToast.show("New Opportunity created!");
-                        that.onCloseWizardPress(oEvent);
-                        that.getView().setBusy(false);
-                    },
-                    error: function (oError) {
-                        that.getView().setBusy(false);
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageBox.error(sMessage);
-
-                    }
-                });
-
             },
 
 
@@ -1781,14 +1429,6 @@ sap.ui.define([
                 });
             },
 
-            onCloseWizardPress: function (oEvent) {
-                var oCreateOpportunity = sap.ui.getCore().byId("myCreateOpportunity");
-                oCreateOpportunity.close();
-                var oDialog = sap.ui.getCore().byId("CreateOpportunity");
-                oDialog.setCurrentStep("WizardStep1");
-                this.getView().getModel("viewModel").setData({});
-                this.getView().setBusy(false);
-            },
 
             onCRMCheckboxSelect: function (oEvent) {
                 var oCheckBox = oEvent.getSource();
@@ -1797,25 +1437,7 @@ sap.ui.define([
                 oCheckBox.setText(sText);
             },
 
-            onFullScreenButtonPress: function (oEvent) {
-                var oDialog = oEvent.getSource().getParent().getParent();
-                var pFullSize = oDialog.getContentWidth();
-                if (pFullSize == "70%") {
-                    oDialog.setContentWidth("100%");
-                    oDialog.setContentHeight("100%");
-                    oEvent.getSource().setIcon('sap-icon://exit-full-screen');
-
-                } else {
-                    oDialog.setContentWidth("70%");
-                    oDialog.setContentHeight("80%");
-                    oEvent.getSource().setIcon('sap-icon://full-screen');
-                }
-            },
-
-            onPreviousStep: function (oEvent) {
-                sap.ui.getCore().byId("CreateOpportunity").previousStep();
-
-            },
+         
             onToggleInCRM: function (oEvent) {
                 var bPressed = oEvent.getSource().getPressed();
                 var sValue = bPressed ? "Yes" : "No";
@@ -2235,14 +1857,6 @@ COMMENTS
                 });
 
             },
-
-            onSidePanelToggle: function(oEvent){
-                var oGlobalModel = this.getOwnerComponent().getModel("global");
-                var bExpanded = oEvent.getParameter("expanded");
-                if(bExpanded) oGlobalModel.setProperty("/layout", "MidColumnFullScreen");
-                else oGlobalModel.setProperty("/layout", "TwoColumnsMidExpanded");
-
-            }
 
 
         });
