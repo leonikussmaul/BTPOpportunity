@@ -17,7 +17,6 @@ annotate service.opportunityHeader with {
     source                    @Common.Label       : 'Source';
     ssa                       @Common.Label       : 'SSA';
     status                    @Common.Label       : 'Status';
-    topic                     @Common.Label       : 'Topic';
     priority                  @Common.Label       : 'Priority';
     opportunityStartDate      @Common.Label       : 'Start Date';
     opportunityDueDate        @Common.Label       : 'Due Date';
@@ -46,7 +45,6 @@ annotate service.opportunityHeaderCopy with {
     source                    @Common.Label       : 'Source';
     ssa                       @Common.Label       : 'SSA';
     status                    @Common.Label       : 'Status';
-    topic                     @Common.Label       : 'Topic';
     priority                  @Common.Label       : 'Priority';
     opportunityStartDate      @Common.Label       : 'Start Date';
     opportunityDueDate        @Common.Label       : 'Due Date';

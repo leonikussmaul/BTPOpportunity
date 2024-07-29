@@ -85,6 +85,7 @@ entity opportunityTopics {
         topic     : String(255);
         comment   : String(5000);
         sortOrder : Integer;
+        topicOwner: String(255);
 };
 
 
