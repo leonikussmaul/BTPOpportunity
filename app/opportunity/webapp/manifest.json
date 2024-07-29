@@ -188,22 +188,6 @@
                     ]
                 },
                 {
-                    "name": "TasksReport",
-                    "pattern": "TasksReport",
-                    "target": [
-                        "TasksReport",
-                        "TaskDetail"
-                    ]
-                },
-                {
-                    "name": "TaskDetail",
-                    "pattern": "TaskDetail/{ID}/{layout}",
-                    "target": [
-                        "TasksReport",
-                        "TaskDetail"
-                    ]
-                },
-                {
                     "name": "TeamChart",
                     "pattern": "TeamChart",
                     "target": "TeamChart"
@@ -271,22 +255,6 @@
                     "transition": "slide",
                     "viewId": "GenieAIWorkshop",
                     "viewName": "GenieAIWorkshop",
-                    "controlAggregation": "midColumnPages"
-                },
-                "TasksReport": {
-                    "level": 1,
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "viewId": "TasksReport",
-                    "viewName": "TasksReport",
-                    "controlAggregation": "beginColumnPages"
-                },
-                "TaskDetail": {
-                    "level": 1,
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "viewId": "TaskDetail",
-                    "viewName": "TaskDetail",
                     "controlAggregation": "midColumnPages"
                 },
                 "Calendar": {

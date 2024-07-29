@@ -53,7 +53,7 @@ sap.ui.define([
             onTeamMemberDetails: function (oNode, oButton) {
                 if (!this._oQuickView) {
                     sap.ui.core.Fragment.load({
-                        name: "opportunity.opportunity.view.fragments.TeamMemberDetails",
+                        name: "opportunity.opportunity.view.fragments.TeamMemberDetail",
                         type: "XML"
                     }).then((oFragment) => {
                         this._oQuickView = oFragment;
