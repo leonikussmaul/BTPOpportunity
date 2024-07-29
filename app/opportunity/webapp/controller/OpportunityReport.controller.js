@@ -555,11 +555,11 @@ sap.ui.define([
                 this.addFiltersForSelectedItems(oEvent, "priority");
                 this.addFiltersForSelectedItems(oEvent, "ssa");
 
-                var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
-                var bSwitch = oSwitch ? "Yes" : "No";
-                if (bSwitch === "Yes") {
-                    oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
-                }
+                // var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
+                // var bSwitch = oSwitch ? "Yes" : "No";
+                // if (bSwitch === "Yes") {
+                //     oBindingParams.filters.push(new Filter("opportunityInCRM", sap.ui.model.FilterOperator.EQ, "Yes"));
+                // }
             },
 
             addFiltersForSelectedItems: function (oEvent, filterKey) {
