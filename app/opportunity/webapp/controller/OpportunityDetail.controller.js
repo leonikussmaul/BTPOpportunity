@@ -101,8 +101,8 @@ sap.ui.define([
                     // var oMaturityTable = this.getView().byId("maturityTableID");
                     // if (oMaturityTable.isInitialised()) oMaturityTable.rebindTable();
 
-                    var oActivitiesTable = this.getView().byId("activitiesTableID");
-                    if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
+                    // var oActivitiesTable = this.getView().byId("activitiesTableID");
+                    // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
 
                     //set segmented button text for current status of opportunity
                     this.setSegButtonText();

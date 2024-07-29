@@ -267,84 +267,87 @@
                         </VBox>
 
                         <l:VerticalLayout class="sapUiResponsiveMargin">
-                            <VBox>
-                                <ObjectStatus
-                                    state="Information"
-                                    text="{i18n>status}"
-                                    icon="sap-icon://message-information"
-                                />
-                                <HBox
-                                    alignItems="Center"
-                                    justifyContent="Center"
-                                    width="100%"
+                            <HBox>
+                                <VBox
+                                    class="sapUiSmallMarginBottom"
+                                    visible="{= ${subTaskModel>/subtasks}.length > 0}"
                                 >
-                                    <SegmentedButton
-                                        selectionChange="onSegmentPressed"
-                                        id="segmentedStatusObject"
-                                        width="300px"
-                                        class="sapUiTinyMarginBeginEnd"
-                                        selectedKey="{status}"
+                                    <Title text="Tasks" />
+                                    <commons:MicroProcessFlow
+                                        renderType="Scrolling"
+                                        class="sapUiTinyMarginTop"
+                                        content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}"
                                     >
-                                        <items>
-                                            <SegmentedButtonItem
-                                                icon="sap-icon://flag-2"
-                                                text=""
-                                                width="50px"
-                                                key="Lead"
-                                                tooltip="Lead"
+                                        <commons:content>
+                                            <commons:MicroProcessFlowItem
+                                                state="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
+                                                press="onPopoverPress"
+                                                icon="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
                                             />
-                                            <SegmentedButtonItem
-                                                icon="sap-icon://overlay"
-                                                text=""
-                                                width="50px"
-                                                key="Opportunity"
-                                                tooltip="Opportunity"
-                                            />
-                                            <SegmentedButtonItem
-                                                icon="sap-icon://pause"
-                                                text=""
-                                                width="50px"
-                                                key="Paused"
-                                                tooltip="Paused"
-                                            />
-                                            <SegmentedButtonItem
-                                                icon="sap-icon://activate"
-                                                text=""
-                                                width="50px"
-                                                key="Delivery"
-                                                tooltip="Delivery"
-                                            />
-                                            <SegmentedButtonItem
-                                                icon="sap-icon://checklist-item"
-                                                text=""
-                                                width="50px"
-                                                key="Completed"
-                                                tooltip="Completed"
-                                            />
-                                        </items>
-                                    </SegmentedButton>
-
-                                    <VBox
-                                        class="sapUiSmallMarginBottom"
-                                        visible="{= ${subTaskModel>/subtasks}.length > 0}"
+                                        </commons:content>
+                                    </commons:MicroProcessFlow>
+                                </VBox>
+                                <VBox class="sapUiMediumMarginBeginEnd">
+                                    <ObjectStatus
+                                        state="Information"
+                                        text="{i18n>status}"
+                                        icon="sap-icon://message-information"
+                                    />
+                                    <HBox
+                                        alignItems="Center"
+                                        justifyContent="Center"
+                                        width="100%"
                                     >
-                                        <Title text="Tasks" />
-
-                                        <commons:MicroProcessFlow
-                                            renderType="Scrolling"
-                                            content="{path: 'subTaskModel>/subtasks', sorter: { path: 'subTaskOrder' }}"
-                                        >
-                                            <commons:content>
-                                                <commons:MicroProcessFlowItem
-                                                    state="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.processFlowFormatter'}"
-                                                    press="onPopoverPress"
-                                                    icon="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
-                                                />
-                                            </commons:content>
-                                        </commons:MicroProcessFlow>
-                                    </VBox>
-                                </HBox>
-                            </VBox>
+                                        <VBox>
+                                            <SegmentedButton
+                                                selectionChange="onSegmentPressed"
+                                                id="segmentedStatusObject"
+                                                width="300px"
+                                                class="sapUiTinyMarginBeginEnd sapUiTinyMarginTop"
+                                                selectedKey="{status}"
+                                            >
+                                                <items>
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://flag-2"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Lead"
+                                                        tooltip="Lead"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://overlay"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Opportunity"
+                                                        tooltip="Opportunity"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://pause"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Paused"
+                                                        tooltip="Paused"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://activate"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Delivery"
+                                                        tooltip="Delivery"
+                                                    />
+                                                    <SegmentedButtonItem
+                                                        icon="sap-icon://checklist-item"
+                                                        text=""
+                                                        width="50px"
+                                                        key="Completed"
+                                                        tooltip="Completed"
+                                                    />
+                                                </items>
+                                            </SegmentedButton>
+                                        </VBox>
+                                    </HBox>
+                                </VBox>
+                            </HBox>
                         </l:VerticalLayout>
                     </FlexBox>
                 </u:headerContent>
@@ -456,7 +459,7 @@
                                         <Label />
                                     </Column>
 
-                                    <Column width="90%">
+                                    <Column width="40%">
                                         <customData>
                                             <core:CustomData
                                                 key="p13nData"
@@ -468,7 +471,7 @@
                                             tooltip="{i18n>subTask}"
                                         />
                                     </Column>
-                                    <Column width="10em">
+                                    <Column width="5em">
                                         <customData>
                                             <core:CustomData
                                                 key="p13nData"
@@ -481,7 +484,7 @@
                                         />
                                     </Column>
 
-                                    <Column width="15em">
+                                    <Column width="5.5em">
                                         <customData>
                                             <core:CustomData key="p13nData" />
                                         </customData>
@@ -491,7 +494,7 @@
                                         />
                                     </Column>
 
-                                    <Column width="10em">
+                                    <Column width="5em">
                                         <customData>
                                             <core:CustomData
                                                 key="p13nData"
