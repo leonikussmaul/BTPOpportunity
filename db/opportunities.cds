@@ -67,14 +67,20 @@ entity opportunityActionItems {
 
 @cds.autoexpose
 entity opportunitySubTasks {
-    key ID               : UUID;
-        opptID           : Association to opportunityActionItems;
-        subTask          : String(5000);
-        subTaskDueDate   : Date;
-        subTaskOwner     : String(20);
-        subTaskCompleted : Boolean;
-        subTaskOrder     : Integer;
-        subTaskStatus    : String(50);
+    key ID                      : UUID;
+        opportunityID           : Association to opportunityHeader;
+        opptID                  : Association to opportunityActionItems;
+        subTaskDescription      : String(5000);
+        subTask                 : String(5000);
+        subTaskDueDate          : Date;
+        subTaskOwner            : String(20);
+        subTaskCompleted        : Boolean;
+        subTaskOrder            : Integer;
+        subTaskTopic            : String(255);
+        subTaskStatus           : String(50);
+        subTaskCustomer         : String(255);
+        subTaskPriority         : String(10);
+        subTaskPriorityNumber   : Integer;
 };
 
 @cds.autoexpose
