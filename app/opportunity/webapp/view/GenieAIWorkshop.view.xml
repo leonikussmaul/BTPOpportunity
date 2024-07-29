@@ -263,23 +263,25 @@
                                     />
 
                                     <Label text="Level" />
-                                    <Select
+                                    <ComboBox
                                         id="level"
                                         selectedKey="{editPageModel>/level}"
                                     >
-                                        <core:Item
-                                            key="Beginner"
-                                            text="Beginner"
-                                        />
-                                        <core:Item
-                                            key="Intermediate"
-                                            text="Intermediate"
-                                        />
-                                        <core:Item
-                                            key="Advanced"
-                                            text="Advanced"
-                                        />
-                                    </Select>
+                                        <items>
+                                            <core:ListItem
+                                                key="Beginner"
+                                                text="Beginner"
+                                            />
+                                            <core:ListItem
+                                                key="Intermediate"
+                                                text="Intermediate"
+                                            />
+                                            <core:ListItem
+                                                key="Advanced"
+                                                text="Advanced"
+                                            />
+                                        </items>
+                                    </ComboBox>
 
                                     <!-- <Label text="Status" />
                 <Text text="{status}" /> -->
@@ -371,7 +373,7 @@
                                 </noData>
                             </List> -->
 
- <core:Fragment
+                            <core:Fragment
                                 fragmentName="opportunity.opportunity.view.fragments.sections.GenieParticipantTables"
                                 type="XML"
                             />
@@ -444,8 +446,6 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
-                 
-
                     <!-- links -->
 
                     <u:ObjectPageSection
@@ -501,7 +501,7 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
-                       <u:ObjectPageSection
+                    <u:ObjectPageSection
                         id="idSectionNotes"
                         titleUppercase="false"
                         title="{i18n>Notes}"
@@ -520,7 +520,6 @@
                             />
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
-                    
                 </u:sections>
             </u:ObjectPageLayout>
         </content>

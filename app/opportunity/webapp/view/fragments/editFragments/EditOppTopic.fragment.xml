@@ -5,7 +5,7 @@
     xmlns:core="sap.ui.core"
 >
     <Dialog
-        title="Add a new Topic for {account}"
+        title="Edit {localModel>/topic} for {account}"
         contentWidth="40%"
     >
         <beginButton>
@@ -18,7 +18,7 @@
             <Button
                 text="Submit"
                 type="Accept"
-                press="onSubmitNewOppTopic"
+                press="onSubmitEditedTopic"
             />
         </endButton>
         <l:VerticalLayout
@@ -34,12 +34,8 @@
                     text="Topic"
                     required="true"
                 />
-                <!-- <Input
-                    placeholder="Enter a name to reference the link" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
-                    value="{localModel>/topic}" liveChange="onChangeValueState"
-                /> -->
 
-                <ComboBox
+                 <ComboBox
                     selectedKey="{localModel>/topic}"
                      valueState="{valueState>/valueState}"
                     valueStateText="{valueState>/valueStateText}"
@@ -79,6 +75,7 @@
                         key="{firstName}"
                     />
                 </ComboBox>
+
 
                 <Label text="Comment" />
                 <TextArea

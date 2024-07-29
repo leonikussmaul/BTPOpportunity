@@ -98,33 +98,33 @@
                                     placeholder="Enter a name for the workshop"
                                 />
 
-<Label text="Description"/>
+                                <Label text="Description" />
                                 <TextArea
                                     value="{viewModel>/description}"
                                     placeholder="Enter a workshop description"
                                 />
-                              
-                                 
 
                                 <Label text="Level" />
-                                <Select
+                                <ComboBox
                                     id="level"
                                     selectedKey="{viewModel>/level}"
-                                    placeholder="What will be the level of the workshop?"
                                 >
-                                    <core:Item
-                                        key="Beginner"
-                                        text="Beginner"
-                                    />
-                                    <core:Item
-                                        key="Intermediate"
-                                        text="Intermediate"
-                                    />
-                                    <core:Item
-                                        key="Advanced"
-                                        text="Advanced"
-                                    />
-                                </Select>
+                                    <items>
+                                        <core:ListItem
+                                            key="Beginner"
+                                            text="Beginner"
+                                        />
+                                        <core:ListItem
+                                            key="Intermediate"
+                                            text="Intermediate"
+                                        />
+                                        <core:ListItem
+                                            key="Advanced"
+                                            text="Advanced"
+                                        />
+                                    </items>
+                                </ComboBox>
+
                                 <Label text="Status" />
                                 <SegmentedButton id="segmentedStatus">
                                     <items>
@@ -163,18 +163,18 @@
                             title="Logistics"
                         >
                             <form:SimpleForm editable="true">
-                             
-                                  <Label text="No. of Participants" />
+                                <Label text="No. of Participants" />
                                 <!-- <Input
                                     value="{viewModel>/email}"
                                     id="email"
                                     placeholder="How can we contact them?"
                                 /> -->
-                                	<StepInput 
-				width="100px"
-				value="{viewModel>/participants}" placeholder="20"/>
-                              
-                              
+                                <StepInput
+                                    width="100px"
+                                    value="{viewModel>/participants}"
+                                    placeholder="20"
+                                />
+
                                 <Label text="Location" />
                                 <Input
                                     value="{viewModel>/city}"
@@ -205,7 +205,6 @@
                                         />
                                     </suggestionItems>
                                 </Input> -->
-                                
 
                                 <Label text="Workshop Dates" />
                                 <DateRangeSelection

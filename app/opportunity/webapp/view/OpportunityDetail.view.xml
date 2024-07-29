@@ -379,6 +379,104 @@
                             />
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
+
+                     <!-- NEW Topics -->
+
+                    <u:ObjectPageSection
+                        id="topicsSection"
+                        titleUppercase="false"
+                        title="Topics"
+                    >
+                        <u:ObjectPageSubSection id="idTopicsSection">
+                            <List
+                                id="topicsList"
+                                items="{}"
+                                mode="Delete"
+                                includeItemInSelection="true"
+                                delete="onDeleteTopic"
+                            >
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title
+                                                text="Ownership"
+                                                level="H5"
+                                            />
+                                            <ToolbarSpacer />
+                                            <Button
+                                                type="Accept"
+                                                text="Add"
+                                                press="onAddNewTopic"
+                                            />
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <items>
+                                    <CustomListItem
+                                  detailPress="onEditTopic"
+                                        type="Detail"
+                                        id="topicsTemplate"
+                                    >
+                                        <HBox
+                                            alignItems="Center"
+                                            class="sapUiTinyMargin"
+                                        >
+                                            <!-- <Avatar
+                                                src="{avatarImageUrl}"
+                                                displayShape="Circle"
+                                                displaySize="S"
+                                                class="sapUiTinyMarginEnd"
+                                            /> -->
+
+                                               <tnt:InfoLabel 
+                                            text="{ path: 'topic' }"
+                                            renderMode="Narrow"
+                                            class="sapUiSmallMarginBeginEnd sapUiTinyMarginTopBottom"
+                                            colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                            visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
+                                        />
+
+                                                               <Avatar
+                                                src="{path: 'topicOwner', formatter: '.formatter.formatterTeamPictures'}"
+                                                displayShape="Circle"
+                                                displaySize="XS"
+                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                visible="{= ${topicOwner} !== null &amp;&amp; ${topicOwner} !== ''}"
+                                                tooltip="{topicOwner}"
+                                            />
+
+                                              <Text text="{topicOwner}" class="sapUiSmallMarginEnd"></Text>
+
+                                        <Text class="sapUiSmallMarginBegin" text="{comment}"></Text>
+
+                         
+                                            
+                                            <!-- <VBox>
+                                                <Title
+                                                    text="{topic}"
+                                                    level="H6"
+                                                />
+                                                <Text
+                                                    text="{comment}"
+                                                    wrapping="true"
+                                                />
+                                            </VBox> -->
+                                        </HBox>
+                                    </CustomListItem>
+                                </items>
+                                <noData>
+                                    <!-- Illustrated message when there is no data -->
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-Tent"
+                                        title="No Topics for this Account"
+                                        description="Start by adding a topic and assigning an owner to it."
+                                    />
+                                </noData>
+                            </List>
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
+
                     <u:ObjectPageSection
                         id="idSectionTasks"
                         titleUppercase="false"
@@ -611,103 +709,7 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
-                    <!-- NEW Topics -->
-
-                    <u:ObjectPageSection
-                        id="topicsSection"
-                        titleUppercase="false"
-                        title="Topics"
-                    >
-                        <u:ObjectPageSubSection id="idTopicsSection">
-                            <List
-                                id="topicsList"
-                                items="{}"
-                                mode="Delete"
-                                includeItemInSelection="true"
-                                selectionChange="onSelectLink"
-                                delete="onDeleteTopic"
-                            >
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <content>
-                                            <Title
-                                                text="Ownership"
-                                                level="H5"
-                                            />
-                                            <ToolbarSpacer />
-                                            <Button
-                                                type="Accept"
-                                                text="Add"
-                                                press="onAddNewTopic"
-                                            />
-                                        </content>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                <items>
-                                    <CustomListItem
-                                        press="onSelectLink"
-                                        type="Active"
-                                        id="topicsTemplate"
-                                    >
-                                        <HBox
-                                            alignItems="Center"
-                                            class="sapUiTinyMargin"
-                                        >
-                                            <!-- <Avatar
-                                                src="{avatarImageUrl}"
-                                                displayShape="Circle"
-                                                displaySize="S"
-                                                class="sapUiTinyMarginEnd"
-                                            /> -->
-
-                                               <tnt:InfoLabel 
-                                            text="{ path: 'topic' }"
-                                            renderMode="Narrow"
-                                            class="sapUiSmallMarginBeginEnd sapUiTinyMarginTopBottom"
-                                            colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
-                                            visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
-                                        />
-
-                                                               <Avatar
-                                                src="{path: 'topicOwner', formatter: '.formatter.formatterTeamPictures'}"
-                                                displayShape="Circle"
-                                                displaySize="XS"
-                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
-                                                visible="{= ${topicOwner} !== null &amp;&amp; ${topicOwner} !== ''}"
-                                                tooltip="{topicOwner}"
-                                            />
-
-                                              <Text text="{topicOwner}" class="sapUiSmallMarginEnd"></Text>
-
-                                        <Text class="sapUiSmallMarginBegin" text="{comment}"></Text>
-
-                         
-                                            
-                                            <!-- <VBox>
-                                                <Title
-                                                    text="{topic}"
-                                                    level="H6"
-                                                />
-                                                <Text
-                                                    text="{comment}"
-                                                    wrapping="true"
-                                                />
-                                            </VBox> -->
-                                        </HBox>
-                                    </CustomListItem>
-                                </items>
-                                <noData>
-                                    <!-- Illustrated message when there is no data -->
-                                    <IllustratedMessage
-                                        enableVerticalResponsiveness="true"
-                                        illustrationType="sapIllus-Tent"
-                                        title="No Topics for this Account"
-                                        description="Start by adding a topic and assigning an owner to it."
-                                    />
-                                </noData>
-                            </List>
-                        </u:ObjectPageSubSection>
-                    </u:ObjectPageSection>
+                   
 
                     <!-- <u:ObjectPageSection
                         id="idSectionTopics"
@@ -815,60 +817,7 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection> -->
 
-                    <!-- links -->
-
-                    <u:ObjectPageSection
-                        id="idSectionLinks"
-                        titleUppercase="false"
-                        title="{i18n>Links}"
-                    >
-                        <u:ObjectPageSubSection id="idSubSectionLinks">
-                            <List
-                                id="linkList"
-                                items="{}"
-                                mode="Delete"
-                                includeItemInSelection="true"
-                                selectionChange="onSelectLink"
-                                delete="onDeleteLink"
-                            >
-                                <headerToolbar>
-                                    <OverflowToolbar>
-                                        <content>
-                                            <Title
-                                                text="Respository"
-                                                level="H5"
-                                            />
-                                            <ToolbarSpacer />
-                                            <Button
-                                                type="Accept"
-                                                text="Add"
-                                                press="onAddNewLink"
-                                            />
-                                        </content>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                <StandardListItem
-                                    press="onSelectLink"
-                                    type="Active"
-                                    id="linkListItem"
-                                    title="{linkName}"
-                                    description="{linkDescription}"
-                                    icon="sap-icon://chain-link"
-                                    iconDensityAware="true"
-                                    iconInset="true"
-                                />
-                                <noData>
-                                    <!-- Illustrated message when there is no data -->
-                                    <IllustratedMessage
-                                        enableVerticalResponsiveness="true"
-                                        illustrationType="sapIllus-SearchFolder"
-                                        title="No Links Found"
-                                        description="Start by adding a link to the repository."
-                                    />
-                                </noData>
-                            </List>
-                        </u:ObjectPageSubSection>
-                    </u:ObjectPageSection>
+               
 
                     <!-- <u:ObjectPageSection
                                 id="idSectionActivities"
@@ -1110,6 +1059,61 @@
                                     </commons:filterList>
                                 </commons:Timeline>
                             </VBox>
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
+
+                         <!-- links -->
+
+                    <u:ObjectPageSection
+                        id="idSectionLinks"
+                        titleUppercase="false"
+                        title="{i18n>Links}"
+                    >
+                        <u:ObjectPageSubSection id="idSubSectionLinks">
+                            <List
+                                id="linkList"
+                                items="{}"
+                                mode="Delete"
+                                includeItemInSelection="true"
+                                selectionChange="onSelectLink"
+                                delete="onDeleteLink"
+                            >
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title
+                                                text="Respository"
+                                                level="H5"
+                                            />
+                                            <ToolbarSpacer />
+                                            <Button
+                                                type="Accept"
+                                                text="Add"
+                                                press="onAddNewLink"
+                                            />
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <StandardListItem
+                                    press="onSelectLink"
+                                    type="Active"
+                                    id="linkListItem"
+                                    title="{linkName}"
+                                    description="{linkDescription}"
+                                    icon="sap-icon://chain-link"
+                                    iconDensityAware="true"
+                                    iconInset="true"
+                                />
+                                <noData>
+                                    <!-- Illustrated message when there is no data -->
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-SearchFolder"
+                                        title="No Links Found"
+                                        description="Start by adding a link to the repository."
+                                    />
+                                </noData>
+                            </List>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 

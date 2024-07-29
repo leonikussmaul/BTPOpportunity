@@ -61,7 +61,7 @@
                     text="Participants"
                     required="true"
                 />
-                <Select
+                <ComboBox
                 id="selectParticipant"  visible="{= ${workshopType} === 'Internal' ? true : false }" 
                     valueState="{valueState>/valueState}" 
                 valueStateText="{valueState>/valueStateText}"
@@ -79,9 +79,9 @@
                         key="{workshopID}"
                         text="{name}"
                     />
-                </Select>
+                </ComboBox>
 
-                   <Select
+                   <ComboBox
                 id="selectCustomer" visible="{= ${workshopType} === 'Customer' ? true : false }" 
                     valueState="{valueState>/valueState}" 
                 valueStateText="{valueState>/valueStateText}"
@@ -99,9 +99,9 @@
                         key="{workshopID}"
                         text="{name}"
                     />
-                </Select>
+                </ComboBox>
 
-                   <Select
+                   <ComboBox
                 id="selectPartner" visible="{= ${workshopType} === 'Partner' ? true : false }" 
                     valueState="{valueState>/valueState}" 
                 valueStateText="{valueState>/valueStateText}"
@@ -119,7 +119,7 @@
                         key="{workshopID}"
                         text="{name}"
                     />
-                </Select>
+                </ComboBox>
             </f:SimpleForm>
         </l:VerticalLayout>
     </Dialog>

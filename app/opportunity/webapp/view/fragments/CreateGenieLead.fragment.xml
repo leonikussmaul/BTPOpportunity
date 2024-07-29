@@ -133,24 +133,26 @@
                                 </MultiComboBox> -->
 
                                 <Label text="Level" />
-                                <Select
+                                <ComboBox
                                     id="level"
                                     selectedKey="{viewModel>/level}"
-                                    placeholder="What is their level of experience with AI?"
                                 >
-                                    <core:Item
-                                        key="Beginner"
-                                        text="Beginner"
-                                    />
-                                    <core:Item
-                                        key="Intermediate"
-                                        text="Intermediate"
-                                    />
-                                    <core:Item
-                                        key="Advanced"
-                                        text="Advanced"
-                                    />
-                                </Select>
+                                    <items>
+                                        <core:ListItem
+                                            key="Beginner"
+                                            text="Beginner"
+                                        />
+                                        <core:ListItem
+                                            key="Intermediate"
+                                            text="Intermediate"
+                                        />
+                                        <core:ListItem
+                                            key="Advanced"
+                                            text="Advanced"
+                                        />
+                                    </items>
+                                </ComboBox>
+
                                 <Label text="Status" />
                                 <SegmentedButton id="segmentedStatus">
                                     <items>
@@ -280,7 +282,8 @@
                         <!-- Step 3 -->
                         <WizardStep
                             id="WizardStep3"
-                            title="Notes"  validated="false"
+                            title="Notes"
+                            validated="false"
                         >
                             <form:SimpleForm editable="true">
                                 <Label text="Notes" />

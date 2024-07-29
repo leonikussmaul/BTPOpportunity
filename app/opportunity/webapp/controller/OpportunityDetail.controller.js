@@ -499,6 +499,50 @@ sap.ui.define([
                 });
             },
 
+            onEditTopic: function (oEvent) {
+                var that = this;
+                var oData = oEvent.getSource().getBindingContext().getObject();
+                var oLocalModel = this.getView().getModel("localModel");
+                oLocalModel.setData(oData);
+                this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditOppTopic");
+
+            },
+
+            onSubmitEditedTopic: function (oEvent) {
+                var that = this;
+
+                var iOppID = parseInt(this.sOpportunityID);
+                var oLocalModel = this.getView().getModel("localModel");
+                var oData = oLocalModel.getData();
+
+
+                var oPayload = {
+                    topicOwner: oData.topicOwner,
+                    topic: oData.topic,
+                    comment: oData.comment,
+                    opptID_opportunityID: iOppID
+                };
+
+                that.getView().setBusy(true);
+                var oModel = that.getView().getModel();
+                var sPath = "/opportunityTopics/" + oLocalModel.getData().ID;
+                oModel.update(sPath, oPayload, {
+                    success: function (oData, response) {
+                        MessageToast.show("Topic updated!");
+                        // that.onReadSubTasksData(iOppID);
+                        that.getView().setBusy(false);
+                        that.onCancelDialogPress();
+
+                    },
+                    error: function (oError) {
+                        that.getView().setBusy(false);
+                        var sMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageBox.error(sMessage);
+
+                    }
+                });
+            },
+
             onReorderUp: function (oEvent) {
                 var sDirection = "Up"
                 this.onReorderItems(oEvent, sDirection);
@@ -1634,7 +1678,15 @@ COMMENTS
                 });
 
             },
-
+            onSuggestTopic: function (oEvent) {
+                var sTerm = oEvent.getParameter("suggestValue");
+                var aFilters = [];
+                if (sTerm) {
+                    aFilters.push(new sap.ui.model.Filter("topic", sap.ui.model.FilterOperator.Contains, sTerm));
+                }
+                
+                oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+            },
 
         });
     });
