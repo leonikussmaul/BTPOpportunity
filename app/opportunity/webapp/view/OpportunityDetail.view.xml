@@ -58,7 +58,7 @@
                                         /> -->
                                 </VBox>
 
-                                <HBox
+                                <!-- <HBox
                                     width="600px"
                                     alignItems="Start"
                                 >
@@ -84,7 +84,7 @@
                                             </tnt:customData>
                                         </tnt:InfoLabel>
                                     </l:HorizontalLayout>
-                                </HBox>
+                                </HBox> -->
                             </HBox>
                         </u:expandedHeading>
                         <u:snappedHeading>
@@ -547,10 +547,6 @@
                                                 tooltip="{subTaskModel>subTaskOwner}"
                                             />
 
-                                            <!-- <Avatar displaySize="XS"
-                                                src="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
-                                                backgroundColor="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatAccentStatus'}"
-                                                visible="{= ${subTaskModel>subTaskStatus} !== null }" /> -->
 
                                             <MenuButton
                                                 text="{subTaskModel>subTaskStatus}"
@@ -614,7 +610,106 @@
                             </Table>
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
+
+                    <!-- NEW Topics -->
+
                     <u:ObjectPageSection
+                        id="topicsSection"
+                        titleUppercase="false"
+                        title="Topics"
+                    >
+                        <u:ObjectPageSubSection id="idTopicsSection">
+                            <List
+                                id="topicsList"
+                                items="{}"
+                                mode="Delete"
+                                includeItemInSelection="true"
+                                selectionChange="onSelectLink"
+                                delete="onDeleteTopic"
+                            >
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title
+                                                text="Ownership"
+                                                level="H5"
+                                            />
+                                            <ToolbarSpacer />
+                                            <Button
+                                                type="Accept"
+                                                text="Add"
+                                                press="onAddNewTopic"
+                                            />
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <items>
+                                    <CustomListItem
+                                        press="onSelectLink"
+                                        type="Active"
+                                        id="topicsTemplate"
+                                    >
+                                        <HBox
+                                            alignItems="Center"
+                                            class="sapUiTinyMargin"
+                                        >
+                                            <!-- <Avatar
+                                                src="{avatarImageUrl}"
+                                                displayShape="Circle"
+                                                displaySize="S"
+                                                class="sapUiTinyMarginEnd"
+                                            /> -->
+
+                                               <tnt:InfoLabel 
+                                            text="{ path: 'topic' }"
+                                            renderMode="Narrow"
+                                            class="sapUiSmallMarginBeginEnd sapUiTinyMarginTopBottom"
+                                            colorScheme="{path:'topic', formatter:'.formatter.topicColorSchemeFormatter'}"
+                                            visible="{= ${topic} !== null &amp;&amp; ${topic} !== '' }"
+                                        />
+
+                                                               <Avatar
+                                                src="{path: 'topicOwner', formatter: '.formatter.formatterTeamPictures'}"
+                                                displayShape="Circle"
+                                                displaySize="XS"
+                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                visible="{= ${topicOwner} !== null &amp;&amp; ${topicOwner} !== ''}"
+                                                tooltip="{topicOwner}"
+                                            />
+
+                                              <Text text="{topicOwner}" class="sapUiSmallMarginEnd"></Text>
+
+                                        <Text class="sapUiSmallMarginBegin" text="{comment}"></Text>
+
+                         
+                                            
+                                            <!-- <VBox>
+                                                <Title
+                                                    text="{topic}"
+                                                    level="H6"
+                                                />
+                                                <Text
+                                                    text="{comment}"
+                                                    wrapping="true"
+                                                />
+                                            </VBox> -->
+                                        </HBox>
+                                    </CustomListItem>
+                                </items>
+                                <noData>
+                                    <!-- Illustrated message when there is no data -->
+                                    <IllustratedMessage
+                                        enableVerticalResponsiveness="true"
+                                        illustrationType="sapIllus-Tent"
+                                        title="No Topics for this Account"
+                                        description="Start by adding a topic and assigning an owner to it."
+                                    />
+                                </noData>
+                            </List>
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
+
+                    <!-- <u:ObjectPageSection
                         id="idSectionTopics"
                         titleUppercase="false"
                     >
@@ -718,7 +813,7 @@
                                 </HBox>
                             </VBox>
                         </u:ObjectPageSubSection>
-                    </u:ObjectPageSection>
+                    </u:ObjectPageSection> -->
 
                     <!-- links -->
 

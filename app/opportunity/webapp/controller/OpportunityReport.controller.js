@@ -240,7 +240,6 @@ sap.ui.define([
                     //add deliverable field to odata
                     var oNewItem = {
                         account: oData.account,
-                        topic: oData.topic,
                         marketUnit: oData.marketUnit,
                         opportunityStartDate: sDate,
                         opportunityStartDate: sDueDate,
@@ -304,56 +303,7 @@ sap.ui.define([
 
             },
 
-            /* ------------------------------------------------------------------------------------------------------------
-          ADD TOPIC
-     --------------------------------------------------------------------------------------------------------------*/
-
-
-            onSubmitTopic: function (oEvent) {
-                var that = this;
-                var oInput = sap.ui.getCore().byId("topicInput");
-                var oValue = oInput.getValue();
-                var aTopics = this.getView().getModel("localModel").getData().topics;
-
-                if (oValue != "" && oInput != null) {
-                    this.resetValueState();
-                    MessageBox.warning("Are you sure you want to post the topic " + oValue + " to the DataBase? This action is not reversible.", {
-                        actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                        emphasizedAction: MessageBox.Action.OK,
-                        onClose: function (sAction) {
-                            if (sAction === MessageBox.Action.OK) {
-                                var isMatch = aTopics.some(oItem => {
-                                    return oItem.topic.toUpperCase() === oValue.toUpperCase();
-                                });
-                                // POST call 
-                                var oNewTopic = {
-                                    topic: oValue
-                                }
-                                that.getView().setBusy(true);
-                                var oModel = that.getView().getModel();
-                                oModel.create("/opportunityTopicsVH", oNewTopic, {
-                                    success: function (oData, response) {
-                                        MessageToast.show("New topic posted!");
-                                        that.onCancelDialogPress();
-                                        oInput.setValue("");
-                                        that.getView().setBusy(false);
-                                    },
-                                    error: function (oError) {
-                                        that.getView().setBusy(false);
-                                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                                        sap.m.MessageBox.error(sMessage);
-
-                                    }
-                                });
-                            } else {
-                                oInput.setValue("");
-                                that.getView().setBusy(false);
-                            }
-                        }
-                    });
-                } else this.ValueStateMethod();
-            },
-
+          
             onPostNewItem: function () {
                 var that = this;
                 var oPayload = {

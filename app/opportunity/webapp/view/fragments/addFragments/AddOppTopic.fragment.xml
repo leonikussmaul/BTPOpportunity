@@ -1,0 +1,89 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Add a new Topic for {account}"
+        contentWidth="40%"
+    >
+        <beginButton>
+            <Button
+                text="Cancel"
+                press="onCancelDialogPress"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Submit"
+                type="Accept"
+                press="onSubmitNewOppTopic"
+            />
+        </endButton>
+        <l:VerticalLayout
+            class="sapUiContentPadding"
+            width="100%"
+        >
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+            >
+                <Label
+                    text="Topic"
+                    required="true"
+                />
+                <!-- <Input
+                    placeholder="Enter a name to reference the link" valueState="{valueState>/valueState}" valueStateText="{valueState>/valueStateText}"
+                    value="{localModel>/topic}" liveChange="onChangeValueState"
+                /> -->
+                <Select
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{localModel>/topic}"
+                    items="{
+                                    path: '/opportunityTopicsVH',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'topic',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{topic}"
+                        text="{topic}"
+                    />
+                </Select>
+
+                <Label text="Owner" />
+                <Select
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{localModel>/topicOwner}"
+                    items="{
+                                    path: '/teamMembers',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{firstName}"
+                        text="{firstName}"
+                    />
+                </Select>
+
+                <Label text="Comment" />
+                <TextArea
+                    id="comment"
+                    placeholder="Any comments or notes for the topic?"
+                    value="{localModel>/comment}"
+                />
+            </f:SimpleForm>
+        </l:VerticalLayout>
+    </Dialog>
+</core:FragmentDefinition>
