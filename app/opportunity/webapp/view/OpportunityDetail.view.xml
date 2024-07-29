@@ -350,7 +350,245 @@
                                     />
                                 </u:ObjectPageSubSection>
                             </u:ObjectPageSection>
+                            <u:ObjectPageSection
+                                id="idSectionTasks"
+                                titleUppercase="false"
+                                title="Tasks"
+                            >
+                                <u:ObjectPageSubSection
+                                    id="idSubSectionTasks"
+                                >
+                                    <Table
+                                        id="subTaskTable"
+                                        items="{
+                                            path : 'subTaskModel>/subtasks', templateShareable:true,
+                                            sorter:
+                                                {
+                                                    path: 'subTaskOrder',
+                                                    descending: false
+                                                },
+                                            parameters: {
+                                                $count: true
+                                            }
+                                        }"
+                                        selectionChange="onSelectSubTask"
+                                        inset="false"
+                                        growing="true"
+                                        growingScrollToLoad="true"
+                                        mode="MultiSelect"
+                                        sticky="ColumnHeaders,HeaderToolbar"
+                                        noDataText="{i18n>noDataSubTasks}"
+                                    >
+                                        <headerToolbar>
+                                            <OverflowToolbar design="Transparent">
+                                                <SegmentedButton
+                                                    id="subTaskFilter"
+                                                    selectedKey="all"
+                                                    selectionChange="onSubTaskFilter"
+                                                    class="sapMSegmentedButtonNoAutoWidth"
+                                                >
+                                                    <items>
+                                                        <SegmentedButtonItem
+                                                            text="All"
+                                                            key="All"
+                                                        />
+                                                        <SegmentedButtonItem
+                                                            text="Open ({subTaskModel>/completedCount})"
+                                                            key="Open"
+                                                        />
+                                                        <SegmentedButtonItem
+                                                            text="Completed"
+                                                            key="Completed"
+                                                        />
+                                                    </items>
+                                                </SegmentedButton>
 
+                                                <ToolbarSpacer />
+
+                                                <Button
+                                                    type="Accept"
+                                                    text="Add" 
+                                                    tooltip="{i18n>addTableItem}"
+                                                    press="onAddSubTask"
+                                                />
+
+                                                <Button
+                                                    text="Clear completed"
+                                                    icon="sap-icon://clear-all"
+                                                    tooltip="{i18n>deleteSelected}"
+                                                    press="onDeleteSubTasks"
+                                                />
+                                            </OverflowToolbar>
+                                        </headerToolbar>
+
+                                        <columns>
+                                            <Column
+                                                hAlign="Center"
+                                                width="3em"
+                                            >
+                                                <customData>
+                                                    <core:CustomData key="p13nData" />
+                                                </customData>
+                                                <Label />
+                                            </Column>
+
+                                            <Column width="90%">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "subTask", "columnIndex" : "1", "leadingProperty": "subTask", "sortProperty": "subTask", "filterProperty": "subTask ", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="{i18n>subTask}"
+                                                    tooltip="{i18n>subTask}"
+                                                />
+                                            </Column>
+                                            <Column width="10em">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "subTaskOwner", "columnIndex" : "2", "leadingProperty": "subTaskOwner", "sortProperty": "subTaskOwner", "filterProperty": "subTaskOwner ", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="{i18n>subTaskOwner}"
+                                                    tooltip="{i18n>subTaskOwner}"
+                                                />
+                                            </Column>
+
+                                            <Column width="15em">
+                                                <customData>
+                                                    <core:CustomData key="p13nData" />
+                                                </customData>
+                                                <Label
+                                                    text="Status"
+                                                    tooltip="Status"
+                                                />
+                                            </Column>
+
+                                            <Column width="10em">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "subTaskDueDate", "columnIndex" : "3", "leadingProperty": "subTaskDueDate", "sortProperty": "subTaskDueDate", "filterProperty": "subTaskDueDate ", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="{i18n>subTaskDueDate}"
+                                                    tooltip="{i18n>subTaskDueDate}"
+                                                />
+                                            </Column>
+
+                                            <Column width="3em">
+                                                <customData>
+                                                    <core:CustomData key="p13nData" />
+                                                </customData>
+                                                <Label />
+                                            </Column>
+
+                                            <Column width="3em">
+                                                <customData>
+                                                    <core:CustomData key="p13nData" />
+                                                </customData>
+                                                <Label />
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem
+                                                type="Detail"
+                                                detailPress="onEditSubTask"
+                                                vAlign="Middle"
+                                                selected="{subTaskModel>subTaskCompleted}"
+                                            >
+                                                <cells>
+                                                    <Text
+                                                        text="{= ${subTaskModel>subTaskOrder} + 1}.)"
+                                                    />
+
+                                                    <Text
+                                                        text="{subTaskModel>subTask}"
+                                                        wrapping="true"
+                                                    />
+
+                                                    <Avatar
+                                                        src="{path: 'subTaskModel>subTaskOwner', formatter: '.formatter.formatterTeamPictures'}"
+                                                        displayShape="Circle"
+                                                        displaySize="XS"
+                                                        class="imageDisplayBlock sapUiTinyMarginBeginEnd"
+                                                        visible="{= ${subTaskModel>subTaskOwner} !== null &amp;&amp; ${subTaskModel>subTaskOwner} !== ''}"
+                                                        tooltip="{subTaskModel>subTaskOwner}"
+                                                    />
+
+                                                    <!-- <Avatar displaySize="XS"
+                                                src="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatSubTaskIcon'}"
+                                                backgroundColor="{path: 'subTaskModel>subTaskStatus', formatter: '.formatter.formatAccentStatus'}"
+                                                visible="{= ${subTaskModel>subTaskStatus} !== null }" /> -->
+
+                                                    <MenuButton
+                                                        text="{subTaskModel>subTaskStatus}"
+                                                        buttonMode="Split"
+                                                        width="140px"
+                                                        icon="{path: 'subTaskModel>subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}"
+                                                    >
+                                                        <menu>
+                                                            <Menu
+                                                                itemSelected="onMenuAction"
+                                                                items="{path: '/opportunitySubTaskStatus', templateShareable:true}"
+                                                            >
+                                                                <MenuItem
+                                                                    press="onSubTaskStatusChange"
+                                                                    text="{subTaskStatus}"
+                                                                    icon="{path: 'subTaskStatus', formatter:'.formatter.formatSubTaskIcon'}"
+                                                                />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
+
+                                                    <ObjectStatus
+                                                        text="{
+                                                            path: 'subTaskModel>subTaskDueDate',
+                                                            type: 'sap.ui.model.type.Date',
+                                                            formatOptions: {
+                                                                relative: true,
+                                                                relativeScale: 'auto'
+                                                            }
+                                                        }"
+                                                        icon="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatIconDueDate'}"
+                                                        state="{path: 'subTaskModel>subTaskDueDate', formatter:'.formatter.formatDueDate'}"
+                                                        visible="{= ${subTaskModel>subTaskDueDate} !== null}"
+                                                    />
+
+                                                    <core:Icon
+                                                        press="onReorderUp"
+                                                        src="sap-icon://slim-arrow-up"
+                                                        size="1.2rem"
+                                                        color="#427cac"
+                                                        tooltip="Move the Sub-Task one up"
+                                                    />
+                                                    <core:Icon
+                                                        press="onReorderDown"
+                                                        src="sap-icon://slim-arrow-down"
+                                                        size="1.2rem"
+                                                        color="#427cac"
+                                                        tooltip="Move the Sub-Task one down"
+                                                    />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                        <noData>
+                                            <IllustratedMessage
+                                                enableVerticalResponsiveness="true"
+                                                illustrationType="sapIllus-NoTasks"
+                                                title="No Tasks Found"
+                                                description="Start by creating one"
+                                            >
+                                            </IllustratedMessage>
+                                        </noData>
+                                        
+                                    </Table>
+                                </u:ObjectPageSubSection>
+                            </u:ObjectPageSection>
                             <u:ObjectPageSection
                                 id="idSectionTopics"
                                 titleUppercase="false"
