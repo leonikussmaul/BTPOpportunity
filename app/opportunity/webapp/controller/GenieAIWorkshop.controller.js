@@ -169,7 +169,7 @@ sap.ui.define([
                             ]
                         });
 
-                        var oSorter = new sap.ui.model.Sorter("name", true);
+                        var oSorter = new sap.ui.model.Sorter("name", false);
                         var oFilter = new sap.ui.model.Filter("ID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);
 
                         this.getView().byId("participantTable").bindAggregation("items", {
@@ -740,6 +740,15 @@ sap.ui.define([
                     sap.ui.getCore().byId("selectParticipant").setVisible(true);
                     sap.ui.getCore().byId("selectPartner").setVisible(false);
                 }
+
+            },
+
+
+            onBeforeRebindTable: function (oEvent) {
+
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                var oSorter = new sap.ui.model.Sorter("name", false);
+                oBindingParams.sorter.push(oSorter);
 
             },
 

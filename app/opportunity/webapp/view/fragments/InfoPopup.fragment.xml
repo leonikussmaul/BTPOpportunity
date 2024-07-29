@@ -46,15 +46,7 @@
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
-
-            <uxap:ObjectPageSection title="Tasks" titleUppercase="false">
-                <uxap:subSections>
-                    <uxap:ObjectPageSubSection title="Tasks">
-                          <FormattedText htmlText="{infoModel>/tasks}" />
-                    </uxap:ObjectPageSubSection>
-                </uxap:subSections>
-            </uxap:ObjectPageSection>
-
+            
             <uxap:ObjectPageSection title="Projects" titleUppercase="false">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection title="Projects">

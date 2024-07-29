@@ -99,7 +99,7 @@
                         </ui-integration:Card>
 
                         <!-- tasks -->
-                        <!-- <ui-integration:Card
+                        <ui-integration:Card
                             id="taskCard"
                             manifest="./cardManifests/cardManifestTasks.json"
                             width="480px"
@@ -111,7 +111,7 @@
                                     minRows="6"
                                 />
                             </w:layoutData>
-                        </ui-integration:Card> -->
+                        </ui-integration:Card>
 
                         <!-- MATURITY -->
 
@@ -471,7 +471,7 @@
                         <ui-integration:Card
                             id="goLiveCard"
                             manifest="./cardManifests/cardManifestGoLive.json"
-                            width="290px"
+                            width="320px"
                             height="auto"
                             class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout"
                         >

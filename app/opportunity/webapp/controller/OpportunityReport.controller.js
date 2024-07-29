@@ -549,6 +549,9 @@ sap.ui.define([
                 var oGrouping = new sap.ui.model.Sorter("marketUnit", true, fnGroupHeaderFormatter);
                 oBindingParams.sorter.push(oGrouping);
 
+                var oAccountSorter = new sap.ui.model.Sorter("account", false);
+                oBindingParams.sorter.push(oAccountSorter);
+
                 this.addFiltersForSelectedItems(oEvent, "marketUnit");
                 this.addFiltersForSelectedItems(oEvent, "topic");
                 this.addFiltersForSelectedItems(oEvent, "primaryContact");
@@ -687,7 +690,7 @@ sap.ui.define([
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 var oModel = this.getView().getModel();
                 var sMessage = "'" + oContext.account + (isFavorite ? "' added to favorites" : "' removed from favorites");
-                
+
                 oModel.update(sPath, { "isFavorite": isFavorite }, {
                     success: function () {
                         sap.m.MessageToast.show(sMessage);
@@ -698,7 +701,7 @@ sap.ui.define([
                     }
                 });
             },
-            
+
             onDeleteTopic: function () {
 
                 var that = this;
@@ -795,23 +798,23 @@ sap.ui.define([
 
             onBeforeExportOpportunities: function (oEvent) {
                 var oWorkbook = oEvent.getParameter("exportSettings").workbook;
-                
+
                 // Find and remove the 'account' column if it already exists
-                var accountColumnIndex = oWorkbook.columns.findIndex(function(column) {
+                var accountColumnIndex = oWorkbook.columns.findIndex(function (column) {
                     return column.property === 'account';
                 });
                 if (accountColumnIndex !== -1) {
                     oWorkbook.columns.splice(accountColumnIndex, 1);
                 }
-            
+
                 // Remove the first column
                 delete oWorkbook.columns[0];
-            
+
                 // Add 'account' and 'marketUnit' columns at the beginning
                 oWorkbook.columns.unshift({ property: 'marketUnit', label: "Market Unit" });
                 oWorkbook.columns.unshift({ property: 'account', label: "Account", width: "30%" });
             },
-            
+
 
             /* ------------------------------------------------------------------------------------------------------------
            VALUE STATE

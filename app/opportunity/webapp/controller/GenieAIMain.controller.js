@@ -512,30 +512,45 @@ sap.ui.define([
                 }
             },
 
-            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-                //post isFavorite 
-                if (isFavorite === true) {
-                    oContext.isFavorite = true;
-                } else {
-                    oContext.isFavorite = false;
-                }
-                delete oContext.links;
-                delete oContext.__metadata;
+            // postFavouriteCustomer: function (isFavorite, oContext, sPath) {
+            //     //post isFavorite 
+            //     if (isFavorite === true) {
+            //         oContext.isFavorite = true;
+            //     } else {
+            //         oContext.isFavorite = false;
+            //     }
+            //     delete oContext.links;
+            //     delete oContext.__metadata;
 
+            //     var oModel = this.getView().getModel();
+            //     oModel.update(sPath, oContext, {
+            //         success: function () {
+            //             var sMessage = "";
+            //             if (isFavorite === true) {
+            //                 sMessage = "'" + oContext.name + "' added to favorites";
+            //             } else {
+            //                 sMessage = "'" + oContext.name + "' removed from favorites";
+            //             }
+            //             MessageToast.show(sMessage);
+            //         },
+            //         error: function (oError) {
+            //             var sMessage = JSON.parse(oError.responseText).error.message.value;
+            //             sap.m.MessageToast.show(sMessage);
+            //         }
+            //     });
+            // },
+
+            postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 var oModel = this.getView().getModel();
-                oModel.update(sPath, oContext, {
+                var sMessage = "'" + oContext.name + (isFavorite ? "' added to favorites" : "' removed from favorites");
+
+                oModel.update(sPath, { "isFavorite": isFavorite }, {
                     success: function () {
-                        var sMessage = "";
-                        if (isFavorite === true) {
-                            sMessage = "'" + oContext.name + "' added to favorites";
-                        } else {
-                            sMessage = "'" + oContext.name + "' removed from favorites";
-                        }
-                        MessageToast.show(sMessage);
+                        sap.m.MessageToast.show(sMessage);
                     },
                     error: function (oError) {
-                        var sMessage = JSON.parse(oError.responseText).error.message.value;
-                        sap.m.MessageToast.show(sMessage);
+                        var sErrorMessage = JSON.parse(oError.responseText).error.message.value;
+                        sap.m.MessageToast.show(sErrorMessage);
                     }
                 });
             },
@@ -584,13 +599,24 @@ sap.ui.define([
 
 
 
-            // onBeforeRebindTable: function (oEvent) {
+            onBeforeRebindTable: function (oEvent) {
 
-            //     var oBindingParams = oEvent.getParameter("bindingParams");
-            //     var oSorter = new sap.ui.model.Sorter("name", true);
-            //     oBindingParams.sorter.push(oSorter);
+                var oBindingParams = oEvent.getParameter("bindingParams");
 
-            // },
+                var fnGroupHeaderFormatter = function (oContext) {
+                    var sHeader = oContext.getProperty("status");
+                    return {
+                        key: sHeader,
+                    };
+                };
+                var oGrouping = new sap.ui.model.Sorter("status", true, fnGroupHeaderFormatter);
+                oBindingParams.sorter.push(oGrouping);
+
+               
+                var oSorter = new sap.ui.model.Sorter("name", false);
+                oBindingParams.sorter.push(oSorter);
+
+            },
 
 
         });

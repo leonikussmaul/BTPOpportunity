@@ -598,7 +598,7 @@
                                            }"
                                         />
 
-                                         <Button text="Open" visible="{path: 'subTasks', formatter:'.formatter.taskCounterVisible'}">
+                                         <Button text="Tasks" visible="{path: 'subTasks', formatter:'.formatter.taskCounterVisible'}">
                                         	<customData>
                                                 <BadgeCustomData
                                                     key="badge"
