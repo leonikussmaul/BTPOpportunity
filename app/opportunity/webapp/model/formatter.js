@@ -562,7 +562,19 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "Accent5";;
       }
 
-    }
+    },
+
+    taskCountFormatter: function(sValue){
+      if(sValue.length > 0){
+        return sValue.length; 
+      } else return; 
+    },
+
+    taskCounterVisible:function(sValue){
+      if(sValue.length > 0){
+        return true; 
+      } else return false; 
+    },
 
 
   };

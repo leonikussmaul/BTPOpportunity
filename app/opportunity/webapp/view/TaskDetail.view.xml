@@ -635,7 +635,7 @@
                             enableVerticalResponsiveness="true"
                             illustrationType="sapIllus-SearchFolder"
                             title="No Links Found"
-                            description="Start by adding a link to the repository"
+                            description="Start by adding a link to the repository."
                        />
                       
                     </noData>
