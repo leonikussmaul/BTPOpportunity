@@ -406,7 +406,7 @@
                         showFullScreenButton="true"
                         initiallyVisibleFields="account,topics,status,primaryContact,opportunityDueDate,opportunityValue,isFavorite"
                         requestAtLeastFields="marketUnit,account,topics,status,primaryContact,opportunityDueDate,opportunityValue,priority,opportunityID"
-                        ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity,isFavorite"
+                        ignoreFromPersonalisation="opportunityID,noteDate,noteText,valueMonth,valueYear,averageMaturity"
                     >
                         <smartTable:customToolbar>
                             <OverflowToolbar design="Transparent">
