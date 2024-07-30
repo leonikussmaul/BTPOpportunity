@@ -211,16 +211,13 @@
                                                     <ObjectIdentifier
                                                         title="{name}"
                                                     />
-
                                                     <Text
                                                         text="{description}"
                                                         wrapping="true"
                                                     />
-
                                                     <Text
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
-                                                        tooltip="{country}"
-                                                    />
+                                                        tooltip="{country}"/>
 
                                                     <Text
                                                         text="{'path': 'workshopStartDate',

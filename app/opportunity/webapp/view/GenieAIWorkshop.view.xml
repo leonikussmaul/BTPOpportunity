@@ -39,8 +39,8 @@
                             <HBox>
                                 <Avatar
                                     class="sapUiTinyMarginEnd"
-                                    backgroundColor="{path:'type', formatter:'.formatter.genieColorFormatter'}"
-                                    src="{path:'type', formatter:'.formatter.genieTypeFormatter'}"
+                                    backgroundColor="{path:'workshopType', formatter:'.formatter.genieColorFormatter'}"
+                                    src="{path:'workshopType', formatter:'.formatter.genieTypeFormatter'}"
                                 />
                                 <VBox>
                                     <Title text="{name}" />
@@ -58,8 +58,8 @@
                             >
                                 <Avatar
                                     class="sapUiTinyMarginEnd"
-                                    backgroundColor="{path:'type', formatter:'.formatter.genieColorFormatter'}"
-                                    src="{path:'type', formatter:'.formatter.genieTypeFormatter'}"
+                                    backgroundColor="{path:'workshopType', formatter:'.formatter.genieColorFormatter'}"
+                                    src="{path:'workshopType', formatter:'.formatter.genieTypeFormatter'}"
                                 />
                                 <Title
                                     text="{name}"

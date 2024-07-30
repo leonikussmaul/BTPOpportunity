@@ -159,15 +159,8 @@ sap.ui.define([
                             "Partner": "/GenieAIPartner"
                         };
                         var sBindingPath = bindingPaths[sType];
-
-                        var oTemplate = new sap.m.ColumnListItem({
-                            type: "Active",
-                            // press: this.onSelectParticipant.bind(this),
-                            cells: [
-                                new sap.m.Text({ text: "{name}" }),
-                                new sap.m.Text({ text: "{type}" })
-                            ]
-                        });
+                        
+                        var oTemplate = this.getView().byId("participantItemID");
 
                         var oSorter = new sap.ui.model.Sorter("name", false);
                         var oFilter = new sap.ui.model.Filter("ID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);

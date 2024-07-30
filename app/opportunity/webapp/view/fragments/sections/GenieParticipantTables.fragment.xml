@@ -48,7 +48,7 @@
         </columns>
         <items>
             <ColumnListItem
-                type="Active"
+                type="Active" id="participantItemID"
                 press="onSelectParticipant"
             >
                 <cells>
@@ -59,6 +59,7 @@
                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                         tooltip="{country}"
                     />
+                    
                 </cells>
             </ColumnListItem>
         </items>
