@@ -88,6 +88,13 @@ sap.ui.define([
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
 
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+
+                //deselect table item
+                this.getView().byId("idWorkshopTable").removeSelections(true);
+                this.getView().byId("idCustomerTable").removeSelections(true);
+                this.getView().byId("idPartnerTable").removeSelections(true);
+                this.getView().byId("idInternalTable").removeSelections(true);
+
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/selectedKey", "GenieAI");

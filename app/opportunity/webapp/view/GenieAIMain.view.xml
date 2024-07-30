@@ -136,6 +136,7 @@
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
+                                        id="idWorkshopTable"
                                     >
                                         <columns>
                                             <Column hAlign="Center">
@@ -298,6 +299,7 @@
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
+                                        id="idCustomerTable"
                                     >
                                         <columns>
                                             <Column
@@ -491,6 +493,7 @@
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
+                                        id="idPartnerTable"
                                     >
                                         <columns>
                                             <Column
@@ -658,6 +661,7 @@
                                         sticky="ColumnHeaders,HeaderToolbar"
                                         noDataText="Nothing here. Please adjust your search critera."
                                         delete="onDeleteTableItem"
+                                        id="idInternalTable"
                                     >
                                         <columns>
                                             <Column
