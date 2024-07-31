@@ -200,6 +200,7 @@ sap.ui.define([
           if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0];
 
           var sType = this.getApptType(oData.status);
+          const now = new Date().toISOString().split("T")[0];
 
           var oPayload = {
             userID_inumber: inumber,
@@ -215,7 +216,7 @@ sap.ui.define([
             descriptionText: oData.descriptionText,
             percentage: oData.percentage,
             goLive: sGoLiveDate,
-            lastUpdated: new Date(),
+            lastUpdated: now,
             type: sType,
             appointmentCategory: "Customer Project",
             appointmentIcon: "sap-icon://business-card",
