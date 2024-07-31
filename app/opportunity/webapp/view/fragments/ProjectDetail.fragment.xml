@@ -306,10 +306,11 @@
                                 items="{
                                     path: '/opportunityMarketUnitVH',
                                       templateShareable: true,
-                                    sorter: {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
+                                     	sorter: {
+						path: 'region',
+						descending: false,
+						group: true
+					}
                                     }"
                             >
                                 <core:Item
@@ -317,6 +318,7 @@
                                     text="{marketUnit}"
                                 />
                             </ComboBox>
+                            
 
                             <Label text="Key Topic" />
                             <ComboBox

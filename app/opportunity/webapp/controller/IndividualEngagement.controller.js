@@ -6,12 +6,13 @@ sap.ui.define([
   "sap/m/MessageToast",
   "sap/ui/model/Filter",
   "sap/ui/model/FilterOperator",
-  "sap/ui/core/library"
+  "sap/ui/core/library",
+  'sap/m/MessageBox',
 ],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary) {
+  function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary, MessageBox) {
     "use strict";
     var ValueState = CoreLibrary.ValueState,
       oValueState = {
@@ -408,7 +409,7 @@ sap.ui.define([
           actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
           emphasizedAction: MessageBox.Action.OK,
           onClose: function (sAction) {
-              if (sAction === MessageBox.Action.OK) {
+            if (sAction === MessageBox.Action.OK) {
 
               oModel.remove(sPath, {
                 success: function () {
@@ -436,7 +437,7 @@ sap.ui.define([
           actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
           emphasizedAction: MessageBox.Action.OK,
           onClose: function (sAction) {
-              if (sAction === MessageBox.Action.OK) {
+            if (sAction === MessageBox.Action.OK) {
 
 
               oModel.remove(sPath, {
@@ -609,7 +610,7 @@ sap.ui.define([
         if (sGoLive) goLiveDate = new Date(sGoLive).toISOString().split("T")[0];
         if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
         if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
-
+        const now = new Date().toISOString().split("T")[0];
         var sOwner = this.inumber;
         var oPayload = {
           account: sap.ui.getCore().byId("projectAccount").getValue(),
@@ -617,12 +618,10 @@ sap.ui.define([
           projectContact: sap.ui.getCore().byId("projectContact").getValue(),
           marketUnit: sap.ui.getCore().byId("projectMU").getValue(),
           topic: sap.ui.getCore().byId("projectTopic").getValue(),
-          projectStartDate: sap.ui.getCore().byId("projectDates").getDateValue(),
-          projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
-          descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
+          projectStartDate: startDate,
+          projectEndDate: endDate,
           percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-          lastUpdated: new Date(),
-          projectValue: sap.ui.getCore().byId("projectValue").getValue(),
+          lastUpdated: now
         }
 
 

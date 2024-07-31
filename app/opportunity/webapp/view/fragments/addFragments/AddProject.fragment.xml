@@ -14,7 +14,6 @@
                 <contentMiddle>
                     <Title text="Add a New Project" />
                 </contentMiddle>
-               
             </Bar>
         </customHeader>
 
@@ -25,9 +24,8 @@
             />
 
             <ComboBox
-            id="userComboBox"
-            visible="{= ${AddProjectModel>/allProjects} }"
-
+                id="userComboBox"
+                visible="{= ${AddProjectModel>/allProjects} }"
                 selectedKey="{AddProjectModel>/userID_inumber}"
                 placeholder="Who is it for?"
                 showSecondaryValues="true"
@@ -39,13 +37,12 @@
                                                 descending: false
                                             }
                                     }"
-            valueState="{valueState>/valueState}" 
+                valueState="{valueState>/valueState}"
                 valueStateText="{valueState>/valueStateText}"
             >
                 <core:ListItem
                     key="{inumber}"
                     text="{firstName}"
-                    additionalText="{inumber}"
                 />
             </ComboBox>
 
@@ -57,7 +54,7 @@
                 value="{AddProjectModel>/account}"
                 id="projectName"
                 placeholder="What's the project name?"
-                valueState="{valueState>/valueState}" 
+                valueState="{valueState>/valueState}"
                 valueStateText="{valueState>/valueStateText}"
                 liveChange="onChangeValueState"
             />
@@ -69,22 +66,39 @@
             <ComboBox
                 selectedKey="{AddProjectModel>/status}"
                 placeholder="What's the status of the project?"
-                items="{
-                                    path: '/projectStatusVH',
-                                    sorter: {
-                                                path: 'status',
-                                                descending: true
-                                            }
-                                    }"
             >
                 <core:Item
-                    key="{status}"
-                    text="{status}"
+                    key="New Requests"
+                    text="New Requests"
+                />
+                <core:Item
+                    key="RFP"
+                    text="RFP"
+                />
+                <core:Item
+                    key="On-Going"
+                    text="On-Going"
+                />
+                <core:Item
+                    key="Go-Live"
+                    text="Go-Live"
+                />
+                <core:Item
+                    key="Past"
+                    text="Past"
                 />
             </ComboBox>
 
-           <Label text="RFP Value (in EUR)" visible="{= ${AddProjectModel>/status} === 'RFP' }" />
-<Input visible="{= ${AddProjectModel>/status} === 'RFP' }" value="{AddProjectModel>/projectValue}" placeholder="Enter the value of the RFP"   type="Number"/>
+            <Label
+                text="RFP Value (in EUR)"
+                visible="{= ${AddProjectModel>/status} === 'RFP' }"
+            />
+            <Input
+                visible="{= ${AddProjectModel>/status} === 'RFP' }"
+                value="{AddProjectModel>/projectValue}"
+                placeholder="Enter the value of the RFP"
+                type="Number"
+            />
 
             <Label text="Market Unit" />
             <ComboBox
@@ -92,10 +106,12 @@
                 placeholder="Which market unit?"
                 items="{
                                     path: '/opportunityMarketUnitVH',
-                                    sorter: {
-                                                path: 'marketUnit',
-                                                descending: false
-                                            }
+                                      templateShareable: true,
+                                   	sorter: {
+						path: 'region',
+						descending: false,
+						group: true
+					}
                                     }"
             >
                 <core:Item
@@ -104,23 +120,7 @@
                 />
             </ComboBox>
 
-            <Label text="Project Contact" />
-            <Input
-                value="{AddProjectModel>/projectContact}"
-                id="projectContact"
-                placeholder="Who can be contacted?"
-            />
-
-            <Label text="Short Descr." />
-            <TextArea
-                value="{AddProjectModel>/descriptionText}"
-                growing="true" height="100%"
-                id="projectDescr"
-                maxLength="5000"
-                placeholder="Add a short project description"
-            />
-
-            <Label text="{i18n>topic}" />
+             <Label text="{i18n>topic}" />
             <ComboBox
                 selectedKey="{AddProjectModel>/topic}"
                 placeholder="Is there a main topic?"
@@ -137,6 +137,15 @@
                     text="{topic}"
                 />
             </ComboBox>
+
+            <Label text="Project Contact" />
+            <Input
+                value="{AddProjectModel>/projectContact}"
+                id="projectContact"
+                placeholder="Who can be contacted?"
+            />
+
+           
 
             <Label text="Dates" />
 
@@ -163,7 +172,7 @@
                 change="handleChange"
             />
 
-            <Label text="Go-Live" />
+            <!-- <Label text="Go-Live" /> -->
             <DatePicker
                 value="{
                     path: 'AddProjectModel>/goLive',
@@ -172,7 +181,8 @@
                         'pattern': 'MM-dd-yyyy'
                     }
                 }"
-                id="goLiveDate" width="400px"
+                id="goLiveDate"
+    
                 placeholder="When is the Project Go-Live?"
             />
 
@@ -180,20 +190,31 @@
             <Slider
                 value="{AddProjectModel>/percentage}"
                 width="100%"
-                step="25"
+                step="10"
                 min="0"
                 max="100"
                 showAdvancedTooltip="true"
                 showHandleTooltip="false"
                 enableTickmarks="true"
             />
+
+             <Label text="Short Descr." />
+            <TextArea
+                value="{AddProjectModel>/descriptionText}"
+                growing="true"
+                height="100%"
+                id="projectDescr"
+                maxLength="5000"
+                placeholder="Add a short project description"
+            />
+            
         </form:SimpleForm>
         <footer>
             <Toolbar design="Auto">
                 <content>
                     <ToolbarSpacer />
 
-                      <Button
+                    <Button
                         text="Cancel"
                         press="onCancelDialogPress"
                     />

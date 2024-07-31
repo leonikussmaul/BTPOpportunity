@@ -625,8 +625,7 @@ sap.ui.define([
                     projectEndDate: endDate,
                     descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
                     percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-                    lastUpdated: new Date().toISOString().split("T")[0],
-                    projectValue: sap.ui.getCore().byId("projectValue").getValue(),
+                    lastUpdated: new Date().toISOString().split("T")[0]
                 }
 
 
@@ -818,6 +817,7 @@ sap.ui.define([
 
 
             },
+
 
             onSearch: function (oEvent) {
                 var aFilterbar = [];
