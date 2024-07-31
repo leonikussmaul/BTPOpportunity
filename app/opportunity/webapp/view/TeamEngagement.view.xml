@@ -100,7 +100,7 @@
                                     <MultiComboBox
                                         name="Topic"
                                         id="multiComboBox2"
-                                        selectionChange=".onSelectionChange"
+                                        selectionChange=".onSelectChange"
                                         items="{
 												path: '/opportunityTopicsVH',
                                                   templateShareable: true,
@@ -128,7 +128,7 @@
                                 <fb:control>
                                     <MultiComboBox
                                         name="MarketUnit"
-                                        selectionChange=".onSelectionChange"
+                                        selectionChange=".onSelectChange"
                                         id="multiComboBox3"
                                         items="{
 												path: '/opportunityMarketUnitVH',

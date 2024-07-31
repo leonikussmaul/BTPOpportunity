@@ -6,12 +6,13 @@ sap.ui.define([
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/core/library"
+    "sap/ui/core/library",
+    'sap/m/MessageBox',
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary) {
+    function (Controller, JSONModel, Fragment, formatter, MessageToast, Filter, FilterOperator, CoreLibrary, MessageBox) {
         "use strict";
         var ValueState = CoreLibrary.ValueState,
             oValueState = {
@@ -143,7 +144,7 @@ sap.ui.define([
                 var oPayload = {
                     //ID: oData.ID,
                     status: sNewStatus,
-                    lastUpdated: new Date()
+                    lastUpdated: new Date().toISOString().split("T")[0]
                 }
 
                 var sPath = "/teamProjects(" + sProjectID + ")";
@@ -188,6 +189,7 @@ sap.ui.define([
                     if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0];
 
                     var sType = this.getApptType(oData.status);
+                    const now = new Date().toISOString().split("T")[0];
 
                     var oPayload = {
                         userID_inumber: oData.userID_inumber,
@@ -203,8 +205,8 @@ sap.ui.define([
                         descriptionText: oData.descriptionText,
                         percentage: oData.percentage,
                         goLive: sGoLiveDate,
-                        lastUpdated: new Date(),
-                        addedOn: new Date(),
+                        lastUpdated: now,
+                        addedOn: now,
                         type: sType,
                         appointmentCategory: "Customer Project",
                         appointmentIcon: "sap-icon://business-card",
@@ -388,8 +390,8 @@ sap.ui.define([
 
 
             onDeleteProjectPress: function (oEvent) {
-                var oBinding = oEvent.getSource().getParent().getBindingContext("ProjectModel");
-                var oContext = oBinding.getObject();
+               
+                var oContext = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
 
                 var sPath = "/teamProjects/" + oContext.projectID;
                 var inumber = oContext.userID_inumber
@@ -403,10 +405,10 @@ sap.ui.define([
                 //var sPath = oBinding.getPath(); 
                 var oModel = this.getView().getModel();
                 sap.m.MessageBox.warning("Are you sure you want to delete the selected Project?", {
-                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                    emphasizedAction: MessageBox.Action.OK,
+                    actions: [sap.m.MessageBox.Action.OK,sap.m.MessageBox.Action.CANCEL],
+                    emphasizedAction: sap.m.MessageBox.Action.OK,
                     onClose: function (sAction) {
-                        if (sAction === MessageBox.Action.OK) {
+                        if (sAction === sap.m.MessageBox.Action.OK) {
 
                             oModel.remove(sPath, {
                                 success: function () {
@@ -440,7 +442,6 @@ sap.ui.define([
 
                             oModel.remove(sPath, {
                                 success: function () {
-                                    //that.onStatusMethod(inumber);
                                     sap.m.MessageToast.show("Token deleted successfully.");
                                 },
                                 error: function (oError) {
@@ -620,11 +621,11 @@ sap.ui.define([
                     projectContact: sap.ui.getCore().byId("projectContact").getValue(),
                     marketUnit: sap.ui.getCore().byId("projectMU").getValue(),
                     topic: sap.ui.getCore().byId("projectTopic").getValue(),
-                    projectStartDate: sap.ui.getCore().byId("projectDates").getDateValue(),
-                    projectEndDate: sap.ui.getCore().byId("projectDates").getSecondDateValue(),
+                    projectStartDate: startDate,
+                    projectEndDate: endDate,
                     descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
                     percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-                    lastUpdated: new Date(),
+                    lastUpdated: new Date().toISOString().split("T")[0],
                     projectValue: sap.ui.getCore().byId("projectValue").getValue(),
                 }
 

@@ -230,8 +230,8 @@ entity teamProjects {
         descriptionDate     : Date;
         percentage          : Integer;
         goLive              : Date;
-        lastUpdated         : DateTime;
-        addedOn             : DateTime;
+        lastUpdated         : Date;
+        addedOn             : Date;
         type                : String(10);
         appointmentCategory : String(30);
         appointmentIcon     : String(50);
