@@ -193,9 +193,9 @@ sap.ui.define([
 
                     var sDate, sDueDate, bCRM, sTodayDate;
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
-                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     if (oData.opportunityInCRM) bCRM = "Yes"
                     else bCRM = "No"
@@ -242,7 +242,7 @@ sap.ui.define([
                         account: oData.account,
                         marketUnit: oData.marketUnit,
                         opportunityStartDate: sDate,
-                        opportunityStartDate: sDueDate,
+                        opportunityDueDate: sDueDate,
                         opportunityValue: oData.opportunityValue,
                         opportunityInCRM: bCRM,
                         source: oData.source,

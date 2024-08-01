@@ -392,11 +392,11 @@ sap.ui.define([
                     var sStartDate, sEndDate, sTodayDate;
                     var workshopStartDate, workshopEndDate;
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
+                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     sStartDate = this.getView().byId("DRS3").getDateValue();
                     sEndDate = this.getView().byId("DRS3").getSecondDateValue();
-                    if (sStartDate) workshopStartDate = new Date(sStartDate).toISOString().split("T")[0];
-                    if (sEndDate) workshopEndDate = new Date(sEndDate).toISOString().split("T")[0];
+                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     const monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"
@@ -657,9 +657,9 @@ sap.ui.define([
                         delete oData.role;
                     }
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.opportunityStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.opportunityDueDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.opportunityStartDate) sStartDate = new Date(oData.workshopStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.opportunityDueDate) sEndDate = new Date(oData.workshopEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 

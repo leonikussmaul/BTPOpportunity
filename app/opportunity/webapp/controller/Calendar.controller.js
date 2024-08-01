@@ -399,9 +399,9 @@ sap.ui.define([
         var sStartDate = sap.ui.getCore().byId("projectDates").getDateValue();
         var sEndDate = sap.ui.getCore().byId("projectDates").getSecondDateValue();
 
-        if (sGoLive) goLiveDate = new Date(sGoLive).toISOString().split("T")[0];
-        if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
-        if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
+        if (sGoLive) goLiveDate = new Date(sGoLive).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+        if (sStartDate) startDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+        if (sEndDate) endDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
         var oPayload = {
           account: sap.ui.getCore().byId("projectAccount").getValue(),
@@ -461,9 +461,12 @@ sap.ui.define([
           if (oData.approved == true) sApproved = "Yes";
           else if (oData.approved == false) sApproved = "No";
 
+          let sDate = new Date(oData.vacationStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+          let sEndDate = new Date(oData.vacationEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+
           var oPayload = {
-            vacationStartDate: oData.vacationStartDate,
-            vacationEndDate: oData.vacationEndDate,
+            vacationStartDate: sDate,
+            vacationEndDate: sEndDate,
             approved: sApproved,
             vacationComment: oData.vacationComment,
             primaryContact: oData.firstName,

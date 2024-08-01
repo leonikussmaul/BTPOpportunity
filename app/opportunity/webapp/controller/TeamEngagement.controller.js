@@ -144,7 +144,7 @@ sap.ui.define([
                 var oPayload = {
                     //ID: oData.ID,
                     status: sNewStatus,
-                    lastUpdated: new Date().toISOString().split("T")[0]
+                    lastUpdated: new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' )
                 }
 
                 var sPath = "/teamProjects(" + sProjectID + ")";
@@ -184,12 +184,12 @@ sap.ui.define([
                     this.resetValueState();
 
                     var sStartDate, sEndDate, sGoLiveDate;
-                    if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toISOString().split("T")[0];
-                    if (oData.projectEndDate) sEndDate = new Date(oData.projectEndDate).toISOString().split("T")[0];
-                    if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toISOString().split("T")[0];
+                    if (oData.projectStartDate) sStartDate = new Date(oData.projectStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.projectEndDate) sEndDate = new Date(oData.projectEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.goLive) sGoLiveDate = new Date(oData.goLive).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var sType = this.getApptType(oData.status);
-                    const now = new Date().toISOString().split("T")[0];
+                    const now = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var oPayload = {
                         userID_inumber: oData.userID_inumber,
@@ -611,9 +611,9 @@ sap.ui.define([
                 var sStartDate = sap.ui.getCore().byId("projectDates").getDateValue();
                 var sEndDate = sap.ui.getCore().byId("projectDates").getSecondDateValue();
 
-                if (sGoLive) goLiveDate = new Date(sGoLive).toISOString().split("T")[0];
-                if (sStartDate) startDate = new Date(sStartDate).toISOString().split("T")[0];
-                if (sEndDate) endDate = new Date(sEndDate).toISOString().split("T")[0];
+                if (sGoLive) goLiveDate = new Date(sGoLive).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                if (sStartDate) startDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                if (sEndDate) endDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                 var oPayload = {
                     account: sap.ui.getCore().byId("projectAccount").getValue(),
@@ -625,7 +625,7 @@ sap.ui.define([
                     projectEndDate: endDate,
                     descriptionText: sap.ui.getCore().byId("projectDesc").getValue(),
                     percentage: sap.ui.getCore().byId("projectPercentage").getValue(),
-                    lastUpdated: new Date().toISOString().split("T")[0]
+                    lastUpdated: new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' )
                 }
 
 

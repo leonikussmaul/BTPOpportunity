@@ -260,9 +260,9 @@ sap.ui.define([
                         delete oData.role;
                     }
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
@@ -315,9 +315,9 @@ sap.ui.define([
                         oData.workshopType = "Partner"
                     }
 
-                    sTodayDate = new Date().toISOString().split("T")[0];
-                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toISOString().split("T")[0];
-                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toISOString().split("T")[0];
+                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.workshopStartDate) sStartDate = new Date(oData.workshopStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.workshopEndDate) sEndDate = new Date(oData.workshopEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 

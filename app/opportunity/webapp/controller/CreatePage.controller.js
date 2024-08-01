@@ -35,7 +35,7 @@ sap.ui.define([
                 if(oCheck == true) oSelected = "Yes"; 
                 var sConvertDate = ""; 
                 var sDate = this.getView().byId("dateCreated").getValue(); 
-                if(sDate != "" && sDate != undefined) sConvertDate = new Date(this.getView().byId("dateCreated").getValue()).toISOString().split('T')[0]; 
+                if(sDate != "" && sDate != undefined) sConvertDate = new Date(this.getView().byId("dateCreated").getValue()).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                 oList.create({
                     account: this.getView().byId("account").getValue(),

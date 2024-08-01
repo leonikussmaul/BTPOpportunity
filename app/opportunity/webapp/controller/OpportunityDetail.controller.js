@@ -293,7 +293,7 @@ sap.ui.define([
                     }
 
                     var sDueDate;
-                    if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
+                    if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var oNewSubTask = {
                         subTask: oData.subTask,
@@ -442,7 +442,7 @@ sap.ui.define([
                 var oData = oEvent.getSource().getBindingContext("subTaskModel").getObject();
                 var oAddSubTaskModel = this.getView().getModel("AddSubTaskModel");
                 if (oData.subTaskDueDate) {
-                    oData.subTaskDueDate = oData.subTaskDueDate.toISOString().split('T')[0];
+                    oData.subTaskDueDate = oData.subTaskDueDate.toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                 }
                 oAddSubTaskModel.setData(oData);
                 this.onDialogOpen("opportunity.opportunity.view.fragments.editFragments.EditSubTask");
@@ -467,7 +467,7 @@ sap.ui.define([
                 }
 
                 var sDueDate;
-                if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toISOString().split("T")[0];
+                if (oData.subTaskDueDate) sDueDate = new Date(oData.subTaskDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                 var oPayload = {
                     subTask: oData.subTask,
@@ -946,8 +946,8 @@ sap.ui.define([
                     sMonth = monthNames[d.getMonth()];
 
                     //date format change for start and due dates
-                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
-                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     if (oData.opportunityInCRM) bCRM = "Yes";
                     else bCRM = "No";
@@ -959,8 +959,8 @@ sap.ui.define([
                         noteText: this.getView().byId("editRTE").getValue(),
                         opportunityClosedQuarter: oData.opportunityClosedQuarter,
                         opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
-                        opportunityDueDate: sDate,
-                        opportunityStartDate: sDueDate,
+                        opportunityStartDate: sDate,
+                        opportunityDueDate: sDueDate,
                         opportunityInCRM: bCRM,
                         opportunityValue: oData.opportunityValue,
                         primaryContact: oData.primaryContact,
@@ -1095,7 +1095,7 @@ sap.ui.define([
                         var sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
                         var sCustomer = this.getView().getBindingContext().getObject().account;
                         var sDueDate;
-                        if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toISOString().split("T")[0];
+                        if (oData.actionDueDate) sDueDate = new Date(oData.actionDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                         var sPriorityNumber;
                         if (oData.actionPriority === "High") sPriorityNumber = 1;
@@ -1320,9 +1320,9 @@ sap.ui.define([
                     this.sOpportunityID = this.getView().getBindingContext().getObject().opportunityID;
                     var sDate, sCompletedOn;
                     var sCompleted = false;
-                    if (oData.deliverableDate) sDate = new Date(oData.deliverableDate).toISOString().split("T")[0];
+                    if (oData.deliverableDate) sDate = new Date(oData.deliverableDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     if (oData.completedOn) {
-                        sCompletedOn = new Date(oData.completedOn).toISOString().split("T")[0];
+                        sCompletedOn = new Date(oData.completedOn).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                         sCompleted = true;
                     }
                     var oPayload = {
