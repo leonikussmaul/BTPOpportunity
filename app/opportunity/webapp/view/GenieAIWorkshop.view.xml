@@ -148,36 +148,36 @@
                                         <items>
                                             <SegmentedButtonItem
                                                 icon="sap-icon://flag-2"
-                                                text=""
-                                                width="50px"
+                                                text="{= ${status} === 'Lead' ? 'Lead' : ''}"
+                                                width="{= ${status} === 'Lead' ? '120px' : '50px'}"
                                                 key="Lead"
                                                 tooltip="Lead"
                                             />
                                             <SegmentedButtonItem
                                                 icon="sap-icon://overlay"
-                                                text=""
-                                                width="50px"
+                                                text="{= ${status} === 'Opportunity' ? 'Opportunity' : ''}"
+                                                width="{= ${status} === 'Opportunity' ? '140px' : '50px'}"
                                                 key="Opportunity"
                                                 tooltip="Opportunity"
                                             />
                                             <SegmentedButtonItem
                                                 icon="sap-icon://pause"
-                                                text=""
-                                                width="50px"
+                                                text="{= ${status} === 'Paused' ? 'Paused' : ''}"
+                                                width="{= ${status} === 'Paused' ? '120px' : '50px'}"
                                                 key="Paused"
                                                 tooltip="Paused"
                                             />
                                             <SegmentedButtonItem
                                                 icon="sap-icon://activate"
-                                                text=""
-                                                width="50px"
+                                                text="{= ${status} === 'Delivery' ? 'Delivery' : ''}"
+                                                width="{= ${status} === 'Delivery' ? '120px' : '50px'}"
                                                 key="Delivery"
                                                 tooltip="Delivery"
                                             />
                                             <SegmentedButtonItem
                                                 icon="sap-icon://checklist-item"
-                                                text=""
-                                                width="50px"
+                                                text="{= ${status} === 'Completed' ? 'Completed' : ''}"
+                                                width="{= ${status} === 'Completed' ? '120px' : '50px'}"
                                                 key="Completed"
                                                 tooltip="Completed"
                                             />

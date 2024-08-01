@@ -102,9 +102,6 @@ sap.ui.define([
 
                     // var oActivitiesTable = this.getView().byId("activitiesTableID");
                     // if (oActivitiesTable.isInitialised()) oActivitiesTable.rebindTable();
-
-                    //set segmented button text for current status of opportunity
-                    this.setSegButtonText();
                 }).catch(err => {
                     console.error("Error with route:", err);
                 });
@@ -1073,21 +1070,6 @@ sap.ui.define([
                 });
             },
 
-            setSegButtonText: function () {
-                let oSegmentedButton = this.getView().byId("segmentedStatusObject");
-                let aButtons = oSegmentedButton.getItems();
-                let sSelectedKey = oSegmentedButton.getSelectedKey();
-
-                aButtons.forEach(function (oButton) {
-                    if (oButton.getKey() === sSelectedKey) {
-                        oButton.setText(sSelectedKey);
-                        oButton.setWidth("120px"); // Set width for the selected button
-                    } else {
-                        oButton.setText("");
-                        oButton.setWidth("50px"); // Reset to default width
-                    }
-                });
-            },
 
             /* ------------------------------------------------------------------------------------------------------------
             DIALOG
