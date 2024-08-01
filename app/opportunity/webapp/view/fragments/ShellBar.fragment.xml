@@ -108,6 +108,13 @@
                             key="DemandGeniusVideo"
                             tooltip="A Guide for this App"
                         />
+
+                        <m:MenuItem
+                            press="onOpenFeedbackForm"
+                            icon="sap-icon://feedback"
+                            tooltip="Annonymous Feedback Form - Google Forms"
+                            text="Annonymous Feedback Form"
+                        />
                     </m:Menu>
                 </m:menu>
             </m:MenuButton>
