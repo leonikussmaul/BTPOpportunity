@@ -943,8 +943,17 @@ sap.ui.define([
                         "July", "August", "September", "October", "November", "December"
                     ];
 
+                    var sMonth, sDate, sDueDate, bCRM;
+
                     const d = new Date();
-                    var sMonth = monthNames[d.getMonth()];
+                    sMonth = monthNames[d.getMonth()];
+
+                    //date format change for start and due dates
+                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toISOString().split("T")[0];
+                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toISOString().split("T")[0];
+
+                    if (oData.opportunityInCRM) bCRM = "Yes";
+                    else bCRM = "No";
 
                     var oPayload = {
                         account: oData.account,
@@ -953,9 +962,9 @@ sap.ui.define([
                         noteText: this.getView().byId("editRTE").getValue(),
                         opportunityClosedQuarter: oData.opportunityClosedQuarter,
                         opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
-                        opportunityDueDate: oData.opportunityDueDate,
-                        opportunityStartDate: oData.opportunityStartDate,
-                        opportunityInCRM: oData.opportunityInCRM,
+                        opportunityDueDate: sDate,
+                        opportunityStartDate: sDueDate,
+                        opportunityInCRM: bCRM,
                         opportunityValue: oData.opportunityValue,
                         primaryContact: oData.primaryContact,
                         priority: oData.priority,
