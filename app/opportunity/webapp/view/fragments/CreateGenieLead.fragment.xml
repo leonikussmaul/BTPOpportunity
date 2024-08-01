@@ -265,6 +265,9 @@
                                     change="handleChange"
                                     value="{
                                             'type': 'sap.ui.model.type.DateInterval',
+                                            'formatOptions': {
+                                                'pattern': 'MM-dd-yyyy'
+                                            },
                                             'parts': [
                                                 {
                                                     'type': 'sap.ui.model.type.Date',

@@ -389,8 +389,7 @@ sap.ui.define([
                     that.getView().setBusy(true);
 
 
-                    var sStartDate, sEndDate, sTodayDate;
-                    var workshopStartDate, workshopEndDate;
+                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate;
 
                     sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     sStartDate = this.getView().byId("DRS3").getDateValue();
@@ -637,7 +636,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sEndPoint, sStartDate, sEndDate, bInternal, sTodayDate;
+                    var sEndPoint, sStartDate, sEndDate, bInternal, sTodayDate, workshopStartDate, workshopEndDate;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -658,14 +657,18 @@ sap.ui.define([
                     }
 
                     sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (oData.opportunityStartDate) sStartDate = new Date(oData.workshopStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (oData.opportunityDueDate) sEndDate = new Date(oData.workshopEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    sStartDate = sap.ui.getCore().byId("DRS3").getDateValue();
+                    sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
+                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+
+                    console.log(sStartDate);
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
-                    oData.workshopStartDate = sStartDate;
-                    oData.workshopEndDate = sEndDate;
+                    oData.workshopStartDate = workshopStartDate;
+                    oData.workshopEndDate = workshopEndDate;
                     oData.status = sStatus;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
