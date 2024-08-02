@@ -350,6 +350,14 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       }
     },
 
+    noteTextFormatter: function (sNoteText) {
+      if(!(sNoteText === "" || sNoteText == undefined)){
+        let result = sNoteText.replaceAll("%2D", "-");
+        return result;
+      }
+      return sNoteText;
+    },
+
     processFlowFormatter: function (sStatus) {
       switch (sStatus) {
         case "Paused":

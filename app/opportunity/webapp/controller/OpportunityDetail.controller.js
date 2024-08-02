@@ -952,11 +952,16 @@ sap.ui.define([
                     if (oData.opportunityInCRM) bCRM = "Yes";
                     else bCRM = "No";
 
+                    let noteText = this.getView().byId("editRTE").getValue();
+                    noteText = noteText.replaceAll("-", "%2D");
+
+                    console.log(noteText);
+
                     var oPayload = {
                         account: oData.account,
                         clientContactPerson: oData.clientContactPerson,
                         marketUnit: oData.marketUnit,
-                        noteText: this.getView().byId("editRTE").getValue(),
+                        noteText: noteText,
                         opportunityClosedQuarter: oData.opportunityClosedQuarter,
                         opportunityCreatedQuarter: oData.opportunityCreatedQuarter,
                         opportunityStartDate: sDate,
