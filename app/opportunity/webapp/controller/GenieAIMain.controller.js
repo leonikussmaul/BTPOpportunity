@@ -237,7 +237,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sEndPoint, sStartDate, sEndDate, bInternal, sTodayDate, workshopStartDate, workshopEndDate;
+                    var sEndPoint, sStartDate, sEndDate, bInternal, sTodayDate, workshopStartDate, workshopEndDate, sStatus, sNoteText;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -266,7 +266,10 @@ sap.ui.define([
                     if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
-                    var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+                    sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
+
+                    sNoteText = oData.notes;
+                    sNoteText = sNoteText.replaceAll("-", "%2D");
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
                     oData.workshopStartDate = workshopStartDate;
@@ -274,6 +277,7 @@ sap.ui.define([
                     oData.status = sStatus;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
+                    oData.notes = sNoteText;
 
                     var oModel = this.getView().getModel();
                     //need to select which one to post to 
@@ -306,7 +310,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate;
+                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate, sNoteText;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -329,6 +333,10 @@ sap.ui.define([
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.status = sStatus;
+
+                    sNoteText = oData.notes;
+                    sNoteText = sNoteText.replaceAll("-", "%2D");
+                    oData.notes = sNoteText;
 
                     //  delete oData.internal;
                     var oModel = this.getView().getModel();
@@ -605,10 +613,28 @@ sap.ui.define([
                 var oWorkbook = oEvent.getParameter("exportSettings").workbook;
                 delete oWorkbook.columns[0];
 
-
             },
 
 
+
+            onBeforeRebindWorkshopTable: function (oEvent) {
+
+                var oBindingParams = oEvent.getParameter("bindingParams");
+
+                var fnGroupHeaderFormatter = function (oContext) {
+                    var sHeader = oContext.getProperty("workshopType");
+                    return {
+                        key: sHeader,
+                    };
+                };
+                var oGrouping = new sap.ui.model.Sorter("name", false, fnGroupHeaderFormatter);
+                oBindingParams.sorter.push(oGrouping);
+
+               
+                var oSorter = new sap.ui.model.Sorter("name", false);
+                oBindingParams.sorter.push(oSorter);
+
+            },
 
             onBeforeRebindTable: function (oEvent) {
 

@@ -389,7 +389,7 @@ sap.ui.define([
                     that.getView().setBusy(true);
 
 
-                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate;
+                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate, sNotes;
 
                     sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     sStartDate = this.getView().byId("DRS3").getDateValue();
@@ -408,7 +408,9 @@ sap.ui.define([
                     oData.workshopStartDate = workshopStartDate;
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
-                    oData.notes = this.getView().byId("editRTE").getValue();
+                    sNotes = this.getView().byId("editRTE").getValue();
+                    sNotes = sNotes.replaceAll("-", "%2D");
+                    oData.notes = sNotes;
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
                     delete oData.__metadata;

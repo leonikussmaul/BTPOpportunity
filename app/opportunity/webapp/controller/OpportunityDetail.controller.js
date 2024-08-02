@@ -955,8 +955,6 @@ sap.ui.define([
                     let noteText = this.getView().byId("editRTE").getValue();
                     noteText = noteText.replaceAll("-", "%2D");
 
-                    console.log(noteText);
-
                     var oPayload = {
                         account: oData.account,
                         clientContactPerson: oData.clientContactPerson,
