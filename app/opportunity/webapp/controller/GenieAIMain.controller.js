@@ -269,7 +269,7 @@ sap.ui.define([
                     sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                     sNoteText = oData.notes;
-                    sNoteText = sNoteText.replaceAll("-", "%2D");
+                    if(!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
                     oData.workshopStartDate = workshopStartDate;
@@ -335,7 +335,7 @@ sap.ui.define([
                     oData.status = sStatus;
 
                     sNoteText = oData.notes;
-                    sNoteText = sNoteText.replaceAll("-", "%2D");
+                    if(!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
                     oData.notes = sNoteText;
 
                     //  delete oData.internal;

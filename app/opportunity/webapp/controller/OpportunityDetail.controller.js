@@ -953,7 +953,7 @@ sap.ui.define([
                     else bCRM = "No";
 
                     let noteText = this.getView().byId("editRTE").getValue();
-                    noteText = noteText.replaceAll("-", "%2D");
+                    if(!(noteText === "" || noteText === undefined)) noteText = noteText.replaceAll("-", "%2D");
 
                     var oPayload = {
                         account: oData.account,

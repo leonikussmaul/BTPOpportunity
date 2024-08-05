@@ -314,7 +314,7 @@ sap.ui.define([
                     oData.isFavorite = false;
                     oData.internal = bInternal;
                     sNotes = this.getView().byId("editRTE").getValue();
-                    sNotes = sNotes.replaceAll("-", "%2D");
+                    if(!(sNotes === "" || sNotes === undefined)) sNotes = sNotes.replaceAll("-", "%2D");
                     oData.notes = sNotes;
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;

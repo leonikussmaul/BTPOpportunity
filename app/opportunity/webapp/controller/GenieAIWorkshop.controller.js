@@ -409,7 +409,7 @@ sap.ui.define([
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
                     sNotes = this.getView().byId("editRTE").getValue();
-                    sNotes = sNotes.replaceAll("-", "%2D");
+                    if(!(sNotes === "" || sNotes === undefined)) sNotes = sNotes.replaceAll("-", "%2D");
                     oData.notes = sNotes;
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
@@ -663,8 +663,6 @@ sap.ui.define([
                     sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
                     if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-
-                    console.log(sStartDate);
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
