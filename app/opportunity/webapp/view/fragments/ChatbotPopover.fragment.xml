@@ -11,7 +11,7 @@
     xmlns:micro="sap.suite.ui.microchart"
 >
     <Popover id="chatbotPopover"
-        placement="Bottom"
+        placement="PreferredBottomOrFlip"
         showHeader="false"
         class="aiDialog"
     >

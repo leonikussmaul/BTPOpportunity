@@ -50,7 +50,11 @@
     font-weight: bold;
 }
 
-.sapFShellBar {
+/* .sapFShellBar {
+    height: 4rem !important;
+    line-height: 4rem !important;
+} */
+.myShellBarStyle {
     height: 4rem !important;
     line-height: 4rem !important;
 }

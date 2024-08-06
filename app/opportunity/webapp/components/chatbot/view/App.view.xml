@@ -19,7 +19,7 @@
                     secondTitle="Powered by Gen AI"
                     homeIcon="./images/genie/genie.ico"
                     showCopilot="false"
-                    showSearch="false"
+                    showSearch="false" class="myShellBarStyle"
                     showNotifications="false"
                 >
                     <f:additionalContent>
