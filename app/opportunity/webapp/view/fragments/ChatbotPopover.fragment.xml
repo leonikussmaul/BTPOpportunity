@@ -10,94 +10,58 @@
     xmlns:rte="sap.ui.richtexteditor"
     xmlns:micro="sap.suite.ui.microchart"
 >
-    <Popover
+    <Popover id="chatbotPopover"
         placement="Bottom"
-        xmlns="sap.m"
         showHeader="false"
         class="aiDialog"
     >
-        <VBox
-            id="aiAssistantPanel"
-            class="aiAssistantPanel"
-        >
+        <VBox id="aiAssistantPanel" class="aiAssistantPanel">
             <HBox class="aiAssistantHeaderToolbar">
                 <HBox class="aiAssistantHeaderTitle">
-                    <Text
-                        text="Genie AI Chatbot"
-                        class="aiAssistantHeaderTitleText"
-                    />
+                    <Text text="Genie AI Chatbot" class="aiAssistantHeaderTitleText" />
                 </HBox>
-
-                <Button
+                <!-- <Button
                     icon="sap-icon://sys-help"
                     text="Help us improve"
                     press="onGetSupport"
                     class="sapUiSizeCompact aiAssistantHeaderButton"
-                />
+                /> -->
                 <Button
-                    icon=" sap-icon://resize"
+                    icon="sap-icon://resize" tooltip="Full Screen Mode"
                     press="onNavToChatbot"
                     class="sapUiSizeCompact aiAssistantHeaderButton"
                 />
             </HBox>
-            <VBox
-                id="aiAssistantContent"
-                class="aiAssistantContent"
-            >
-                <VBox
-                    id="aiAssistantWelcomePanel"
-                    class="aiAssistantWelcomePanel"
-                    visible="{viewModel>/isWelcomePanelVisible}"
-                >
+            <VBox id="aiAssistantContent" class="aiAssistantContent">
+                <VBox id="aiAssistantWelcomePanel" class="aiAssistantWelcomePanel" visible="{viewModel>/isWelcomePanelVisible}">
                     <HBox justifyContent="Center">
-                        <Image
-                            src="{viewModel>/imagePath}"
-                            width="100px"
-                            class="aiAssistantWelcomeHeroImage"
-                        />
+                        <Image src="{viewModel>/imagePath}" width="100px" class="aiAssistantWelcomeHeroImage" />
                     </HBox>
-                    <Text
-                        text="Hello, {user>/firstname} {user>/lastname}"
-                        class="aiAssistantWelcomeMessage"
-                    />
-                    <Text
-                        text="How can I help you?"
-                        class="aiAssistantWelcomeMessageMain"
-                    />
-                    <Text
-                        text="Talk to me naturally. For example 'When is the next workshop planned?'"
-                        class="aiBotMessage"
-                    />
+                    <Text text="Hello, {user>/firstname} {user>/lastname}" class="aiAssistantWelcomeMessage" />
+                    <Text text="How can I help you?" class="aiAssistantWelcomeMessageMain" />
+                    <Text text="Talk to me naturally. For example 'When is the next workshop planned?'" class="aiBotMessage" />
                 </VBox>
-                <VBox
-                    id="messagesWrapper"
-                    class="sapUiContentPadding"
-                />
+                <VBox id="messagesWrapper" class="sapUiContentPadding" />
             </VBox>
             <VBox>
                 <MessageStrip
-                    text="Not the right answer?"
+                    text="Responses may contain inaccuracies."
                     showIcon="true"
                     showCloseButton="true"
-                    visible="{viewModel>/isFeedbackStripVisible}"
                     class="sapUiTinyMarginBeginEnd"
                 >
-                    <link>
-                        <Link
-                            text="Help us improve"
-                            target="_blank"
-                            href="{viewModel>/supportPageURL}"
-                        />
-                    </link>
+                    <!-- <link>
+                        <Link text="Help us improve" target="_blank" href="{viewModel>/supportPageURL}" />
+                    </link> -->
                 </MessageStrip>
                 <HBox class="aiAssistantInputWrapper">
                     <Input
                         id="aiAssistantInput"
-                        submit="onUserMessagePost"
+                        submit="onPostMessage"
                         liveChange="onInputLiveChange"
                         showClearIcon="true"
                         placeholder="Type something..."
-                        value="{viewModel>/inputText}"
+                        value="{chatModel>/userInput}"
                     >
                         <layoutData>
                             <FlexItemData growFactor="1" />
@@ -105,10 +69,10 @@
                     </Input>
                     <Button
                         icon="sap-icon://paper-plane"
-                        press="onUserMessagePost"
+                        press="onPostMessage"
                         class="sapUiSmallMarginBegin"
                         type="Emphasized"
-                        enabled="{= ${viewModel>/inputText} ? true : false}"
+                        enabled="{= ${chatModel>/userInput} ? true : false}"
                     />
                 </HBox>
             </VBox>

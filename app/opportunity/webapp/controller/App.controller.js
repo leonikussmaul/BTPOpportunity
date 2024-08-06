@@ -28,13 +28,19 @@ sap.ui.define(
         this.oRouter.attachRouteMatched(this.onRouteMatched, this);
 
         this.getView().setModel(
-					new JSONModel({
-						imagePath: './images/diamond.png',
-						isFullScreenMode: false,
-						settingsDialogPreviousSelections: {}
-					}),
-					'viewModel'
-				);
+          new JSONModel({
+            imagePath: './images/diamond.png',
+            isFullScreenMode: false,
+            settingsDialogPreviousSelections: {}
+          }),
+          'viewModel'
+        );
+        this.getView().setModel(new sap.ui.model.json.JSONModel({
+        }), "chatModel");
+
+        this.getView().setModel(new sap.ui.model.json.JSONModel({
+        }), "historyModel");
+        this.getView().getModel("historyModel").setProperty("/history", []);
 
       },
 
@@ -70,15 +76,15 @@ sap.ui.define(
       // },
 
       onOpenGenieTeamsChannel: function () {
-          var sUrlServiceCatalog = 'https://teams.microsoft.com/l/team/19%3ACQux_k8zte78DMIFtUzI3sh5tRp8NiEEZTndqMLHPfk1%40thread.tacv2/conversations?groupId=373d5920-56b1-4d41-9c32-030a71e9592c&tenantId=42f7676c-f455-423c-82f6-dc2d99791af7';
-          library.URLHelper.redirect(sUrlServiceCatalog, true);
-        },
+        var sUrlServiceCatalog = 'https://teams.microsoft.com/l/team/19%3ACQux_k8zte78DMIFtUzI3sh5tRp8NiEEZTndqMLHPfk1%40thread.tacv2/conversations?groupId=373d5920-56b1-4d41-9c32-030a71e9592c&tenantId=42f7676c-f455-423c-82f6-dc2d99791af7';
+        library.URLHelper.redirect(sUrlServiceCatalog, true);
+      },
 
       onOpenGenieRuum: function () {
-          var sUrlServiceCatalog = 'https://open.ruumapp.com/projects/ruum_1715765401349_ajisgz361d/canvas';
-          library.URLHelper.redirect(sUrlServiceCatalog, true);
-        },
-  
+        var sUrlServiceCatalog = 'https://open.ruumapp.com/projects/ruum_1715765401349_ajisgz361d/canvas';
+        library.URLHelper.redirect(sUrlServiceCatalog, true);
+      },
+
       onOpenGenieSharePoint: function () {
         var sUrlServiceCatalog = 'https://sap.sharepoint.com/:u:/r/sites/209083/SitePages/Home.aspx?csf=1&web=1&share=EZ1yRiAQnBNJkbFmc0bwN_IBq0xK5oDx0XMUDpZ7tVYOJw&e=Btpi61';
         library.URLHelper.redirect(sUrlServiceCatalog, true);
@@ -129,7 +135,7 @@ sap.ui.define(
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("GenieAIMain", {
           type: "Customer"
-      });
+        });
       },
 
 
@@ -194,56 +200,56 @@ sap.ui.define(
       onOpenIndividualEngagement: function (oEvent) {
         // Adjusted function call with the correct fragment name and path
         this.onDialogOpen("opportunity.opportunity.view.fragments.TeamSelection");
-    },
-    
-    onDialogOpen: function (fragmentName) {
-      var that = this;
-  
-      if (!this._dialogs) {
+      },
+
+      onDialogOpen: function (fragmentName) {
+        var that = this;
+
+        if (!this._dialogs) {
           this._dialogs = {};
-      }
-  
-      if (!this._dialogs[fragmentName]) {
+        }
+
+        if (!this._dialogs[fragmentName]) {
           this._dialogs[fragmentName] = Fragment.load({
-              name: fragmentName,
-              controller: this
+            name: fragmentName,
+            controller: this
           }).then(function (oDialog) {
-              that.getView().addDependent(oDialog);
-              oDialog.setEscapeHandler(function () {
-                  that.onCloseDialog();
-              });
-              return oDialog;
+            that.getView().addDependent(oDialog);
+            oDialog.setEscapeHandler(function () {
+              that.onCloseDialog();
+            });
+            return oDialog;
           });
-      }
-  
-      this._currentDialog = this._dialogs[fragmentName];
-  
-      this._currentDialog.then(function (oDialog) {
-          oDialog.open();
-      }).catch(function (error) {
-          console.error("Error opening dialog: ", error);
-      });
-  },
-  
-  
-    
-  onCloseDialog: function () {
-    var that = this;
+        }
 
-    // Ensure the correct dialog is referenced
-    if (this._currentDialog) {
+        this._currentDialog = this._dialogs[fragmentName];
+
         this._currentDialog.then(function (oDialog) {
-            oDialog.close();
+          oDialog.open();
         }).catch(function (error) {
-            console.error("Error closing dialog: ", error);
+          console.error("Error opening dialog: ", error);
         });
-    }
-    
-    // Clear the selected key
-    this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
-},
+      },
 
-    
+
+
+      onCloseDialog: function () {
+        var that = this;
+
+        // Ensure the correct dialog is referenced
+        if (this._currentDialog) {
+          this._currentDialog.then(function (oDialog) {
+            oDialog.close();
+          }).catch(function (error) {
+            console.error("Error closing dialog: ", error);
+          });
+        }
+
+        // Clear the selected key
+        this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
+      },
+
+
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("Calendar");
@@ -257,7 +263,7 @@ sap.ui.define(
           inumber: inumber
         }
         );
-        this.onCloseDialog(); 
+        this.onCloseDialog();
 
       },
 
@@ -369,14 +375,76 @@ sap.ui.define(
       },
 
       onNavToChatbot: function (oEvent) {
+        try {
+          var oParent = oEvent.getSource().getParent().getParent().getParent();
+          if (oParent && typeof oParent.close === 'function') {
+            oParent.close();
+          }
+        } catch (error) {
+          console.error("error:", error);
+        }
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("chatbot");
+
       },
 
-      onPressChatbotPopup: function(oEvent){
-        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.ChatbotPopover"); 
 
+      /* ------------------------------------------------------------------------------------------------------------
+    GENIE CHABOT
+      --------------------------------------------------------------------------------------------------------------*/
+
+
+      onPressChatbotPopup: function (oEvent) {
+        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.ChatbotPopover");
+
+      },
+
+      onPostMessage: function () {
+        var oView = this.getView();
+        var oInput = oView.byId("aiAssistantInput");
+        var oMessagesWrapper = oView.byId("messagesWrapper");
+        var sUserInput = oInput.getValue();
+
+        if (sUserInput.trim() !== "") {
+          // Create a new Text element as a user message bubble
+          var oUserQuestion = new sap.m.CustomListItem({
+            content: [
+              new sap.m.HBox({
+                justifyContent: "End",
+                items: [
+                  new sap.m.Text({
+                    text: sUserInput
+                  }).addStyleClass("aiUserMessage")
+                    .addStyleClass("sapUiResponsiveMargin")
+                ]
+              }).addStyleClass("userMessageWrapper")
+            ]
+          });
+
+          oMessagesWrapper.addItem(oUserQuestion);
+
+          oInput.setValue("");
+
+          // Simulate bot response after a delay
+          setTimeout(function () {
+            var oBotResponse = new sap.m.CustomListItem({
+              content: [
+                new sap.m.HBox({
+                  justifyContent: "Start",
+                  items: [
+                    new sap.m.Text({
+                      text: "Service currently unavailable."
+                    }).addStyleClass("aiBotMessage")
+                  ]
+                }).addStyleClass("botMessageWrapper")
+              ]
+            });
+
+            oMessagesWrapper.addItem(oBotResponse);
+          }, 1000);
+        }
       }
+
 
 
     });
