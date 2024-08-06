@@ -85,6 +85,16 @@ sap.ui.define(
         library.URLHelper.redirect(sUrlServiceCatalog, true);
       },
 
+      onOpenCustomerTemplateRuum: function () {
+        var sUrlServiceCatalog = 'https://open.ruumapp.com/templates/projects/template_1722872719149_rp2k335icpr/canvas';
+        library.URLHelper.redirect(sUrlServiceCatalog, true);
+      },
+
+      onOpenInternalTemplateRuum: function () {
+        var sUrlServiceCatalog = 'https://open.ruumapp.com/templates/projects/template_1722875347316_ek40t41rz3a/canvas';
+        library.URLHelper.redirect(sUrlServiceCatalog, true);
+      },
+
       onOpenGenieSharePoint: function () {
         var sUrlServiceCatalog = 'https://sap.sharepoint.com/:u:/r/sites/209083/SitePages/Home.aspx?csf=1&web=1&share=EZ1yRiAQnBNJkbFmc0bwN_IBq0xK5oDx0XMUDpZ7tVYOJw&e=Btpi61';
         library.URLHelper.redirect(sUrlServiceCatalog, true);

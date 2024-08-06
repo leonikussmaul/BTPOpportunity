@@ -47,10 +47,27 @@
 
                         <m:MenuItem
                             text="Ruum"
-                            press="onOpenGenieRuum"
                             icon="sap-icon://write-new"
                             key="Ruum"
-                        />
+                        >
+                         <m:items>
+                                <m:MenuItem
+                                    text="Master Ruum"
+                                    press="onOpenGenieRuum"
+                                    icon="sap-icon://workflow-tasks"
+                                />
+                                <m:MenuItem
+                                    text="Customer Template Ruum"
+                                    press="onOpenCustomerTemplateRuum"
+                                    icon="sap-icon://group"
+                                />
+                                <m:MenuItem
+                                    text="Internal Template Ruum"
+                                    press="onOpenInternalTemplateRuum"
+                                    icon="sap-icon://learning-assistant"
+                                />
+                            </m:items>
+                            </m:MenuItem>
 
                         <m:MenuItem
                             text="ChatBot"
