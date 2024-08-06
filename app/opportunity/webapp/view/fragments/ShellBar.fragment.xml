@@ -135,8 +135,8 @@
                         <m:MenuItem
                             press="onOpenFeedbackForm"
                             icon="sap-icon://feedback"
-                            tooltip="Annonymous Feedback Form - Google Forms"
-                            text="Annonymous Feedback Form"
+                            tooltip="Anonymous Feedback Form - Google Forms"
+                            text="Anonymous Feedback Form"
                         />
                     </m:Menu>
                 </m:menu>
