@@ -142,7 +142,7 @@
                                 showSelectAll="true"
                                 items="{
                                     path: '/opportunityTopicsVH',
-                                      templateShareable: true,
+                                    templateShareable: true,
                                     sorter: {
                                                 path: 'topic',
                                                 descending: false

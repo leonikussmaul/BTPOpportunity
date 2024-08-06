@@ -509,7 +509,7 @@
                         <u:ObjectPageSubSection id="idSubSectionNotes">
                             <!-- <core:Fragment id="notesSection" fragmentName="opportunity.opportunity.view.fragments.sections.NotesSection" type="XML"/> -->
                             <rte:RichTextEditor
-                                value="{notes}"
+                                value="{'path': 'notes', 'formatter': '.formatter.noteTextFormatter'}"
                                 id="editRTE"
                                 height="400px"
                                 width="100%"

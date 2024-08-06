@@ -290,8 +290,7 @@ sap.ui.define([
                     that.getView().setBusy(true);
 
 
-                    var sStartDate, sEndDate, bInternal, sTodayDate;
-                    var workshopStartDate, workshopEndDate;
+                    var sStartDate, sEndDate, bInternal, sTodayDate, workshopStartDate, workshopEndDate, sNotes, sMonth;
 
                     sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
                     sStartDate = this.getView().byId("DRS3").getDateValue();
@@ -306,7 +305,6 @@ sap.ui.define([
                         "July", "August", "September", "October", "November", "December"
                     ];
 
-                    var sMonth;
                     if (sStartDate) sMonth = monthNames[sStartDate.getMonth()];
                     // oData.country = this.getFlagMethod(oData.country.toUpperCase());
                     if (oData.country) oData.country = oData.country.toUpperCase();
@@ -315,7 +313,9 @@ sap.ui.define([
                     oData.month = sMonth;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
-                    oData.notes = this.getView().byId("editRTE").getValue();
+                    sNotes = this.getView().byId("editRTE").getValue();
+                    if(!(sNotes === "" || sNotes === undefined)) sNotes = sNotes.replaceAll("-", "%2D");
+                    oData.notes = sNotes;
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
                     delete oData.__metadata;

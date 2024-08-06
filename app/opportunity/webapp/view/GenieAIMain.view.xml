@@ -87,7 +87,7 @@
                                     id="workshopTable"
                                     persistencyKey="persistencyKey"
                                     entitySet="GenieAIWorkshops"
-                                    beforeRebindTable="onBeforeRebindTable"
+                                    beforeRebindTable="onBeforeRebindWorkshopTable"
                                     tableType="ResponsiveTable"
                                     useVariantManagement="false"
                                     useTablePersonalisation="true"
