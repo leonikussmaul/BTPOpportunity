@@ -10,6 +10,12 @@
         homeIconPressed="onHomeIconPressed"
     >
         <additionalContent>
+            <m:Button
+                icon="sap-icon://da-2"
+                text="Chatbot"
+                press="onPressChatbotPopup"
+            />
+
             <m:MenuButton
                 icon="sap-icon://ai"
                 text="Genie AI"
@@ -41,10 +47,27 @@
 
                         <m:MenuItem
                             text="Ruum"
-                            press="onOpenGenieRuum"
                             icon="sap-icon://write-new"
                             key="Ruum"
-                        />
+                        >
+                         <m:items>
+                                <m:MenuItem
+                                    text="Master Ruum"
+                                    press="onOpenGenieRuum"
+                                    icon="sap-icon://workflow-tasks"
+                                />
+                                <m:MenuItem
+                                    text="Customer Template Ruum"
+                                    press="onOpenCustomerTemplateRuum"
+                                    icon="sap-icon://group"
+                                />
+                                <m:MenuItem
+                                    text="Internal Template Ruum"
+                                    press="onOpenInternalTemplateRuum"
+                                    icon="sap-icon://learning-assistant"
+                                />
+                            </m:items>
+                            </m:MenuItem>
 
                         <m:MenuItem
                             text="ChatBot"
@@ -112,8 +135,8 @@
                         <m:MenuItem
                             press="onOpenFeedbackForm"
                             icon="sap-icon://feedback"
-                            tooltip="Annonymous Feedback Form - Google Forms"
-                            text="Annonymous Feedback Form"
+                            tooltip="Anonymous Feedback Form - Google Forms"
+                            text="Anonymous Feedback Form"
                         />
                     </m:Menu>
                 </m:menu>

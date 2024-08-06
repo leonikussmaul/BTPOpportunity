@@ -50,7 +50,11 @@
     font-weight: bold;
 }
 
-.sapFShellBar {
+/* .sapFShellBar {
+    height: 4rem !important;
+    line-height: 4rem !important;
+} */
+.myShellBarStyle {
     height: 4rem !important;
     line-height: 4rem !important;
 }
@@ -62,10 +66,10 @@
     vertical-align: middle;
 }
 
-.sapFShellBar .sapFShellBarItem {
+/* .sapFShellBar .sapFShellBarItem {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
-}
+} */
 
 
 .chatPage {

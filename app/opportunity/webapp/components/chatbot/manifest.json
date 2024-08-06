@@ -97,10 +97,7 @@
             "controlAggregation": "content",
             "controlId": "page",
             "clearControlAggregation": false,
-            "path": "chatbot.view",
-            "bypassed": {
-                "target": "NotFound"
-             }
+            "path": "chatbot.view"
         },
           "routes": [
             {

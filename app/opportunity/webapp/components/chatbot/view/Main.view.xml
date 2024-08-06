@@ -102,12 +102,12 @@
                 class="sapUiSmallMarginBottom"
             >
                 <FeedInput
-                    icon="./utils/genie.ico"
+                    icon="./images/genie/genie.ico"
                     value="{chatModel>/userInput}"
                     id="newMessageInput"
                     post="onPostMessage"
                     showIcon="true"
-                    placeholder="What is the Genie AI Workshop?  Who is delivering it?  What is the benefit?"
+                    placeholder="Talk to me naturally. For example, 'When is the next workshop planned?'"
                 />
             </OverflowToolbar>
         </f:footer>
