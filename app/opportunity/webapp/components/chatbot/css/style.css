@@ -1,0 +1,77 @@
+ /* Enter your custom styles here */
+ .userMessage {
+    text-align: right;
+}
+
+.botMessage {
+    text-align: left;
+}
+
+:root {
+    --background-color: #e0f7fa;
+    ;
+    /* Light mode background color */
+    --text-color: #000000;
+    /* Light mode text color */
+}
+
+/* Dark mode */
+[data-theme="sap_horizon_dark"] {
+    --background-color: #1C0C6E;
+    /* Dark mode background color */
+    --text-color: #ffffff;
+    /* Dark mode text color */
+}
+
+.userMessage .sapMFeedListItemText {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 15px;
+    padding: 10px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+.botMessage .sapMFeedListItemText {
+    /* background-color: #fff9c4; */
+    border-radius: 15px;
+    /* padding: 10px; */
+    /* display: inline-block; */
+    /* margin-left: 10px;  */
+}
+
+/* .botMessage .sapMFeedListItemIcon {
+   margin-right: 5px; 
+} */
+
+/* Style for the bot sender text */
+.botSender {
+    font-weight: bold;
+}
+
+.sapFShellBar {
+    height: 4rem !important;
+    line-height: 4rem !important;
+}
+
+.sapFShellBar .sapFShellBarHomeIcon {
+    height: 3rem !important;
+    max-height: 3rem !important;
+    width: 3rem !important;
+    vertical-align: middle;
+}
+
+.sapFShellBar .sapFShellBarItem {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+
+.chatPage {
+    padding-top: 1rem;
+}
+
+*:focus {
+    outline: none !important;
+}

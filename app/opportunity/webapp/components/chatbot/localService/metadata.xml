@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="GenieService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="DocumentChunk" EntityType="GenieService.DocumentChunk"/>
+                <ActionImport Name="chat" Action="GenieService.chat"/>
+                <FunctionImport Name="chatfrombrowser" Function="GenieService.chatfrombrowser"/>
+                <FunctionImport Name="storeEmbeddings" Function="GenieService.storeEmbeddings"/>
+                <FunctionImport Name="deleteEmbeddings" Function="GenieService.deleteEmbeddings"/>
+            </EntityContainer>
+            <EntityType Name="DocumentChunk">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="text_chunk" Type="Edm.String"/>
+                <Property Name="metadata_column" Type="Edm.String"/>
+            </EntityType>
+            <ComplexType Name="sap_emea_btp_geine_History">
+                <Property Name="content" Type="Edm.String"/>
+                <Property Name="role" Type="Edm.String"/>
+            </ComplexType>
+            <Action Name="chat" IsBound="false">
+                <Parameter Name="question" Type="Edm.String"/>
+                <Parameter Name="history" Type="Collection(GenieService.sap_emea_btp_geine_History)" Nullable="false"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Function Name="chatfrombrowser" IsBound="false" IsComposable="false">
+                <Parameter Name="question" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="storeEmbeddings" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Function Name="deleteEmbeddings" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.String"/>
+            </Function>
+            <Annotations Target="GenieService.DocumentChunk/ID">
+                <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+            </Annotations>
+            <Annotations Target="GenieService.sap_emea_btp_geine_History/role">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="user"/>
+                            <PropertyValue Property="Value" String="user"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="assistant"/>
+                            <PropertyValue Property="Value" String="assistant"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

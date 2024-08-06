@@ -32,6 +32,14 @@
                 tooltip="Go to the Genie AI Report"
             />
 
+             <tnt:NavigationListItem
+                text="Chatbot"
+                key="chatbot"
+                icon="sap-icon://da-2"
+                select="onNavToChatbot"
+                tooltip="Go to the Genie AI Chatbot"
+            />
+
             <tnt:NavigationListItem
                 text="Team Engagement"
                 key="TeamEngagement"

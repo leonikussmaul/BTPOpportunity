@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="chatbot.controller.App"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+>
+    <App
+        id="app"
+        homeIcon="./utils/genie.ico"
+    >
+        <Page
+            id="page"
+            enableScrolling="false"
+        >
+            <customHeader>
+                <f:ShellBar
+                    title="Genie ChatBot"
+                    secondTitle="Powered by Gen AI"
+                    homeIcon="./utils/genie.ico"
+                    showCopilot="false"
+                    showSearch="false"
+                    showNotifications="false"
+                >
+                    <f:additionalContent>
+                        <Image
+                            src="./utils/csd.png"
+                            width="2.5rem"
+                            height="2.5rem"
+                            class="sapUiSmallMarginEnd"
+                        />
+                        <Image
+                            src="./utils/emea.png"
+                            width="2.5rem"
+                            height="2.2rem"
+                        />
+                    </f:additionalContent>
+                </f:ShellBar>
+            </customHeader>
+        </Page>
+        <!-- <f:FlexibleColumnLayout
+            id="fcl"
+            stateChange="onStateChanged"
+            layout="{global>/layout}"
+            backgroundDesign="Solid"
+        /> -->
+    </App>
+</mvc:View>

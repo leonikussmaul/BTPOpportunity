@@ -85,6 +85,17 @@
                 "sap.ushell": {}
             }
         },
+        "components": {
+            "chatbot": {}
+          },
+          "componentUsages": {
+            "chatbot": {
+              "name": "chatbot",
+              "componentData": {
+                "renderButton": true
+              }
+            }
+        },
         "contentDensities": {
             "compact": true,
             "cozy": true
@@ -206,7 +217,15 @@
                     "name": "Calendar",
                     "pattern": "Calendar",
                     "target": "Calendar"
-                }
+                },
+                {
+                    "name": "chatbot",
+                    "pattern": "chatbot:?query:",
+                    "target": {
+                      "name": "chatbot",
+                      "prefix": "i"
+                    }
+                  }
             ],
             "targets": {
                 "Overview": {
@@ -289,12 +308,14 @@
                     "viewName": "TeamEngagement",
                     "viewLevel": 1
             },
-            "NotFound": {
-                "id": "NotFound",
-                "name": "NotFound",
-                "viewType": "XML",
-                "transition": "show"
-             }
+             "chatbot": {
+                "controlAggregation": "beginColumnPages",
+                "viewLevel": 1,
+                "type": "Component",
+                "usage": "chatbot",
+                "title": "chatbot",
+                "id": "chatbot"
+              }
             }
         },
         "rootView": {

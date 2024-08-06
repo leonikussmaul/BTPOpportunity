@@ -357,7 +357,12 @@ sap.ui.define(
 
       onExit: function () {
         this.oRouter.detachRouteMatched(this.onRouteMatched, this);
-      }
+      },
+
+      onNavToChatbot: function (oEvent) {
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("chatbot");
+      },
 
 
     });
