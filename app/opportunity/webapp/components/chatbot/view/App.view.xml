@@ -7,7 +7,7 @@
 >
     <App
         id="app"
-        homeIcon="./utils/genie.ico"
+        homeIcon="./images/genie/genie.ico"
     >
         <Page
             id="page"
@@ -17,20 +17,20 @@
                 <f:ShellBar
                     title="Genie ChatBot"
                     secondTitle="Powered by Gen AI"
-                    homeIcon="./utils/genie.ico"
+                    homeIcon="./images/genie/genie.ico"
                     showCopilot="false"
                     showSearch="false"
                     showNotifications="false"
                 >
                     <f:additionalContent>
                         <Image
-                            src="./utils/csd.png"
+                            src="./images/genie/csd.png"
                             width="2.5rem"
                             height="2.5rem"
                             class="sapUiSmallMarginEnd"
                         />
                         <Image
-                            src="./utils/emea.png"
+                            src="./images/genie/emea.png"
                             width="2.5rem"
                             height="2.2rem"
                         />
