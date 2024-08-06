@@ -27,6 +27,15 @@ sap.ui.define(
         this.oRouter = this.oOwnerComponent.getRouter();
         this.oRouter.attachRouteMatched(this.onRouteMatched, this);
 
+        this.getView().setModel(
+					new JSONModel({
+						imagePath: './images/diamond.png',
+						isFullScreenMode: false,
+						settingsDialogPreviousSelections: {}
+					}),
+					'viewModel'
+				);
+
       },
 
 
@@ -363,6 +372,11 @@ sap.ui.define(
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("chatbot");
       },
+
+      onPressChatbotPopup: function(oEvent){
+        this.onOpenPopover(oEvent, "opportunity.opportunity.view.fragments.ChatbotPopover"); 
+
+      }
 
 
     });

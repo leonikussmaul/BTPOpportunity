@@ -10,6 +10,12 @@
         homeIconPressed="onHomeIconPressed"
     >
         <additionalContent>
+            <m:Button
+                icon="sap-icon://da-2"
+                text="Chatbot"
+                press="onPressChatbotPopup"
+            />
+
             <m:MenuButton
                 icon="sap-icon://ai"
                 text="Genie AI"
