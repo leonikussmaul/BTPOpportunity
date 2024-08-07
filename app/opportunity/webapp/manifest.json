@@ -124,7 +124,7 @@
                     "autoExpandSelect": true
                 }
             },
-            "genie": {
+            "genieV4": {
                 "dataSource": "genieService",
                 "preload": true,
                 "settings": {
