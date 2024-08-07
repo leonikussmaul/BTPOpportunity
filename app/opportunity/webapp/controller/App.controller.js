@@ -30,8 +30,9 @@ sap.ui.define(
         this.getView().setModel(
           new JSONModel({
             imagePath: './images/diamond.png',
-            isFullScreenMode: false,
-            settingsDialogPreviousSelections: {}
+            genieImage: './images/genie/genie.png'
+            // isFullScreenMode: false,
+            // settingsDialogPreviousSelections: {}
           }),
           'viewModel'
         );
@@ -453,7 +454,8 @@ sap.ui.define(
             oMessagesWrapper.addItem(oBotResponse);
           }, 1000);
         }
-      }
+      },
+    
 
 
 

@@ -79,3 +79,263 @@
 *:focus {
     outline: none !important;
 }
+
+
+/* chatbot */
+.aiDialog {
+    /* Variables */
+    --ia_Illustrative_Color1: #5d36ff;
+    --ia_Illustrative_Color2: #eae5ff;
+    --ia_Illustrative_Color4: #a100c2;
+    --ia_Illustrative_Color5: #eff1f2;
+}
+
+.aiErrorText {
+    color: red;
+}
+
+.aiFullScreenDialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 0;
+    margin: 0;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 100% !important;
+}
+
+.aiDialog .sapMDialogScroll {
+    padding: 0 !important;
+    border: 0;
+    height: 100%;
+}
+
+.aiDialog .sapMDialogScroll .sapMDialogScrollCont {
+    height: 100%;
+}
+
+.aiDialog .iaSupportButtonsColumn {
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+.aiDialog .iaSupportButtonsColumn .aiSupportCard {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.aiDialog .iaSupportButtonsColumn .iaSupportButtonBlock {
+    margin: 5px 0 15px 10px;
+}
+
+.aiDialog .aiContentView {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+}
+
+.aiDialog .aiAssistantPanel {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.aiDialog .aiUserMessage {
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 8px 8px 0 8px;
+    background-color: var(--ia_Illustrative_Color1);
+    color: white;
+    font-size: 1em;
+
+    
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiDialog .aiChatActionButton .sapMBtnInner {
+    border-radius: 100px;
+    padding-right: 15px;
+    padding-left: 15px;
+    border: 1px solid var(--ia_Illustrative_Color5);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.aiDialog .aiBotMessage {
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 8px 8px 8px 0;
+    background-color: var(--ia_Illustrative_Color5);
+    color: black;
+    font-size: 1em;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiDialog .aiThinkingDotsBox {
+    width: fit-content;
+    padding: 10px 10px 5px 10px;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar {
+    padding: 10px;
+    align-items: stretch;
+    background-color: var(--ia_Illustrative_Color1);
+    font-weight: 500;
+
+    border-radius: 10px 10px 0 0;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar .aiAssistantHeaderTitle {
+    flex: 1;
+    align-items: center;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar .aiAssistantHeaderTitle .aiAssistantHeaderTitleText {
+    color: white !important;
+    font-size: 1em;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 700;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar .aiAssistantHeaderTitle .aiAssistantHeaderSubTitleText {
+    color: white !important;
+    font-size: 2em;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 300;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar .sapMBtnInner {
+    background-color: transparent !important;
+    border: 0;
+    color: white !important;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiAssistantPanel .aiAssistantHeaderToolbar .sapMBtnIcon {
+    color: white !important;
+}
+
+.aiAssistantPanel .aiAssistantContent {
+    flex: 1;
+    overflow: auto;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiSupportPanel .iaSupportButtonBlock {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiSupportPanel .iaSupportIcon {
+    margin: 20px 0 50px 0;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiSupportPanel .aiSupportTitle {
+    color: white !important;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiSupportPanel .aiSupportText {
+    color: white !important;
+    font-size: 1em;
+    font-weight: 400;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiAssistantWelcomePanel {
+    background-image: linear-gradient(180deg, var(--ia_Illustrative_Color1), var(--ia_Illustrative_Color4));
+    padding: 25px 15px;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiAssistantWelcomeHeroImage {
+    margin: 20px auto 30px auto;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiAssistantWelcomeMessage {
+    color: white;
+    font-size: 1em;
+    font-weight: 300;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiAssistantWelcomeMessageMain {
+    color: white;
+    font-size: 2em;
+    font-weight: 100;
+    margin: 10px 0 20px 0;
+
+    /* Antialiased */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.aiAssistantPanel .aiAssistantContent .aiAssistantWelcomePanel .aiBotMessage {
+    max-width: 200px;
+}
+
+.aiAssistantPanel .aiAssistantInputWrapper {
+    padding: 10px;
+}
+
+/* In a CSS file loaded by the UI5 application */
+.userMessageWrapper {
+    align-self: flex-end;
+}
+
+.botMessageWrapper {
+    align-self: flex-start;
+}
+
+.aiUserMessage {
+    padding: 5px 10px;
+    border-radius: 8px 8px 0 8px;
+    background-color: var(--ia_Illustrative_Color1);
+    color: white;
+}
+
+.aiBotMessage {
+    padding: 5px 10px;
+    border-radius: 8px 8px 8px 0;
+    background-color: var(--ia_Illustrative_Color5);
+    color: black;
+}
+
+
+
+/*  */

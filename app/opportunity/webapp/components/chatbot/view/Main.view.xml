@@ -9,12 +9,13 @@
     xmlns:layout="sap.ui.layout"
     height="100%"
 >
-    <f:DynamicPage
+    <!-- <f:DynamicPage
         id="chatPage"
-        class="sapUiContentPadding sapUiTinyMarginTop"
-        showFooter="true"
-    >
-        <f:title>
+        class="aiDialog sapUiContentPadding sapUiTinyMarginTop"
+        showFooter="true"   
+       
+    > -->
+    <!-- <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
                     <Title
@@ -23,9 +24,9 @@
                     />
                 </f:heading>
             </f:DynamicPageTitle>
-        </f:title>
+        </f:title> -->
 
-        <f:header>
+    <!-- <f:header>
             <f:DynamicPageHeader pinnable="false">
                 <layout:HorizontalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -33,18 +34,111 @@
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
-        </f:header>
-        <f:content>
-            <ScrollContainer
-                id="scrollContainer"
+        </f:header> -->
+    <!-- <f:content > -->
+    <VBox
+        id="scrollContainer"
+        height="100%"
+        class="aiDialog sapUiContentPadding sapUiTinyMarginTop"
+    >
+        <VBox
+            class="sapUiMediumMarginBottom aiAssistantPanel"
+            id="aiAssistantPanel"
+        >
+            <VBox
+                id="chatbotView"
                 height="100%"
-                vertical="true"
+                class="aiFullScreenDialog"
             >
-                <VBox
-                    class="sapUiMediumMarginBottom"
-                    height="100%"
+                <HBox
+                    class="aiAssistantHeaderToolbar"
+                    justifyContent="SpaceBetween"
+                    alignItems="Center"
                 >
+                    <HBox class="aiAssistantHeaderTitle sapUiSmallMarginBegin">
+                        <VBox>
+                            <Text
+                                text="Genie AI Chatbot"
+                                class="aiAssistantHeaderTitleText sapUiTinyMarginTopBottom"
+                            />
+                            <Text
+                                text="Experience Generative AI coupled with the power of SAP HANA Vector Engine."
+                                class="aiAssistantHeaderSubTitleText"
+                            />
+                        </VBox>
+                    </HBox>
+                    <Image
+                        src="{viewModel>/genieImage}"
+                
+                        height="5.5rem" class="sapUiResponsiveMargin"
+                    />
+                </HBox>
+
+                <VBox
+                    id="aiAssistantContent"
+                    class="aiAssistantContent"
+                >
+                    <VBox
+                        id="aiAssistantWelcomePanel"
+                        class="aiAssistantWelcomePanel"
+                    >
+                        <HBox justifyContent="Center">
+                            <Image
+                                src="{viewModel>/imagePath}"
+                                width="100px"
+                                class="aiAssistantWelcomeHeroImage"
+                            />
+                        </HBox>
+                        <Text
+                            text="Hello, {user>/firstname} {user>/lastname}"
+                            class="aiAssistantWelcomeMessage sapUiSmallMarginBegin"
+                        />
+                        <Text
+                            text="How can I help you?"
+                            class="aiAssistantWelcomeMessageMain sapUiSmallMarginBegin"
+                        />
+                        <Text
+                            text="Talk to me naturally. For example 'When is the next workshop planned?'"
+                            class="aiBotMessage sapUiSmallMarginBegin"
+                        />
+                    </VBox>
+                    <VBox
+                        id="messagesWrapper"
+                        class="sapUiContentPadding"
+                    />
+                </VBox>
+                <VBox>
                     <MessageStrip
+                        text="Responses may contain inaccuracies."
+                        showIcon="true"
+                        showCloseButton="true"
+                        class="sapUiSmallMarginBeginEnd"
+                    />
+                    <HBox class="aiAssistantInputWrapper">
+                        <Input
+                            id="aiAssistantInput"
+                            submit="onPostMessage"
+                            liveChange="onInputLiveChange"
+                            showClearIcon="true"
+                            class="sapUiTinyMarginBeginEnd"
+                            placeholder="Type something..."
+                            value="{chatModel>/userInput}"
+                        >
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Input>
+                        <Button
+                            icon="sap-icon://paper-plane"
+                            press="onPostMessage"
+                            class="sapUiSmallMarginBegin sapUiTinyMarginEnd"
+                            type="Emphasized"
+                            enabled="{= ${chatModel>/userInput} ? true : false}"
+                        />
+                    </HBox>
+                </VBox>
+            </VBox>
+            <!-- <MessageStrip
                         text="This content gets generated by AI. It may contain errors or inaccuracies."
                         type="Information"
                         showCloseButton="true"
@@ -91,12 +185,12 @@
                         id="listEndMarker"
                         text=""
                         visible="true"
-                    />
-                </VBox>
-            </ScrollContainer>
-        </f:content>
+                    /> -->
+        </VBox>
+    </VBox>
+    <!-- </f:content> -->
 
-        <f:footer>
+    <!-- <f:footer>
             <OverflowToolbar
                 height="100px"
                 class="sapUiSmallMarginBottom"
@@ -110,6 +204,6 @@
                     placeholder="Talk to me naturally. For example, 'When is the next workshop planned?'"
                 />
             </OverflowToolbar>
-        </f:footer>
-    </f:DynamicPage>
+        </f:footer> -->
+    <!-- </f:DynamicPage> -->
 </mvc:View>

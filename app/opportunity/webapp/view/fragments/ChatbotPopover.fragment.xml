@@ -10,15 +10,23 @@
     xmlns:rte="sap.ui.richtexteditor"
     xmlns:micro="sap.suite.ui.microchart"
 >
-    <Popover id="chatbotPopover"
-        placement="PreferredBottomOrFlip"
+    <Popover
+        id="chatbotPopover"
+        placement="Bottom"
         showHeader="false"
+        contentWidth="350px"
         class="aiDialog"
     >
-        <VBox id="aiAssistantPanel" class="aiAssistantPanel">
+        <VBox
+            id="aiAssistantPanel"
+            class="aiAssistantPanel"
+        >
             <HBox class="aiAssistantHeaderToolbar">
                 <HBox class="aiAssistantHeaderTitle">
-                    <Text text="Genie AI Chatbot" class="aiAssistantHeaderTitleText" />
+                    <Text
+                        text="Genie AI Chatbot"
+                        class="aiAssistantHeaderTitleText"
+                    />
                 </HBox>
                 <!-- <Button
                     icon="sap-icon://sys-help"
@@ -27,21 +35,44 @@
                     class="sapUiSizeCompact aiAssistantHeaderButton"
                 /> -->
                 <Button
-                    icon="sap-icon://resize" tooltip="Full Screen Mode"
+                    icon="sap-icon://resize"
+                    tooltip="Full Screen Mode"
                     press="onNavToChatbot"
                     class="sapUiSizeCompact aiAssistantHeaderButton"
                 />
             </HBox>
-            <VBox id="aiAssistantContent" class="aiAssistantContent">
-                <VBox id="aiAssistantWelcomePanel" class="aiAssistantWelcomePanel" visible="{viewModel>/isWelcomePanelVisible}">
+            <VBox
+                id="aiAssistantContent"
+                class="aiAssistantContent"
+            >
+                <VBox
+                    id="aiAssistantWelcomePanel"
+                    class="aiAssistantWelcomePanel"
+                >
                     <HBox justifyContent="Center">
-                        <Image src="{viewModel>/imagePath}" width="100px" class="aiAssistantWelcomeHeroImage" />
+                        <Image
+                            src="{viewModel>/imagePath}"
+                            width="100px"
+                            class="aiAssistantWelcomeHeroImage"
+                        />
                     </HBox>
-                    <Text text="Hello, {user>/firstname} {user>/lastname}" class="aiAssistantWelcomeMessage" />
-                    <Text text="How can I help you?" class="aiAssistantWelcomeMessageMain" />
-                    <Text text="Talk to me naturally. For example 'When is the next workshop planned?'" class="aiBotMessage" />
+                    <Text
+                        text="Hello, {user>/firstname} {user>/lastname}"
+                        class="aiAssistantWelcomeMessage"
+                    />
+                    <Text
+                        text="How can I help you?"
+                        class="aiAssistantWelcomeMessageMain"
+                    />
+                    <Text
+                        text="Talk to me naturally. For example 'When is the next workshop planned?'"
+                        class="aiBotMessage"
+                    />
                 </VBox>
-                <VBox id="messagesWrapper" class="sapUiContentPadding" />
+                <VBox
+                    id="messagesWrapper"
+                    class="sapUiContentPadding"
+                />
             </VBox>
             <VBox>
                 <MessageStrip

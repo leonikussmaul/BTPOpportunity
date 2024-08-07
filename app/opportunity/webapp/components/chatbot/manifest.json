@@ -16,7 +16,7 @@
         "toolsId": "f810d1c4-b9da-4a98-8c67-6eb753a95157"
       },
       "dataSources": {
-        "mainService": {
+        "genieService": {
           "uri": "/odata/v4/genie/",
           "type": "OData",
           "settings": {
@@ -71,7 +71,7 @@
           }
         },
         "": {
-          "dataSource": "mainService",
+          "dataSource": "genieService",
           "preload": true,
           "settings": {
             "operationMode": "Server",
