@@ -410,51 +410,145 @@ sap.ui.define(
 
       },
 
-      onPostMessage: function () {
-        var oView = this.getView();
-        var oInput = oView.byId("aiAssistantInput");
-        var oMessagesWrapper = oView.byId("messagesWrapper");
-        var sUserInput = oInput.getValue();
+      // onPostMessage: function () {
+      //   var oView = this.getView();
+      //   var oInput = oView.byId("aiAssistantInput");
+      //   var oMessagesWrapper = oView.byId("messagesWrapper");
+      //   var sUserInput = oInput.getValue();
 
-        if (sUserInput.trim() !== "") {
-          // Create a new Text element as a user message bubble
-          var oUserQuestion = new sap.m.CustomListItem({
-            content: [
-              new sap.m.HBox({
-                justifyContent: "End",
-                items: [
-                  new sap.m.Text({
-                    text: sUserInput
-                  }).addStyleClass("aiUserMessage")
-                    .addStyleClass("sapUiResponsiveMargin")
-                ]
-              }).addStyleClass("userMessageWrapper")
+      //   if (sUserInput.trim() !== "") {
+      //     // Create a new Text element as a user message bubble
+      //     var oUserQuestion = new sap.m.CustomListItem({
+      //       content: [
+      //         new sap.m.HBox({
+      //           justifyContent: "End",
+      //           items: [
+      //             new sap.m.Text({
+      //               text: sUserInput
+      //             }).addStyleClass("aiUserMessage")
+      //               .addStyleClass("sapUiResponsiveMargin")
+      //           ]
+      //         }).addStyleClass("userMessageWrapper")
+      //       ]
+      //     });
+
+      //     oMessagesWrapper.addItem(oUserQuestion);
+
+      //     oInput.setValue("");
+
+      //     // Simulate bot response after a delay
+      //     setTimeout(function () {
+      //       var oBotResponse = new sap.m.CustomListItem({
+      //         content: [
+      //           new sap.m.HBox({
+      //             justifyContent: "Start",
+      //             items: [
+      //               new sap.m.Text({
+      //                 text: "Service currently unavailable."
+      //               }).addStyleClass("aiBotMessage")
+      //             ]
+      //           }).addStyleClass("botMessageWrapper")
+      //         ]
+      //       });
+
+      //       oMessagesWrapper.addItem(oBotResponse);
+      //     }, 1000);
+      //   }
+      // },
+
+      onPostMessage: function (oEvent) {
+        var that = this;
+        var oChatModel = this.getView().getModel("chatModel");
+        var oInput = oChatModel.getProperty("/userInput");
+        var oHistoryModel = this.getView().getModel("historyModel");
+        var oMessagesWrapper = this.getView().byId("messagesWrapper");
+    
+        // Create the user question as a VBox with a Text control
+        var oUserQuestion = new sap.m.VBox({
+            items: [
+                new sap.m.Text({
+                    text: oInput
+                }).addStyleClass("aiUserMessage")
+                .addStyleClass("sapUiResponsiveMargin")
             ]
-          });
-
-          oMessagesWrapper.addItem(oUserQuestion);
-
-          oInput.setValue("");
-
-          // Simulate bot response after a delay
-          setTimeout(function () {
-            var oBotResponse = new sap.m.CustomListItem({
-              content: [
-                new sap.m.HBox({
-                  justifyContent: "Start",
-                  items: [
+        }).addStyleClass("userMessageWrapper");
+    
+        oMessagesWrapper.addItem(oUserQuestion);
+        //this._oBusyDialog.open();
+    
+        // Use the getBotResponse function and wait for the response
+        this.getBotResponse(oInput).then(function (sBotResponse) {
+            var oBotResponse = new sap.m.VBox({
+                items: [
                     new sap.m.Text({
-                      text: "Service currently unavailable."
+                        text: sBotResponse
                     }).addStyleClass("aiBotMessage")
-                  ]
-                }).addStyleClass("botMessageWrapper")
-              ]
-            });
-
+                    .addStyleClass("sapUiResponsiveMargin")
+                    
+                ]
+            }).addStyleClass("botMessageWrapper");
+    
+            // Add the bot's response to the messages wrapper
             oMessagesWrapper.addItem(oBotResponse);
-          }, 1000);
-        }
-      },
+    
+            // Get records for history
+            let oHistoryEntryUser = { content: oInput, role: "user" };
+            let oHistoryEntryBot = { content: sBotResponse, role: "assistant" };
+    
+            let newHistory = oHistoryModel.getProperty("/history");
+            newHistory.push(oHistoryEntryUser);
+            newHistory.push(oHistoryEntryBot);
+    
+            oHistoryModel.setProperty("/history", newHistory);
+            console.log(oHistoryModel.getProperty("/history"));
+    
+           // that._oBusyDialog.close();
+            setTimeout(function () {
+                that.handleScroll();
+            }, 100);
+        });
+    
+        oChatModel.setData({});
+    }
+    ,
+    
+
+    getBotResponse: function (sUserInput) {
+        var that = this;
+        let oModel = this.getView().getModel("genieV4");
+        let oChatModel = this.getView().getModel("chatModel");
+        let oHistoryModel = this.getView().getModel("historyModel");
+
+        var oActionODataContextBinding = oModel.bindContext("/chat(...)");
+        oActionODataContextBinding.setParameter("question", sUserInput);
+
+        let oHistory = oHistoryModel.getProperty("/history");
+        oActionODataContextBinding.setParameter("history", oHistory);
+
+        // Return a Promise that resolves with the bot response
+        return new Promise(function (resolve, reject) {
+            oActionODataContextBinding.execute().then(function () {
+                var oActionContext = oActionODataContextBinding.getBoundContext();
+                console.log(oActionContext.getObject().value);
+                resolve(oActionContext.getObject().value);
+            }).catch(function (oError) {
+                console.log("Error getting bot response:", oError);
+                //sap.m.MessageBox.error(oError.toString());
+                sap.m.MessageBox.error(
+                    oError.toString(),
+                    {
+                        icon: sap.m.MessageBox.Icon.WARNING,
+                        title: "Please Try Again",
+                    }
+                );
+                //remember question 
+                oChatModel.setProperty("/userInput", sUserInput);
+                //that._oBusyDialog.close();
+                reject(oError);
+            });
+        });
+    },
+
     
 
 

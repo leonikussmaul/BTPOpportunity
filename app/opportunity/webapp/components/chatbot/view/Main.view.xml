@@ -37,10 +37,11 @@
         </f:header> -->
     <!-- <f:content > -->
     <VBox
-        id="scrollContainer"
+        id="vboxID"
         height="100%"
-        class="aiDialog sapUiContentPadding sapUiTinyMarginTop"
+        class="aiDialog sapUiContentPadding"
     >
+  
         <VBox
             class="sapUiMediumMarginBottom aiAssistantPanel"
             id="aiAssistantPanel"
@@ -187,6 +188,7 @@
                         visible="true"
                     /> -->
         </VBox>
+        
     </VBox>
     <!-- </f:content> -->
 
@@ -206,4 +208,5 @@
             </OverflowToolbar>
         </f:footer> -->
     <!-- </f:DynamicPage> -->
+   
 </mvc:View>
