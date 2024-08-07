@@ -1,0 +1,67 @@
+{
+    "VCAP_SERVICES": {
+        "destination": [
+            {
+                "name": "BTPOpportunities-destination-service",
+                "instance_name": "BTPOpportunities-destination-service",
+                "label": "destination",
+                "tags": [
+                    "destination",
+                    "conn",
+                    "connsvc",
+                    "endpoint:https://api.cf.eu10-004.hana.ondemand.com",
+                    "org:DBSEMEANorth_opportunity-tracker",
+                    "space:dev"
+                ],
+                "plan": "lite",
+                "credentials": {
+                    "clientid": "sb-clonef39bbed7cd9740bf80196f5b8aa32fbc!b233144|destination-xsappname!b404",
+                    "clientsecret": "a901ae52-abda-4b86-ad7d-1e1e5ea38766$wsZIdtn3isJusGmAivrGEDbWYNajP4YY0oheE4cpB2c=",
+                    "credential-type": "binding-secret",
+                    "identityzone": "opportunity-tracker",
+                    "instanceid": "f39bbed7-cd97-40bf-8019-6f5b8aa32fbc",
+                    "service_key_name": "key",
+                    "tenantid": "206d2681-3933-4f60-8299-83ec93f6172a",
+                    "tenantmode": "dedicated",
+                    "uaadomain": "authentication.eu10.hana.ondemand.com",
+                    "uri": "https://destination-configuration.cfapps.eu10.hana.ondemand.com",
+                    "url": "https://opportunity-tracker.authentication.eu10.hana.ondemand.com",
+                    "verificationkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArIsDlon+TrAe2GrRnkDB\nUmI0SvW8eBoAtCA9FPGehwi6X7HT8oOlNBoCTGEyhQRHscBW1uuGjNVleetdZZhJ\nlWGOeEBh71PhOQjYViQNivpd/PRuhwl+UhHbxkOhVnf5/E+TQnv5RWXYHNfRublY\naL3VdS2wh+9jaYbOAxR5xvdGlxFXXxl7p9M6DP8VkcPldO/l4GXkmj+x/qTOHUlM\n2kXYXUS1BdU7AthtPHhtXPZLKqjvKVr1c+mg2I2vR/jvGjc2PFoXAJf4df6S5aZr\nRSPGVq2I4vSFBKNM3C2dwTN+IToQxBsUeCbqINRemfPRqPUAWDN95Z8JDa6GhvEN\nwwIDAQAB\n-----END PUBLIC KEY-----",
+                    "xsappname": "clonef39bbed7cd9740bf80196f5b8aa32fbc!b233144|destination-xsappname!b404"
+                }
+            }
+        ],
+        "xsuaa": [
+            {
+                "name": "BTPOpportunities-uaa",
+                "instance_name": "BTPOpportunities-uaa",
+                "label": "xsuaa",
+                "tags": [
+                    "xsuaa",
+                    "endpoint:https://api.cf.eu10-004.hana.ondemand.com",
+                    "org:DBSEMEANorth_opportunity-tracker",
+                    "space:dev"
+                ],
+                "plan": "application",
+                "credentials": {
+                    "apiurl": "https://api.authentication.eu10.hana.ondemand.com",
+                    "clientid": "sb-BTPOpportunities-DBSEMEANorth_opportunity-tracker-dev!t233144",
+                    "clientsecret": "A6IFJ79gLqo+Kp7uwhCUiihcJt0=",
+                    "credential-type": "instance-secret",
+                    "identityzone": "opportunity-tracker",
+                    "identityzoneid": "206d2681-3933-4f60-8299-83ec93f6172a",
+                    "sburl": "https://internal-xsuaa.authentication.eu10.hana.ondemand.com",
+                    "service_key_name": "key",
+                    "subaccountid": "206d2681-3933-4f60-8299-83ec93f6172a",
+                    "tenantid": "206d2681-3933-4f60-8299-83ec93f6172a",
+                    "tenantmode": "dedicated",
+                    "uaadomain": "authentication.eu10.hana.ondemand.com",
+                    "url": "https://opportunity-tracker.authentication.eu10.hana.ondemand.com",
+                    "verificationkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArIsDlon+TrAe2GrRnkDB\nUmI0SvW8eBoAtCA9FPGehwi6X7HT8oOlNBoCTGEyhQRHscBW1uuGjNVleetdZZhJ\nlWGOeEBh71PhOQjYViQNivpd/PRuhwl+UhHbxkOhVnf5/E+TQnv5RWXYHNfRublY\naL3VdS2wh+9jaYbOAxR5xvdGlxFXXxl7p9M6DP8VkcPldO/l4GXkmj+x/qTOHUlM\n2kXYXUS1BdU7AthtPHhtXPZLKqjvKVr1c+mg2I2vR/jvGjc2PFoXAJf4df6S5aZr\nRSPGVq2I4vSFBKNM3C2dwTN+IToQxBsUeCbqINRemfPRqPUAWDN95Z8JDa6GhvEN\nwwIDAQAB\n-----END PUBLIC KEY-----",
+                    "xsappname": "BTPOpportunities-DBSEMEANorth_opportunity-tracker-dev!t233144",
+                    "zoneid": "206d2681-3933-4f60-8299-83ec93f6172a"
+                }
+            }
+        ]
+    }
+}

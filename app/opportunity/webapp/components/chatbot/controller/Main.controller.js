@@ -22,6 +22,16 @@ sap.ui.define([
                     text: "The Genie is thinking..."
                 });
 
+                this.getView().setModel(
+                    new JSONModel({
+                      imagePath: './images/diamond.png',
+                      genieImage: './images/genie/genie_white.png',
+                    //   isFullScreenMode: false,
+                    //   settingsDialogPreviousSelections: {}
+                    }),
+                    'viewModel'
+                  );
+
                 //add event for enter
                 this.iDebounceTimer = null;
                 var oInput = this.getView().byId("newMessageInput");
@@ -55,72 +65,57 @@ sap.ui.define([
                 var oChatModel = this.getView().getModel("chatModel");
                 var oInput = oChatModel.getProperty("/userInput");
                 var oHistoryModel = this.getView().getModel("historyModel");
-                var oFeedList = this.getView().byId("feedList");
-
-                // Create the user question as a CustomListItem
-                var oUserQuestion = new sap.m.CustomListItem({
-                    content: [
-                        new sap.m.FeedListItem({
-                            text: oInput,
-                            sender: "You",
-                            showIcon: false,
-                            timestamp: that.getFormattedTime(),
-                            customData: [
-                                new sap.ui.core.CustomData({
-                                    key: "alignment",
-                                    value: "right"
-                                })
-                            ]
-                        }).addStyleClass("userMessage")
-
+                var oMessagesWrapper = this.getView().byId("messagesWrapper");
+            
+                // Create the user question as a VBox with a Text control
+                var oUserQuestion = new sap.m.VBox({
+                    items: [
+                        new sap.m.Text({
+                            text: oInput
+                        }).addStyleClass("aiUserMessage")
+                        .addStyleClass("sapUiResponsiveMargin")
                     ]
-                });
-
-                oFeedList.addItem(oUserQuestion);
+                }).addStyleClass("userMessageWrapper");
+            
+                oMessagesWrapper.addItem(oUserQuestion);
                 this._oBusyDialog.open();
-
+            
                 // Use the getBotResponse function and wait for the response
                 this.getBotResponse(oInput).then(function (sBotResponse) {
-                    var oBotResponse = new sap.m.FeedListItem({
-                        text: sBotResponse,
-                        sender: "Genie",
-                        icon: "./utils/genie.ico",
-                        iconDensityAware: false,
-                        timestamp: that.getFormattedTime(),
-                        highlight: "Information",
-                        lessLabel: "show less",
-                        moreLabel: "show more",
-                        customData: [
-                            new sap.ui.core.CustomData({
-                                key: "alignment",
-                                value: "left"
-                            })
+                    var oBotResponse = new sap.m.VBox({
+                        items: [
+                            new sap.m.Text({
+                                text: sBotResponse
+                            }).addStyleClass("aiBotMessage")
+                            .addStyleClass("sapUiResponsiveMargin")
+                            
                         ]
-                    }).addStyleClass("botMessage");
-
-                    // Add the bot's response to the feed list
-                    oFeedList.addItem(oBotResponse);
-
-                    //get records for history
-                    let oHistoryEntryUser = { "content": oInput, "role": "user" }
-                    let oHistoryEntryBot = { "content": sBotResponse, "role": "assistant" }
-
+                    }).addStyleClass("botMessageWrapper");
+            
+                    // Add the bot's response to the messages wrapper
+                    oMessagesWrapper.addItem(oBotResponse);
+            
+                    // Get records for history
+                    let oHistoryEntryUser = { content: oInput, role: "user" };
+                    let oHistoryEntryBot = { content: sBotResponse, role: "assistant" };
+            
                     let newHistory = oHistoryModel.getProperty("/history");
                     newHistory.push(oHistoryEntryUser);
                     newHistory.push(oHistoryEntryBot);
-
+            
                     oHistoryModel.setProperty("/history", newHistory);
                     console.log(oHistoryModel.getProperty("/history"));
-
+            
                     that._oBusyDialog.close();
                     setTimeout(function () {
                         that.handleScroll();
                     }, 100);
                 });
-
-
+            
                 oChatModel.setData({});
-            },
+            }
+            ,
+            
 
             getBotResponse: function (sUserInput) {
                 var that = this;

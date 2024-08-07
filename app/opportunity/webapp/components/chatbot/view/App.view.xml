@@ -11,9 +11,9 @@
     >
         <Page
             id="page"
-            enableScrolling="false"
+            enableScrolling="false" showHeader="false"
         >
-            <customHeader>
+            <!-- <customHeader>
                 <f:ShellBar
                     title="Genie ChatBot"
                     secondTitle="Powered by Gen AI"
@@ -36,7 +36,7 @@
                         />
                     </f:additionalContent>
                 </f:ShellBar>
-            </customHeader>
+            </customHeader> -->
         </Page>
         <!-- <f:FlexibleColumnLayout
             id="fcl"

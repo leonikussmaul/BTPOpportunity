@@ -3,6 +3,13 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "^/odata/(.*)$",
+      "target": "/odata/$1",
+      "destination": "genie",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
       "source": "^/user-api(.*)",
       "target": "$1",
       "service": "sap-approuter-userapi"
