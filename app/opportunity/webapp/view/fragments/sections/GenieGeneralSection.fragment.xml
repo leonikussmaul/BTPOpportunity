@@ -23,12 +23,14 @@
 
                 <!-- <Label text="Contact name" />
                 <Text text="{contactName}" /> -->
+                 <Label text="Owner" />
+                <Text text="{owner}" />
 
                 <Label text="Source" />
                 <Text text="{source}" />
 
-                <Label text="Region" />
-                <Text text="{region}" />
+                <Label text="Market Unit" />
+                <Text text="{marketUnit}" />
 
                 <Label text="Level" />
                 <Text text="{level}" />
@@ -65,7 +67,7 @@
                     visible="{= ${genieModel>/genieType} === 'Internal' }"
                 />
 
-                <Label text="Location" />
+                <Label text="Workshop Location" />
                 <Text text="{city} " />
                 <Text text="{country}" />
 

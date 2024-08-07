@@ -108,6 +108,8 @@ sap.ui.define([
                     console.log(oHistoryModel.getProperty("/history"));
             
                     // that._oBusyDialog.close();
+                    that.hideThinkingDots(); 
+                    
                     // setTimeout(function () {
                     //     that.handleScroll();
                     // }, 100);
@@ -148,6 +150,7 @@ sap.ui.define([
                         //remember question 
                         oChatModel.setProperty("/userInput", sUserInput);
                         //that._oBusyDialog.close();
+                        that.hideThinkingDots(); 
                         reject(oError);
                     });
                 });
@@ -159,6 +162,12 @@ sap.ui.define([
                 thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
                 this.addMessagesToWrapper([thinkingDotsBox]);
               },
+
+
+    hideThinkingDots() {
+        const items = this.byId('messagesWrapper').getItems();
+        this.byId('messagesWrapper').removeItem(items[items.length - 1]);
+      },
               // Add message control to chat panel wrapper
                       addMessagesToWrapper(messages) {
                           const messagesWrapper = this.byId('messagesWrapper');

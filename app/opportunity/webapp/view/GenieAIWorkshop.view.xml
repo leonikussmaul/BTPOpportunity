@@ -218,6 +218,9 @@
                                     <Label text="Description" />
                                     <Text text="{description}" />
 
+                                        <Label text="Owner" />
+                                    <Text text="{owner}" />
+
                                     <!-- <Label text="Status" />
                 <Text text="{status}" /> -->
 
@@ -260,6 +263,11 @@
                                     <Label text="Description" />
                                     <Input
                                         value="{editPageModel>/description}"
+                                    />
+
+                                      <Label text="Owner" />
+                                    <Input
+                                        value="{editPageModel>/owner}"
                                     />
 
                                     <Label text="Level" />

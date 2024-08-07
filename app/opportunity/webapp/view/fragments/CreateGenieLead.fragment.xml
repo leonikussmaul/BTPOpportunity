@@ -98,16 +98,43 @@
                                     placeholder="Enter the customer name or participant first and last name"
                                 />
 
+                                <Label text="Owner" />
+                                <Input
+                                    value="{viewModel>/owner}"
+                                    placeholder="Who is responsible for this lead?"
+                                />
+                                <!-- <Input
+                                    value="{viewModel>/region}"
+                                    id="region"
+                                    placeholder="Which Region are they part of?"
+                                /> -->
+                                <MultiComboBox
+                                    value="{viewModel>/marketUnit}"
+                                    id="marketUnitFilter"
+                                    placeholder="Which MU are they part of?"
+                                    showSelectAll="true"
+                                    items="{
+                                            path: '/opportunityMarketUnitVH',
+                                            templateShareable: true,
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
+                                >
+                                    <core:Item
+                                        key="marketUnit"
+                                        text="{marketUnit}"
+                                    />
+                                </MultiComboBox>
+
                                 <Label text="Source" />
                                 <Input
                                     value="{viewModel>/source}"
                                     id="source"
                                     placeholder="Where did the lead come from?"
-                                />
-                                <Input
-                                    value="{viewModel>/region}"
-                                    id="region"
-                                    placeholder="Which Region are they part of?"
                                 />
 
                                 <!-- <MultiComboBox
@@ -225,18 +252,18 @@
                                     placeholder="Organisation i.e. CS&amp;D, CS.."
                                 />
 
-                                <Label text="Location" />
+                                <Label text="Workshop Location" />
                                 <Input
                                     value="{viewModel>/city}"
                                     id="city"
-                                    placeholder="What city are they based in?"
+                                    placeholder="What city are we having the workshop in?"
                                 />
 
                                 <!-- <Label text="Country" /> -->
                                 <Input
                                     value="{viewModel>/country}"
                                     id="country"
-                                    placeholder="What country are they based in?"
+                                    placeholder="What country are we having the workshop in?"
                                 />
 
                                 <!-- <Input

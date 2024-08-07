@@ -97,8 +97,8 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,description,city,workshopStartDate,status"
-                                    requestAtLeastFields="name,description,city,workshopStartDate,status"
+                                    initiallyVisibleFields="name,description,city,owner,workshopStartDate,status"
+                                    requestAtLeastFields="name,description,city,owner,workshopStartDate,status"
                                     ignoreFromPersonalisation="workshopID"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
@@ -183,7 +183,21 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "3", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
+                                                        value='\{"columnKey": "owner", "columnIndex" : "3", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Owner" />
+                                            </Column>
+
+                                            <Column
+                                                visible="{global>/columnsExpanded}"
+                                                hAlign="Center"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "4", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
                                                     />
                                                 </customData>
                                                 <Label text="Start Date" />
@@ -218,7 +232,21 @@
                                                     />
                                                     <Text
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
-                                                        tooltip="{country}"/>
+                                                        tooltip="{country}"
+                                                    />
+                                                    <!-- <Text
+                                                        text="{owner}"
+                                                        wrapping="true"
+                                                    /> -->
+
+                                                    <Avatar
+                                                        src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
+                                                        displayShape="Circle"
+                                                        displaySize="XS"
+                                                        class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                        visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                        tooltip="{owner}"
+                                                    />
 
                                                     <Text
                                                         text="{'path': 'workshopStartDate',

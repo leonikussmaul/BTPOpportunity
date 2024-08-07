@@ -20,23 +20,56 @@
                     text="Name"
                     required="true"
                 />
-                
+
                 <Input
                     value="{editPageModel>/name}"
                     valueState="{valueState>/valueState}"
                     valueStateText="{valueState>/valueStateText}"
-                    liveChange="onChangeValueState" placeholder="Enter the customer name or participant first and last name"
+                    liveChange="onChangeValueState"
+                    placeholder="Enter the customer name or participant first and last name"
                 />
 
-   <Label text="Source" />
-                <Input value="{editPageModel>/source}"  placeholder="Where did the lead come from?" />
+                <Label text="Owner" />
+                <Input
+                    value="{editPageModel>/owner}"
+                    placeholder="Who is responsible for this lead?"
+                />
 
-               
+                <Label text="Source" />
+                <Input
+                    value="{editPageModel>/source}"
+                    placeholder="Where did the lead come from?"
+                />
 
-               <!-- <Label text="Region" /> -->
-                <Input value="{editPageModel>/region}"   placeholder="Which Region are they part of?" />
+                <!-- <Label text="Region" /> -->
+                <!-- <Input
+                    value="{editPageModel>/marketUnit}"
+                    placeholder="Which MU are they part of?"
+                /> -->
+                <MultiComboBox
+                value="{editPageModel>/marketUnit}"
+                                id="marketUnitFilter"
+                                placeholder="Which MU are they part of?"
+                                showSelectAll="true"
+                                items="{
+                                            path: '/opportunityMarketUnitVH',
+                                            templateShareable: true,
+                                            sorter: {
+                                                path: 'region',
+                                                descending: false,
+                                                group: true
+                                            },
+                                            groupHeaderFactory: '.getGroupHeader'
+                                        }"
 
-                  <!-- <MultiComboBox
+                            >
+                                <core:Item
+                                    key="marketUnit"
+                                    text="{marketUnit}"
+                                />
+                            </MultiComboBox>
+
+                <!-- <MultiComboBox
                                     id="marketUnitFilter"
                                     placeholder="Which Region are they part of?"
                                     selectionChange="customFieldChange"
@@ -59,7 +92,7 @@
                                     />
                                 </MultiComboBox> -->
 
-                                 <Label text="Level" />
+                <Label text="Level" />
                 <Select
                     id="level"
                     selectedKey="{editPageModel>/level}"
@@ -109,25 +142,49 @@
                                     </items>
                                 </SegmentedButton> -->
 
-             
-
                 <core:Title text="Contact &amp; Logistics" />
 
                 <Label text="Email" />
-                <Input value="{editPageModel>/email}"   placeholder="How can we contact them?"/>
+                <Input
+                    value="{editPageModel>/email}"
+                    placeholder="How can we contact them?"
+                />
 
-                   <Label text="Role" visible="{= ${genieModel>/genieType} === 'Internal' }" />
-                <Input value="{editPageModel>/role}"   placeholder="What is their job role?"  visible="{= ${genieModel>/genieType} === 'Internal' }"/>
+                <Label
+                    text="Role"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
+                <Input
+                    value="{editPageModel>/role}"
+                    placeholder="What is their job role?"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
-                <Label text="Organisation" visible="{= ${genieModel>/genieType} === 'Internal' }"/>
-                <Input value="{editPageModel>/functionalArea}"  placeholder="Functional i.e. Services, Sales &amp; Presales.." visible="{= ${genieModel>/genieType} === 'Internal' }" />
+                <Label
+                    text="Organisation"
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
+                <Input
+                    value="{editPageModel>/functionalArea}"
+                    placeholder="Functional i.e. Services, Sales &amp; Presales.."
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
-             
-                <Input value="{editPageModel>/orgArea}"  placeholder="Organisation i.e. CS&amp;D, CS.." visible="{= ${genieModel>/genieType} === 'Internal' }" />
+                <Input
+                    value="{editPageModel>/orgArea}"
+                    placeholder="Organisation i.e. CS&amp;D, CS.."
+                    visible="{= ${genieModel>/genieType} === 'Internal' }"
+                />
 
-                <Label text="Location" />
-                <Input value="{editPageModel>/city}"  placeholder="City" />
-                <Input value="{editPageModel>/country}"  placeholder="Country" />
+                <Label text="Workshop Location" />
+                <Input
+                    value="{editPageModel>/city}"
+                    placeholder="City for the workshop"
+                />
+                <Input
+                    value="{editPageModel>/country}"
+                    placeholder="Country for the workshop"
+                />
 
                 <Label text="Workshop Dates" />
                 <DateRangeSelection

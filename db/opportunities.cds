@@ -37,7 +37,7 @@ entity opportunityHeader {
                                         on links.opptID = $self;
         nextSteps                 : Composition of many opportunityNextSteps
                                         on nextSteps.opptID = $self;
-        subTasks               : Composition of many opportunitySubTasks
+        subTasks                  : Composition of many opportunitySubTasks
                                         on subTasks.opportunityID = $self;
 };
 
@@ -63,29 +63,29 @@ entity opportunityActionItems {
 
 @cds.autoexpose
 entity opportunitySubTasks {
-    key ID                      : UUID;
-        opportunityID           : Association to opportunityHeader;
-        subTaskDescription      : String(5000);
-        subTask                 : String(5000);
-        subTaskDueDate          : Date;
-        subTaskOwner            : String(20);
-        subTaskCompleted        : Boolean;
-        subTaskOrder            : Integer;
-        subTaskTopic            : String(255);
-        subTaskStatus           : String(50);
-        subTaskCustomer         : String(255);
-        subTaskPriority         : String(10);
-        subTaskPriorityNumber   : Integer;
+    key ID                    : UUID;
+        opportunityID         : Association to opportunityHeader;
+        subTaskDescription    : String(5000);
+        subTask               : String(5000);
+        subTaskDueDate        : Date;
+        subTaskOwner          : String(20);
+        subTaskCompleted      : Boolean;
+        subTaskOrder          : Integer;
+        subTaskTopic          : String(255);
+        subTaskStatus         : String(50);
+        subTaskCustomer       : String(255);
+        subTaskPriority       : String(10);
+        subTaskPriorityNumber : Integer;
 };
 
 @cds.autoexpose
 entity opportunityTopics {
-    key ID        : UUID;
-        opptID    : Association to opportunityHeader;
-        topic     : String(255);
-        comment   : String(5000);
-        sortOrder : Integer;
-        topicOwner: String(255);
+    key ID         : UUID;
+        opptID     : Association to opportunityHeader;
+        topic      : String(255);
+        comment    : String(5000);
+        sortOrder  : Integer;
+        topicOwner : String(255);
 };
 
 
@@ -360,7 +360,7 @@ entity opportunitySubTaskStatus {
 @cds.autoexpose
 entity GenieAIInternal {
     key workshopID        : UUID;
-      ID          : Association to GenieAIWorkshops;
+        ID                : Association to GenieAIWorkshops;
         name              : String(255);
         type              : String(255);
         internal          : Boolean;
@@ -372,6 +372,8 @@ entity GenieAIInternal {
         city              : String(255);
         country           : String(255);
         region            : String(255);
+        marketUnit        : String(255);
+        owner             : String(255);
         month             : String(50);
         workshopStartDate : Date;
         workshopEndDate   : Date;
@@ -384,7 +386,7 @@ entity GenieAIInternal {
 @cds.autoexpose
 entity GenieAICustomer {
     key workshopID        : UUID;
-      ID          : Association to GenieAIWorkshops;
+        ID                : Association to GenieAIWorkshops;
         name              : String(255);
         type              : String(255);
         internal          : Boolean;
@@ -393,6 +395,8 @@ entity GenieAICustomer {
         city              : String(255);
         country           : String(255);
         region            : String(255);
+        marketUnit        : String(255);
+        owner             : String(255);
         month             : String(50);
         workshopStartDate : Date;
         workshopEndDate   : Date;
@@ -407,7 +411,7 @@ entity GenieAICustomer {
 @cds.autoexpose
 entity GenieAIPartner {
     key workshopID        : UUID;
-     ID          : Association to GenieAIWorkshops;
+        ID                : Association to GenieAIWorkshops;
         name              : String(255);
         type              : String(255);
         internal          : Boolean;
@@ -416,6 +420,8 @@ entity GenieAIPartner {
         city              : String(255);
         country           : String(255);
         region            : String(255);
+        marketUnit        : String(255);
+        owner             : String(255);
         month             : String(50);
         workshopStartDate : Date;
         workshopEndDate   : Date;
@@ -466,6 +472,9 @@ entity GenieAIWorkshops {
         workshopEndDate   : Date;
         city              : String(255);
         country           : String(255);
+        region            : String(255);
+        marketUnit        : String(255);
+        owner             : String(255);
         status            : String(255);
         month             : String(255);
         level             : String(255);
