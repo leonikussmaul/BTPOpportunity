@@ -475,6 +475,7 @@ sap.ui.define(
     
         oMessagesWrapper.addItem(oUserQuestion);
         //this._oBusyDialog.open();
+        this.showThinkingDots(); 
     
         // Use the getBotResponse function and wait for the response
         this.getBotResponse(oInput).then(function (sBotResponse) {
@@ -509,9 +510,26 @@ sap.ui.define(
         });
     
         oChatModel.setData({});
-    }
-    ,
-    
+    },
+    showThinkingDots() {
+      const busyIndicator = new sap.m.BusyIndicator({ active: 'true', size: '0.7em' });
+      const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
+      thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
+      this.addMessagesToWrapper([thinkingDotsBox]);
+    },
+    // Add message control to chat panel wrapper
+			addMessagesToWrapper(messages) {
+				const messagesWrapper = this.byId('messagesWrapper');
+				messages.forEach(message => messagesWrapper.addItem(message));
+				this.scrollToBottomContent();
+			},
+
+			// Scroll to bottom of chat panel content
+			scrollToBottomContent() {
+				const aiAssistantContentBox = this.byId('aiAssistantContent');
+				const aiMessagesWrapper = this.byId('messagesWrapper');
+				aiAssistantContentBox.$().scrollTop(aiMessagesWrapper.$().height());
+			},
 
     getBotResponse: function (sUserInput) {
         var that = this;

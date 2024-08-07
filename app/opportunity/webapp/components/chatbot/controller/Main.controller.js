@@ -18,9 +18,9 @@ sap.ui.define([
                 }), "historyModel");
                 this.getView().getModel("historyModel").setProperty("/history", []);
 
-                this._oBusyDialog = new sap.m.BusyDialog({
-                    text: "The Genie is thinking..."
-                });
+                // this._oBusyDialog = new sap.m.BusyDialog({
+                //     text: "The Genie is thinking..."
+                // });
 
                 this.getView().setModel(
                     new JSONModel({
@@ -78,7 +78,8 @@ sap.ui.define([
                 }).addStyleClass("userMessageWrapper");
             
                 oMessagesWrapper.addItem(oUserQuestion);
-                this._oBusyDialog.open();
+               // this._oBusyDialog.open();
+               this.showThinkingDots(); 
             
                 // Use the getBotResponse function and wait for the response
                 this.getBotResponse(oInput).then(function (sBotResponse) {
@@ -106,15 +107,14 @@ sap.ui.define([
                     oHistoryModel.setProperty("/history", newHistory);
                     console.log(oHistoryModel.getProperty("/history"));
             
-                    that._oBusyDialog.close();
-                    setTimeout(function () {
-                        that.handleScroll();
-                    }, 100);
+                    // that._oBusyDialog.close();
+                    // setTimeout(function () {
+                    //     that.handleScroll();
+                    // }, 100);
                 });
             
                 oChatModel.setData({});
-            }
-            ,
+            },
             
 
             getBotResponse: function (sUserInput) {
@@ -147,18 +147,38 @@ sap.ui.define([
                         );
                         //remember question 
                         oChatModel.setProperty("/userInput", sUserInput);
-                        that._oBusyDialog.close();
+                        //that._oBusyDialog.close();
                         reject(oError);
                     });
                 });
             },
 
-            handleScroll: function () {
-                var oScrollContainer = this.getView().byId("scrollContainer");
-                if (oScrollContainer) {
-                    oScrollContainer.scrollTo(0, oScrollContainer.getDomRef().scrollHeight, 100);
-                }
-            },
+            showThinkingDots() {
+                const busyIndicator = new sap.m.BusyIndicator({ active: 'true', size: '0.7em' });
+                const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
+                thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
+                this.addMessagesToWrapper([thinkingDotsBox]);
+              },
+              // Add message control to chat panel wrapper
+                      addMessagesToWrapper(messages) {
+                          const messagesWrapper = this.byId('messagesWrapper');
+                          messages.forEach(message => messagesWrapper.addItem(message));
+                          this.scrollToBottomContent();
+                      },
+          
+                      // Scroll to bottom of chat panel content
+                      scrollToBottomContent() {
+                          const aiAssistantContentBox = this.byId('aiAssistantContent');
+                          const aiMessagesWrapper = this.byId('messagesWrapper');
+                          aiAssistantContentBox.$().scrollTop(aiMessagesWrapper.$().height());
+                      },
+
+            // handleScroll: function () {
+            //     var oScrollContainer = this.getView().byId("scrollContainer");
+            //     if (oScrollContainer) {
+            //         oScrollContainer.scrollTo(0, oScrollContainer.getDomRef().scrollHeight, 100);
+            //     }
+            // },
 
             getFormattedTime: function () {
                 var now = new Date();
