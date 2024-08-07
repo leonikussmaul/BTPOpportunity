@@ -462,83 +462,89 @@ sap.ui.define(
         var oInput = oChatModel.getProperty("/userInput");
         var oHistoryModel = this.getView().getModel("historyModel");
         var oMessagesWrapper = this.getView().byId("messagesWrapper");
-    
+
         // Create the user question as a VBox with a Text control
         var oUserQuestion = new sap.m.VBox({
-            items: [
-                new sap.m.Text({
-                    text: oInput
-                }).addStyleClass("aiUserMessage")
-                .addStyleClass("sapUiResponsiveMargin")
-            ]
+          items: [
+            new sap.m.Text({
+              text: oInput
+            }).addStyleClass("aiUserMessage")
+              .addStyleClass("sapUiResponsiveMargin")
+          ]
         }).addStyleClass("userMessageWrapper");
-    
+
         oMessagesWrapper.addItem(oUserQuestion);
         //this._oBusyDialog.open();
-        this.showThinkingDots(); 
-    
+        this.showThinkingDots();
+
         // Use the getBotResponse function and wait for the response
         this.getBotResponse(oInput).then(function (sBotResponse) {
-            var oBotResponse = new sap.m.VBox({
-                items: [
-                    new sap.m.Text({
-                        text: sBotResponse
-                    }).addStyleClass("aiBotMessage")
-                    .addStyleClass("sapUiResponsiveMargin")
-                    
-                ]
-            }).addStyleClass("botMessageWrapper");
-    
-            // Add the bot's response to the messages wrapper
-            oMessagesWrapper.addItem(oBotResponse);
-    
-            // Get records for history
-            let oHistoryEntryUser = { content: oInput, role: "user" };
-            let oHistoryEntryBot = { content: sBotResponse, role: "assistant" };
-    
-            let newHistory = oHistoryModel.getProperty("/history");
-            newHistory.push(oHistoryEntryUser);
-            newHistory.push(oHistoryEntryBot);
-    
-            oHistoryModel.setProperty("/history", newHistory);
-            console.log(oHistoryModel.getProperty("/history"));
-    
-           // that._oBusyDialog.close();
-           that.hideThinkingDots(); 
-            setTimeout(function () {
-               // that.handleScroll();
-            }, 100);
+          var oBotResponse = new sap.m.VBox({
+            items: [
+              new sap.m.Text({
+                text: sBotResponse
+              }).addStyleClass("aiBotMessage")
+                .addStyleClass("sapUiResponsiveMargin")
+
+            ]
+          }).addStyleClass("botMessageWrapper");
+
+          // Add the bot's response to the messages wrapper
+          oMessagesWrapper.addItem(oBotResponse);
+
+          // Get records for history
+          let oHistoryEntryUser = { content: oInput, role: "user" };
+          let oHistoryEntryBot = { content: sBotResponse, role: "assistant" };
+
+          let newHistory = oHistoryModel.getProperty("/history");
+          newHistory.push(oHistoryEntryUser);
+          newHistory.push(oHistoryEntryBot);
+
+          oHistoryModel.setProperty("/history", newHistory);
+          console.log(oHistoryModel.getProperty("/history"));
+
+          // that._oBusyDialog.close();
+          that.hideThinkingDots();
+          setTimeout(function () {
+            // that.handleScroll();
+          }, 100);
         });
-    
+
         oChatModel.setData({});
-    },
-    showThinkingDots() {
-      const busyIndicator = new sap.m.BusyIndicator({ active: 'true', size: '0.7em' });
-      const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
-      thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
-      this.addMessagesToWrapper([thinkingDotsBox]);
-    },
+      },
+      showThinkingDots() {
+        const busyIndicator = new sap.m.BusyIndicator({ active: true, size: '0.7em' });
+        const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
+        thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
+        this.addMessagesToWrapper([thinkingDotsBox]);
+      },
+
+      hideThinkingDots() {
+        const messagesWrapper = this.byId('messagesWrapper');
+        const items = messagesWrapper.getItems();
+        // Find the thinking dots box by class or type
+        const thinkingDotsBox = items.find(item => item.hasStyleClass && item.hasStyleClass('aiThinkingDotsBox'));
+        if (thinkingDotsBox) {
+          messagesWrapper.removeItem(thinkingDotsBox);
+        }
+      },
+
+      // Add message control to chat panel wrapper
+      addMessagesToWrapper(messages) {
+        const messagesWrapper = this.byId('messagesWrapper');
+        messages.forEach(message => messagesWrapper.addItem(message));
+        this.scrollToBottomContent();
+      },
+
+      // Scroll to bottom of chat panel content
+      scrollToBottomContent() {
+        const aiAssistantContentBox = this.byId('aiAssistantContent');
+        const aiMessagesWrapper = this.byId('messagesWrapper');
+        aiAssistantContentBox.$().scrollTop(aiMessagesWrapper.$().height());
+      },
 
 
-    hideThinkingDots() {
-      const items = this.byId('messagesWrapper').getItems();
-      this.byId('messagesWrapper').removeItem(items[items.length - 1]);
-    },
-    // Add message control to chat panel wrapper
-			addMessagesToWrapper(messages) {
-				const messagesWrapper = this.byId('messagesWrapper');
-				messages.forEach(message => messagesWrapper.addItem(message));
-				this.scrollToBottomContent();
-			},
-
-			// Scroll to bottom of chat panel content
-			scrollToBottomContent() {
-				const aiAssistantContentBox = this.byId('aiAssistantContent');
-				const aiMessagesWrapper = this.byId('messagesWrapper');
-				aiAssistantContentBox.$().scrollTop(aiMessagesWrapper.$().height());
-			},
-
-    getBotResponse: function (sUserInput) {
+      getBotResponse: function (sUserInput) {
         var that = this;
         let oModel = this.getView().getModel("genieV4");
         let oChatModel = this.getView().getModel("chatModel");
@@ -552,30 +558,30 @@ sap.ui.define(
 
         // Return a Promise that resolves with the bot response
         return new Promise(function (resolve, reject) {
-            oActionODataContextBinding.execute().then(function () {
-                var oActionContext = oActionODataContextBinding.getBoundContext();
-                console.log(oActionContext.getObject().value);
-                resolve(oActionContext.getObject().value);
-            }).catch(function (oError) {
-                console.log("Error getting bot response:", oError);
-                //sap.m.MessageBox.error(oError.toString());
-                sap.m.MessageBox.error(
-                    oError.toString(),
-                    {
-                        icon: sap.m.MessageBox.Icon.WARNING,
-                        title: "Please Try Again",
-                    }
-                );
-                //remember question 
-                oChatModel.setProperty("/userInput", sUserInput);
-                //that._oBusyDialog.close();
-                that.hideThinkingDots(); 
-                reject(oError);
-            });
+          oActionODataContextBinding.execute().then(function () {
+            var oActionContext = oActionODataContextBinding.getBoundContext();
+            console.log(oActionContext.getObject().value);
+            resolve(oActionContext.getObject().value);
+          }).catch(function (oError) {
+            console.log("Error getting bot response:", oError);
+            //sap.m.MessageBox.error(oError.toString());
+            sap.m.MessageBox.error(
+              oError.toString(),
+              {
+                icon: sap.m.MessageBox.Icon.WARNING,
+                title: "Please Try Again",
+              }
+            );
+            //remember question 
+            oChatModel.setProperty("/userInput", sUserInput);
+            //that._oBusyDialog.close();
+            that.hideThinkingDots();
+            reject(oError);
+          });
         });
-    },
+      },
 
-    
+
 
 
 
