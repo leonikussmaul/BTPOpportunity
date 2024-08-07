@@ -504,7 +504,7 @@ sap.ui.define(
     
            // that._oBusyDialog.close();
             setTimeout(function () {
-                that.handleScroll();
+               // that.handleScroll();
             }, 100);
         });
     
