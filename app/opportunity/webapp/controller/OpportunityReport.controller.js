@@ -488,7 +488,7 @@ sap.ui.define([
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
 
-                oBindingParams.parameters["expand"] = "subTasks";
+                oBindingParams.parameters["expand"] = "subTasks,topics";
 
                 var fnGroupHeaderFormatter = function (oContext) {
                     var sHeader = oContext.getProperty("marketUnit");
@@ -502,14 +502,14 @@ sap.ui.define([
                 var oAccountSorter = new sap.ui.model.Sorter("account", false);
                 oBindingParams.sorter.push(oAccountSorter);
 
-                this.addFiltersForSelectedItems(oEvent, "marketUnit");
-                this.addFiltersForSelectedItems(oEvent, "topic");
-                this.addFiltersForSelectedItems(oEvent, "primaryContact");
-                this.addFiltersForSelectedItems(oEvent, "status");
-                this.addFiltersForSelectedItems(oEvent, "opportunityCreatedQuarter");
-                this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter");
-                this.addFiltersForSelectedItems(oEvent, "priority");
-                this.addFiltersForSelectedItems(oEvent, "ssa");
+                this.addFiltersForSelectedItems(oEvent, "topic", true);
+                this.addFiltersForSelectedItems(oEvent, "marketUnit", false);
+                this.addFiltersForSelectedItems(oEvent, "primaryContact", false);
+                this.addFiltersForSelectedItems(oEvent, "status", false);
+                this.addFiltersForSelectedItems(oEvent, "opportunityCreatedQuarter", false);
+                this.addFiltersForSelectedItems(oEvent, "opportunityClosedQuarter", false);
+                this.addFiltersForSelectedItems(oEvent, "priority", false);
+                this.addFiltersForSelectedItems(oEvent, "ssa", false);
 
                 // var oSwitch = oSmartFilterBar.getControlByKey("opportunityInCRM").getState();
                 // var bSwitch = oSwitch ? "Yes" : "No";
@@ -518,14 +518,18 @@ sap.ui.define([
                 // }
             },
 
-            addFiltersForSelectedItems: function (oEvent, filterKey) {
+            addFiltersForSelectedItems: function (oEvent, filterKey, isTopic) {
                 var oSmartFilterBar = this.getView().byId("smartFilterBar");
                 var oBindingParams = oEvent.getParameter("bindingParams");
                 var selectedItems = oSmartFilterBar.getControlByKey(filterKey)?.getSelectedItems() || [];
+                //add deep filtering for topic
+                var key = isTopic ? "topics/topic" : filterKey;
+            
                 selectedItems.forEach(function (oToken) {
-                    oBindingParams.filters.push(new Filter(filterKey, sap.ui.model.FilterOperator.EQ, oToken.getText()));
-                })
+                    oBindingParams.filters.push(new Filter(key, sap.ui.model.FilterOperator.EQ, oToken.getText()));
+                });
             },
+            
 
 
             onClearSmartFilterBar: function (oEvent) {
