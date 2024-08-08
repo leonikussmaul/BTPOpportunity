@@ -26,6 +26,7 @@ sap.ui.define([
                     new JSONModel({
                         imagePath: './images/diamond.png',
                         genieImage: './images/genie/genie_white.png',
+                        isWelcomePanelVisible: true
                         //   isFullScreenMode: false,
                         //   settingsDialogPreviousSelections: {}
                     }),
@@ -60,6 +61,7 @@ sap.ui.define([
                 var randomIndex = Math.floor(Math.random() * illustrationTypes.length);
                 return illustrationTypes[randomIndex];
             },
+
             onPostMessage: function (oEvent) {
                 var that = this;
                 var oChatModel = this.getView().getModel("chatModel");
@@ -67,13 +69,17 @@ sap.ui.define([
                 var oHistoryModel = this.getView().getModel("historyModel");
                 var oMessagesWrapper = this.getView().byId("messagesWrapper");
 
+                //set section of the chatbot to invisible after initial interaction for better UX
+                this.getView().getModel("viewModel").setProperty("/isWelcomePanelVisible", false);
+
                 // Create the user question as a VBox with a Text control
                 var oUserQuestion = new sap.m.VBox({
                     items: [
                         new sap.m.Text({
                             text: oInput
                         }).addStyleClass("aiUserMessage")
-                            .addStyleClass("sapUiResponsiveMargin")
+                            .addStyleClass("sapUiLargeMarginBegin")
+                            .addStyleClass("sapUiTinyMarginTopBottom")
                     ]
                 }).addStyleClass("userMessageWrapper");
 
@@ -88,7 +94,8 @@ sap.ui.define([
                             new sap.m.Text({
                                 text: sBotResponse
                             }).addStyleClass("aiBotMessage")
-                                .addStyleClass("sapUiResponsiveMargin")
+                                .addStyleClass("sapUiLargeMarginEnd")
+                                .addStyleClass("sapUiTinyMarginTopBottom")
 
                         ]
                     }).addStyleClass("botMessageWrapper");
@@ -110,14 +117,13 @@ sap.ui.define([
                     // that._oBusyDialog.close();
                     that.hideThinkingDots();
 
-                    // setTimeout(function () {
-                    //     that.handleScroll();
-                    // }, 100);
+                    setTimeout(function () {
+                        that.handleScroll();
+                    }, 100);
                 });
 
                 oChatModel.setData({});
             },
-
 
             getBotResponse: function (sUserInput) {
                 var that = this;
@@ -155,13 +161,14 @@ sap.ui.define([
                     });
                 });
             },
+
             showThinkingDots() {
                 const busyIndicator = new sap.m.BusyIndicator({ active: true, size: '0.7em' });
                 const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
                 thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
                 this.addMessagesToWrapper([thinkingDotsBox]);
             },
-            
+
             hideThinkingDots() {
                 const messagesWrapper = this.byId('messagesWrapper');
                 const items = messagesWrapper.getItems();
@@ -171,28 +178,28 @@ sap.ui.define([
                     messagesWrapper.removeItem(thinkingDotsBox);
                 }
             },
-            
+
             // Add message control to chat panel wrapper
             addMessagesToWrapper(messages) {
                 const messagesWrapper = this.byId('messagesWrapper');
                 messages.forEach(message => messagesWrapper.addItem(message));
                 this.scrollToBottomContent();
             },
-            
+
             // Scroll to bottom of chat panel content
             scrollToBottomContent() {
                 const aiAssistantContentBox = this.byId('aiAssistantContent');
                 const aiMessagesWrapper = this.byId('messagesWrapper');
                 aiAssistantContentBox.$().scrollTop(aiMessagesWrapper.$().height());
             },
-            
 
-            // handleScroll: function () {
-            //     var oScrollContainer = this.getView().byId("scrollContainer");
-            //     if (oScrollContainer) {
-            //         oScrollContainer.scrollTo(0, oScrollContainer.getDomRef().scrollHeight, 100);
-            //     }
-            // },
+
+            handleScroll: function () {
+                var oScrollContainer = this.getView().byId("scrollContainerID");
+                if (oScrollContainer) {
+                    oScrollContainer.scrollTo(0, oScrollContainer.getDomRef().scrollHeight, 100);
+                }
+            },
 
             getFormattedTime: function () {
                 var now = new Date();

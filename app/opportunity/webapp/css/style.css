@@ -58,11 +58,71 @@
 /* chatbot */
 .aiDialog {
     /* Variables */
-    --ia_Illustrative_Color1: #5d36ff;
-    --ia_Illustrative_Color2: #eae5ff;
-    --ia_Illustrative_Color4: #a100c2;
-    --ia_Illustrative_Color5: #eff1f2;
+    --genie_Color1: #5d36ff;
+    --genie_Color2: #eae5ff;
+    --genie_Color4: #a100c2;
+    --genie_Color5: #eff1f2;
+    --genie_Color6: #6267DD;
+    --genie_Color7: #8DB9DB;
 }
+
+
+.suggestionButtons {
+    border-radius: 15px;
+    border: 2px solid #8DB9DB;
+    box-shadow: 0 0 10px #8DB9DB;
+    background-color: transparent;
+
+}
+
+.suggestionButtons .sapMBtnInner {
+    border-radius: 13px;
+    background-color: #ffffff;
+    box-shadow: none;
+    background-clip: padding-box;
+    border: none;
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5194c8;
+    font-size: 0.8rem;
+}
+
+.suggestionButtons:focus,
+.suggestionButtons:hover {
+    border-color: #8DB9DB;
+    color: #5194c8;
+    box-shadow: none;
+    background-color: #ffffff;
+}
+
+.suggestionButtons:focus:not(:focus-visible),
+.suggestionButtons:hover .sapMBtnInner {
+    color: #5194c8;
+    background-color: transparent;
+}
+
+.suggestionButtons .sapMBtnInner .sapMBtnHover {
+    color: inherit;
+    text-shadow: none;
+}
+
+.suggestionButtons:active {
+    border-color: #8DB9DB;
+    color: #5194c8;
+    box-shadow: 0px 0px 0px 2px #8DB9DB inset;
+    background-color: #ffffff;
+}
+
+.suggestionButtons:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+
 
 .aiErrorText {
     color: red;
@@ -131,7 +191,7 @@
     padding: 5px 10px;
     border: 0;
     border-radius: 8px 8px 0 8px;
-    background-color: var(--ia_Illustrative_Color1);
+    background-color: var(--genie_Color6);
     color: white;
 
     /* Antialiased */
@@ -144,7 +204,7 @@
     border-radius: 100px;
     padding-right: 15px;
     padding-left: 15px;
-    border: 1px solid var(--ia_Illustrative_Color5);
+    border: 1px solid var(--genie_Color5);
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -152,7 +212,7 @@
     padding: 5px 10px;
     border: 0;
     border-radius: 8px 8px 8px 0;
-    background-color: var(--ia_Illustrative_Color5);
+    background-color: var(--genie_Color5);
     color: black;
 
     /* Antialiased */
@@ -169,7 +229,7 @@
 .aiAssistantPanel .aiAssistantHeaderToolbar {
     padding: 10px;
     align-items: stretch;
-    background-color: var(--ia_Illustrative_Color1);
+    background-color: var(--genie_Color1);
     font-weight: 500;
 
     border-radius: 10px 10px 0 0;
@@ -237,7 +297,7 @@
 }
 
 .aiAssistantPanel .aiAssistantContent .aiAssistantWelcomePanel {
-    background-image: linear-gradient(180deg, var(--ia_Illustrative_Color1), var(--ia_Illustrative_Color4));
+    background-image: linear-gradient(180deg, var(--genie_Color1), var(--genie_Color4));
     padding: 25px 15px;
 }
 
@@ -275,4 +335,3 @@
 .aiAssistantPanel .aiAssistantInputWrapper {
     padding: 10px;
 }
-

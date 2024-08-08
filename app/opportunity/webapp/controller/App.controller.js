@@ -30,7 +30,10 @@ sap.ui.define(
         this.getView().setModel(
           new JSONModel({
             imagePath: './images/diamond.png',
-            genieImage: './images/genie/genie.png'
+            genieImage: './images/genie/genie.png',
+            isMessageStripVisible: false,
+            isSuggestionVisible: true,
+            isWelcomePanelVisible: true
             // isFullScreenMode: false,
             // settingsDialogPreviousSelections: {}
           }),
@@ -410,52 +413,6 @@ sap.ui.define(
 
       },
 
-      // onPostMessage: function () {
-      //   var oView = this.getView();
-      //   var oInput = oView.byId("aiAssistantInput");
-      //   var oMessagesWrapper = oView.byId("messagesWrapper");
-      //   var sUserInput = oInput.getValue();
-
-      //   if (sUserInput.trim() !== "") {
-      //     // Create a new Text element as a user message bubble
-      //     var oUserQuestion = new sap.m.CustomListItem({
-      //       content: [
-      //         new sap.m.HBox({
-      //           justifyContent: "End",
-      //           items: [
-      //             new sap.m.Text({
-      //               text: sUserInput
-      //             }).addStyleClass("aiUserMessage")
-      //               .addStyleClass("sapUiResponsiveMargin")
-      //           ]
-      //         }).addStyleClass("userMessageWrapper")
-      //       ]
-      //     });
-
-      //     oMessagesWrapper.addItem(oUserQuestion);
-
-      //     oInput.setValue("");
-
-      //     // Simulate bot response after a delay
-      //     setTimeout(function () {
-      //       var oBotResponse = new sap.m.CustomListItem({
-      //         content: [
-      //           new sap.m.HBox({
-      //             justifyContent: "Start",
-      //             items: [
-      //               new sap.m.Text({
-      //                 text: "Service currently unavailable."
-      //               }).addStyleClass("aiBotMessage")
-      //             ]
-      //           }).addStyleClass("botMessageWrapper")
-      //         ]
-      //       });
-
-      //       oMessagesWrapper.addItem(oBotResponse);
-      //     }, 1000);
-      //   }
-      // },
-
       onPostMessage: function (oEvent) {
         var that = this;
         var oChatModel = this.getView().getModel("chatModel");
@@ -463,13 +420,21 @@ sap.ui.define(
         var oHistoryModel = this.getView().getModel("historyModel");
         var oMessagesWrapper = this.getView().byId("messagesWrapper");
 
+        //make welcome panel invisible after user interaction for better UX
+        var oViewModel = this.getView().getModel("viewModel");
+        oViewModel.setProperty("/isWelcomePanelVisible", false);
+        oViewModel.setProperty("/isMessageStripVisible", true);
+        oViewModel.setProperty("/isSuggestionVisible", false);
+
+
         // Create the user question as a VBox with a Text control
         var oUserQuestion = new sap.m.VBox({
           items: [
             new sap.m.Text({
               text: oInput
             }).addStyleClass("aiUserMessage")
-              .addStyleClass("sapUiResponsiveMargin")
+              .addStyleClass("sapUiSmallMarginBegin")
+              .addStyleClass("sapUiTinyMarginTopBottom")
           ]
         }).addStyleClass("userMessageWrapper");
 
@@ -484,7 +449,8 @@ sap.ui.define(
               new sap.m.Text({
                 text: sBotResponse
               }).addStyleClass("aiBotMessage")
-                .addStyleClass("sapUiResponsiveMargin")
+                .addStyleClass("sapUiSmallMarginEnd")
+                .addStyleClass("sapUiTinyMarginTopBottom")
 
             ]
           }).addStyleClass("botMessageWrapper");
@@ -581,8 +547,20 @@ sap.ui.define(
         });
       },
 
+      onPressSuggestion: function (oEvent) {
+        var oViewModel = this.getView().getModel("viewModel");
+        oViewModel.setProperty("/isSuggestionVisible", false);
+        var sKey = oEvent.getSource().getText();
+        var oChatModel = this.getView().getModel("chatModel");
 
+        var sInput;
+        if (sKey == "Customers") sInput = "Who are the Genie AI Customer Leads?";
+        else if (sKey == "Workshop Dates") sInput = "What are the Genie AI planned Workshop Dates?";
+        else if (sKey == "More Info") sInput = "Can you give more general information on the Genie AI Workshop?";
 
+        oChatModel.setProperty("/userInput", sInput);
+        if(sInput) this.onPostMessage(); 
+      }
 
 
     });

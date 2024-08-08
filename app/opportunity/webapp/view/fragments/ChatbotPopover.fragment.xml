@@ -47,6 +47,7 @@
             >
                 <VBox
                     id="aiAssistantWelcomePanel"
+                    visible="{viewModel>/isWelcomePanelVisible}"
                     class="aiAssistantWelcomePanel"
                 >
                     <HBox justifyContent="Center">
@@ -80,11 +81,34 @@
                     showIcon="true"
                     showCloseButton="true"
                     class="sapUiTinyMarginBeginEnd"
+                    visible="{viewModel>/isMessageStripVisible}"
                 >
                     <!-- <link>
                         <Link text="Help us improve" target="_blank" href="{viewModel>/supportPageURL}" />
                     </link> -->
                 </MessageStrip>
+
+                <HBox wrap="Wrap">
+                    <Button
+                        text="Customers"
+                        visible="{viewModel>/isSuggestionVisible}"
+                        press="onPressSuggestion" 
+                        class="sapUiSmallMarginBegin suggestionButtons"
+                    />
+
+                    <Button
+                        text="Workshop Dates"
+                        visible="{viewModel>/isSuggestionVisible}"
+                        press="onPressSuggestion"
+                        class="sapUiTinyMarginBeginEnd suggestionButtons"
+                    />
+                    <Button
+                        text="More Info"
+                        visible="{viewModel>/isSuggestionVisible}"
+                        press="onPressSuggestion"
+                        class="sapUiTinyMarginEnd suggestionButtons"
+                    />
+                </HBox>
                 <HBox class="aiAssistantInputWrapper">
                     <Input
                         id="aiAssistantInput"
