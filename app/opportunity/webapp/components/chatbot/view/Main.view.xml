@@ -14,7 +14,6 @@
         height="100%"
         class="aiDialog sapUiContentPadding"
     >
-
         <VBox
             class="sapUiMediumMarginBottom aiAssistantPanel"
             id="aiAssistantPanel"
@@ -27,10 +26,10 @@
                 <HBox
                     class="aiAssistantHeaderToolbar"
                     justifyContent="SpaceBetween"
-                    alignItems="Center" 
+                    alignItems="Center"
                 >
-                    <HBox class="aiAssistantHeaderTitle sapUiSmallMarginBegin" >
-                        <VBox >
+                    <HBox class="aiAssistantHeaderTitle sapUiSmallMarginBegin">
+                        <VBox>
                             <Text
                                 text="Genie AI Chatbot"
                                 class="aiAssistantHeaderTitleText sapUiTinyMarginTopBottom"
@@ -43,18 +42,17 @@
                     </HBox>
                     <Image
                         src="{viewModel>/genieImage}"
-                
-                        height="5.5rem" class="sapUiResponsiveMargin"
+                        height="5.5rem"
+                        class="sapUiResponsiveMargin"
                     />
                 </HBox>
 
                 <VBox
-                    id="aiAssistantContent"   
+                    id="aiAssistantContent"
                     class="aiAssistantContent"
                 >
-
-                    <VBox 
-                    visible="{viewModel>/isWelcomePanelVisible}"
+                    <VBox
+                        visible="{viewModel>/isWelcomePanelVisible}"
                         id="aiAssistantWelcomePanel"
                         class="aiAssistantWelcomePanel"
                     >
@@ -84,7 +82,6 @@
                     />
                 </VBox>
                 <VBox>
-              
                     <MessageStrip
                         text="Responses may contain inaccuracies."
                         showIcon="true"
@@ -106,19 +103,22 @@
                             </layoutData>
                         </Input>
                         <Button
+                            icon="sap-icon://restart"
+                            tooltip="Reset the Chat"
+                            press="onResetChatbot"
+                            class="sapUiSmallMarginBegin"
+                            type="Transparent"
+                        />
+                        <Button
                             icon="sap-icon://paper-plane"
                             press="onPostMessage"
-                            class="sapUiSmallMarginBegin sapUiTinyMarginEnd"
+                            class="sapUiTinyMarginBeginEnd"
                             type="Emphasized"
                             enabled="{= ${chatModel>/userInput} ? true : false}"
                         />
                     </HBox>
-                  
                 </VBox>
             </VBox>
-           
         </VBox>
-        
     </VBox>
-   
 </mvc:View>

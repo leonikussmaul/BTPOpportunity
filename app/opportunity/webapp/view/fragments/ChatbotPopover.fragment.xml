@@ -14,12 +14,12 @@
         id="chatbotPopover"
         placement="Bottom"
         showHeader="false"
-        contentWidth="350px"
-        class="aiDialog"
+        contentWidth="350px" 
+        class="aiDialog" modal="true"
     >
         <VBox
             id="aiAssistantPanel"
-            class="aiAssistantPanel"
+            class="aiAssistantPanel" height="540px"
         >
             <HBox class="aiAssistantHeaderToolbar">
                 <HBox class="aiAssistantHeaderTitle">
@@ -34,10 +34,23 @@
                     press="onGetSupport"
                     class="sapUiSizeCompact aiAssistantHeaderButton"
                 /> -->
+               
+                 <Button
+                    icon="sap-icon://restart"
+                    tooltip="Reset the Chat"
+                    press="onResetChatbot"
+                    class="sapUiSizeCompact aiAssistantHeaderButton"
+                />
                 <Button
                     icon="sap-icon://resize"
                     tooltip="Full Screen Mode"
                     press="onNavToChatbot"
+                    class="sapUiSizeCompact aiAssistantHeaderButton"
+                />
+                   <Button
+                    icon="sap-icon://decline"
+                    tooltip="Close Popover"
+                    press="onCloseChatbotPopover"
                     class="sapUiSizeCompact aiAssistantHeaderButton"
                 />
             </HBox>

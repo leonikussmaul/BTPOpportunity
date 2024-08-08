@@ -413,6 +413,21 @@ sap.ui.define(
 
       },
 
+      onCloseChatbotPopover: function(oEvent){
+        oEvent.getSource().getParent().getParent().getParent().close();
+     
+      },
+
+      onResetChatbot: function(oEvent){
+        var oViewModel = this.getView().getModel("viewModel");
+        oViewModel.setProperty("/isWelcomePanelVisible", true);
+        oViewModel.setProperty("/isMessageStripVisible", false);
+        oViewModel.setProperty("/isSuggestionVisible", true);
+        this.getView().byId('messagesWrapper').removeAllItems();
+        this.getView().getModel("chatModel").setData({});
+     
+      },
+
       onPostMessage: function (oEvent) {
         var that = this;
         var oChatModel = this.getView().getModel("chatModel");

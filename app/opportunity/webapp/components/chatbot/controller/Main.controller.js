@@ -48,6 +48,73 @@ sap.ui.define([
                     }.bind(this));
                 }
 
+                this.initializeChat();
+            },
+
+            initializeChat: function () {
+                //Reset conversation
+                //this.getModel("chatConversation").setProperty("/conversation", []);
+
+                //Initial action buttons
+                const oActionButton1 = new sap.m.Button({
+                    text: 'Customers',
+                    press: this.onActionButtonPressed.bind(this),
+                    visible: '{viewModel>/isSuggestionVisible}'
+                }).addStyleClass('sapUiSizeCompact sapUiSmallMarginEnd aiChatActionButton');
+                const oActionButton2 = new sap.m.Button({
+                    text: 'Workshop Dates',
+                    press: this.onActionButtonPressed.bind(this),
+                    visible: '{viewModel>/isSuggestionVisible}'
+                }).addStyleClass('sapUiSizeCompact sapUiSmallMarginEnd aiChatActionButton');
+                const oActionButton3 = new sap.m.Button({
+                    text: 'More Info',
+                    press: this.onActionButtonPressed.bind(this),
+                    visible: '{viewModel>/isSuggestionVisible}'
+                }).addStyleClass('sapUiSizeCompact sapUiSmallMarginEnd aiChatActionButton');
+                const oActionButtonsWrapper = new sap.m.HBox({
+                    items: [oActionButton1, oActionButton2, oActionButton3]
+                });
+
+                const oGetStartedText = new sap.m.Text({
+                    text: 'Get started'
+                }).addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom');
+                const oGetStartedTextWrapper = new sap.m.HBox({
+                    items: [oGetStartedText]
+                });
+
+                this.addMessagesToWrapper([oGetStartedTextWrapper, oActionButtonsWrapper]);
+            },
+            // Handle button press action
+            // onActionButtonPressed: function (oEvent) {
+            //     const oBtnText = oEvent.getSource().getText();
+            //     const oChatModel = this.getView().getModel('chatModel');
+            //     oChatModel.setProperty('/userInput', oBtnText);
+            //     this.removeLastConversationItem();
+            //     this.onPostMessage();
+            // },
+
+
+            onActionButtonPressed: function (oEvent) {
+                var oViewModel = this.getView().getModel("viewModel");
+                oViewModel.setProperty("/isSuggestionVisible", false);
+                var sKey = oEvent.getSource().getText();
+                var oChatModel = this.getView().getModel("chatModel");
+
+                var sInput;
+                if (sKey == "Customers") sInput = "Who are the Genie AI Customer Leads?";
+                else if (sKey == "Workshop Dates") sInput = "What are the Genie AI planned Workshop Dates?";
+                else if (sKey == "More Info") sInput = "Can you give more general information on the Genie AI Workshop?";
+
+                oChatModel.setProperty("/userInput", sInput);
+                if (sInput) this.onPostMessage();
+                this.removeLastConversationItem();
+            },
+
+            removeLastConversationItem() {
+                const viewModel = this.getView().getModel('viewModel');
+                const items = this.byId('messagesWrapper').getItems();
+                this.byId('messagesWrapper').removeItem(items[items.length - 1]);
+                viewModel.setProperty('/isLastItemRemoveble', false);
             },
 
             _getRandomIllustrationType: function () {
@@ -163,7 +230,7 @@ sap.ui.define([
             },
 
             showThinkingDots() {
-                const busyIndicator = new sap.m.BusyIndicator({ active: true, size: '0.7em' });
+                const busyIndicator = new sap.m.BusyIndicator({ size: '0.7em' });
                 const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
                 thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
                 this.addMessagesToWrapper([thinkingDotsBox]);
@@ -178,6 +245,19 @@ sap.ui.define([
                     messagesWrapper.removeItem(thinkingDotsBox);
                 }
             },
+
+            onResetChatbot: function (oEvent) {
+                var oViewModel = this.getView().getModel("viewModel");
+                oViewModel.setProperty("/isWelcomePanelVisible", true);
+                oViewModel.setProperty("/isMessageStripVisible", false);
+                oViewModel.setProperty("/isSuggestionVisible", true);
+                this.getView().byId('messagesWrapper').removeAllItems();
+                this.getView().getModel("chatModel").setData({});
+
+                this.initializeChat(); 
+
+            },
+
 
             // Add message control to chat panel wrapper
             addMessagesToWrapper(messages) {
