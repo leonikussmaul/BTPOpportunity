@@ -479,7 +479,7 @@ sap.ui.define(
         oChatModel.setData({});
       },
       showThinkingDots() {
-        const busyIndicator = new sap.m.BusyIndicator({ active: true, size: '0.7em' });
+        const busyIndicator = new sap.m.BusyIndicator({ size: '0.7em' });
         const thinkingDotsBox = new sap.m.VBox({ items: [busyIndicator] });
         thinkingDotsBox.addStyleClass('aiBotMessage sapUiTinyMarginTop sapUiTinyMarginBottom aiThinkingDotsBox');
         this.addMessagesToWrapper([thinkingDotsBox]);
