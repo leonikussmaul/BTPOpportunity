@@ -569,8 +569,8 @@ sap.ui.define(
         var oChatModel = this.getView().getModel("chatModel");
 
         var sInput;
-        if (sKey == "Customers") sInput = "Who are the Genie AI Customer Leads?";
-        else if (sKey == "Workshop Dates") sInput = "What are the Genie AI planned Workshop Dates?";
+        if (sKey == "Customer Leads") sInput = "Who are the Genie AI Customer Leads?";
+        else if (sKey == "Internal Leads") sInput = "How many Internal Leads do we have for the Genie AI Workshop and can you list them?";
         else if (sKey == "More Info") sInput = "Can you give more general information on the Genie AI Workshop?";
 
         oChatModel.setProperty("/userInput", sInput);

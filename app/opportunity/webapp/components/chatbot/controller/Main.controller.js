@@ -57,12 +57,12 @@ sap.ui.define([
 
                 //Initial action buttons
                 const oActionButton1 = new sap.m.Button({
-                    text: 'Customers',
+                    text: 'Customer Leads',
                     press: this.onActionButtonPressed.bind(this),
                     visible: '{viewModel>/isSuggestionVisible}'
                 }).addStyleClass('sapUiSizeCompact sapUiSmallMarginEnd aiChatActionButton');
                 const oActionButton2 = new sap.m.Button({
-                    text: 'Workshop Dates',
+                    text: 'Internal Leads',
                     press: this.onActionButtonPressed.bind(this),
                     visible: '{viewModel>/isSuggestionVisible}'
                 }).addStyleClass('sapUiSizeCompact sapUiSmallMarginEnd aiChatActionButton');
@@ -101,21 +101,21 @@ sap.ui.define([
                 var oChatModel = this.getView().getModel("chatModel");
 
                 var sInput;
-                if (sKey == "Customers") sInput = "Who are the Genie AI Customer Leads?";
-                else if (sKey == "Workshop Dates") sInput = "What are the Genie AI planned Workshop Dates?";
+                if (sKey == "Customer Leads") sInput = "Who are the Genie AI Customer Leads?";
+                else if (sKey == "Internal Leads") sInput = "How many Internal Leads do we have for the Genie AI Workshop and can you list them?";
                 else if (sKey == "More Info") sInput = "Can you give more general information on the Genie AI Workshop?";
 
                 oChatModel.setProperty("/userInput", sInput);
                 if (sInput) this.onPostMessage();
-                this.removeLastConversationItem();
+                //this.removeLastConversationItem();
             },
 
-            removeLastConversationItem() {
-                const viewModel = this.getView().getModel('viewModel');
-                const items = this.byId('messagesWrapper').getItems();
-                this.byId('messagesWrapper').removeItem(items[items.length - 1]);
-                viewModel.setProperty('/isLastItemRemoveble', false);
-            },
+            // removeLastConversationItem() {
+            //     const viewModel = this.getView().getModel('viewModel');
+            //     const items = this.byId('messagesWrapper').getItems();
+            //     this.byId('messagesWrapper').removeItem(items[items.length - 1]);
+            //     viewModel.setProperty('/isLastItemRemoveble', false);
+            // },
 
             _getRandomIllustrationType: function () {
                 var illustrationTypes = [

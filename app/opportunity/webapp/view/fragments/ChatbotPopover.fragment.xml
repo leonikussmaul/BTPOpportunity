@@ -103,14 +103,14 @@
 
                 <HBox wrap="Wrap">
                     <Button
-                        text="Customers"
+                        text="Customer Leads"
                         visible="{viewModel>/isSuggestionVisible}"
                         press="onPressSuggestion" 
                         class="sapUiSmallMarginBegin suggestionButtons"
                     />
 
                     <Button
-                        text="Workshop Dates"
+                        text="Internal Leads"
                         visible="{viewModel>/isSuggestionVisible}"
                         press="onPressSuggestion"
                         class="sapUiTinyMarginBeginEnd suggestionButtons"
