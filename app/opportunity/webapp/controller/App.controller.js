@@ -376,6 +376,7 @@ sap.ui.define(
         //chatbot
         if(oEvent.getParameter("name") == "chatbot"){
           this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "chatbot");
+          this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
         }
       },
 
