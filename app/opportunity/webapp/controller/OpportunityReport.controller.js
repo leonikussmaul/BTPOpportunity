@@ -59,9 +59,15 @@ sap.ui.define([
             _onRoutePatternMatched: function (oEvent) {
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
-
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
+                
+                //scroll to selected item
+                let oItem = this.getView().byId("idOpportunityTable").getSelectedItem();
+                oItem.getDomRef().scrollIntoView(false);
+
+                //deselect item
                 this.getView().byId("idOpportunityTable").removeSelections(true);
+
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
                 oGlobalModel.setProperty("/selectedKey", "Opportunities");
@@ -108,7 +114,6 @@ sap.ui.define([
 
                 var userModel = this.getOwnerComponent().getModel("userModel");
                 userModel.setProperty("/opportunityID", selectedItem.opportunityID);
-
             },
             /* ------------------------------------------------------------------------------------------------------------
             FCL Buttons
