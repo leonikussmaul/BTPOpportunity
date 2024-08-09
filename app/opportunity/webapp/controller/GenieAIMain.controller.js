@@ -363,8 +363,9 @@ sap.ui.define([
             onCloseWizardPress: function (oEvent) {
                 var oCreateWizard = sap.ui.getCore().byId("myCreateWizard");
                 oCreateWizard.close();
-                var oDialog = sap.ui.getCore().byId("CreateWizard");
-                oDialog.setCurrentStep("WizardStep1");
+                oCreateWizard.destroy();
+                this._oDialog = null;
+
                 this.getView().getModel("viewModel").setData({});
                 this.getView().setBusy(false);
             },
