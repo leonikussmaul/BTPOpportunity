@@ -41,8 +41,6 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Karthik.jpeg";
         case "Leoni":
           return "./images/Leoni.jpeg";
-        case "Liliana":
-          return "./images/Liliana.jpeg";
         case "Matt":
           return "./images/Matt.jpeg";
         case "Nesimi":
@@ -59,8 +57,6 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Rajat.jpeg";
         case "Ravi":
           return "./images/Ravi.jpeg";
-        case "Rudolf":
-          return "./images/Rudolf.jpeg";
         case "Sarah":
           return "./images/Sarah.jpeg";
         case "Shubham":

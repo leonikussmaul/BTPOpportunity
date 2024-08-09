@@ -47,7 +47,7 @@
                         key="{marketUnit}"
                     />
                 </ComboBox>
-                <Label text="{i18n>topic}" />
+                <!-- <Label text="{i18n>topic}" />
                 <ComboBox
                     id="topicsEdit"
                     selectedKey="{editPageModel>/topic}"
@@ -65,7 +65,7 @@
                         text="{topic}"
                         key="{topic}"
                     />
-                </ComboBox>
+                </ComboBox> -->
 
                 <Label text="{i18n>priority}" />
                 <ComboBox

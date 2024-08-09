@@ -372,6 +372,11 @@ sap.ui.define(
         // Save the current route name
         this.currentRouteName = sRouteName;
         this.opportunityID = oArguments.opportunityID;
+
+        //chatbot
+        if(oEvent.getParameter("name") == "chatbot"){
+          this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "chatbot");
+        }
       },
 
       onStateChanged: function (oEvent) {

@@ -104,6 +104,25 @@
                                     placeholder="Enter a workshop description"
                                 />
 
+                                 <Label text="Owner" />
+                                <ComboBox
+                                    selectedKey="{viewModel>/owner}"
+                                    items="{
+                                    path: '/teamMembers',
+                                      templateShareable: true,
+                                   sorter: 
+                                            {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        text="{firstName}"
+                                        key="{firstName}"
+                                    />
+                                </ComboBox>
+
                                 <Label text="Level" />
                                 <ComboBox
                                     id="level"

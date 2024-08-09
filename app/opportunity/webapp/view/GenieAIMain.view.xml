@@ -99,7 +99,7 @@
                                     showFullScreenButton="true"
                                     initiallyVisibleFields="name,description,city,owner,workshopStartDate,status"
                                     requestAtLeastFields="name,description,city,owner,workshopStartDate,status"
-                                    ignoreFromPersonalisation="workshopID"
+                                    ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
                                 >
@@ -176,7 +176,6 @@
                                             </Column>
 
                                             <Column
-                                                visible="{global>/columnsExpanded}"
                                                 hAlign="Center"
                                                 demandPopin="true"
                                             >
@@ -204,6 +203,7 @@
                                             </Column>
 
                                             <Column
+                                                visible="{global>/columnsExpanded}"
                                                 hAlign="Center"
                                                 demandPopin="true"
                                             >
@@ -239,15 +239,26 @@
                                                         wrapping="true"
                                                     /> -->
 
-                                                    <Avatar
-                                                        src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
-                                                        displayShape="Circle"
-                                                        displaySize="XS"
-                                                        class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
-                                                        visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
-                                                        tooltip="{owner}"
-                                                    />
+                                                    <CustomListItem  class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                        <HBox
+                                                            alignItems="Center"
+                                                            class="sapUiTinyMargin"
+                                                        >
+                                                            <Avatar
+                                                                src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
+                                                                displayShape="Circle"
+                                                                displaySize="XS"
+                                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                                visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                                tooltip="{owner}"
+                                                            />
 
+                                                            <Text
+                                                                text="{owner}"
+                                                                class="sapUiSmallMarginEnd"
+                                                            />
+                                                        </HBox>
+                                                    </CustomListItem>
                                                     <Text
                                                         text="{'path': 'workshopStartDate',
                                             'type':'sap.ui.model.type.Date'
@@ -289,9 +300,9 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,workshopStartDate,city,status,isFavorite"
-                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
-                                    ignoreFromPersonalisation="workshopID"
+                                    initiallyVisibleFields="name,workshopStartDate,city,owner,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite,owner,workshopStartDate,workshopEndDate"
+                                    ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
                                 >
@@ -371,10 +382,23 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
+                                                        value='\{"columnKey": "city", "columnIndex" : "2", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="Location" />
+                                            </Column>
+
+                                            <Column
+                                                hAlign="Center"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "owner", "columnIndex" : "3", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Owner" />
                                             </Column>
 
                                             <Column
@@ -410,6 +434,7 @@
                                             <Column
                                                 hAlign="Center"
                                                 width="15%"
+                                                visible="{global>/columnsExpanded}"
                                             >
                                                 <customData>
                                                     <core:CustomData
@@ -441,6 +466,26 @@
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                                                         tooltip="{country}"
                                                     />
+                                                    <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                        <HBox
+                                                            alignItems="Center"
+                                                            class="sapUiTinyMargin"
+                                                        >
+                                                            <Avatar
+                                                                src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
+                                                                displayShape="Circle"
+                                                                displaySize="XS"
+                                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                                visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                                tooltip="{owner}"
+                                                            />
+
+                                                            <Text
+                                                                text="{owner}"
+                                                                class="sapUiSmallMarginEnd"
+                                                            />
+                                                        </HBox>
+                                                    </CustomListItem>
 
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
@@ -485,9 +530,9 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,workshopStartDate,city,status,isFavorite"
-                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,workshopEndDate"
-                                    ignoreFromPersonalisation="workshopID"
+                                    initiallyVisibleFields="name,workshopStartDate,city,owner,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,owner,workshopEndDate"
+                                    ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
                                 >
@@ -556,6 +601,16 @@
                                                 <Label text="Location" />
                                             </Column>
 
+                                            <Column hAlign="Center">
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "owner", "columnIndex" : "4", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label text="Owner" />
+                                            </Column>
+
                                             <Column
                                                 hAlign="Center"
                                                 visible="{global>/columnsExpanded}"
@@ -564,7 +619,7 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "4", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
+                                                        value='\{"columnKey": "workshopStartDate", "columnIndex" : "5", "leadingProperty": "workshopStartDate", "sortProperty": "workshopStartDate", "filterProperty": "workshopStartDate", "type":"date"}'
                                                     />
                                                 </customData>
                                                 <Label
@@ -576,11 +631,12 @@
                                             <Column
                                                 hAlign="Center"
                                                 width="15%"
+                                                visible="{global>/columnsExpanded}"
                                             >
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "status", "columnIndex" : "5", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                        value='\{"columnKey": "status", "columnIndex" : "6", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="{i18n>status}" />
@@ -607,6 +663,26 @@
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                                                         tooltip="{country}"
                                                     />
+                                                    <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                        <HBox
+                                                            alignItems="Center"
+                                                            class="sapUiTinyMargin"
+                                                        >
+                                                            <Avatar
+                                                                src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
+                                                                displayShape="Circle"
+                                                                displaySize="XS"
+                                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                                visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                                tooltip="{owner}"
+                                                            />
+
+                                                            <Text
+                                                                text="{owner}"
+                                                                class="sapUiSmallMarginEnd"
+                                                            />
+                                                        </HBox>
+                                                    </CustomListItem>
 
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
@@ -651,9 +727,9 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,role,orgArea,city,status,isFavorite"
-                                    requestAtLeastFields="name,role,orgArea,city,status,isFavorite"
-                                    ignoreFromPersonalisation="workshopID"
+                                    initiallyVisibleFields="name,role,orgArea,city,owner,status,isFavorite"
+                                    requestAtLeastFields="name,role,orgArea,city,owner,status,isFavorite"
+                                    ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
                                 >
@@ -742,6 +818,22 @@
                                             </Column>
 
                                             <Column
+                                                hAlign="Center"
+                                                demandPopin="true"
+                                            >
+                                                <customData>
+                                                    <core:CustomData
+                                                        key="p13nData"
+                                                        value='\{"columnKey": "owner", "columnIndex" : "4", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
+                                                    />
+                                                </customData>
+                                                <Label
+                                                    text="Owner"
+                                                    tooltip="Owner"
+                                                />
+                                            </Column>
+
+                                            <Column
                                                 visible="{global>/columnsExpanded}"
                                                 hAlign="Center"
                                                 width="20%"
@@ -750,7 +842,7 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "orgArea", "columnIndex" : "4", "leadingProperty": "orgArea", "sortProperty": "orgArea", "filterProperty": "orgArea", "type":"string"}'
+                                                        value='\{"columnKey": "orgArea", "columnIndex" : "5", "leadingProperty": "orgArea", "sortProperty": "orgArea", "filterProperty": "orgArea", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label
@@ -766,7 +858,7 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "role", "columnIndex" : "5", "leadingProperty": "role", "sortProperty": "role", "filterProperty": "role ", "type":"string"}'
+                                                        value='\{"columnKey": "role", "columnIndex" : "6", "leadingProperty": "role", "sortProperty": "role", "filterProperty": "role ", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label
@@ -782,7 +874,7 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "status", "columnIndex" : "6", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                        value='\{"columnKey": "status", "columnIndex" : "7", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="{i18n>status}" />
@@ -809,6 +901,27 @@
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                                                         tooltip="{country}"
                                                     />
+
+                                                    <CustomListItem class="myCustomListItem"  visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                        <HBox
+                                                            alignItems="Center"
+                                                            class="sapUiTinyMargin"
+                                                        >
+                                                            <Avatar
+                                                                src="{path: 'owner', formatter: '.formatter.formatterTeamPictures'}"
+                                                                displayShape="Circle"
+                                                                displaySize="XS"
+                                                                class="imageDisplayBlock sapUiLargeMediumBegin sapUiTinyMarginEnd"
+                                                                visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                                tooltip="{owner}"
+                                                            />
+
+                                                            <Text
+                                                                text="{owner}"
+                                                                class="sapUiSmallMarginEnd"
+                                                            />
+                                                        </HBox>
+                                                    </CustomListItem>
                                                     <Text
                                                         text="{orgArea}  {functionalArea}"
                                                     />

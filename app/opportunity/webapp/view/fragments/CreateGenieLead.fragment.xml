@@ -97,12 +97,25 @@
                                     valueStateText="{valueState>/valueStateText}"
                                     placeholder="Enter the customer name or participant first and last name"
                                 />
-
+                         
                                 <Label text="Owner" />
-                                <Input
-                                    value="{viewModel>/owner}"
-                                    placeholder="Who is responsible for this lead?"
-                                />
+                                <ComboBox
+                                    selectedKey="{viewModel>/owner}"
+                                    items="{
+                                    path: '/teamMembers',
+                                      templateShareable: true,
+                                   sorter: 
+                                            {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+                                >
+                                    <core:Item
+                                        text="{firstName}"
+                                        key="{firstName}"
+                                    />
+                                </ComboBox>
                                 <!-- <Input
                                     value="{viewModel>/region}"
                                     id="region"
