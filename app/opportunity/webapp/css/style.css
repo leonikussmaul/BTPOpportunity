@@ -43,7 +43,13 @@
     background-color: #f5f6f7;
 }
 
+.sapMLIBSelected .labelsItem {
+    background-color: #ebf8ff !important;
+}
 
+.sapMLIBSelected:hover .labelsItem {
+    background-color: #DEF3FF !important;
+}
 
 .v-axis-item.index_1 {
     visibility: hidden;
@@ -52,7 +58,6 @@
 .v-valueaxisline {
     visibility: hidden;
 }
-
 
 
 /* chatbot */
