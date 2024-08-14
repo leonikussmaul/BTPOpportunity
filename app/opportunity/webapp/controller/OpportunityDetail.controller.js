@@ -83,6 +83,8 @@ sap.ui.define([
                 oGlobalModel.setProperty("/selectedKey", "Opportunities");
                 oModel.setDefaultBindingMode("TwoWay");
 
+               
+
                 // wait for async calls 
                 Promise.all([
                     this.onFilterLinkList(sOpportunityID),

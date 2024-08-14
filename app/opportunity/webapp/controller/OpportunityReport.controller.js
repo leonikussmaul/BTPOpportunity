@@ -56,17 +56,23 @@ sap.ui.define([
                 });
             },
 
+            onAfterRendering: function(oEvent){
+                  //scroll to selected item
+                  try {
+                    let oItem = this.getView().byId("idOpportunityTable").getSelectedItem();
+                    oItem.getDomRef().scrollIntoView();
+
+                } catch (error) {
+                    console.log(error)
+                }
+
+            },
+
             _onRoutePatternMatched: function (oEvent) {
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
                 this.getOwnerComponent().getModel("global").setProperty("/filterbarExpanded", true);
                 this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
-                
-                //scroll to selected item
-                let oItem = this.getView().byId("idOpportunityTable").getSelectedItem();
-                oItem.getDomRef().scrollIntoView(false);
 
-                //deselect item
-                this.getView().byId("idOpportunityTable").removeSelections(true);
 
                 this.getView().byId("mySmartTable").rebindTable();
                 var oGlobalModel = this.getOwnerComponent().getModel("global");
@@ -196,9 +202,9 @@ sap.ui.define([
 
                     var sDate, sDueDate, bCRM, sTodayDate;
 
-                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    sTodayDate = new Date().toLocaleDateString().split('/').reverse().join('-');
+                    if (oData.opportunityStartDate) sDate = new Date(oData.opportunityStartDate).toLocaleDateString().split('/').reverse().join('-');
+                    if (oData.opportunityDueDate) sDueDate = new Date(oData.opportunityDueDate).toLocaleDateString().split('/').reverse().join('-');
 
                     if (oData.opportunityInCRM) bCRM = "Yes"
                     else bCRM = "No"
@@ -306,7 +312,7 @@ sap.ui.define([
 
             },
 
-          
+
             onPostNewItem: function () {
                 var that = this;
                 var oPayload = {
@@ -527,12 +533,12 @@ sap.ui.define([
                 var selectedItems = oSmartFilterBar.getControlByKey(filterKey)?.getSelectedItems() || [];
                 //add deep filtering for topic
                 var key = isTopic ? "topics/topic" : filterKey;
-            
+
                 selectedItems.forEach(function (oToken) {
                     oBindingParams.filters.push(new Filter(key, sap.ui.model.FilterOperator.EQ, oToken.getText()));
                 });
             },
-            
+
 
 
             onClearSmartFilterBar: function (oEvent) {
