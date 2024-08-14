@@ -200,69 +200,40 @@ sap.ui.define(
       },
 
 
-      onCancelDialogPress: function (oEvent) {
-        this.editDialog = false;
-        this._currentDialog.then(function (_pDialog) {
-          _pDialog.close();
-          _pDialog.destroy();
-        });
-        this._pDialog = null;
-        this.getView().getModel("localModel").setData({});
-
-      },
-
       onOpenIndividualEngagement: function (oEvent) {
         // Adjusted function call with the correct fragment name and path
         this.onDialogOpen("opportunity.opportunity.view.fragments.TeamSelection");
       },
 
+
       onDialogOpen: function (fragmentName) {
         var that = this;
-
-        if (!this._dialogs) {
-          this._dialogs = {};
-        }
-
-        if (!this._dialogs[fragmentName]) {
-          this._dialogs[fragmentName] = Fragment.load({
+        if (!this._pDialog) {
+          this._pDialog = Fragment.load({
             name: fragmentName,
             controller: this
-          }).then(function (oDialog) {
-            that.getView().addDependent(oDialog);
-            oDialog.setEscapeHandler(function () {
+          }).then(function (_pDialog) {
+            that.getView().addDependent(_pDialog);
+            _pDialog.setEscapeHandler(function () {
               that.onCloseDialog();
             });
-            return oDialog;
+            return _pDialog;
           });
         }
+        this._pDialog.then(function (_pDialog) {
+          _pDialog.open();
 
-        this._currentDialog = this._dialogs[fragmentName];
+        })
+      },
 
-        this._currentDialog.then(function (oDialog) {
-          oDialog.open();
-        }).catch(function (error) {
-          console.error("Error opening dialog: ", error);
+      onCancelDialogPress: function (oEvent) {
+        this._pDialog.then(function (_pDialog) {
+          _pDialog.close();
+          _pDialog.destroy();
         });
+        this._pDialog = null;
+
       },
-
-
-
-      onCloseDialog: function () {
-        var that = this;
-
-        // Ensure the correct dialog is referenced
-        if (this._currentDialog) {
-          this._currentDialog.then(function (oDialog) {
-            oDialog.close();
-          }).catch(function (error) {
-            console.error("Error closing dialog: ", error);
-          });
-        }
-
-        // Clear the selected key
-        this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "");
-      },
-
 
       onOpenCalendar: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -277,7 +248,7 @@ sap.ui.define(
           inumber: inumber
         }
         );
-        this.onCloseDialog();
+        this.onCancelDialogPress();
 
       },
 
@@ -374,7 +345,7 @@ sap.ui.define(
         this.opportunityID = oArguments.opportunityID;
 
         //chatbot
-        if(oEvent.getParameter("name") == "chatbot"){
+        if (oEvent.getParameter("name") == "chatbot") {
           this.getOwnerComponent().getModel("global").setProperty("/selectedKey", "chatbot");
           this.getOwnerComponent().getModel("global").setProperty("/layout", "OneColumn");
         }
@@ -419,19 +390,19 @@ sap.ui.define(
 
       },
 
-      onCloseChatbotPopover: function(oEvent){
+      onCloseChatbotPopover: function (oEvent) {
         oEvent.getSource().getParent().getParent().getParent().close();
-     
+
       },
 
-      onResetChatbot: function(oEvent){
+      onResetChatbot: function (oEvent) {
         var oViewModel = this.getView().getModel("viewModel");
         oViewModel.setProperty("/isWelcomePanelVisible", true);
         oViewModel.setProperty("/isMessageStripVisible", false);
         oViewModel.setProperty("/isSuggestionVisible", true);
         this.getView().byId('messagesWrapper').removeAllItems();
         this.getView().getModel("chatModel").setData({});
-     
+
       },
 
       onPostMessage: function (oEvent) {
@@ -580,7 +551,7 @@ sap.ui.define(
         else if (sKey == "More Info") sInput = "Can you give more general information on the Genie AI Workshop?";
 
         oChatModel.setProperty("/userInput", sInput);
-        if(sInput) this.onPostMessage(); 
+        if (sInput) this.onPostMessage();
       }
 
 

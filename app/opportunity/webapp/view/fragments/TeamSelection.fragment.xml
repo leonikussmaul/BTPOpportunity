@@ -37,7 +37,7 @@
             </VBox>
         </content>
         <beginButton>
-            <Button text="Cancel" press="onCloseDialog"/>
+            <Button text="Cancel" press="onCancelDialogPress"/>
         </beginButton>
     </Dialog>
 </core:FragmentDefinition>
