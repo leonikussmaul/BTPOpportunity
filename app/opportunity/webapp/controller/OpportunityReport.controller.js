@@ -91,7 +91,7 @@ sap.ui.define([
                             filters: [
                                 new Filter({ path: "marketUnit", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
                                 new Filter({ path: "account", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
-                                new Filter({ path: "topics/topic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
+                                // new Filter({ path: "topics/topic", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
                                 new Filter({ path: "status", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false }),
                                 new Filter({ path: "primaryContact", operator: FilterOperator.Contains, value1: sQuery, caseSensitive: false })
                             ],
