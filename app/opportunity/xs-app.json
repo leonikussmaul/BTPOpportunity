@@ -17,14 +17,14 @@
     {
       "source": "^/Opportunity/(.*)$",
       "target": "/Opportunity/$1",
-      "destination": "opportunity",
+      "destination": "opportunity_prod",	
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },
     {
       "source": "^/v2/Opportunity/(.*)$",
       "target": "/v2/Opportunity/$1",
-      "destination": "opportunity",
+      "destination": "opportunity_prod",
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },

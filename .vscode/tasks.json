@@ -28,13 +28,13 @@
       "problemMatcher": []
     },
     {
-      "label": "cds-deploy-to-hana-BTPOpportunities-BTPOpportunities-db",
+      "label": "cds-deploy-to-hana-BTPOpportunities-BTPOpportunities-prod",
       "type": "shell",
       "command": "cds",
       "args": [
         "deploy",
         "--to",
-        "hana:BTPOpportunities-db",
+        "hana:BTPOpportunities-prod",
         "--no-save"
       ],
       "options": {

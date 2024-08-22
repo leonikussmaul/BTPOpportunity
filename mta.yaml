@@ -7,7 +7,7 @@ modules:
   type: nodejs
   path: gen/srv
   requires:
-  - name: BTPOpportunities-db
+  - name: BTPOpportunities-prod
   - name: BTPOpportunities-uaa
   provides:
   - name: srv-api
@@ -20,15 +20,15 @@ modules:
     stack: cflinuxfs4
   build-parameters:
     builder: npm-ci
-- name: BTPOpportunities-db-deployer
+- name: BTPOpportunities-prod-deployer
   type: hdb
   path: db
   requires:
-  - name: BTPOpportunities-db
+  - name: BTPOpportunities-prod
   parameters:
     buildpack: nodejs_buildpack
     stack: cflinuxfs4
-- name: BTPOpportunities-approuter
+- name: BTPOpportunities-prod-approuter
   type: approuter.nodejs
   path: app/
   requires:
@@ -89,7 +89,7 @@ modules:
     - npm run build:cf
     supported-platforms: []
 resources:
-- name: BTPOpportunities-db
+- name: BTPOpportunities-prod
   type: com.sap.xs.hdi-container
   parameters:
     service: hana
