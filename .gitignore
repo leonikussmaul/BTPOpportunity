@@ -37,3 +37,5 @@ db/.env
 .env
 # auto generated wildcard
 .env2
+
+dist
