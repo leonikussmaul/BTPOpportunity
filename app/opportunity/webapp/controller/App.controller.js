@@ -148,7 +148,7 @@ sap.ui.define(
       onNavToGenieAIMain: function (oEvent) {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("GenieAIMain", {
-          type: "Customer"
+          type: "Workshop"
         });
       },
 
