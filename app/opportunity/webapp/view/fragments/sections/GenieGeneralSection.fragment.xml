@@ -67,7 +67,7 @@
                     visible="{= ${genieModel>/genieType} === 'Internal' }"
                 />
 
-                <Label text="Workshop Location"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
+                <Label text="Location"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
                 <Text text="{city} "  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
                 <Text text="{country}"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
 

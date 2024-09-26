@@ -117,6 +117,8 @@ sap.ui.define([
                 Promise.all([
                     this.onFilterLinkList(sWorkshopID),
                     this.onFilterParticipants(sWorkshopID, sType),
+                    this.onFilterTeamTable(sWorkshopID)
+
                 ]).then(() => {
 
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
@@ -164,6 +166,28 @@ sap.ui.define([
                         var oFilter = new sap.ui.model.Filter("ID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);
 
                         this.getView().byId("participantTable").bindAggregation("items", {
+                            path: sBindingPath,
+                            template: oTemplate,
+                            sorter: oSorter,
+                            filters: oFilter
+                        });
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            },
+
+            onFilterTeamTable: function (sWorkshopID) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        var sBindingPath = "/GenieAIDeliveryTeam";
+                        var oTemplate = this.getView().byId("teamMemberID");
+                        var oSorter = new sap.ui.model.Sorter("name", false);
+                        //check if filter is right
+                        var oFilter = new sap.ui.model.Filter("memberID_workshopID", sap.ui.model.FilterOperator.EQ, sWorkshopID);
+
+                        this.getView().byId("teamTable").bindAggregation("items", {
                             path: sBindingPath,
                             template: oTemplate,
                             sorter: oSorter,

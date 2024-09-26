@@ -98,29 +98,6 @@
                                     placeholder="Enter the customer name or participant first and last name"
                                 />
                          
-                                <Label text="Owner" />
-                                <ComboBox
-                                    selectedKey="{viewModel>/owner}"
-                                    items="{
-                                    path: '/teamMembers',
-                                      templateShareable: true,
-                                   sorter: 
-                                            {
-                                                path: 'firstName',
-                                                descending: false
-                                            }
-                                    }"
-                                >
-                                    <core:Item
-                                        text="{firstName}"
-                                        key="{firstName}"
-                                    />
-                                </ComboBox>
-                                <!-- <Input
-                                    value="{viewModel>/region}"
-                                    id="region"
-                                    placeholder="Which Region are they part of?"
-                                /> -->
                                 <MultiComboBox
                                     value="{viewModel>/marketUnit}"
                                     id="marketUnitFilter"
@@ -149,29 +126,6 @@
                                     id="source"
                                     placeholder="Where did the lead come from?"
                                 />
-
-                                <!-- <MultiComboBox
-                                    id="marketUnitFilter"
-                                    placeholder="Which Region are they part of?"
-                                    selectionChange="customFieldChange"
-                                    value="{viewModel>/region}"
-                                    showSelectAll="true"
-                                    items="{
-                                            path: '/opportunityMarketUnitVH',
-                                            sorter: {
-                                                path: 'region',
-                                                descending: false,
-                                                group: true
-                                            },
-                                            groupHeaderFactory: '.getGroupHeader'
-                                        }"
-                                >
-                                    <core:Item
-                                        key="marketUnit"
-                                        text="{marketUnit}"
-                                    />
-                                </MultiComboBox> -->
-
                                 <Label text="Level" />
                                 <ComboBox
                                     id="level"
@@ -265,60 +219,18 @@
                                     placeholder="Organisation i.e. CS&amp;D, CS.."
                                 />
 
-                                <Label text="Workshop Location" />
+                                <Label text="Location" />
                                 <Input
                                     value="{viewModel>/city}"
                                     id="city"
-                                    placeholder="What city are we having the workshop in?"
+                                    placeholder="What city are they based in?"
                                 />
 
                                 <!-- <Label text="Country" /> -->
                                 <Input
                                     value="{viewModel>/country}"
                                     id="country"
-                                    placeholder="What country are we having the workshop in?"
-                                />
-
-                                <!-- <Input
-                                    id="countryInput"
-                                    showSuggestion="true"
-                                    placeholder="Type a country"
-                                    suggestionItems="{countryModel>/countries}"
-                                    suggest="onSuggest"
-                                    value="{viewModel>/country}"
-                                    width="100%"
-                                >
-                                    <suggestionItems>
-                                        <core:Item
-                                            key="{countryModel>country}"
-                                            text="{countryModel>country}"
-                                        />
-                                    </suggestionItems>
-                                </Input> -->
-
-                                <Label text="Workshop Dates" />
-                                <DateRangeSelection
-                                    id="DRS3"
-                                    placeholder="i.e. Jul 8th, 2024 - Jul 9th, 2024"
-                                    showCurrentDateButton="true"
-                                    showFooter="true"
-                                    change="handleChange"
-                                    value="{
-                                            'type': 'sap.ui.model.type.DateInterval',
-                                            'formatOptions': {
-                                                'pattern': 'MM-dd-yyyy'
-                                            },
-                                            'parts': [
-                                                {
-                                                    'type': 'sap.ui.model.type.Date',
-                                                    'path': '{viewModel>/workshopStartDate}'
-                                                },
-                                                {
-                                                    'type': 'sap.ui.model.type.Date',
-                                                   'path': '{viewModel>/workshopEndDate}'
-                                                }
-                                            ]
-                                        }"
+                                    placeholder="What country are they based in?"
                                 />
                             </form:SimpleForm>
                         </WizardStep>

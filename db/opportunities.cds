@@ -359,62 +359,62 @@ entity opportunitySubTaskStatus {
 
 @cds.autoexpose
 entity GenieAIInternal {
-    key workshopID        : UUID;
-        ID                : Association to GenieAIWorkshops;
-        name              : String(255);
-        type              : String(255);
-        internal          : Boolean;
-        email             : String(255);
-        role              : String(255);
-        functionalArea    : String(255);
-        orgArea           : String(255);
-        source            : String(255);
-        city              : String(255);
-        country           : String(255);
-        region            : String(255);
-        marketUnit        : String(255);
-        notes             : String(5000);
-        level             : String(50); // beginner, intermediate, advanced
-        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
-        isFavorite        : Boolean;
+    key workshopID     : UUID;
+        ID             : Association to GenieAIWorkshops;
+        name           : String(255);
+        type           : String(255);
+        internal       : Boolean;
+        email          : String(255);
+        role           : String(255);
+        functionalArea : String(255);
+        orgArea        : String(255);
+        source         : String(255);
+        city           : String(255);
+        country        : String(255);
+        region         : String(255);
+        marketUnit     : String(255);
+        notes          : String(5000);
+        level          : String(50); // beginner, intermediate, advanced
+        status         : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite     : Boolean;
 }
 
 @cds.autoexpose
 entity GenieAICustomer {
-    key workshopID        : UUID;
-        ID                : Association to GenieAIWorkshops;
-        name              : String(255);
-        type              : String(255);
-        internal          : Boolean;
-        email             : String(255);
-        source            : String(255);
-        city              : String(255);
-        country           : String(255);
-        region            : String(255);
-        marketUnit        : String(255);
-        notes             : String(5000);
-        level             : String(50); // beginner, intermediate, advanced
-        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
-        isFavorite        : Boolean;
+    key workshopID : UUID;
+        ID         : Association to GenieAIWorkshops;
+        name       : String(255);
+        type       : String(255);
+        internal   : Boolean;
+        email      : String(255);
+        source     : String(255);
+        city       : String(255);
+        country    : String(255);
+        region     : String(255);
+        marketUnit : String(255);
+        notes      : String(5000);
+        level      : String(50); // beginner, intermediate, advanced
+        status     : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite : Boolean;
 }
 
 @cds.autoexpose
 entity GenieAIPartner {
-    key workshopID        : UUID;
-        ID                : Association to GenieAIWorkshops;
-        name              : String(255);
-        type              : String(255);
-        internal          : Boolean;
-        email             : String(255);
-        source            : String(255);
-        city              : String(255);
-        country           : String(255);
-        region            : String(255);
-        marketUnit        : String(255);
-        notes             : String(5000);
-        level             : String(50); // beginner, intermediate, advanced
-        status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
-        isFavorite        : Boolean;
+    key workshopID : UUID;
+        ID         : Association to GenieAIWorkshops;
+        name       : String(255);
+        type       : String(255);
+        internal   : Boolean;
+        email      : String(255);
+        source     : String(255);
+        city       : String(255);
+        country    : String(255);
+        region     : String(255);
+        marketUnit : String(255);
+        notes      : String(5000);
+        level      : String(50); // beginner, intermediate, advanced
+        status     : String(50); // Lead, Opportunity, Delivery, Paused, Completed
+        isFavorite : Boolean;
 }
 
 
@@ -448,6 +448,8 @@ entity GenieAIWorkshops {
         notes             : String(5000);
         links             : Composition of many GenieAIWorkshopLinks
                                 on links.linkID = $self;
+        deliveryTeam      : Composition of many GenieAIDeliveryTeam
+                                on deliveryTeam.memberID = $self;
         internalAttendees : Composition of many GenieAIInternal
                                 on internalAttendees.workshopID = $self.workshopID;
         customerAttendees : Composition of many GenieAICustomer
@@ -455,3 +457,12 @@ entity GenieAIWorkshops {
         partnerAttendees  : Composition of many GenieAIPartner
                                 on partnerAttendees.workshopID = $self.workshopID;
 }
+
+@cds.autoexpose
+entity GenieAIDeliveryTeam {
+    key ID       : UUID;
+        memberID : Association to GenieAIWorkshops;
+        name     : String(1000);
+        role     : String(1000);
+        note     : String(5000);
+};

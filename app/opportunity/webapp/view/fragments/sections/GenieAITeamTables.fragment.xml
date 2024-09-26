@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+>
+    <Table
+        id="teamTable"
+        items="{}"
+        mode="Delete"
+        includeItemInSelection="true"
+        selectionChange="onSelectMember"
+        delete="onDeleteMember"
+    >
+        <headerToolbar>
+            <OverflowToolbar>
+                <content>
+                    <Title
+                        text="Team Members"
+                        level="H5"
+                    />
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="Add"
+                        press="onAddTeamMember"
+                    />
+                </content>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column>
+                <header>
+                    <Text text="Name" />
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Text text="Role" />
+                </header>
+            </Column>
+            <Column>
+                <header>
+                    <Text text="Note" />
+                </header>
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem
+                type="Active" id="teamMemberID"
+                press="onSelectTeamMember"
+            >
+                <cells>
+                    <Text text="{name}" />
+                    <Text text="{role}" />
+
+                    <Text
+                        text="{note}"
+                    />
+                    
+                </cells>
+            </ColumnListItem>
+        </items>
+        <noData>
+            <IllustratedMessage
+                enableVerticalResponsiveness="true"
+                illustrationType="sapIllus-SearchFolder"
+                title="No Team Members Found"
+                description="Start by adding a team member to the workshop."
+            />
+        </noData>
+    </Table>
+</core:FragmentDefinition>

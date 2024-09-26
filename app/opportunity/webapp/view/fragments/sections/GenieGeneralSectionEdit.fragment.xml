@@ -29,11 +29,11 @@
                     placeholder="Enter the customer name or participant first and last name"
                 />
 
-                <Label text="Owner" />
+                <!-- <Label text="Owner" />
                 <Input
                     value="{editPageModel>/owner}"
                     placeholder="Who is responsible for this lead?"
-                />
+                /> -->
 
                 <Label text="Source" />
                 <Input
@@ -176,17 +176,17 @@
                     visible="{= ${genieModel>/genieType} === 'Internal' }"
                 />
 
-                <Label text="Workshop Location" />
+                <Label text="Location" />
                 <Input
                     value="{editPageModel>/city}"
-                    placeholder="City for the workshop"
+                    placeholder="What city are they based in?"
                 />
                 <Input
                     value="{editPageModel>/country}"
-                    placeholder="Country for the workshop"
+                    placeholder="What country are they based in?"
                 />
 
-                <Label text="Workshop Dates" />
+                <!-- <Label text="Workshop Dates" />
                 <DateRangeSelection
                     id="DRS3"
                     placeholder="i.e. Jul 8th, 2024 - Jul 9th, 2024"
@@ -206,7 +206,7 @@
                                                 }
                                             ]
                                         }"
-                />
+                /> -->
             </f:content>
         </f:SimpleForm>
     </VBox>

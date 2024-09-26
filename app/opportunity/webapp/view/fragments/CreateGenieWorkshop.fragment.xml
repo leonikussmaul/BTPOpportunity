@@ -194,18 +194,18 @@
                                     placeholder="20"
                                 />
 
-                                <Label text="Workshop Location" />
+                                <Label text="Location" />
                                 <Input
                                     value="{viewModel>/city}"
                                     id="city"
-                                    placeholder="What city are we having the workshop in?"
+                                    placeholder="What city are they based in?"
                                 />
 
                                 <!-- <Label text="Country" /> -->
                                 <Input
                                     value="{viewModel>/country}"
                                     id="country"
-                                    placeholder="What country are we having the workshop in?"
+                                    placeholder="What country are they based in?"
                                 />
 
                                 <!-- <Input

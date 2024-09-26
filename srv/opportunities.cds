@@ -49,6 +49,7 @@ service OpportunityService {
     entity GenieAIPartner              as projection on opportunities.GenieAIPartner;
     entity GenieAIWorkshopLinks        as projection on opportunities.GenieAIWorkshopLinks;
     entity GenieAIWorkshops            as projection on opportunities.GenieAIWorkshops;
+    entity GenieAIDeliveryTeam            as projection on opportunities.GenieAIDeliveryTeam;
 //entity CurrentUser                 as projection on opportunities.CurrentUser;
 
 

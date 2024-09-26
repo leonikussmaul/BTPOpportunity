@@ -385,6 +385,8 @@
                                 fragmentName="opportunity.opportunity.view.fragments.sections.GenieParticipantTables"
                                 type="XML"
                             />
+
+                         
                             <!-- <Table
                                 id="participantTable"
                                 items="{}"
@@ -454,7 +456,21 @@
                         </u:ObjectPageSubSection>
                     </u:ObjectPageSection>
 
-                    <!-- links -->
+                    <!-- team members -->
+
+                             <u:ObjectPageSection
+                        id="idSectionTeamMembers"
+                        titleUppercase="false"
+                        title="Workshop Delivery"
+                    >
+                        <u:ObjectPageSubSection id="idSubSectionTeamMembers">
+                           <core:Fragment
+                                fragmentName="opportunity.opportunity.view.fragments.sections.GenieAITeamTables"
+                                type="XML"
+                            />
+                        </u:ObjectPageSubSection>
+                    </u:ObjectPageSection>
+
 
                     <u:ObjectPageSection
                         visible="{= ${genieModel>/genieType} !== 'Internal' }"
@@ -500,7 +516,7 @@
                                 <noData>
                                     <IllustratedMessage
                                         enableVerticalResponsiveness="true"
-                                        illustrationType="sapIllus-SearchFolder"
+                                        illustrationType="sapIllus-NoSavedItems"
                                         title="No Links Found"
                                         description="Start by adding a link to the repository."
                                     />
