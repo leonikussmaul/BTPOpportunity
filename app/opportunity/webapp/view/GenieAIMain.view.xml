@@ -229,7 +229,7 @@
                                                         wrapping="true"
                                                     />
                                                     <CustomListItem
-                                                        class="myCustomListItem"
+                                                        class="labelsItem"
                                                         visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
                                                     >
                                                         <HBox
@@ -259,8 +259,8 @@
 
                                                     <Text
                                                         text="{'path': 'workshopStartDate',
-                                            'type':'sap.ui.model.type.Date'
-                                           }"
+                                                            'type':'sap.ui.model.type.Date'
+                                                        }"
                                                         visible="{= ${workshopStartDate} !== null}"
                                                     />
 
