@@ -206,7 +206,7 @@ sap.ui.define([
                 var sPath = oBindingContext.getPath();
                 var sName = oBindingContext.getProperty("name");
 
-                MessageBox.warning("Are you sure you want to remove the participant '" + sName + "'?", {
+                MessageBox.warning("Are you sure you want to remove '" + sName + "'?", {
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {
@@ -214,7 +214,8 @@ sap.ui.define([
                             that.getView().setBusy(true);
                             var oModel = that.getView().getModel();
                             var oData = {
-                                ID_workshopID: null
+                                ID_workshopID: null,
+                                // memberID_workshopID: null
                             }
                             //  oData.ID_workshopID = null; 
                             oModel.update(sPath, oData, {
@@ -222,7 +223,7 @@ sap.ui.define([
                                     // that.onCancelDialogPress();
                                     oModel.refresh();
                                     that.getView().setBusy(false);
-                                    MessageToast.show("Participant removed successfully.");
+                                    MessageToast.show(sName + " has been removed successfully.");
                                 },
                                 error: function (oError) {
                                     var sMessage = JSON.parse(oError.responseText).error.message.value;
@@ -244,7 +245,7 @@ sap.ui.define([
                 var sPath = oBindingContext.getPath();
                 var sLinkName = oBindingContext.getProperty("linkName");
 
-                MessageBox.warning("Are you sure you want to delete the link '" + sLinkName + "'?", {
+                MessageBox.warning("Are you sure you want to delete the item?", {
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                     emphasizedAction: MessageBox.Action.OK,
                     onClose: function (sAction) {
@@ -269,11 +270,44 @@ sap.ui.define([
 
 
 
+            onDeleteTeamMember: function (oEvent) {
+                var that = this;
+                var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
+                var sPath = oBindingContext.getPath();
+                var sName = oBindingContext.getProperty("name");
+
+                MessageBox.warning("Are you sure you want to delete " + sName + " for this delivery?", {
+                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                    emphasizedAction: MessageBox.Action.OK,
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.OK) {
+                            that.getView().setBusy(true);
+                            var oModel = that.getView().getModel();
+                            oModel.remove(sPath, {
+                                success: function () {
+                                    sap.m.MessageToast.show("Team member deleted successfully.");
+                                    that.getView().setBusy(false);
+                                },
+                                error: function (oError) {
+                                    that.getView().setBusy(false);
+                                    var sMessage = JSON.parse(oError.responseText).error.message.value;
+                                    sap.m.MessageToast.show(sMessage);
+                                }
+                            });
+                        }
+                    }
+                });
+            },
+
+
             onAddNewLink: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddLink");
             },
             onAddParticipant: function (oEvent) {
                 this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddParticipant");
+            },
+            onAddDeliveryTeamMember: function (oEvent) {
+                this.onDialogOpen("opportunity.opportunity.view.fragments.addFragments.AddDeliveryTeamMember");
             },
 
             onSubmitNewLink: function (oEvent) {
@@ -357,6 +391,48 @@ sap.ui.define([
                         that.getView().setBusy(false);
                     }
                 });
+            },
+
+
+            onSubmitNewDeliveryTeamMember: function (oEvent) {
+                var that = this;
+                //var oDialog = oEvent.getSource().getParent();
+                this.workshopID = this.getView().getBindingContext().getObject().workshopID;
+                var sWorkshopID = this.workshopID;
+
+                var oLocalModel = this.getView().getModel("localModel");
+                var oData = oLocalModel.getData();
+
+                if (oData.name) {
+                    this.resetValueState();
+
+                    var oPayload = {
+                        name: oData.name,
+                        role: oData.role,
+                        note: oData.note,
+                        memberID_workshopID: this.workshopID
+                    }
+                    that.getView().setBusy(true);
+                    var oModel = that.getView().getModel();
+                    oModel.create("/GenieAIDeliveryTeam", oPayload, {
+                        success: function (oData, response) {
+                            MessageToast.show("New Member added!");
+                            that.getView().setBusy(false);
+                            //oDialog.close();
+                            that.onCancelDialogPress();
+                            oLocalModel.setData({});
+                            that.onFilterTeamTable(sWorkshopID);
+                        },
+                        error: function (oError) {
+                            that.getView().setBusy(false);
+                            var sMessage = JSON.parse(oError.responseText).error.message.value;
+                            sap.m.MessageBox.error(sMessage);
+
+                        }
+                    });
+
+                } else this.ValueStateMethod();
+
             },
 
 

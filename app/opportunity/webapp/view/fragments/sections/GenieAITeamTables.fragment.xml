@@ -11,20 +11,20 @@
         mode="Delete"
         includeItemInSelection="true"
         selectionChange="onSelectMember"
-        delete="onDeleteMember"
+        delete="onDeleteTeamMember"
     >
         <headerToolbar>
             <OverflowToolbar>
                 <content>
                     <Title
-                        text="Team Members"
+                        text="Delivery Team Members"
                         level="H5"
                     />
                     <ToolbarSpacer />
                     <Button
                         type="Accept"
                         text="Add"
-                        press="onAddTeamMember"
+                        press="onAddDeliveryTeamMember"
                     />
                 </content>
             </OverflowToolbar>
@@ -37,7 +37,7 @@
             </Column>
             <Column>
                 <header>
-                    <Text text="Role" />
+                    <Text text="Workshop Role" />
                 </header>
             </Column>
             <Column>

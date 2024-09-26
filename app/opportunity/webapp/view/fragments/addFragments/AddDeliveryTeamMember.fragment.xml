@@ -1,0 +1,71 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        title="Add a new Member deliver Genie AI for '{name}'"
+        contentWidth="570px"
+    >
+        <beginButton>
+            <Button
+                text="Cancel"
+                press="onCancelDialogPress"
+            />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Submit"
+                type="Accept"
+                press="onSubmitNewDeliveryTeamMember"
+            />
+        </endButton>
+        <l:VerticalLayout
+            class="sapUiContentPadding"
+            width="100%"
+        >
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+            >
+                <Label
+                    text="Team Members"
+                    required="true"
+                />
+                <ComboBox
+                    id="selectTeamMember"
+                    valueState="{valueState>/valueState}"
+                    valueStateText="{valueState>/valueStateText}"
+                    selectedKey="{localModel>/name}"
+                    items="{
+                                    path: '/teamMembers',
+                                      templateShareable: true,
+                                    sorter: {
+                                                path: 'firstName',
+                                                descending: false
+                                            }
+                                    }"
+                >
+                    <core:Item
+                        key="{firstName}"
+                        text="{firstName}"
+                    />
+                </ComboBox>
+
+                <Label text="Workshop Role" />
+                <Input
+                    value="{localModel>/role}"
+                    placeholder="i.e. Project Management, Showcase Station Expert etc."
+                />
+
+                <Label text="Notes" />
+                <TextArea
+                    value="{localModel>/note}"
+                    placeholder="Optional details"
+                />
+            </f:SimpleForm>
+        </l:VerticalLayout>
+    </Dialog>
+</core:FragmentDefinition>
