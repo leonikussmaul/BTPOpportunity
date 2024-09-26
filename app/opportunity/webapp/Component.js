@@ -151,7 +151,7 @@ sap.ui.define([
                         },
                         {
                             "from": "Ravi",
-                            "to": "Byader"
+                            "to": "Bee"
                         },
                         {
                             "from": "Ravi",

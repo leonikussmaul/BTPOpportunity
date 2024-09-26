@@ -29,10 +29,10 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Bal.jpeg";
         case "Biswajit":
           return "./images/Biswajit.jpeg";
-        case "Byader":
-          return "./images/Byader.jpeg";
         case "Bee":
-          return "./images/Byader.jpeg";
+          return "./images/Bee.jpeg";
+        case "Bee":
+          return "./images/Bee.jpeg";
         case "Eswara":
           return "./images/Eswara.jpeg";
         case "Giulia":
