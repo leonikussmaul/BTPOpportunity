@@ -367,12 +367,12 @@ sap.ui.define([
                     case "Customer":
                         oObject = sap.ui.getCore().byId("selectCustomer").getBindingContext().getObject();
                         oData.ID_workshopID = oObject.workshopID;
-                        sPath = "/GenieAICustomer(guid'" + oData.workshopID + "')";
+                        sPath = "/GenieAICustomer(guid'" + oData.ID + "')";
                         break;
                     case "Partner":
                         oObject = sap.ui.getCore().byId("selectPartner").getBindingContext().getObject();
                         oData.ID_workshopID = oObject.workshopID;
-                        sPath = "/GenieAIPartner(guid'" + oData.workshopID + "')";
+                        sPath = "/GenieAIPartner(guid'" + oData.ID + "')";
                         break;
                 }
 

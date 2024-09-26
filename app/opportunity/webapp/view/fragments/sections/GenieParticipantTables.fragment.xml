@@ -11,14 +11,14 @@
         mode="Delete"
         includeItemInSelection="true"
         selectionChange="onSelectParticipant"
-         itemPress="onParticipantPress"
+        itemPress="onParticipantPress"
         delete="onDeleteParticipant"
     >
         <headerToolbar>
             <OverflowToolbar>
                 <content>
                     <Title
-                        text="Registered ({participants})"
+                        text="Registered"
                         level="H5"
                     />
                     <ToolbarSpacer />
