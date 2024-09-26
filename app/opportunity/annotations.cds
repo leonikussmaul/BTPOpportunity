@@ -103,57 +103,54 @@ annotate service.opportunityDeliverables with {
 
 
 annotate service.GenieAIInternal with {
-    name              @Common.Label: 'Name';
-    internal          @Common.Label: 'Internal';
-    email             @Common.Label: 'Email';
-    role              @Common.Label: 'Role';
-    functionalArea    @Common.Label: 'Functional Area';
-    orgArea           @Common.Label: 'Org Area';
-    source            @Common.Label: 'Source';
-    city              @Common.Label: 'City';
-    country           @Common.Label: 'Country';
-    region            @Common.Label: 'Region';
-    month             @Common.Label: 'Month';
-    workshopStartDate @Common.Label: 'Start Date';
-    workshopEndDate   @Common.Label: 'End Date';
-    notes             @Common.Label: 'Notes';
-    level             @Common.Label: 'Level';
-    status            @Common.Label: 'Status';
-    isFavorite        @Common.Label: 'Favorite';
+    name           @Common.Label: 'Name';
+    internal       @Common.Label: 'Internal';
+    email          @Common.Label: 'Email';
+    role           @Common.Label: 'Role';
+    functionalArea @Common.Label: 'Functional Area';
+    orgArea        @Common.Label: 'Org Area';
+    source         @Common.Label: 'Source';
+    city           @Common.Label: 'City';
+    country        @Common.Label: 'Country';
+    region         @Common.Label: 'Region';
+    notes          @Common.Label: 'Notes';
+    level          @Common.Label: 'Level';
+    status         @Common.Label: 'Status';
+    isFavorite     @Common.Label: 'Favorite';
+    marketUnit     @Common.Label: 'Market Unit';
+    type           @Common.Label: 'Type';
 };
 
 annotate service.GenieAICustomer with {
-    name              @Common.Label: 'Name';
-    internal          @Common.Label: 'Internal';
-    email             @Common.Label: 'Email';
-    source            @Common.Label: 'Source';
-    city              @Common.Label: 'City';
-    country           @Common.Label: 'Country';
-    region            @Common.Label: 'Region';
-    month             @Common.Label: 'Month';
-    workshopStartDate @Common.Label: 'Start Date';
-    workshopEndDate   @Common.Label: 'End Date';
-    notes             @Common.Label: 'Notes';
-    level             @Common.Label: 'Level';
-    status            @Common.Label: 'Status';
-    isFavorite        @Common.Label: 'Favorite';
+    name       @Common.Label: 'Name';
+    internal   @Common.Label: 'Internal';
+    email      @Common.Label: 'Email';
+    source     @Common.Label: 'Source';
+    city       @Common.Label: 'City';
+    country    @Common.Label: 'Country';
+    region     @Common.Label: 'Region';
+    notes      @Common.Label: 'Notes';
+    level      @Common.Label: 'Level';
+    status     @Common.Label: 'Status';
+    isFavorite @Common.Label: 'Favorite';
+    marketUnit @Common.Label: 'Market Unit';
+    type       @Common.Label: 'Type';
 };
 
 annotate service.GenieAIPartner with {
-    name              @Common.Label: 'Name';
-    internal          @Common.Label: 'Internal';
-    email             @Common.Label: 'Email';
-    source            @Common.Label: 'Source';
-    city              @Common.Label: 'City';
-    country           @Common.Label: 'Country';
-    region            @Common.Label: 'Region';
-    month             @Common.Label: 'Month';
-    workshopStartDate @Common.Label: 'Start Date';
-    workshopEndDate   @Common.Label: 'End Date';
-    notes             @Common.Label: 'Notes';
-    level             @Common.Label: 'Level';
-    status            @Common.Label: 'Status';
-    isFavorite        @Common.Label: 'Favorite';
+    name       @Common.Label: 'Name';
+    internal   @Common.Label: 'Internal';
+    email      @Common.Label: 'Email';
+    source     @Common.Label: 'Source';
+    city       @Common.Label: 'City';
+    country    @Common.Label: 'Country';
+    region     @Common.Label: 'Region';
+    notes      @Common.Label: 'Notes';
+    level      @Common.Label: 'Level';
+    status     @Common.Label: 'Status';
+    isFavorite @Common.Label: 'Favorite';
+    marketUnit @Common.Label: 'Market Unit';
+    type       @Common.Label: 'Type';
 };
 
 annotate service.GenieAIWorkshops with {
@@ -167,8 +164,10 @@ annotate service.GenieAIWorkshops with {
     level             @Common.Label: 'Level';
     status            @Common.Label: 'Status';
     number            @Common.Label: 'Number';
-    participants            @Common.Label: 'Participants';
-    workshopType            @Common.Label: 'Type';
+    marketUnit        @Common.Label: 'Market Unit';
+    region            @Common.Label: 'Region';
+    participants      @Common.Label: 'Participants';
+    workshopType      @Common.Label: 'Type';
 };
 
 annotate service.opportunityHeaderCopy with @(

@@ -373,10 +373,6 @@ entity GenieAIInternal {
         country           : String(255);
         region            : String(255);
         marketUnit        : String(255);
-        owner             : String(255);
-        month             : String(50);
-        workshopStartDate : Date;
-        workshopEndDate   : Date;
         notes             : String(5000);
         level             : String(50); // beginner, intermediate, advanced
         status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
@@ -396,16 +392,10 @@ entity GenieAICustomer {
         country           : String(255);
         region            : String(255);
         marketUnit        : String(255);
-        owner             : String(255);
-        month             : String(50);
-        workshopStartDate : Date;
-        workshopEndDate   : Date;
         notes             : String(5000);
         level             : String(50); // beginner, intermediate, advanced
         status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
         isFavorite        : Boolean;
-        links             : Composition of many GenieAICustomerLinks
-                                on links.linkID = $self;
 }
 
 @cds.autoexpose
@@ -421,35 +411,12 @@ entity GenieAIPartner {
         country           : String(255);
         region            : String(255);
         marketUnit        : String(255);
-        owner             : String(255);
-        month             : String(50);
-        workshopStartDate : Date;
-        workshopEndDate   : Date;
         notes             : String(5000);
         level             : String(50); // beginner, intermediate, advanced
         status            : String(50); // Lead, Opportunity, Delivery, Paused, Completed
         isFavorite        : Boolean;
-        links             : Composition of many GenieAIPartnerLinks
-                                on links.linkID = $self;
 }
 
-@cds.autoexpose
-entity GenieAICustomerLinks {
-    key ID              : UUID;
-        linkID          : Association to GenieAICustomer;
-        link            : String(2000);
-        linkDescription : String(1000);
-        linkName        : String(200);
-};
-
-@cds.autoexpose
-entity GenieAIPartnerLinks {
-    key ID              : UUID;
-        linkID          : Association to GenieAIPartner;
-        link            : String(2000);
-        linkDescription : String(1000);
-        linkName        : String(200);
-};
 
 @cds.autoexpose
 entity GenieAIWorkshopLinks {
@@ -481,7 +448,6 @@ entity GenieAIWorkshops {
         notes             : String(5000);
         links             : Composition of many GenieAIWorkshopLinks
                                 on links.linkID = $self;
-
         internalAttendees : Composition of many GenieAIInternal
                                 on internalAttendees.workshopID = $self.workshopID;
         customerAttendees : Composition of many GenieAICustomer

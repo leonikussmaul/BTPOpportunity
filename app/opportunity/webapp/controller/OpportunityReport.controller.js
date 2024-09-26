@@ -56,17 +56,17 @@ sap.ui.define([
                 });
             },
 
-            onAfterRendering: function(oEvent){
-                  //scroll to selected item
-                  try {
-                    let oItem = this.getView().byId("idOpportunityTable").getSelectedItem();
-                    oItem.getDomRef().scrollIntoView();
+            // onAfterRendering: function(oEvent){
+            //       //scroll to selected item
+            //       try {
+            //         let oItem = this.getView().byId("idOpportunityTable").getSelectedItem();
+            //         oItem.getDomRef().scrollIntoView();
 
-                } catch (error) {
-                    console.log(error)
-                }
+            //     } catch (error) {
+            //         console.log(error)
+            //     }
 
-            },
+            // },
 
             _onRoutePatternMatched: function (oEvent) {
                 this.getOwnerComponent().getModel("global").setProperty("/columnsExpanded", true);
