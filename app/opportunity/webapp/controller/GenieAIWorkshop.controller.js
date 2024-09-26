@@ -157,7 +157,7 @@ sap.ui.define([
                             "Partner": "/GenieAIPartner"
                         };
                         var sBindingPath = bindingPaths[sType];
-                        
+
                         var oTemplate = this.getView().byId("participantItemID");
 
                         var oSorter = new sap.ui.model.Sorter("name", false);
@@ -272,7 +272,7 @@ sap.ui.define([
                     }
                     that.getView().setBusy(true);
                     var oModel = that.getView().getModel();
-                    oModel.create("/GenieAICustomerLinks", oPayload, {
+                    oModel.create("/GenieAIWorkshopLinks", oPayload, {
                         success: function (oData, response) {
                             MessageToast.show("New Link added!");
                             that.getView().setBusy(false);
@@ -391,11 +391,11 @@ sap.ui.define([
 
                     var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate, sNotes;
 
-                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    sTodayDate = new Date().toLocaleDateString().split('/').reverse().join('-');
                     sStartDate = this.getView().byId("DRS3").getDateValue();
                     sEndDate = this.getView().byId("DRS3").getSecondDateValue();
-                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split('/').reverse().join('-');
+                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split('/').reverse().join('-');
 
                     const monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"
@@ -409,7 +409,7 @@ sap.ui.define([
                     oData.workshopEndDate = workshopEndDate;
                     oData.month = sMonth;
                     sNotes = this.getView().byId("editRTE").getValue();
-                    if(!(sNotes === "" || sNotes === undefined)) sNotes = sNotes.replaceAll("-", "%2D");
+                    if (!(sNotes === "" || sNotes === undefined)) sNotes = sNotes.replaceAll("-", "%2D");
                     oData.notes = sNotes;
                     oData.status = this.getView().byId("segmentedStatusObject").getSelectedKey();
                     delete oData.links;
@@ -658,11 +658,11 @@ sap.ui.define([
                         delete oData.role;
                     }
 
-                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    sTodayDate = new Date().toLocaleDateString().split('/').reverse().join('-');
                     sStartDate = sap.ui.getCore().byId("DRS3").getDateValue();
                     sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
-                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split('/').reverse().join('-');
+                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split('/').reverse().join('-');
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
@@ -726,6 +726,28 @@ sap.ui.define([
                 oBindingParams.sorter.push(oSorter);
 
             },
+
+            onParticipantPress: function (oEvent) {
+                var selectedItem = oEvent.getParameters().listItem.getBindingContext().getObject();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                var sKey = selectedItem.type;
+                this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
+
+
+                var sView;
+                sView = "GenieAIDetail";
+                oRouter.navTo(sView, {
+                    type: sKey,
+                    workshopID: selectedItem.workshopID,
+                    layout: "TwoColumnsMidExpanded"
+                });
+                var userModel = this.getOwnerComponent().getModel("userModel");
+                userModel.setProperty("/workshopID", selectedItem.workshopID);
+
+            }
+
+
 
         });
     });

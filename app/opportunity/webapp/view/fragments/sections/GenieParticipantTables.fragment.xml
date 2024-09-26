@@ -11,6 +11,7 @@
         mode="Delete"
         includeItemInSelection="true"
         selectionChange="onSelectParticipant"
+         itemPress="onParticipantPress"
         delete="onDeleteParticipant"
     >
         <headerToolbar>

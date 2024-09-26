@@ -237,7 +237,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sEndPoint, sStartDate, sEndDate, bInternal, sTodayDate, workshopStartDate, workshopEndDate, sStatus, sNoteText;
+                    var sEndPoint, bInternal, sStatus, sNoteText;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -260,20 +260,13 @@ sap.ui.define([
                         delete oData.role;
                     }
 
-                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    sStartDate = sap.ui.getCore().byId("DRS3").getDateValue();
-                    sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
-                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-
                     sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                     sNoteText = oData.notes;
                     if(!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
-                    oData.workshopStartDate = workshopStartDate;
-                    oData.workshopEndDate = workshopEndDate;
+
                     oData.status = sStatus;
                     oData.isFavorite = false;
                     oData.internal = bInternal;
@@ -310,7 +303,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var sStartDate, sEndDate, sTodayDate, workshopStartDate, workshopEndDate, sNoteText;
+                    var  sNoteText;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -321,17 +314,17 @@ sap.ui.define([
                         oData.workshopType = "Partner"
                     }
 
-                    sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    sStartDate = sap.ui.getCore().byId("DRS3").getDateValue();
-                    sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
-                    if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
-                    if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    // sTodayDate = new Date().toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    // sStartDate = sap.ui.getCore().byId("DRS3").getDateValue();
+                    // sEndDate = sap.ui.getCore().byId("DRS3").getSecondDateValue();
+                    // if (sStartDate) workshopStartDate = new Date(sStartDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
+                    // if (sEndDate) workshopEndDate = new Date(sEndDate).toLocaleDateString().split( '/' ).reverse( ).join( '-' );
 
                     var sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
-                    oData.workshopStartDate = workshopStartDate;
-                    oData.workshopEndDate = workshopEndDate;
+                    // oData.workshopStartDate = workshopStartDate;
+                    // oData.workshopEndDate = workshopEndDate;
                     oData.status = sStatus;
 
                     sNoteText = oData.notes;
@@ -531,34 +524,6 @@ sap.ui.define([
                     that.postFavouriteCustomer(isFavorite, oContext, sPath);
                 }
             },
-
-            // postFavouriteCustomer: function (isFavorite, oContext, sPath) {
-            //     //post isFavorite 
-            //     if (isFavorite === true) {
-            //         oContext.isFavorite = true;
-            //     } else {
-            //         oContext.isFavorite = false;
-            //     }
-            //     delete oContext.links;
-            //     delete oContext.__metadata;
-
-            //     var oModel = this.getView().getModel();
-            //     oModel.update(sPath, oContext, {
-            //         success: function () {
-            //             var sMessage = "";
-            //             if (isFavorite === true) {
-            //                 sMessage = "'" + oContext.name + "' added to favorites";
-            //             } else {
-            //                 sMessage = "'" + oContext.name + "' removed from favorites";
-            //             }
-            //             MessageToast.show(sMessage);
-            //         },
-            //         error: function (oError) {
-            //             var sMessage = JSON.parse(oError.responseText).error.message.value;
-            //             sap.m.MessageToast.show(sMessage);
-            //         }
-            //     });
-            // },
 
             postFavouriteCustomer: function (isFavorite, oContext, sPath) {
                 var oModel = this.getView().getModel();
