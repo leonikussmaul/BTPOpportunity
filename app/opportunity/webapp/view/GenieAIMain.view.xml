@@ -53,7 +53,7 @@
                     wrapping="true"
                     class="sapUiSmallMarginBottom"
                 />
-
+<!-- 
                 <Button
                     text="New Lead"
                     icon="sap-icon://ai"
@@ -62,7 +62,7 @@
                     class="sapUiSmallMarginBegin"
                     press="onCreateGenieLead"
                     tooltip="Create a New Lead in the System"
-                />
+                /> -->
             </FlexBox>
         </u:headerContent>
         <u:sections>
@@ -119,6 +119,7 @@
                                                 press="onCreateNewWorkshop"
                                                 tooltip="Create a New Workshop in the System"
                                             />
+
                                             <ToggleButton
                                                 icon="sap-icon://edit"
                                                 text="Edit"
@@ -150,7 +151,7 @@
                                             </Column>
 
                                             <Column
-                                                width="40%"
+                                                width="30%"
                                                 visible="{global>/columnsExpanded}"
                                             >
                                                 <customData>
@@ -162,17 +163,14 @@
                                                 <Label text="Description" />
                                             </Column>
 
-                                            <Column
-                                                hAlign="Center"
-                                                demandPopin="true"
-                                            >
+                                            <Column demandPopin="true">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "city", "columnIndex" : "2", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
+                                                        value='\{"columnKey": "owner", "columnIndex" : "2", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
                                                     />
                                                 </customData>
-                                                <Label text="Location" />
+                                                <Label text="Owner" />
                                             </Column>
 
                                             <Column
@@ -182,10 +180,10 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "owner", "columnIndex" : "3", "leadingProperty": "owner", "sortProperty": "owner", "filterProperty": "owner", "type":"string"}'
+                                                        value='\{"columnKey": "city", "columnIndex" : "3", "leadingProperty": "city", "sortProperty": "city", "filterProperty": "city", "type":"string"}'
                                                     />
                                                 </customData>
-                                                <Label text="Owner" />
+                                                <Label text="Location" />
                                             </Column>
 
                                             <Column
@@ -210,7 +208,7 @@
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
-                                                        value='\{"columnKey": "status", "columnIndex" : "4", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
+                                                        value='\{"columnKey": "status", "columnIndex" : "5", "leadingProperty": "status", "sortProperty": "status", "filterProperty": "status", "type":"string"}'
                                                     />
                                                 </customData>
                                                 <Label text="Status" />
@@ -230,16 +228,10 @@
                                                         text="{description}"
                                                         wrapping="true"
                                                     />
-                                                    <Text
-                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
-                                                        tooltip="{country}"
-                                                    />
-                                                    <!-- <Text
-                                                        text="{owner}"
-                                                        wrapping="true"
-                                                    /> -->
-
-                                                    <CustomListItem  class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                    <CustomListItem
+                                                        class="myCustomListItem"
+                                                        visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}"
+                                                    >
                                                         <HBox
                                                             alignItems="Center"
                                                             class="sapUiTinyMargin"
@@ -259,12 +251,19 @@
                                                             />
                                                         </HBox>
                                                     </CustomListItem>
+
+                                                    <Text
+                                                        text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
+                                                        tooltip="{country}"
+                                                    />
+
                                                     <Text
                                                         text="{'path': 'workshopStartDate',
                                             'type':'sap.ui.model.type.Date'
                                            }"
                                                         visible="{= ${workshopStartDate} !== null}"
                                                     />
+
                                                     <ObjectStatus
                                                         text="{status}"
                                                         state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
@@ -300,8 +299,8 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,workshopStartDate,city,owner,status,isFavorite"
-                                    requestAtLeastFields="name,city,status,isFavorite,owner,workshopStartDate,workshopEndDate"
+                                    initiallyVisibleFields="name,city,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite"
                                     ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
@@ -313,6 +312,14 @@
                                                 width="30%"
                                                 liveChange="onSearch"
                                                 class="sapUiSizeCompact"
+                                            />
+                                            <Button
+                                                text="New Customer"
+                                                icon="sap-icon://ai"
+                                                type="Accept"
+                                                class="sapUiSmallMarginBegin"
+                                                press="onCreateGenieLead"
+                                                tooltip="Create a New Lead in the System"
                                             />
                                             <ToggleButton
                                                 icon="sap-icon://edit"
@@ -388,7 +395,7 @@
                                                 <Label text="Location" />
                                             </Column>
 
-                                            <Column
+                                            <!-- <Column
                                                 hAlign="Center"
                                                 demandPopin="true"
                                             >
@@ -399,8 +406,8 @@
                                                     />
                                                 </customData>
                                                 <Label text="Owner" />
-                                            </Column>
-
+                                            </Column> -->
+                                            <!-- 
                                             <Column
                                                 hAlign="Center"
                                                 visible="{global>/columnsExpanded}"
@@ -416,7 +423,7 @@
                                                     text="Start Date"
                                                     tooltip="Workshop Dates"
                                                 />
-                                            </Column>
+                                            </Column> -->
 
                                             <!-- <Column
                                             hAlign="Center"
@@ -466,7 +473,7 @@
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                                                         tooltip="{country}"
                                                     />
-                                                    <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                    <!-- <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
                                                         <HBox
                                                             alignItems="Center"
                                                             class="sapUiTinyMargin"
@@ -485,16 +492,16 @@
                                                                 class="sapUiSmallMarginEnd"
                                                             />
                                                         </HBox>
-                                                    </CustomListItem>
+                                                    </CustomListItem> -->
 
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
-                                                    <Text
+                                                    <!-- <Text
                                                         text="{'path': 'workshopStartDate',
                                             'type':'sap.ui.model.type.Date'
                                            }"
                                                         visible="{= ${workshopStartDate} !== null}"
-                                                    />
+                                                    /> -->
                                                     <ObjectStatus
                                                         text="{status}"
                                                         state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
@@ -530,8 +537,8 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,workshopStartDate,city,owner,status,isFavorite"
-                                    requestAtLeastFields="name,city,status,isFavorite,workshopStartDate,owner,workshopEndDate"
+                                    initiallyVisibleFields="name,city,status,isFavorite"
+                                    requestAtLeastFields="name,city,status,isFavorite"
                                     ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
@@ -543,6 +550,14 @@
                                                 width="30%"
                                                 liveChange="onSearch"
                                                 class="sapUiSizeCompact"
+                                            />
+                                            <Button
+                                                text="New Partner"
+                                                icon="sap-icon://ai"
+                                                type="Accept"
+                                                class="sapUiSmallMarginBegin"
+                                                press="onCreateGenieLead"
+                                                tooltip="Create a New Lead in the System"
                                             />
                                             <ToggleButton
                                                 icon="sap-icon://edit"
@@ -601,7 +616,7 @@
                                                 <Label text="Location" />
                                             </Column>
 
-                                            <Column hAlign="Center">
+                                            <!-- <Column hAlign="Center">
                                                 <customData>
                                                     <core:CustomData
                                                         key="p13nData"
@@ -609,9 +624,9 @@
                                                     />
                                                 </customData>
                                                 <Label text="Owner" />
-                                            </Column>
+                                            </Column> -->
 
-                                            <Column
+                                            <!-- <Column
                                                 hAlign="Center"
                                                 visible="{global>/columnsExpanded}"
                                                 demandPopin="true"
@@ -626,7 +641,7 @@
                                                     text="Start Date"
                                                     tooltip="Workshop Dates"
                                                 />
-                                            </Column>
+                                            </Column> -->
 
                                             <Column
                                                 hAlign="Center"
@@ -663,7 +678,7 @@
                                                         text="{city}  {path: 'country', formatter:'.formatter.getFlagMethod'}"
                                                         tooltip="{country}"
                                                     />
-                                                    <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                    <!-- <CustomListItem class="myCustomListItem" visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
                                                         <HBox
                                                             alignItems="Center"
                                                             class="sapUiTinyMargin"
@@ -682,16 +697,16 @@
                                                                 class="sapUiSmallMarginEnd"
                                                             />
                                                         </HBox>
-                                                    </CustomListItem>
+                                                    </CustomListItem> -->
 
                                                     <!-- <Text text="{role}" />
                                                 <Text text="{orgArea}" /> -->
-                                                    <Text
+                                                    <!-- <Text
                                                         text="{'path': 'workshopStartDate',
                                             'type':'sap.ui.model.type.Date'
                                            }"
                                                         visible="{= ${workshopStartDate} !== null}"
-                                                    />
+                                                    /> -->
                                                     <ObjectStatus
                                                         text="{status}"
                                                         state="{path: 'status', formatter:'.formatter.formatStatusColor'}"
@@ -727,8 +742,8 @@
                                     demandPopin="true"
                                     class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
                                     showFullScreenButton="true"
-                                    initiallyVisibleFields="name,role,orgArea,city,owner,status,isFavorite"
-                                    requestAtLeastFields="name,role,orgArea,city,owner,status,isFavorite"
+                                    initiallyVisibleFields="name,role,orgArea,city,status,isFavorite"
+                                    requestAtLeastFields="name,role,orgArea,city,status,isFavorite"
                                     ignoreFromPersonalisation="workshopID,ID_workshopID,internal"
                                     enableCopy="false"
                                     beforeExport="onBeforeExport"
@@ -740,6 +755,14 @@
                                                 width="30%"
                                                 liveChange="onSearch"
                                                 class="sapUiSizeCompact"
+                                            />
+                                            <Button
+                                                text="New Internal Lead"
+                                                icon="sap-icon://ai"
+                                                type="Accept"
+                                                class="sapUiSmallMarginBegin"
+                                                press="onCreateGenieLead"
+                                                tooltip="Create a New Lead in the System"
                                             />
                                             <ToggleButton
                                                 icon="sap-icon://edit"
@@ -817,7 +840,7 @@
                                                 <Label text="Location" />
                                             </Column>
 
-                                            <Column
+                                            <!-- <Column
                                                 hAlign="Center"
                                                 demandPopin="true"
                                             >
@@ -831,7 +854,7 @@
                                                     text="Owner"
                                                     tooltip="Owner"
                                                 />
-                                            </Column>
+                                            </Column> -->
 
                                             <Column
                                                 visible="{global>/columnsExpanded}"
@@ -902,7 +925,7 @@
                                                         tooltip="{country}"
                                                     />
 
-                                                    <CustomListItem class="myCustomListItem"  visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
+                                                    <!-- <CustomListItem class="myCustomListItem"  visible="{= ${owner} !== null &amp;&amp; ${owner} !== ''}">
                                                         <HBox
                                                             alignItems="Center"
                                                             class="sapUiTinyMargin"
@@ -921,7 +944,7 @@
                                                                 class="sapUiSmallMarginEnd"
                                                             />
                                                         </HBox>
-                                                    </CustomListItem>
+                                                    </CustomListItem> -->
                                                     <Text
                                                         text="{orgArea}  {functionalArea}"
                                                     />

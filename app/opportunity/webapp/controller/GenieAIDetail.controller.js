@@ -111,8 +111,8 @@ sap.ui.define([
 
                 var expandParameters = {
                     "Internal": "",
-                    "Customer": "links",
-                    "Partner": "links",
+                    "Customer": "",
+                    "Partner": "",
                     "Workshops": "links,internalAttendees,customerAttendees,partnerAttendees"
                 };
 
@@ -131,7 +131,7 @@ sap.ui.define([
 
                 // wait for async calls 
                 Promise.all([
-                    this.onFilterLinkList(sWorkshopID),
+                   // this.onFilterLinkList(sWorkshopID),
                 ]).then(() => {
 
                     this.getOwnerComponent().getModel("global").setProperty("/layout", "TwoColumnsMidExpanded");
@@ -140,25 +140,6 @@ sap.ui.define([
                     this.getGenieCount();
                 }).catch(err => {
                     console.error("Error with route:", err);
-                });
-            },
-
-            onFilterLinkList: function (sWorkshopID) {
-                return new Promise((resolve, reject) => {
-                    try {
-                        var oTemplate = this.getView().byId("linkListItem");
-                        var oSorter = new sap.ui.model.Sorter("linkName", true);
-                        var oFilter = new Filter("linkID_workshopID", FilterOperator.EQ, sWorkshopID);
-                        this.getView().byId("linkList").bindAggregation("items", {
-                            template: oTemplate,
-                            path: "/GenieAICustomerLinks",
-                            sorter: oSorter,
-                            filters: oFilter
-                        });
-                        resolve();
-                    } catch (error) {
-                        reject(error);
-                    }
                 });
             },
 
@@ -216,7 +197,7 @@ sap.ui.define([
                     }
                     that.getView().setBusy(true);
                     var oModel = that.getView().getModel();
-                    oModel.create("/GenieAICustomerLinks", oPayload, {
+                    oModel.create("/GenieAIWorkshopLinks", oPayload, {
                         success: function (oData, response) {
                             MessageToast.show("New Link added!");
                             that.getView().setBusy(false);

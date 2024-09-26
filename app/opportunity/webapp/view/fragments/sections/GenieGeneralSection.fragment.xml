@@ -23,8 +23,8 @@
 
                 <!-- <Label text="Contact name" />
                 <Text text="{contactName}" /> -->
-                 <Label text="Owner" />
-                <Text text="{owner}" />
+                 <Label text="Owner"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
+                <Text text="{owner}" visible="{= ${genieModel>/genieType} === 'Workshop' }" />
 
                 <Label text="Source" />
                 <Text text="{source}" />
@@ -67,12 +67,12 @@
                     visible="{= ${genieModel>/genieType} === 'Internal' }"
                 />
 
-                <Label text="Workshop Location" />
-                <Text text="{city} " />
-                <Text text="{country}" />
+                <Label text="Workshop Location"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
+                <Text text="{city} "  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
+                <Text text="{country}"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
 
-                <Label text="Dates" />
-                <Text
+                <Label text="Dates"  visible="{= ${genieModel>/genieType} === 'Workshop' }" />
+                <Text  visible="{= ${genieModel>/genieType} === 'Workshop' }" 
                     text="{ path: 'workshopStartDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {

@@ -136,7 +136,7 @@ sap.ui.define([
                         var oFilter = new Filter("linkID_workshopID", FilterOperator.EQ, sWorkshopID);
                         this.getView().byId("linkList").bindAggregation("items", {
                             template: oTemplate,
-                            path: "/GenieAICustomerLinks",
+                            path: "/GenieAIWorkshopLinks",
                             sorter: oSorter,
                             filters: oFilter
                         });
