@@ -24,6 +24,7 @@
     xmlns:dnd="sap.ui.core.dnd"
     xmlns:dnd-grid="sap.f.dnd"
     xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:unified="sap.ui.unified"
 >
     <u:ObjectPageLayout
         id="ObjectPageLayoutBegin"
@@ -53,7 +54,7 @@
                     wrapping="true"
                     class="sapUiSmallMarginBottom"
                 />
-<!-- 
+                <!-- 
                 <Button
                     text="New Lead"
                     icon="sap-icon://ai"
@@ -961,6 +962,53 @@
                                         </items>
                                     </Table>
                                 </smartTable:SmartTable>
+                            </IconTabFilter>
+
+                            <!-- calendar view -->
+                            <IconTabSeparator icon="sap-icon://open-command-field" />
+                            <IconTabFilter
+                                icon="sap-icon://calendar"
+                                iconColor="Neutral"
+                                text="Calendar"
+                                key="Calendar"
+                            >
+                                <!-- <ScrollContainer
+                                    height="100%"
+                                    width="100%"
+                                    vertical="true"
+                                    focusable="true"
+                                > -->
+                                <SinglePlanningCalendar
+                                    id="SPC1"
+                                    class="sapUiSmallMarginTop"
+                                    title="Workshop Calendar"
+                                    startDate="{path: 'CalendarModel>/startDate'}"
+                                    stickyMode="All"
+                                    appointments="{path: '/GenieAIWorkshops'}"
+                                    appointmentSelect="handleWorkshopSelect"
+                                >
+                                    <views>
+                                        <SinglePlanningCalendarMonthView
+                                            key="MonthView"
+                                            title="Month"
+                                        />
+                                    </views>
+
+                                    <appointments>
+                                        <unified:CalendarAppointment
+                                        description="{city}"
+                                            startDate="{path: 'workshopStartDate', formatter: '.formatter.calendarDate'}"
+                                            endDate="{path: 'workshopEndDate', formatter: '.formatter.calendarEndDate'}"
+                                            icon="{path:'owner', formatter:'.formatter.formatterTeamPictures'}"
+                                            title="{name}"
+                                            text="{city} | Owner: {owner}"
+                                            type="{path:'workshopType', formatter:'.formatter.workshopTypeFormatter'}"
+                                             tentative="{= ${status} === 'Paused' || ${status} === 'Lead' ? true : false }"
+   
+                                        />
+                                    </appointments>
+                                </SinglePlanningCalendar>
+                                <!-- </ScrollContainer> -->
                             </IconTabFilter>
                         </items>
                     </IconTabBar>

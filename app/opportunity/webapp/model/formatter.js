@@ -479,6 +479,20 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
       }
     },
 
+    workshopTypeFormatter: function (sType) {
+      switch (sType) {
+        case "Customer":
+          return "Type06";
+        case "Internal":
+          return "Type08";
+        case "Partner":
+          return "Type02";
+        
+        default:
+          return "Type05";
+      }
+    },
+
     initialsFormatter: function (sFirstName, sLastName) {
       if (sFirstName && sLastName) {
         var sInitials = sFirstName.substring(0, 1) + sLastName.substring(0, 1);

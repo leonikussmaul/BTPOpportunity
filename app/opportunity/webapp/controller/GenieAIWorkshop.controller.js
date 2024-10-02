@@ -517,6 +517,7 @@ sap.ui.define([
                     delete oData.customerAttendees;
                     delete oData.internalAttendees;
                     delete oData.partnerAttendees;
+                    delete oData.deliveryTeam;
 
                     var sPath = this.getView().getBindingContext().sPath;
                     oModel.update(sPath, oData, {

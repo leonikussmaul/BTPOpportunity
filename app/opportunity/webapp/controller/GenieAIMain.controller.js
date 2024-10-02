@@ -143,7 +143,7 @@ sap.ui.define([
 
                 var sKey = this.getView().byId("idIconTabBar").getSelectedKey();
                 this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sKey);
-                var sView; 
+                var sView;
                 if (sKey === "Workshops") {
                     sView = "GenieAIWorkshop";
                     oRouter.navTo(sView, {
@@ -263,7 +263,7 @@ sap.ui.define([
                     sStatus = sap.ui.getCore().byId("segmentedStatus").getSelectedKey();
 
                     sNoteText = oData.notes;
-                    if(!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
+                    if (!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
 
                     if (oData.country) oData.country = oData.country.toUpperCase();
 
@@ -303,7 +303,7 @@ sap.ui.define([
                     this.resetValueState();
                     that.getView().setBusy(true);
 
-                    var  sNoteText;
+                    var sNoteText;
 
                     var sKey = sap.ui.getCore().byId("segmentedWorkshopBtn").getSelectedKey();
                     if (sKey === "Internal") {
@@ -328,7 +328,7 @@ sap.ui.define([
                     oData.status = sStatus;
 
                     sNoteText = oData.notes;
-                    if(!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
+                    if (!(sNoteText === "" || sNoteText === undefined)) sNoteText = sNoteText.replaceAll("-", "%2D");
                     oData.notes = sNoteText;
 
                     //  delete oData.internal;
@@ -588,18 +588,15 @@ sap.ui.define([
                 var oBindingParams = oEvent.getParameter("bindingParams");
 
                 var fnGroupHeaderFormatter = function (oContext) {
-                    var sHeader = oContext.getProperty("workshopType");
+                    var sHeader = oContext.getProperty("workshopType"); 
                     return {
                         key: sHeader,
                     };
                 };
-                var oGrouping = new sap.ui.model.Sorter("name", false, fnGroupHeaderFormatter);
-                oBindingParams.sorter.push(oGrouping);
+                var oGrouping = new sap.ui.model.Sorter("workshopType", false, fnGroupHeaderFormatter);
+                var oSorter = new sap.ui.model.Sorter("name", false); // Sort within groups
 
-               
-                var oSorter = new sap.ui.model.Sorter("name", false);
-                oBindingParams.sorter.push(oSorter);
-
+                oBindingParams.sorter = [oGrouping, oSorter];
             },
 
             onBeforeRebindTable: function (oEvent) {
@@ -615,11 +612,29 @@ sap.ui.define([
                 var oGrouping = new sap.ui.model.Sorter("status", true, fnGroupHeaderFormatter);
                 oBindingParams.sorter.push(oGrouping);
 
-               
+
                 var oSorter = new sap.ui.model.Sorter("name", false);
                 oBindingParams.sorter.push(oSorter);
 
             },
+
+            handleWorkshopSelect: function (oEvent) {
+                var oData = oEvent.getParameter("appointment").getBindingContext().getObject();
+                var sWorkshopID = oData.workshopID;
+                var sType = oData.workshopType;
+
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+                this.getOwnerComponent().getModel("genieModel").setProperty("/genieType", sType);
+                var sView;
+
+                oRouter.navTo("GenieAIWorkshop", {
+                    type: "Workshops",
+                    workshopType: sType,
+                    workshopID: sWorkshopID,
+                    layout: "TwoColumnsMidExpanded"
+                });
+            }
 
 
         });
