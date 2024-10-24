@@ -51,6 +51,8 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "./images/Ollie.jpeg";
         case "Omar":
           return "./images/Omar.jpeg";
+        case "Parul":
+          return "./images/Parul.jpeg";
         case "Peter":
           return "./images/Peter.jpeg";
         case "Philip":
@@ -349,7 +351,7 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
     },
 
     noteTextFormatter: function (sNoteText) {
-      if(!(sNoteText === "" || sNoteText == undefined)){
+      if (!(sNoteText === "" || sNoteText == undefined)) {
         let result = sNoteText.replaceAll("%2D", "-");
         return result;
       }
@@ -487,7 +489,7 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
           return "Type08";
         case "Partner":
           return "Type02";
-        
+
         default:
           return "Type05";
       }
@@ -584,16 +586,16 @@ sap.ui.define(["sap/ui/core/library", "sap/ui/core/date/UI5Date"], function (cor
 
     },
 
-    taskCountFormatter: function(sValue){
-      if(sValue.length > 0){
-        return sValue.length; 
-      } else return; 
+    taskCountFormatter: function (sValue) {
+      if (sValue.length > 0) {
+        return sValue.length;
+      } else return;
     },
 
-    taskCounterVisible:function(sValue){
-      if(sValue.length > 0){
-        return true; 
-      } else return false; 
+    taskCounterVisible: function (sValue) {
+      if (sValue.length > 0) {
+        return true;
+      } else return false;
     },
 
 
