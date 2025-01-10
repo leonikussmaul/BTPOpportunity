@@ -66,6 +66,10 @@
                     key="2024"
                     text="2024"
                 />
+                <core:Item
+                    key="2025"
+                    text="2025"
+                />
             </ComboBox>
 
             <Label text="Forecast (in %)" />

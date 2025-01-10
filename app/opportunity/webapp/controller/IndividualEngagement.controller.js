@@ -781,7 +781,7 @@ sap.ui.define([
 
             //check if we have a forecast for this month && year
             aCurrentForecasts.forEach((forecast) => {
-              if (forecast.month === oData.month && forecast.year === sYear) {
+              if (forecast.month === oData.month && forecast.year.toString() === sYear) {
                 bFlagUpdate = true;
                 sUpdatePath += String(forecast.forecastID);
               }
